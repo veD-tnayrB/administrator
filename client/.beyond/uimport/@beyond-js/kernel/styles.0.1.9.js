@@ -1,1 +1,0 @@
-export * from '@beyond-js/kernel/styles';
