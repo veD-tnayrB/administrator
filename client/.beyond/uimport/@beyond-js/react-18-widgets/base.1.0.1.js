@@ -1,0 +1,1 @@
+export * from '@beyond-js/react-18-widgets/base';

@@ -1,0 +1,14 @@
+.page__container {
+  display: flex;
+  padding: 20px;
+  max-width: 1024px;
+  margin: 20px auto;
+  flex-direction: row;
+  background: var(--surface);
+}
+.page__container .beyond {
+  color: #ff8056;
+}
+
+
+/*# sourceMappingURL=home.css.map*/

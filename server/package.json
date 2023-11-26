@@ -1,0 +1,39 @@
+{
+  "name": "@essential-js/admin-backend",
+  "version": "0.0.1",
+  "title": "Backend",
+  "description": "",
+  "license": "ISC",
+  "languages": {
+    "default": "en",
+    "supported": [
+      "en",
+      "es"
+    ]
+  },
+  "modules": {
+    "path": "modules"
+  },
+  "deployment": {
+    "distributions": [
+      {
+        "name": "backend",
+        "environment": "development",
+        "platform": "backend",
+        "ports": {
+          "bundles": 6580,
+          "http": 6581,
+          "inspect": 6582
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "@beyond-js/backend": "~0.1.8",
+    "@beyond-js/kernel": "~0.1.9",
+    "@beyond-js/local": "~0.1.3",
+    "bg-data-model": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "socket.io-client": "^4.5.4"
+  }
+}
