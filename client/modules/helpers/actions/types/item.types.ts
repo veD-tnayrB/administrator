@@ -3,3 +3,7 @@ export /*bundle*/ interface IPublishParams {
 	isNew: boolean;
 	id: string;
 }
+
+export /*bundle*/ interface IDataParams {
+	[key: string]: any;
+}

@@ -1,13 +1,24 @@
 {
 	"application": {
-		"processor": "scss",
+		"processor": "sass",
 		"path": "application",
-		"files": ["*"]
+		"files": [
+			"application/custom-properties/definition.scss",
+			"application/_variables.scss",
+			"global/_variables.scss",
+			"*"
+		]
 	},
 	"global": {
-		"processor": "scss",
+		"processor": "sass",
 		"path": "global",
 		"files": ["*"]
+	},
+	"processors": {
+		"scss": {
+			"path": "sass",
+			"files": ["*"]
+		}
 	},
 	"overwrites": "overwrites/overwrites.json"
 }

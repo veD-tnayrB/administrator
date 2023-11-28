@@ -1,5 +1,5 @@
 {
-	"name": "home",
+	"name": "views/home",
 	"widget": {
 		"is": "page",
 		"route": "/",

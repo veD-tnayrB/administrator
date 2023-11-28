@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,800;1,100;1,300;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+:root {
+	--gray-base: #000000;
+	--gray-darker: #333333;
+	--gray-dark: #4e5256;
+	--gray: #82837f;
+	--gray-variant: #979797;
+	--gray-light: #d8d8d8;
+	--gray-lighter: #f9f9f9;
+
+	--background: var(--gray-lighter);
+	--text-color: var(--gray-darker);
+	--element-bg: #fff;
+	--border: #dddddd;
+	--border-variant: #e1e5ef;
+	--text: #fff;
+	--success: #22bb33;
+	--warning: #f7c700;
+	--error: #f04141;
+	--info: hsla(211, 88%, 53%, 1);
+	--chat-online: #43fc22;
+	--preload-bg: var(--secondary);
+	--main-color: hsla(211, 88%, 53%, 1);
+	--text-grey: #707070;
+	--text-gray-light: #757575;
+	--border-primary: 20px;
+	--border-secondary: 8px;
+
+	--body-bg: #f5f8ff;
+	--box-bg: #fff;
+	--input-bg: #f5f8ff;
+	--txt-color: #2f2d2f;
+	--txt-second-color: #ccc;
+	--border-color: #e1e1e1;
+	--primary-box-shadow: 0px 19px 40px 0px hsla(0, 0%, 0%, 10%);
+}

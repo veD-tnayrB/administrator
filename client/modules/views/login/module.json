@@ -1,0 +1,24 @@
+{
+	"name": "views/login",
+	"platforms": ["web", "ios", "android"],
+	"widget": {
+		"route": "/auth/login",
+		"is": "page",
+		"sass": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "login-view"
+		}
+	},
+	"txt": {
+		"path": "/widget/txt",
+		"multilanguage": true,
+		"files": "*"
+	}
+}

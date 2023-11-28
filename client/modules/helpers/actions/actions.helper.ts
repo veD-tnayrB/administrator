@@ -12,7 +12,7 @@ import {
 	where,
 } from 'firebase/firestore';
 import { IListParams } from './types/collection.types';
-import { IPublishParams } from './types/item.types';
+import { IDataParams, IPublishParams } from './types/item.types';
 
 type IModel = CollectionReference<DocumentData, DocumentData>;
 
@@ -54,6 +54,7 @@ export /*bundle*/ class Actions {
 			return { status: false, error };
 		}
 	};
+
 	static publish = async (model: IModel, params: IPublishParams) => {
 		try {
 			console.log('PARMAS => ', params);
@@ -71,6 +72,31 @@ export /*bundle*/ class Actions {
 
 			return { status: true };
 		} catch (error) {
+			return { status: false, error };
+		}
+	};
+
+	static data = async (model: IModel, params: IDataParams) => {
+		try {
+			let buildedQuery = query(model);
+			console.log('PARAMS => ', params);
+
+			for (const field in params) {
+				if (params[field]) {
+					buildedQuery = query(buildedQuery, where(field, '==', params[field]));
+				}
+			}
+
+			const querySnapshot = await getDocs(buildedQuery);
+			let item = querySnapshot.docs.length ? querySnapshot.docs[0].data() : null;
+
+			if (!item) throw 'Item not found';
+			return {
+				status: true,
+				data: item,
+			};
+		} catch (error) {
+			console.error(error);
 			return { status: false, error };
 		}
 	};
