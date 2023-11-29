@@ -1,6 +1,6 @@
 import { CollectionReference, DocumentData, collection } from 'firebase/firestore';
 import { Actions } from '../actions/actions.helper';
-import { db } from '@essential-js/admin/init';
+import { db } from '@essential-js/admin/serverless-provider';
 import { IDataParams, IPublishParams } from '../actions/types/item.types';
 
 export /*bundle*/ abstract class ItemProvider {

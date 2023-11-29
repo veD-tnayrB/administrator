@@ -4,7 +4,7 @@
 	"title": "Administrator",
 	"description": "",
 	"license": "ISC",
-	"layout": "main-layout",
+	"layout": "main-admin-layout",
 	"template": "template/template.json",
 	"languages": {
 		"default": "en",
@@ -34,7 +34,7 @@
 				"environment": "development",
 				"platform": "web",
 				"ports": {
-					"bundles": 6530
+					"bundles": 6550
 				}
 			}
 		]

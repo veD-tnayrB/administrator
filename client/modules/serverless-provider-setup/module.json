@@ -1,0 +1,7 @@
+{
+	"name": "serverless-provider",
+	"ts": {
+		"path": "./",
+		"files": ["*"]
+	}
+}

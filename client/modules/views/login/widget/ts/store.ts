@@ -1,30 +1,21 @@
-import { auth } from '@essential-js/admin/init';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { session } from '@essential-js/admin/auth';
+import { session, Providers } from '@essential-js/admin/auth';
 import { ReactiveModel } from '@beyond-js/reactive/model';
-
-type IProviders = 'Google';
+import { routing } from '@beyond-js/kernel/routing';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
-	#providers: {
-		[key in IProviders]: any;
-	} = {
-		Google: new GoogleAuthProvider(),
-	};
-
 	#error: string | null = null;
 	get error() {
 		return this.#error;
 	}
 
-	login = async (params: { email: string; password: string }) => {
+	login = async (params: { email: string; password: string }, provider?: Providers) => {
 		try {
 			this.fetching = true;
 			// const provider = this.#providers[params.provider];
-			const response = await session.login(params);
+			const response = await session.login(params, provider);
 			if (!response.status) throw response.error;
 			// const response = await signInWithPopup(auth, provider);
-			// console.log('AUTH RESPONSE => ', response);
+			routing.pushState('/');
 		} catch (error) {
 			console.error(error);
 			this.#error = error;

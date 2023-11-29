@@ -57,7 +57,6 @@ export /*bundle*/ class Actions {
 
 	static publish = async (model: IModel, params: IPublishParams) => {
 		try {
-			console.log('PARMAS => ', params);
 			const { isNew, ...data } = params;
 			data.timeUpdated = new Date();
 
@@ -79,7 +78,6 @@ export /*bundle*/ class Actions {
 	static data = async (model: IModel, params: IDataParams) => {
 		try {
 			let buildedQuery = query(model);
-			console.log('PARAMS => ', params);
 
 			for (const field in params) {
 				if (params[field]) {
@@ -96,7 +94,6 @@ export /*bundle*/ class Actions {
 				data: item,
 			};
 		} catch (error) {
-			console.error(error);
 			return { status: false, error };
 		}
 	};

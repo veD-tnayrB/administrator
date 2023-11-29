@@ -15,10 +15,17 @@ interface IUser {
 export /*bundle*/ class User extends Item<IUser> {
 	protected properties = ['active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated'];
 
+	get fullName() {
+		let namesArray = this.names.split(' ');
+		let lastNamesArray = this.lastNames.split(' ');
+
+		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
+	}
+
 	constructor(params: { id: string | undefined } = { id: undefined }) {
 		super({
 			provider: UserItemProvider,
-			storeName: 'address-types',
+			storeName: 'users',
 			db: config.params.application.localDB,
 			...params,
 		});

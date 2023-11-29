@@ -1,7 +1,7 @@
 import { CollectionReference, DocumentData, collection } from 'firebase/firestore';
 import { Actions } from '../actions/actions.helper';
 import { IListParams } from '../actions/types/collection.types';
-import { db } from '@essential-js/admin/init';
+import { db } from '@essential-js/admin/serverless-provider';
 
 export /*bundle*/ abstract class CollectionProvider {
 	#model: CollectionReference<DocumentData, DocumentData>;

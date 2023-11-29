@@ -3,10 +3,11 @@ import { Form, Input } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
 import { useLoginContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { Providers } from '@essential-js/admin/auth';
 
 const DEFAULT_VALUE = {
-	email: '',
-	password: '',
+	email: 'brayanmc.contacto@gmail.com',
+	password: 'Admin01*',
 };
 
 export const LeftSectionForm = () => {
@@ -20,6 +21,10 @@ export const LeftSectionForm = () => {
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		if (isButtonDisabled) return;
 		store.login(values);
+	};
+
+	const loginWithGoogle = () => {
+		store.login(values, Providers.Google);
 	};
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +50,7 @@ export const LeftSectionForm = () => {
 				<Input
 					error={message}
 					name="email"
+					type="email"
 					value={values.email}
 					label={texts.fields.email}
 					onChange={onChange}
@@ -52,6 +58,7 @@ export const LeftSectionForm = () => {
 				<Input
 					error={message}
 					name="password"
+					type="password"
 					value={values.password}
 					label={texts.fields.password}
 					onChange={onChange}
@@ -65,7 +72,9 @@ export const LeftSectionForm = () => {
 				<span>{texts.or}</span>
 				<div />
 			</div>
-			<Button variant="outline">{texts.loginWithGoogle}</Button>
+			<Button variant="outline" onClick={loginWithGoogle}>
+				{texts.loginWithGoogle}
+			</Button>
 		</article>
 	);
 };

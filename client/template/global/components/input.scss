@@ -1,9 +1,18 @@
-div.pui-element-input {
-	border: 1px solid hsl(217.2 32.6% 17.5%);
-	border-radius: 5px;
+div.pui-input {
+	position: relative;
+	border-radius: 2px;
 	margin: 0;
+	transition: all 0.2s linear;
 
-	label {
+	input {
+		border: 1px solid transparent;
+		background: var(--background);
+		border-radius: 2px;
+	}
+
+	.pui-input__label {
+		height: 100%;
+		position: absolute;
 		font-size: 0.85rem;
 		left: 0.5rem;
 		padding: 0;
@@ -11,15 +20,15 @@ div.pui-element-input {
 		align-items: center;
 		text-transform: capitalize;
 		color: var(--text-color);
-		transition: all 0.3s linear;
+		transition: all 0.2s ease-out;
 	}
 
-	&:focus-within label,
-	input:not(:placeholder-shown) ~ label {
+	&:focus-within .pui-input__label,
+	input:not(:placeholder-shown) ~ .pui-input__label {
 		background: transparent;
 		padding: 0;
-		top: -25px;
 		left: 0.5rem;
 		color: var(--text-color);
+		transform: translateY(-35px);
 	}
 }

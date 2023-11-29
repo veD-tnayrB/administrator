@@ -7,7 +7,7 @@ export /*bundle*/ class Users extends Collection {
 	constructor() {
 		super({
 			provider: UsersCollectionProvider,
-			storeName: 'widgets',
+			storeName: 'users',
 			db: config.params.application.localDB,
 			localdb: true,
 			item: User,
