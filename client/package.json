@@ -16,7 +16,10 @@
 	"params": {
 		"application": {
 			"localDB": "essential-dashboard",
-			"localDBVersion": 1
+			"localDBVersion": 1,
+			"company": {
+				"name": "Essential"
+			}
 		}
 	},
 	"libraries": {

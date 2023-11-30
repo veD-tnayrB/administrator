@@ -1,0 +1,46 @@
+.main-layout {
+	nav.main-layout-sidebar {
+		.sidebar-content {
+			ul {
+				.sidebar-item {
+					border-radius: 5px;
+					padding: 0.7rem 0.9rem;
+					cursor: pointer;
+					transition: all 0.1s ease-in-out;
+
+					&.selected {
+						background: var(--primary);
+					}
+
+					.sidebar-item-link {
+						display: flex;
+						align-items: center;
+						gap: 0.5rem;
+
+						.icon {
+							width: 25px;
+							aspect-ratio: 1/1;
+							display: flex;
+							align-items: center;
+
+							svg {
+								width: 100%;
+								height: 100%;
+
+								aspect-ratio: 1/1;
+							}
+						}
+
+						span {
+							color: var(--on-primary);
+						}
+					}
+
+					&:hover {
+						background: var(--primary);
+					}
+				}
+			}
+		}
+	}
+}

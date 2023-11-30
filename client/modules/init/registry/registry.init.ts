@@ -9,6 +9,8 @@ async function inializeApp() {
 		await DBManager.config(`${dbName}@${dbVersion}`, {
 			users: 'id, active, email, lastNames, names, timeCreated, timeUpdated',
 			widgets: 'id, active, identifier, metadata, order',
+			profiles: 'id, name, description, timeCreated, timeUpdated',
+			entities: 'id, label, icon, to, timeCreated, timeUpdated, mode, order',
 		});
 	} catch (e) {
 		console.error('error', e);

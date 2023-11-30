@@ -1,0 +1,23 @@
+.login-view.auth-view {
+	display: grid;
+	grid-template-columns: 60% 40%;
+
+	.right-section {
+		background: var(--primary-container);
+		position: relative;
+		display: flex;
+		align-items: center;
+
+		img {
+			width: 700px;
+			position: absolute;
+			bottom: 80px;
+			left: -10rem;
+		}
+	}
+
+	.background-section {
+		height: 100%;
+		min-height: 100vh;
+	}
+}

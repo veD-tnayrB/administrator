@@ -1,0 +1,22 @@
+{
+	"name": "views/profiles/managment",
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	},
+	"widget": {
+		"route": "/profiles/managment/${id}",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "profiles-managment"
+		}
+	}
+}

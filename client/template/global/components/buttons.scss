@@ -1,0 +1,10 @@
+button.pui-button.btn-primary,
+.btn.btn-primary {
+	font-weight: normal;
+	border-radius: 5px;
+
+	.button-label {
+		font-weight: normal;
+		color: var(--on-primary);
+	}
+}

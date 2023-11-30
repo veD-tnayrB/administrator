@@ -1,0 +1,22 @@
+{
+	"name": "views/profiles/list",
+	"widget": {
+		"route": "/profiles",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "profiles-list"
+		}
+	},
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	}
+}
