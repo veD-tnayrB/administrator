@@ -12,7 +12,6 @@ declare global {
 }
 
 export function Layout({ store }: { store: StoreManager }) {
-	console.log('STORE => ', store);
 	const contextValue: IContext = {
 		store,
 	};

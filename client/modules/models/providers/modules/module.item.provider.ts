@@ -1,9 +1,9 @@
 import { ItemProvider } from '@essential-js/admin/helpers';
 
-export class EntityItemProvider extends ItemProvider {
+export class ModulesItemProvider extends ItemProvider {
 	constructor() {
 		super({
-			collection: 'entities',
+			collection: 'modules',
 		});
 	}
 }

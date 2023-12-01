@@ -51,7 +51,6 @@ export /*bundle*/ abstract class StoreViewTable extends ReactiveModel<StoreViewT
 			const response = await this.#collection.load({ start: this.#next });
 			if (!response.status) throw response.error;
 
-			console.log('AAAAAAAAA', this.#collection.items);
 			// this.#items = this.#collection.items;
 			this.#total = this.#collection.counters.total;
 			this.#next = this.#collection.next;
@@ -68,7 +67,6 @@ export /*bundle*/ abstract class StoreViewTable extends ReactiveModel<StoreViewT
 			this.fetching = true;
 			const { startDate, endDate } = search;
 
-			console.log(search);
 			await this.#collection.load({
 				profile: search,
 			});
