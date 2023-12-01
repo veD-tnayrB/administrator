@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'pragmate-ui/link';
 import { routing } from '@beyond-js/kernel/routing';
 import { Module } from '@essential-js/admin/models';
-import { useLayoutContext } from '../context';
+import { useLayoutContext } from '../../context';
 
 export const SidebarItem: React.FC<Module> = params => {
 	const { store } = useLayoutContext();

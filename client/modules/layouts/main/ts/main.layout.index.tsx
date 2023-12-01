@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Sidebar } from './components/main.layout.sidebar';
+import { Sidebar } from './components/sidebar/main.layout.sidebar';
 import { IContext, LayoutContext } from './context';
 import { StoreManager } from './store';
 

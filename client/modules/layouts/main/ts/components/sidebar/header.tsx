@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image } from 'pragmate-ui/image';
 import config from '@essential-js/admin/config';
-import { Toggle } from './toggle';
 
 export const SidebarHeader = () => {
 	const name = config.params.application.company.name;
