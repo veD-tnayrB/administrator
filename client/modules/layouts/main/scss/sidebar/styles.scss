@@ -17,25 +17,31 @@
 			flex-direction: column;
 			gap: 2rem;
 
-			ul {
-				display: flex;
-				flex-direction: column;
-				gap: 0.5rem;
-			}
-
-			.sidebar-loading {
-				margin: -5rem 0 0 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
+			.sidebar-content-container {
 				height: 100%;
-				width: 100%;
+				display: grid;
+				grid-template-rows: 80% 20%;
 
-				svg {
-					fill: var(--on-primary);
-					width: 20px;
-					height: 20px;
-					animation: rotate 0.5s ease-in-out infinite 0s, 6s ease-in-out infinite -0.75s;
+				ul {
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem;
+				}
+
+				.sidebar-loading {
+					margin: -5rem 0 0 0;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					width: 100%;
+
+					svg {
+						fill: var(--on-primary);
+						width: 20px;
+						height: 20px;
+						animation: rotate 0.5s ease-in-out infinite 0s, 6s ease-in-out infinite -0.75s;
+					}
 				}
 			}
 		}

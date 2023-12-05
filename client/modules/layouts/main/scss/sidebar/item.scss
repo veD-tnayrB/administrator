@@ -4,7 +4,6 @@
 			ul {
 				.sidebar-item {
 					border-radius: 5px;
-					padding: 0.7rem 0.9rem;
 					cursor: pointer;
 					transition: all 0.1s ease-in-out;
 
@@ -12,7 +11,10 @@
 						background: var(--primary);
 					}
 
-					.sidebar-item-link {
+					.sidebar-item-link,
+					.sidebar-item-button {
+						width: 100%;
+						padding: 0.7rem 0.9rem;
 						display: flex;
 						align-items: center;
 						gap: 0.5rem;

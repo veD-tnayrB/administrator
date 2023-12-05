@@ -13,5 +13,10 @@
 			"path": "ts",
 			"files": ["*"]
 		}
+	},
+	"txt": {
+		"path": "/txt",
+		"multilanguage": true,
+		"files": "*"
 	}
 }

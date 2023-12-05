@@ -1,0 +1,12 @@
+{
+	"en": {
+		"lightMode": "Light Mode",
+		"darkMode": "Dark Mode",
+		"logout": "Logout"
+	},
+	"es": {
+		"lightMode": "Modo claro",
+		"darkMode": "Modo obscuro",
+		"logout": "Cerrar sesion"
+	}
+}

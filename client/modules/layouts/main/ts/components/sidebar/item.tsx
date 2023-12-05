@@ -5,7 +5,15 @@ import { routing } from '@beyond-js/kernel/routing';
 import { Module } from '@essential-js/admin/models';
 import { useLayoutContext } from '../../context';
 
-export const SidebarItem: React.FC<Module> = params => {
+interface IProps extends Module {
+	to?: string;
+	onClick: () => void;
+	iconDarkMode: string;
+	iconLightMode: string;
+	label: string;
+}
+
+export const SidebarItem: React.FC<IProps> = params => {
 	const { store } = useLayoutContext();
 	const [isSelected, setIsSelected] = React.useState(routing.uri.pathname === params.to);
 	React.useEffect(() => {
@@ -14,15 +22,20 @@ export const SidebarItem: React.FC<Module> = params => {
 		});
 	}, []);
 
+	const Container = params.to ? Link : 'button';
+	const properties = params.to
+		? { href: params.to, className: 'sidebar-item-link' }
+		: { className: 'sidebar-item-button' };
+
 	const cls = isSelected ? 'selected' : '';
 	const icon = store.mode === 'dark' ? params.iconDarkMode : params.iconLightMode;
 
 	return (
 		<li className={`sidebar-item ${cls}`}>
-			<Link className="sidebar-item-link" href={params.to}>
+			<Container className="sidebar-item-link" onClick={params.onClick} {...properties}>
 				<div className="icon" dangerouslySetInnerHTML={{ __html: icon }} />
 				<span>{params.label}</span>
-			</Link>
+			</Container>
 		</li>
 	);
 };
