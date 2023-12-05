@@ -1,0 +1,23 @@
+{
+	"name": "views/users/list",
+
+	"widget": {
+		"route": "/users",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "users-list"
+		}
+	},
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	}
+}

@@ -1,6 +1,8 @@
 import React from 'react';
+import { session } from '@essential-js/admin/auth';
 import { SidebarItem } from './item';
 import { useLayoutContext } from '../../context';
+import { routing } from '@beyond-js/kernel/routing';
 
 const ICONS = {
 	theme: {
@@ -17,7 +19,10 @@ const ICONS = {
 export const SidebarFooter = () => {
 	const { texts, store } = useLayoutContext();
 
-	const onLogout = () => {};
+	const onLogout = () => {
+		session.logout();
+		routing.pushState('/auth/login');
+	};
 
 	const firstItemName = store.mode === 'dark' ? texts.lightMode : texts.darkMode;
 	return (
