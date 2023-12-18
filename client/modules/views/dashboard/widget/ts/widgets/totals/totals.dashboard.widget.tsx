@@ -17,7 +17,7 @@ export const TotalsWidget = () => {
 	const output = data.map((item, index) => <TotalItem key={item.amount} index={index} {...item} />);
 
 	return (
-		<section>
+		<section className="totals-widget">
 			<AnimatePresence>{output}</AnimatePresence>
 		</section>
 	);

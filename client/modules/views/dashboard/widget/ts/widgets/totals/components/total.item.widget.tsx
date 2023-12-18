@@ -29,13 +29,13 @@ export const TotalItem = ({ title, amount, icon, to, index }: IProps) => {
 		},
 	};
 
-	to = to || '/dashboard';
+	to = to || '/';
 	return (
-		<motion.article {...animation}>
+		<motion.article {...animation} className="total">
 			<Link to={to} className={` ${linkCls}`}>
-				<div className="w-12 h-12" dangerouslySetInnerHTML={{ __html: icon }} />
+				<div className="icon" dangerouslySetInnerHTML={{ __html: icon }} />
 
-				<div>
+				<div className="content">
 					<p>{title}</p>
 					<h3>{amount.toLocaleString('de-DE')}</h3>
 				</div>

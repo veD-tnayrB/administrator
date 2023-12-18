@@ -4,7 +4,7 @@ export const WelcomeIllustration = () => {
 	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
 
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">
+		<svg className="welcome-bg-ilustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">
 			<path
 				fill={primary}
 				fillOpacity="1"

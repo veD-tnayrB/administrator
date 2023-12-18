@@ -57,9 +57,11 @@ export const RegisteredUsersWidget = () => {
 	};
 
 	return (
-		<motion.section {...animation}>
-			<h3 className="text-center">Registered Users</h3>
-			<Bar data={chart} options={options} />
-		</motion.section>
+		<div className="registered-users-widget">
+			<motion.section {...animation}>
+				<h3 className="text-center">Registered Users</h3>
+				<Bar data={chart} options={options} />
+			</motion.section>
+		</div>
 	);
 };

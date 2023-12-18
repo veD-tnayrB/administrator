@@ -1,7 +1,8 @@
 import React from 'react';
 import { WelcomeIllustration } from './welcome-illustration';
-// import PeopleIllustration from './person-ilustration.svg';
 import { motion } from 'framer-motion';
+import { session } from '@essential-js/admin/auth';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
 function getGreetings(): string {
 	const date = new Date();
@@ -30,6 +31,9 @@ function getMoment(): string {
 }
 
 export const WelcomeWidget = () => {
+	const [names, setNames] = React.useState(session.user.names);
+	useBinder([session], () => setNames(session.user.names));
+
 	const animation = {
 		initial: { y: -5, opacity: 0 },
 		animate: { y: 0, opacity: 1 },
@@ -42,16 +46,12 @@ export const WelcomeWidget = () => {
 	};
 
 	return (
-		<motion.header {...animation}>
-			<div>
-				<WelcomeIllustration />
-
-				<h2>
-					{getGreetings()}, <span>Bryant!</span>
-				</h2>
-				<p>Have a great {getMoment()}!</p>
-			</div>
-			{/* <img src={PeopleIllustration} alt="People" className="w-60 absolute end-0 bottom-[-3rem]" /> */}
+		<motion.header {...animation} className="welcome-widget">
+			<WelcomeIllustration />
+			<h2>
+				{getGreetings()}, <span>{names}!</span>
+			</h2>
+			<p>Have a great {getMoment()}!</p>
 		</motion.header>
 	);
 };

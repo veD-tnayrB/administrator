@@ -54,9 +54,11 @@ export const OnlineUsersWidget = () => {
 	};
 
 	return (
-		<motion.section {...animation}>
-			<h3>Online users</h3>
-			<Doughnut data={chart} options={options} />
-		</motion.section>
+		<div className="online-users-widget">
+			<motion.section {...animation}>
+				<h3>Online users</h3>
+				<Doughnut data={chart} options={options} />
+			</motion.section>
+		</div>
 	);
 };

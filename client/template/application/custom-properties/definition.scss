@@ -7,11 +7,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kurale&display=swap');
 
 :root {
-	--font-family: 'Poppins', sans-serif;
+	--font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+		Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 	--secondary-font-family: 'Roboto', sans-serif;
 	--title-font: 'Inter', sans-serif;
 	--brand-font: 'Kurale', sans-serif;
-	--border-primary: 20px;
+	--border-primary: 0.75rem;
 	--border-secondary: 8px;
 	--border-radius-base: 1rem;
 
