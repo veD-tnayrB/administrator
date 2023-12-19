@@ -1,0 +1,13 @@
+{
+	"name": "components/list-view",
+	"code": {
+		"scss": {
+			"path": "scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "ts",
+			"files": ["*"]
+		}
+	}
+}

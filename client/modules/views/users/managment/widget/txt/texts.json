@@ -1,0 +1,26 @@
+{
+	"es": {
+		"title": {
+			"creating": "Creacion de usuarios",
+			"editing": "Edicion de usuarios"
+		},
+		"labels": {
+			"names": "Nombres",
+			"lastNames": "Apellidos",
+			"email": "Email",
+			"active": "Esta activo?"
+		}
+	},
+	"en": {
+		"title": {
+			"creating": "Users creation",
+			"editing": "Users edition"
+		},
+		"labels": {
+			"names": "Names",
+			"lastNames": "Last names",
+			"email": "Email",
+			"active": "Is active?"
+		}
+	}
+}

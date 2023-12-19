@@ -1,0 +1,29 @@
+.list-view {
+	.list {
+		width: 100%;
+
+		.row {
+			border: 1px solid var(--outline);
+			width: 100%;
+		}
+
+		&.default {
+			border: 1px solid var(--outline);
+			display: table-row-group;
+
+			.row {
+				border: 1px solid var(--outline);
+				display: table-row;
+
+				span {
+					display: table-cell;
+					padding: 0.625rem 0;
+				}
+
+				&:nth-child(even) {
+					background: var(--surface-variant);
+				}
+			}
+		}
+	}
+}

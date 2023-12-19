@@ -1,7 +1,7 @@
-import { StoreViewTable } from '@essential-js/admin/helpers';
+import { StoreListView } from '@essential-js/admin/components/list-view';
 import { Users } from '@essential-js/admin/models';
 
-export class StoreManager extends StoreViewTable {
+export class StoreManager extends StoreListView {
 	constructor() {
 		super({ collection: new Users() });
 	}

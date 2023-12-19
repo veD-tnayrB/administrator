@@ -1,5 +1,4 @@
 .main-layout {
-	height: 100%;
 	min-height: 100vh;
 	min-width: 100vw;
 	width: 100%;
@@ -8,6 +7,6 @@
 	.content {
 		background: var(--background);
 		width: calc(100% - 250px);
-		padding: 10px;
+		padding: 1.25rem;
 	}
 }

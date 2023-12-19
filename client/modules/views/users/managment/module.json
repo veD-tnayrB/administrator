@@ -1,0 +1,22 @@
+{
+	"name": "views/users/managment",
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	},
+	"widget": {
+		"route": "/users/managment/${id}",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "users-managment"
+		}
+	}
+}

@@ -1,0 +1,51 @@
+footer {
+	.paginator {
+		display: flex;
+		align-items: center;
+
+		.panel {
+			background: var(--primary);
+
+			p {
+				color: var(--on-primary);
+				padding: 5.5px;
+
+				.to {
+					color: var(--on-primary-container);
+				}
+			}
+		}
+
+		.action {
+			background: var(--primary);
+			border-radius: 20px;
+
+			button {
+				padding: 0 0.5rem;
+				border-radius: 0;
+
+				&.left {
+					border-top-left-radius: 20px;
+					border-bottom-left-radius: 20px;
+				}
+
+				&.right {
+					border-top-right-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+
+				.button-label {
+					display: flex;
+					align-items: center;
+
+					svg {
+						fill: none;
+						stroke: var(--on-primary);
+						width: 1.2rem;
+						height: 1.2rem;
+					}
+				}
+			}
+		}
+	}
+}

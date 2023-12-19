@@ -1,10 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
 import { module } from 'beyond_context';
 import { useTexts } from '@essential-js/admin/helpers';
 import { Button } from 'pragmate-ui/components';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { routing } from '@beyond-js/kernel/routing';
+import { ListView } from '@essential-js/admin/components/list-view';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
@@ -14,6 +16,11 @@ function View({ store }: { store: StoreManager }) {
 	useBinder([store], () => setUpdate({}));
 
 	if (!ready) return null;
+
+	const onClick = () => {
+		routing.pushState('/users/managment/create');
+	};
+
 	const contextValue: IContext = {
 		store,
 		texts,
@@ -21,11 +28,21 @@ function View({ store }: { store: StoreManager }) {
 
 	const output = store.collection.items.map(item => <li key={item.id}>{item.fullName}</li>);
 	console.log(store.collection.items);
+
+	const listProperties = {
+		store,
+		list: {
+			default: true,
+		},
+		header: {
+			items: ['Active', 'Email', 'Last name', 'First name', 'id'],
+		},
+	};
 	return (
 		<UsersListContext.Provider value={contextValue}>
-			<div>
-				<Button>{texts.create}</Button>
-				<ul>{output}</ul>
+			<div className="page-container">
+				<Button onClick={onClick}>{texts.create}</Button>
+				<ListView {...listProperties} />
 			</div>
 		</UsersListContext.Provider>
 	);
