@@ -5,6 +5,11 @@
 		width: 100%;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
+		transition: all 0.2s ease-in-out;
+
+		&.loading {
+			opacity: 0.65;
+		}
 
 		li {
 			display: table-cell;

@@ -15,9 +15,8 @@ export interface IPaginatorProps {
 export const Paginator = (props: IPaginatorProps) => {
 	const { store } = useListViewContext();
 
-	const since = `${store.collection.next || 0} - ${store.limit} `;
+	const since = `${store.currentPage || 0} - ${store.limit} `;
 	const to = `${props?.texts?.of || '/'} ${store.collection.total}`;
-	console.log(store.collection);
 	return (
 		<footer>
 			<div className="paginator">
@@ -35,7 +34,7 @@ export const Paginator = (props: IPaginatorProps) => {
 							/>
 						</svg>
 					</Button>
-					<Button>
+					<Button onClick={props.onPrev}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -52,7 +51,7 @@ export const Paginator = (props: IPaginatorProps) => {
 				</div>
 
 				<div className="right-actions action">
-					<Button>
+					<Button onClick={props.onNext}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"

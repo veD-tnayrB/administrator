@@ -27,7 +27,6 @@ function View({ store }: { store: StoreManager }) {
 	};
 
 	const output = store.collection.items.map(item => <li key={item.id}>{item.fullName}</li>);
-	console.log(store.collection.items);
 
 	const listProperties = {
 		store,
@@ -36,6 +35,10 @@ function View({ store }: { store: StoreManager }) {
 		},
 		header: {
 			items: ['Active', 'Email', 'Last name', 'First name', 'id'],
+		},
+		paginator: {
+			onNext: store.onNext,
+			onPrev: store.onPrev,
 		},
 	};
 	return (

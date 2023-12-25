@@ -24,7 +24,8 @@ export /*bundle*/ class Actions {
 			const order = params?.order || { by: 'timeUpdated', way: 'asc' };
 			const search = params?.where || {};
 
-			let buildedQuery = query(model, orderBy(order.by, order.way), startAt(startNumber), limit(limitNumber));
+			let buildedQuery = query(model, orderBy(order.by, order.way), limit(limitNumber));
+			let totalQuery = query(model, orderBy(order.by, order.way)); // Query without limit for total count
 
 			for (const field in search) {
 				if (search[field]) {
@@ -33,11 +34,20 @@ export /*bundle*/ class Actions {
 						where(field, '>=', search[field]),
 						where(field, '<', search[field] + '\uf8ff')
 					);
+					totalQuery = query(
+						totalQuery,
+						where(field, '>=', search[field]),
+						where(field, '<', search[field] + '\uf8ff')
+					);
 				}
 			}
 
-			const querySnapshot = await getDocs(buildedQuery);
+			const allDocs = await getDocs(totalQuery);
+			const startDoc = allDocs.docs[startNumber];
 
+			buildedQuery = query(buildedQuery, startAt(startDoc));
+
+			const querySnapshot = await getDocs(buildedQuery);
 			const items = [];
 			querySnapshot.forEach(doc => {
 				items.push(doc.data());
@@ -48,10 +58,14 @@ export /*bundle*/ class Actions {
 				data: {
 					entries: items,
 					next: startNumber + items.length,
+					total: allDocs.size,
 				},
 			};
 		} catch (error) {
-			return { status: false, error };
+			return {
+				status: false,
+				error,
+			};
 		}
 	};
 

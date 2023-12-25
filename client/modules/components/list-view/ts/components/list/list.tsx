@@ -9,6 +9,11 @@ export interface IRow {
 	index: number;
 }
 
+export interface IList {
+	rows?: React.ComponentType<IRow>;
+	default?: boolean;
+}
+
 interface IProps {
 	row?: React.ComponentType<IRow>;
 	default?: boolean;
@@ -23,6 +28,7 @@ export const List = (props: IProps) => {
 		return <Row key={uuid()} item={item} index={index} />;
 	});
 
-	const cls = props.default ? `default` : '';
+	let cls = props.default ? `default` : '';
+	cls += store.fetching ? ` loading` : '';
 	return <ul className={`list ${cls}`}>{output}</ul>;
 };

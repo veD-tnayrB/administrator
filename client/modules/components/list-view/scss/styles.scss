@@ -1,10 +1,21 @@
 .list-view {
+	overflow: hidden;
+	position: relative;
 	width: 100%;
-	border-collapse: collapse;
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 
 	&.default {
 		display: table;
+	}
+
+	&.fetching {
+		.essential-spinner {
+			position: absolute;
+			top: 45%;
+			left: 50%;
+			right: 50%;
+			bottom: 50%;
+		}
 	}
 }

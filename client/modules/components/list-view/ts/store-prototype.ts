@@ -13,6 +13,14 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return this.#limit;
 	}
 
+	get currentPage() {
+		return Math.floor(this.#params.start / this.#limit) + 1;
+	}
+
+	get totalPages() {
+		return Math.ceil(this.#collection.total / this.#limit);
+	}
+
 	#params = {
 		limit: this.#limit,
 		start: 0,
@@ -28,14 +36,13 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	load = async () => {
 		try {
-			this.fetching = true;
+			this.ready = false;
 
-			const response = await this.#collection.load({ start: this.#collection.next });
+			const response = await this.#collection.load({ start: this.#collection.next, limit: this.#limit });
 			if (!response.status) throw response.error;
 		} catch (error) {
 			console.error(error);
 		} finally {
-			this.fetching = false;
 			this.ready = true;
 		}
 	};
@@ -56,7 +63,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		}
 	};
 
-	#navigation = async page => {
+	#navigation = async (page: number) => {
 		try {
 			this.fetching = true;
 			this.#params = {
@@ -66,7 +73,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			};
 			const response = await this.#collection.load(this.#params);
 			if (!response.status) throw new Error(response.error);
-			return this.#collection.items;
 		} catch (error) {
 			console.error('error', error);
 		} finally {
@@ -76,11 +82,21 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	clearSearch = async () => {
 		this.fetching = true;
-		await this.#collection.load({ start: this.#collection.next });
+		await this.#collection.load({ start: 0, limit: this.#limit });
 		this.fetching = false;
 	};
 
-	next = ({ next, page }: { next: number; page: number }) => this.#navigation(page);
+	onNext = () => {
+		if (this.fetching) return;
+		const page = this.currentPage + 1;
+		if (page > this.totalPages) return;
+		this.#navigation(page);
+	};
 
-	prev = (page: number) => this.#navigation(page);
+	onPrev = () => {
+		if (this.fetching) return;
+		const page = this.currentPage - 1;
+		if (page < 1) return;
+		this.#navigation(page);
+	};
 }
