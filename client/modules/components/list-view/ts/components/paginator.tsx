@@ -1,27 +1,29 @@
 import React from 'react';
 import { Button } from 'pragmate-ui/components';
-import { useListViewContext } from '../../context';
-import { StoreListView } from '../../store-prototype';
+import { useListViewContext } from '../context';
+import { StoreListView } from '../store-prototype';
 
-export interface IPaginatorProps {
+export interface IPaginator {
 	texts: {
 		of: string;
 	};
 
-	onNext: StoreListView['next'];
-	onPrev: StoreListView['prev'];
+	onNext: StoreListView['onNext'];
+	onPrev: StoreListView['onPrev'];
+	onFirstPage: StoreListView['onFirstPage'];
+	onLastPage: StoreListView['onLastPage'];
 }
 
-export const Paginator = (props: IPaginatorProps) => {
+export const Paginator = (props: IPaginator) => {
 	const { store } = useListViewContext();
 
 	const since = `${store.currentPage || 0} - ${store.limit} `;
 	const to = `${props?.texts?.of || '/'} ${store.collection.total}`;
 	return (
-		<footer>
+		<footer className="list-view-paginator">
 			<div className="paginator">
 				<div className="left-actions action">
-					<Button className="left">
+					<Button className="left" onClick={store.onFirstPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -34,7 +36,7 @@ export const Paginator = (props: IPaginatorProps) => {
 							/>
 						</svg>
 					</Button>
-					<Button onClick={props.onPrev}>
+					<Button onClick={store.onPrev}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -51,7 +53,7 @@ export const Paginator = (props: IPaginatorProps) => {
 				</div>
 
 				<div className="right-actions action">
-					<Button onClick={props.onNext}>
+					<Button onClick={store.onNext}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -60,7 +62,7 @@ export const Paginator = (props: IPaginatorProps) => {
 							<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 						</svg>
 					</Button>
-					<Button className="right">
+					<Button className="right" onClick={store.onLastPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"

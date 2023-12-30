@@ -1,0 +1,17 @@
+{
+  "name": "components/dialog",
+  "code": {
+    "scss": {
+      "path": "/code/scss",
+      "files": [
+        "*"
+      ]
+    },
+    "ts": {
+      "path": "/code/ts",
+      "files": [
+        "*"
+      ]
+    }
+  }
+}

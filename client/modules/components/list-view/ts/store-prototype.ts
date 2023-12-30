@@ -47,10 +47,11 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		}
 	};
 
-	search = async (search: { startDate: string; endDate: string; search }) => {
+	search = async (search: { [key: string]: unknown } | string) => {
 		try {
 			this.fetching = true;
-			const { startDate, endDate } = search;
+
+			const params = typeof search === 'string' ? { search } : search;
 
 			await this.#collection.load({
 				profile: search,
@@ -93,10 +94,23 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.#navigation(page);
 	};
 
+	onLastPage = () => {
+		if (this.fetching) return;
+		const page = this.totalPages;
+		if (this.currentPage === page) return;
+		this.#navigation(page);
+	};
+
 	onPrev = () => {
 		if (this.fetching) return;
 		const page = this.currentPage - 1;
 		if (page < 1) return;
 		this.#navigation(page);
+	};
+
+	onFirstPage = () => {
+		if (this.fetching) return;
+		if (this.currentPage === 1) return;
+		this.#navigation(1);
 	};
 }

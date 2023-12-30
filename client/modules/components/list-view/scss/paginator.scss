@@ -1,14 +1,20 @@
-footer {
+footer.list-view-paginator {
 	.paginator {
 		display: flex;
 		align-items: center;
 
 		.panel {
 			background: var(--primary);
+			display: flex;
+			align-items: center;
+			min-width: min-content;
 
 			p {
 				color: var(--on-primary);
 				padding: 5.5px;
+				display: flex;
+				align-items: center;
+				min-width: min-content;
 
 				.to {
 					color: var(--on-primary-container);
@@ -19,6 +25,8 @@ footer {
 		.action {
 			background: var(--primary);
 			border-radius: 20px;
+			display: flex;
+			align-items: center;
 
 			button {
 				padding: 0 0.5rem;

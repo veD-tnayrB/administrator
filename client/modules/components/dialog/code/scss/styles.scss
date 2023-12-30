@@ -1,0 +1,13 @@
+.essential-dialog {
+	position: relative;
+
+	.modal {
+		background: var(--surface);
+		min-width: 300px;
+		position: absolute;
+		top: 100%;
+		z-index: 999;
+		box-shadow: var(--box-shadow);
+		padding: 0.5rem;
+	}
+}

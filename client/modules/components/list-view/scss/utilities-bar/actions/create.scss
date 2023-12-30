@@ -1,0 +1,18 @@
+.list-view {
+	.actions-container {
+		.create-action {
+			.button-label {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+
+				svg {
+					stroke: var(--on-primary);
+					width: 1.5rem;
+					height: 1.5rem;
+				}
+			}
+		}
+	}
+}

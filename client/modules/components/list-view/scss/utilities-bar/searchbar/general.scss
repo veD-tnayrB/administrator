@@ -1,0 +1,47 @@
+.list-view {
+	form.list-view-searchbar-container {
+		background: var(--surface);
+		border: 2px solid var(--outline);
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		padding: 0 0.5rem;
+		width: 18rem;
+
+		.clear-button {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+		}
+
+		svg {
+			width: 1.5rem;
+			height: 1.5rem;
+			stroke: var(--on-surface);
+		}
+
+		&:has(.pui-input.list-view-searchbar > input:focus) {
+			border: 2px solid var(--on-surface);
+		}
+
+		div.pui-input.list-view-searchbar {
+			width: 100%;
+			input {
+				background: var(--surface);
+				border-radius: 10px;
+				width: 100%;
+				padding: 0.5rem;
+
+				&:focus {
+					border: 1px solid transparent;
+					outline: transparent;
+				}
+			}
+		}
+	}
+}

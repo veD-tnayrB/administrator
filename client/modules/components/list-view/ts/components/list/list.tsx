@@ -10,16 +10,14 @@ export interface IRow {
 }
 
 export interface IList {
-	rows?: React.ComponentType<IRow>;
-	default?: boolean;
-}
-
-interface IProps {
 	row?: React.ComponentType<IRow>;
 	default?: boolean;
+	itemsConfig: {
+		properties: string[];
+	};
 }
 
-export const List = (props: IProps) => {
+export const List = (props: IList) => {
 	const { store } = useListViewContext();
 	const Row = props?.row || DefaultRow;
 
