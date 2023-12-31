@@ -4,9 +4,10 @@ import { Modal } from './modal';
 
 interface IProps extends HTMLDivElement {
 	toggler: IToggler;
+	isClose: boolean;
 }
 
-export /*bundle*/ const Dialog = ({ children, ...props }: IProps) => {
+export /*bundle*/ const Dialog = ({ children, isClose, ...props }: IProps) => {
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const ref = React.useRef(null);
 

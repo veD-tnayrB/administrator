@@ -1,9 +1,10 @@
 import React from 'react';
+import { IColumnSelector } from './column-selector';
 
-export const ColumnSelectorToggler = () => {
+export const ColumnSelectorToggler = (props: IColumnSelector) => {
 	return (
 		<div className="column-selector-toggler">
-			<p>Columns</p>
+			<p>{props.label}</p>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 				<path
 					strokeLinecap="round"

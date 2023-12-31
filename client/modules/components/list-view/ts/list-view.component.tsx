@@ -9,9 +9,11 @@ import { ISearchbar } from './components/utility-bar/searchbar/searchbar';
 import { IActions } from './components/utility-bar/actions/actions';
 import { ListContainer } from './components/list/wrapper';
 import { Utilitybar } from './components/utility-bar/utility-bar';
+import { IViewHeader, ViewHeader } from './components/view-header';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	store: StoreListView;
+	viewHeader: IViewHeader;
 	searchbar: ISearchbar;
 	list: IList;
 	header?: IHeader;
@@ -38,6 +40,7 @@ export /*bundle*/ const ListView = (props: IProps) => {
 	return (
 		<ListViewContext.Provider value={contextValue}>
 			<section className={`list-view ${props.className} ${cls}`}>
+				<ViewHeader {...props.viewHeader} />
 				<Utilitybar />
 				<ListContainer />
 				<Paginator {...props.paginator} />

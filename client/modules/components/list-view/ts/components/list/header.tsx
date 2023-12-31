@@ -1,12 +1,18 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useListViewContext } from '../../context';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
 export interface IHeader {
 	items?: IHeaderItem;
 }
 
-export type IHeaderItem = JSX.Element[];
+interface IDefaultHeaderItem {
+	label: string;
+	name: string;
+}
+
+export type IHeaderItem = IDefaultHeaderItem[];
 
 interface IProps {
 	items?: IHeaderItem;
@@ -14,10 +20,13 @@ interface IProps {
 
 export const Header = (props: IProps) => {
 	const { store } = useListViewContext();
-	const output = props.items?.map((Item: React.ReactElement, index: number) => {
-		if (typeof Item === 'string') return <li key={uuid()}>{Item}</li>;
+	const [, setUpdate] = React.useState({});
+	useBinder([store], () => setUpdate({}), 'displaying-change');
 
-		return React.cloneElement(Item, { key: uuid(), index });
+	const selectedItems = props.items.filter(item => store.propertiesDisplaying.includes(item.name));
+
+	const output = selectedItems?.map((Item, index: number) => {
+		return <li key={uuid()}>{Item.label as React.ReactNode}</li>;
 	});
 
 	const cls = store.fetching ? ` loading` : ``;

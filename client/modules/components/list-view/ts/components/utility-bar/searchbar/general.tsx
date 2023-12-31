@@ -1,7 +1,9 @@
 import React from 'react';
+import { useListViewContext } from '../../../context';
 import { ISearchbar } from './searchbar';
 
 export const GeneralSearchbar = (props: ISearchbar) => {
+	const { store } = useListViewContext();
 	const [values, setValues] = React.useState('');
 	const inputRef = React.useRef<HTMLInputElement>(null);
 	const [hasBeenSubmitted, setHasBeenSubmitted] = React.useState(false);
@@ -12,8 +14,8 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		store.search(values);
 		setHasBeenSubmitted(true);
-		props.onSubmit(values);
 	};
 
 	const onClear = () => {
@@ -21,14 +23,10 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 		setHasBeenSubmitted(false);
 	};
 
-	const focusInput = () => {
-		inputRef.current.focus();
-	};
-
 	const displayClear = values || hasBeenSubmitted;
 
 	return (
-		<form onClick={focusInput} className="list-view-searchbar-container" onSubmit={onSubmit}>
+		<form className="list-view-searchbar-container" onSubmit={onSubmit}>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 				<path
 					strokeLinecap="round"
@@ -38,8 +36,8 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 			</svg>
 			<div className="pui-input list-view-searchbar">
 				<input
+					{...props}
 					ref={inputRef}
-					placeholder="Search..."
 					className="list-view-searchbar"
 					name="list-view-searchbar"
 					value={values}
@@ -49,7 +47,7 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 			</div>
 
 			{displayClear && (
-				<button onClick={onClear} className="clear-button">
+				<button type="reset" onClick={onClear} className="clear-button">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 					</svg>

@@ -5,4 +5,12 @@ export interface ITexts {
 		email: string;
 		active: string;
 	};
+	title: {
+		creating: string;
+		editing: string;
+	};
+	actions: {
+		reset: string;
+		save: string;
+	};
 }

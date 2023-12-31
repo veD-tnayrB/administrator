@@ -1,8 +1,55 @@
 {
 	"es": {
-		"create": "Crear"
+		"actions": {
+			"create": "Crear",
+			"columns": "Columnas"
+		},
+		"title": "Usuarios",
+		"searchbar": {
+			"placeholder": "Buscar...",
+			"filtersDialog": {
+				"label": "Filtrar",
+
+				"title": "Filtrar por columna especifica",
+				"apply": "Buscar",
+				"reset": "Resetear"
+			}
+		},
+		"list": {
+			"columns": {
+				"id": "ID",
+				"names": "Nombres",
+				"lastNames": "Apellidos",
+				"email": "Email",
+				"timeCreated": "Creado el",
+				"timeUpdated": "Actualizado el"
+			}
+		}
 	},
 	"en": {
-		"create": "Create"
+		"actions": {
+			"create": "Create",
+			"columns": "Columns"
+		},
+		"title": "Users",
+		"searchbar": {
+			"placeholder": "Search...",
+			"filtersDialog": {
+				"label": "Filter",
+				"title": "Filter by specific column",
+				"apply": "Search",
+				"reset": "Reset"
+			}
+		},
+		"list": {
+			"columns": {
+				"id": "ID",
+				"names": "Names",
+				"lastNames": "Last names",
+				"email": "Email",
+				"timeCreated": "Created at",
+				"timeUpdated": "Updated at"
+			}
+		}
 	}
 }

@@ -25,7 +25,14 @@
 
 		input {
 			font-size: 0.8rem;
-			padding: 0.5rem;
+			padding: 0.3rem 0.5rem;
+		}
+
+		.actions {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 0.5rem;
 		}
 	}
 }

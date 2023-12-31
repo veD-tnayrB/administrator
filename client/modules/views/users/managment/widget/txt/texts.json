@@ -9,6 +9,10 @@
 			"lastNames": "Apellidos",
 			"email": "Email",
 			"active": "Esta activo?"
+		},
+		"actions": {
+			"reset": "Cancelar",
+			"save": "Guardar"
 		}
 	},
 	"en": {
@@ -21,6 +25,10 @@
 			"lastNames": "Last names",
 			"email": "Email",
 			"active": "Is active?"
+		},
+		"actions": {
+			"reset": "cancel",
+			"save": "Save"
 		}
 	}
 }

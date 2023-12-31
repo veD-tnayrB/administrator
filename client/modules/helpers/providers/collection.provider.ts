@@ -1,16 +1,23 @@
-import { CollectionReference, DocumentData, collection } from 'firebase/firestore';
-import { Actions } from '../actions/actions.helper';
 import { IListParams } from '../actions/types/collection.types';
-import { db } from '@essential-js/admin/serverless-provider';
+import { Api } from '@bgroup/http-suite/api';
+import config from '@essential-js/admin/config';
+import { Utils } from '@bgroup/helpers/utils';
 
 export /*bundle*/ abstract class CollectionProvider {
-	#model: CollectionReference<DocumentData, DocumentData>;
+	#api: Api = new Api(config.params.server);
+	#endpoints: {
+		list: string;
+	};
 
-	constructor(params: { collection: string }) {
-		this.#model = collection(db, params.collection);
+	constructor(params: { endpoints: { list: string } }) {
+		if (!params?.endpoints) throw new Error('Endpoints are required');
+		this.#endpoints = params.endpoints;
 	}
 
 	list = async (params: IListParams) => {
-		return Actions.list(this.#model, params);
+		const rawQuery = { ...params, ...params.where };
+		const query = Utils.convertObjectToQuery(rawQuery);
+
+		return this.#api.get(`${this.#endpoints.list}${query}`);
 	};
 }

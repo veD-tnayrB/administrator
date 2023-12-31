@@ -1,9 +1,13 @@
 import React from 'react';
 
-export const FiltersToggler = () => {
+interface IProps {
+	label: string;
+}
+
+export const FiltersToggler = (props: IProps) => {
 	return (
 		<div className="filter-toggler">
-			<p>Filter</p>
+			<p>{props.label}</p>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 				<path
 					strokeLinecap="round"

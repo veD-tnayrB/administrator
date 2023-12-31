@@ -12,5 +12,4 @@ const firebaseConfig = FIREBASE_CREDENTIALS;
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export /*bundle*/ const db = getFirestore();
 export /*bundle*/ const auth = getAuth(app);

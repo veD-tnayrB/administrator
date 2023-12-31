@@ -1,7 +1,13 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Collection } from '@beyond-js/reactive/entities';
+import { IFilter } from './components/utility-bar/searchbar/filters/filters';
 
 export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListView> {
+	#id: string;
+	get id() {
+		return this.#id;
+	}
+
 	#collection: Collection;
 	get collection() {
 		return this.#collection;
@@ -11,6 +17,17 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	get limit() {
 		return this.#limit;
+	}
+
+	propertiesToSearch: IFilter[] = [];
+	#propertiesDisplaying: string[] = [];
+	get propertiesDisplaying() {
+		return this.#propertiesDisplaying;
+	}
+
+	set propertiesDisplaying(properties: string[]) {
+		this.#propertiesDisplaying = properties;
+		this.triggerEvent('displaying-change');
 	}
 
 	get currentPage() {
@@ -24,13 +41,22 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	#params = {
 		limit: this.#limit,
 		start: 0,
+		order: 'timeUpdated',
+		des: 'DES',
 	};
 
-	constructor({ collection }: { collection: Collection }) {
+	constructor({ collection, id }: { collection: Collection; id: string }) {
 		super();
+
 		if (!collection) {
 			throw new Error('Collection is required');
 		}
+
+		this.#id = id;
+		if (!this.#id) this.#id = collection.storeName;
+
+		this.#propertiesDisplaying = JSON.parse(localStorage.getItem(this.#id) || '[]');
+		console.log(this.#propertiesDisplaying);
 		this.#collection = collection;
 	}
 
@@ -38,7 +64,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		try {
 			this.ready = false;
 
-			const response = await this.#collection.load({ start: this.#collection.next, limit: this.#limit });
+			const response = await this.#collection.load({ start: this.#collection.next || 0, limit: this.#limit });
 			if (!response.status) throw response.error;
 		} catch (error) {
 			console.error(error);
@@ -50,11 +76,19 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	search = async (search: { [key: string]: unknown } | string) => {
 		try {
 			this.fetching = true;
+			const properties = this.propertiesToSearch.map(item => item.name);
+			const query = {};
+			properties.forEach(item => {
+				const value = typeof search === 'string' ? search : search[item];
+				if (!value) return;
+				query[item] = value;
+			});
 
-			const params = typeof search === 'string' ? { search } : search;
+			console.log('query', query);
 
 			await this.#collection.load({
-				profile: search,
+				where: query,
+				...this.#params,
 			});
 			this.triggerEvent();
 		} catch (error) {

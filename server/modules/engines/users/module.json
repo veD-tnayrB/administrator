@@ -1,0 +1,7 @@
+{
+	"name": "engines/users",
+	"ts": {
+		"path": "./",
+		"files": ["*"]
+	}
+}
