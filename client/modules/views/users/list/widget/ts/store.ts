@@ -8,8 +8,7 @@ export class StoreManager extends StoreListView {
 			{ label: 'ID', name: 'id' },
 			{ label: 'Names', name: 'names' },
 			{ label: 'Last name', name: 'lastNames' },
-			{ label: 'GMAIL', name: 'email' },
-			{ label: 'timeCreated', name: 'timeCreated', type: 'date' },
+			{ label: 'Email', name: 'email' },
 		];
 	}
 }

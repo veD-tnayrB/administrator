@@ -43,11 +43,14 @@ export /*bundle*/ class Route {
 
 	list = async (req: Request, res: Response) => {
 		try {
-			let { start, limit, ...query } = req.query;
+			let { start, limit, order, des, asc, ...query } = req.query;
 
 			const response: ResponseType = await this.#manager.list({
-				start,
-				limit,
+				start: Number(start),
+				limit: Number(limit),
+				order,
+				des,
+				asc,
 				where: query,
 			});
 			if (!response.status && 'error' in response) throw response.error;

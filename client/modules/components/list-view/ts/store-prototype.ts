@@ -56,7 +56,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		if (!this.#id) this.#id = collection.storeName;
 
 		this.#propertiesDisplaying = JSON.parse(localStorage.getItem(this.#id) || '[]');
-		console.log(this.#propertiesDisplaying);
 		this.#collection = collection;
 	}
 
@@ -83,8 +82,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				if (!value) return;
 				query[item] = value;
 			});
-
-			console.log('query', query);
 
 			await this.#collection.load({
 				where: query,

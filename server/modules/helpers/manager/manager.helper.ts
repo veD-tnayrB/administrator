@@ -12,7 +12,13 @@ export /*bundle*/ abstract class Manager {
 	}
 
 	list = (params: Partial<{ [key: string]: unknown }>) => {
-		return actions.list(this.#model, params, `/list/${this.#managerName}`);
+		const or = [];
+		Object.entries(params.where).forEach(([key, value]) => {
+			or.push({ [key]: value });
+		});
+
+		const where = !!Object.keys(params.where).length ? { or } : {};
+		return actions.list(this.#model, { ...params, where }, `/list/${this.#managerName}`);
 	};
 
 	create = (params: Partial<{ [key: string]: unknown }>) => {
