@@ -18,7 +18,7 @@ function View({ store }) {
 	const mode = store.isCreating ? 'creating' : 'editing';
 	return (
 		<UsersManagementContext.Provider value={contextValue}>
-			<div className="page-container">
+			<div className="page-container managment-page">
 				<h1>{texts.title[mode]}</h1>
 				<Form />
 			</div>

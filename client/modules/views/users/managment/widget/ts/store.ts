@@ -45,4 +45,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = false;
 		}
 	};
+
+	reset = () => {
+		this.#item = new User();
+		this.triggerEvent();
+	};
 }

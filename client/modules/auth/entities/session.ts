@@ -1,7 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { User } from '@essential-js/admin/models';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@essential-js/admin/serverless-provider';
+import { User } from './user.item';
 
 /**
  * Interface for login parameters.
@@ -37,10 +37,6 @@ const providers = {
 class Session extends ReactiveModel<Session> {
 	#user: User = new User();
 
-	/**
-	 * Getter for the current user.
-	 * @returns {User} The current user.
-	 */
 	get user() {
 		return this.#user;
 	}
@@ -53,6 +49,12 @@ class Session extends ReactiveModel<Session> {
 	 */
 	get isLogged() {
 		return this.#isLogged || !!localStorage.getItem('__session');
+	}
+
+	#token: string | null = null;
+	get token() {
+		const values = JSON.parse(localStorage.getItem('__session'));
+		return this.#token || values?.token || null;
 	}
 
 	/**
@@ -85,12 +87,18 @@ class Session extends ReactiveModel<Session> {
 			const loadParams = provider ? { email: response?.email } : params;
 
 			// Load the user in a item to be saved in this object
-			const loadResponse = await this.#user.load(loadParams);
+			const loadResponse = await this.#user.login(loadParams);
 			if (!loadResponse.status) throw loadResponse.error.message;
 
 			this.#isLogged = true;
-			localStorage.setItem('__session', 'true');
+			const toSave = {
+				token: loadResponse.data.token,
+			};
+			localStorage.setItem('__session', JSON.stringify(toSave));
+			this.#token = loadResponse.data.token;
+
 			this.triggerEvent('user-changed');
+			this.triggerEvent('token-changed');
 			return { status: true };
 		} catch (error) {
 			await this.#removeSessionFromRemote();
@@ -138,7 +146,9 @@ class Session extends ReactiveModel<Session> {
 	logout = async () => {
 		localStorage.removeItem('__session');
 		this.#isLogged = false;
+		this.#token = null;
 		this.#user = new User();
+		this.triggerEvent('token-changed');
 		return signOut(auth);
 	};
 
@@ -158,8 +168,15 @@ class Session extends ReactiveModel<Session> {
 	 */
 	#listenForSessionChanges = async () => {
 		auth.onAuthStateChanged(async user => {
-			if (!user) return this.logout();
+			if (!user) {
+				// Verificar si previamente había un usuario autenticado.
+				if (this.#isLogged) {
+					return this.logout();
+				}
+				return;
+			}
 
+			// Si hay un usuario, continuar con la carga del usuario.
 			const loadResponse = await this.#user.load({ email: user.email });
 			if (!loadResponse.status) throw loadResponse.error.message;
 			this.#isLogged = true;

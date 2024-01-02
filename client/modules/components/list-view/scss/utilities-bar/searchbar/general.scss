@@ -2,7 +2,7 @@
 	form.list-view-searchbar-container {
 		background: var(--surface);
 		border: 2px solid var(--outline);
-		border-radius: 10px;
+		border-radius: 5px;
 		display: flex;
 		align-items: center;
 		padding: 0 0.5rem;
@@ -35,7 +35,7 @@
 				background: var(--surface);
 				border-radius: 10px;
 				width: 100%;
-				padding: 0.5rem;
+				padding: 0.32rem 0.5rem;
 
 				&:focus {
 					border: 1px solid transparent;

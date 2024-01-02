@@ -1,6 +1,6 @@
 import { Item } from '@beyond-js/reactive/entities';
-import { UserItemProvider } from '../../providers/users/user.item.provider';
 import config from '@essential-js/admin/config';
+import { UserItemProvider } from './user.item.provider';
 
 interface IUser {
 	id: string;

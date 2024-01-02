@@ -2,6 +2,7 @@
 	"name": "views/profiles/list",
 	"widget": {
 		"route": "/profiles",
+		"layout": "main-admin-layout",
 		"is": "page",
 		"scss": {
 			"path": "/widget/scss",

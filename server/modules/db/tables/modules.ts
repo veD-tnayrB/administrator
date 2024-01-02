@@ -45,19 +45,23 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
     },
     iconDarkMode: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: true,
+      field: 'icon_dark_mode'
     },
     iconLightMode: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: true,
+      field: 'icon_light_mode'
     },
     timeCreated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_created'
     },
     timeUpdated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_updated'
     },
     order: {
       type: DataTypes.INTEGER,

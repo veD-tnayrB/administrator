@@ -4,14 +4,15 @@ import { IUser } from '@essential-js/admin/models';
 import { useUsersManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
-
+import { routing } from '@beyond-js/kernel/routing';
+import { toast } from 'react-toastify';
 export const Form = () => {
 	const { store, texts } = useUsersManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
-		names: store.item.names,
-		email: store.item.email,
-		lastNames: store.item.lastNames,
-		active: store.item.active,
+		names: store.item.names || '',
+		email: store.item.email || '',
+		lastNames: store.item.lastNames || '',
+		active: store.item.active || false,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
@@ -26,6 +27,15 @@ export const Form = () => {
 
 	const onSubmit = () => {
 		store.save(values);
+		toast.success(store.item.id ? 'User updated' : 'User created');
+		routing.pushState('/users');
+		store.reset();
+	};
+
+	const onCancel = () => {
+		setValues({});
+		store.reset();
+		routing.pushState('/users');
 	};
 
 	return (
@@ -36,7 +46,7 @@ export const Form = () => {
 			<Switch label={texts.labels.active} checked={values.active} name="active" onChange={onChange} />
 
 			<div className="actions">
-				<Button type="reset" disabled={isLoading}>
+				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
 					{texts.actions.reset}
 				</Button>
 				<Button type="submit" fetching={isLoading}>

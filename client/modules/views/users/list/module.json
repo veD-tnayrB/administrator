@@ -2,6 +2,7 @@
 	"name": "views/users/list",
 
 	"widget": {
+		"layout": "main-admin-layout",
 		"route": "/users",
 		"is": "page",
 		"scss": {

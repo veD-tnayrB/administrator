@@ -11,10 +11,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	login = async (params: { email: string; password: string }, provider?: Providers) => {
 		try {
 			this.fetching = true;
-			// const provider = this.#providers[params.provider];
 			const response = await session.login(params, provider);
 			if (!response.status) throw response.error;
-			// const response = await signInWithPopup(auth, provider);
 			routing.pushState('/');
 		} catch (error) {
 			console.error(error);

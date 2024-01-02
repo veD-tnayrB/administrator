@@ -1,6 +1,7 @@
 import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { jwt } from '@bgroup/helpers/jwt';
 
 interface ISuccess {
 	status: boolean;
@@ -35,10 +36,10 @@ export /*bundle*/ class Route {
 	}
 
 	setup = (app: Application) => {
-		app.get(`/${this.#endpoints.plural}`, this.list);
-		app.get(`/${this.#endpoints.singular}/:id`, this.get);
-		app.post(`/${this.#endpoints.singular}`, this.create);
-		app.put(`/${this.#endpoints.singular}`, this.update);
+		app.get(`/${this.#endpoints.plural}`, jwt.verify, this.list);
+		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, this.get);
+		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
+		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
 	};
 
 	list = async (req: Request, res: Response) => {
@@ -95,7 +96,7 @@ export /*bundle*/ class Route {
 
 	update = async (req: Request, res: Response) => {
 		try {
-			const data = req.body.data;
+			const data = req.body.body;
 			const response = await this.#manager.update(data);
 			if (!response.status) throw response.error;
 			const formatedResponse = ResponseAPI.success({ data: response.data });

@@ -39,11 +39,13 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
     },
     timeCreated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_created'
     },
     timeUpdated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_updated'
     }
   }, {
     sequelize,

@@ -5,6 +5,7 @@
 		"files": "*"
 	},
 	"widget": {
+		"layout": "main-admin-layout",
 		"route": "/users/managment/${id}",
 		"is": "page",
 		"scss": {

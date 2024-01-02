@@ -1,0 +1,13 @@
+{
+	"name": "auth-layout",
+	"widget": {
+		"is": "layout",
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "auth-layout"
+		}
+	}
+}

@@ -20,6 +20,10 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 
 	const onClear = () => {
 		setValues('');
+		if (hasBeenSubmitted) {
+			store.load();
+		}
+
 		setHasBeenSubmitted(false);
 	};
 

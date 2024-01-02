@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { Connections } from './connections';
 import { routes, hmr } from '@essential-js/admin-server/routes';
+import * as cors from 'cors';
+import { jwt } from '@bgroup/helpers/jwt';
 
 export class Server {
 	#instance;
@@ -17,7 +19,11 @@ export class Server {
 		try {
 			this.#app = express();
 			this.#app.use(express.json());
+			jwt.init(process.env.JWT_SECRET);
 			this.#setHeader();
+			this.#app.use(express.urlencoded({ extended: true }));
+			this.#app.use(express.json());
+			this.#app.use(cors());
 			this.#router = express.Router();
 			routes(this.#app);
 			//subscription to listen routes module changes.

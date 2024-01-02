@@ -4,6 +4,7 @@ import { IContext, LayoutContext } from './context';
 import { StoreManager } from './store';
 import { useTexts } from '@essential-js/admin/helpers';
 import { module } from 'beyond_context';
+import { ToastContainer } from 'react-toastify';
 
 declare global {
 	namespace JSX {
@@ -28,6 +29,18 @@ export function Layout({ store }: { store: StoreManager }) {
 				<Sidebar />
 				<div className="content">
 					<beyond-layout-children />
+					<ToastContainer
+						position="bottom-right"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="light"
+					/>
 				</div>
 			</main>
 		</LayoutContext.Provider>

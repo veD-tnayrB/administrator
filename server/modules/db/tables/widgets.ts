@@ -51,11 +51,13 @@ export class Widgets extends Model<WidgetsAttributes, WidgetsCreationAttributes>
     },
     timeUpdated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_updated'
     },
     timeCreated: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      field: 'time_created'
     }
   }, {
     sequelize,

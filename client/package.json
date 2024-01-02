@@ -4,7 +4,7 @@
 	"title": "Administrator",
 	"description": "",
 	"license": "ISC",
-	"layout": "main-admin-layout",
+	"layout": "auth-layout",
 	"template": "template/template.json",
 	"languages": {
 		"default": "en",
@@ -25,7 +25,8 @@
 	},
 	"libraries": {
 		"imports": [
-			"pragmate-ui"
+			"pragmate-ui",
+			"@bgroup/http-suite"
 		]
 	},
 	"modules": {
@@ -53,9 +54,12 @@
 		"firebase": "^10.6.0",
 		"framer-motion": "^10.16.12",
 		"http-suite": "^0.0.1",
+		"i": "^0.3.7",
+		"npm": "^10.2.5",
 		"react": "^18.2.0",
 		"react-chartjs-2": "^5.2.0",
 		"react-dom": "^18.2.0",
+		"react-toastify": "^9.1.3",
 		"socket.io-client": "^4.5.4",
 		"tippy.js": "^6.3.7"
 	},

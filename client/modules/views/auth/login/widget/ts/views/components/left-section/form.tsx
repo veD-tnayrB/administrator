@@ -7,7 +7,7 @@ import { Providers } from '@essential-js/admin/auth';
 
 const DEFAULT_VALUE = {
 	email: 'brayanmc.contacto@gmail.com',
-	password: 'Admin01*',
+	password: 'Admin02*',
 };
 
 export const LeftSectionForm = () => {
