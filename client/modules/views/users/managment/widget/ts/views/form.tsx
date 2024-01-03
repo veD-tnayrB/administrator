@@ -25,8 +25,8 @@ export const Form = () => {
 		setValues({ ...values, [name]: value });
 	};
 
-	const onSubmit = () => {
-		store.save(values);
+	const onSubmit = async () => {
+		await store.save(values);
 		toast.success(store.item.id ? 'User updated' : 'User created');
 		routing.pushState('/users');
 		store.reset();

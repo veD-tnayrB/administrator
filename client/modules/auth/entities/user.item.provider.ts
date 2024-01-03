@@ -7,4 +7,8 @@ export class UserItemProvider {
 	login = (params: { email: string; password?: string }) => {
 		return this.#api.post('login', params);
 	};
+
+	data = (params: { id: string }) => {
+		return this.#api.post('user', params);
+	};
 }

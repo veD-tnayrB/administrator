@@ -1,5 +1,4 @@
 import { ItemProvider } from '@essential-js/admin/helpers';
-import { session } from '@essential-js/admin/auth';
 
 export class UserItemProvider extends ItemProvider {
 	constructor() {
@@ -8,7 +7,6 @@ export class UserItemProvider extends ItemProvider {
 				publish: 'user',
 				get: 'user',
 			},
-			token: session.token,
 		});
 	}
 

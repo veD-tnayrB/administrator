@@ -1,6 +1,4 @@
-import { Api } from '@bgroup/http-suite/api';
-import config from '@essential-js/admin/config';
-import { session } from '@essential-js/admin/auth';
+import { Api } from '../api/api.helper';
 
 interface IItemEndpoints {
 	publish: string;
@@ -8,7 +6,7 @@ interface IItemEndpoints {
 }
 
 export /*bundle*/ abstract class ItemProvider {
-	#api: Api = new Api(config.params.server).bearer(session.token);
+	#api: Api = new Api();
 	get api() {
 		return this.#api;
 	}
@@ -18,7 +16,6 @@ export /*bundle*/ abstract class ItemProvider {
 	constructor(params: { endpoints: IItemEndpoints }) {
 		if (!params?.endpoints) throw new Error('Endpoints are required');
 		this.#endpoints = params.endpoints;
-		session.on('token-changed', () => this.#api.bearer(session.token));
 	}
 
 	publish = (params: {

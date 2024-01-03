@@ -1,5 +1,4 @@
-import { Item } from '@beyond-js/reactive/entities';
-import config from '@essential-js/admin/config';
+import { ReactiveModel } from '@beyond-js/reactive/model';
 import { UserItemProvider } from './user.item.provider';
 
 interface IUser {
@@ -12,8 +11,8 @@ interface IUser {
 	timeUpdated: Date;
 }
 
-export /*bundle*/ class User extends Item<IUser> {
-	protected properties = ['active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated', 'id'];
+export /*bundle*/ class User extends ReactiveModel<IUser> {
+	private provider: UserItemProvider = new UserItemProvider();
 
 	get fullName() {
 		let namesArray = this.names.split(' ');
@@ -22,19 +21,29 @@ export /*bundle*/ class User extends Item<IUser> {
 		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
 	}
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
-		super({
-			provider: UserItemProvider,
-			storeName: 'users',
-			db: config.params.application.localDB,
-			...params,
-		});
+	constructor() {
+		super();
+		this.reactiveProps(['id', 'names', 'lastNames', 'email', 'active', 'timeCreated', 'timeUpdated']);
 	}
 
 	login = async (params: { email: string; password?: string }) => {
 		try {
 			this.fetching = true;
 			const response = await this.provider.login(params);
+			if (!response.status) throw response.error;
+			return response;
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
+	data = async ({ id }: { id: string }) => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.data({ id });
 			if (!response.status) throw response.error;
 			return response;
 		} catch (error) {
