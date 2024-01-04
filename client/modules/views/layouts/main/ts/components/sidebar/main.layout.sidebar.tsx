@@ -10,7 +10,7 @@ export const Sidebar = () => {
 	const { store } = useLayoutContext();
 	const [items, setItems] = React.useState(store.sidebarCollection.items);
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
-	const [, setTheme] = React.useState(store.mode);
+	const [theme, setTheme] = React.useState(store.mode);
 	useBinder([store], () => setTheme(store.mode), 'theme-changed');
 
 	useBinder([store], () => {

@@ -19,11 +19,6 @@ class Controller extends PageReactWidgetController {
 	show() {
 		if (!this.#store) return;
 		this.#store.load();
-		// const { userId } = JSON.parse(localStorage.getItem('session'));
-		// const entity = `${userId}-profile`;
-		// const confTables = !!localStorage.getItem(entity) ? JSON.parse(localStorage.getItem(entity)) : head.slice(0, 9);
-		// this.#store.heads = confTables;
-		// this.#store.keys = confTables.map(item => item.id);
 	}
 
 	/**

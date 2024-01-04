@@ -52,19 +52,18 @@ function View({ store }: { store: StoreManager }) {
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
 				actions: [
-					{ type: 'edit', to: '/users/managment' },
+					{ type: 'edit', to: '/users/managment', title: texts.list.actions.item.edit },
 					{
 						type: 'delete',
-						title: 'Arrecho',
-						description: 'Perro',
+						title: texts.list.actions.item.delete.title,
 						modal: {
-							title: 'Delete',
-							description: 'Are you sure you want to delete this item?',
+							title: texts.list.actions.item.delete.title,
+							description: texts.list.actions.item.delete.description,
 							close: {
-								label: 'Close',
+								label: texts.list.actions.item.delete.close,
 							},
 							confirm: {
-								label: 'Delete',
+								label: texts.list.actions.item.delete.confirm,
 							},
 						},
 					},

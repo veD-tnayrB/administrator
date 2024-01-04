@@ -21,6 +21,22 @@ div.pui-input {
 		text-transform: capitalize;
 		color: var(--text-color);
 		transition: all 0.2s ease-out;
+
+		&:has(> .pui-element-switch) {
+			gap: 1rem;
+		}
+
+		.pui-element-switch {
+			.pui-element-switch__label {
+				background: var(--surface);
+
+				&.active {
+					.label__btn--slider {
+						background: var(--primary);
+					}
+				}
+			}
+		}
 	}
 
 	&:focus-within .pui-input__label,

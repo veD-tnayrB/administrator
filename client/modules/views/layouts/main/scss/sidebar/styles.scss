@@ -11,14 +11,16 @@
 		left: 0;
 
 		.sidebar-content {
+			height: 97vh;
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
 
 			.sidebar-content-container {
 				height: 100%;
-				display: grid;
-				grid-template-rows: 80% 20%;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
 
 				ul {
 					display: flex;

@@ -1,9 +1,22 @@
-.page-container {
+.page-container.managment-page {
+	background: var(--surface);
+	box-shadow: var(--primary-shadow);
+	border-radius: 15px;
+	padding: 1.5rem 1.25rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 	.managment-form {
-		background: var(--surface);
-		padding: 1.25rem;
 		display: flex;
 		flex-direction: column;
 		gap: 2.5rem;
+
+		.actions {
+			display: flex;
+			align-content: center;
+			justify-content: flex-end;
+			gap: 1.5rem;
+		}
 	}
 }

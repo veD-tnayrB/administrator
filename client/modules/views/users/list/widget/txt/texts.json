@@ -28,6 +28,15 @@
 				"columnsSelector": {
 					"min": "No puedes seleccionar menos de {{number}} columnas",
 					"max": "No puedes seleccionar mas de {{number}} columnas"
+				},
+				"item": {
+					"edit": "Editar",
+					"delete": {
+						"title": "Eliminar",
+						"description": "Estas seguro de querer eliminarlo?",
+						"confirm": "Confirmar",
+						"close": "Cancelar"
+					}
 				}
 			}
 		}
@@ -58,7 +67,16 @@
 			},
 			"actions": {
 				"min": "You can't select less than {{number}} columns",
-				"max": "You can't select more than {{number}} columns"
+				"max": "You can't select more than {{number}} columns",
+				"item": {
+					"edit": "Edit",
+					"delete": {
+						"title": "Remove",
+						"description": "Are you sure you want to delete it?",
+						"confirm": "Confirm",
+						"close": "Cancel"
+					}
+				}
 			}
 		}
 	}

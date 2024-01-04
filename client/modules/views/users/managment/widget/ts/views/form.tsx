@@ -12,7 +12,7 @@ export const Form = () => {
 		names: store.item.names || '',
 		email: store.item.email || '',
 		lastNames: store.item.lastNames || '',
-		active: store.item.active || false,
+		active: store.item.active || true,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
@@ -43,7 +43,12 @@ export const Form = () => {
 			<Input label={texts.labels.names} value={values.names} name="names" onChange={onChange} />
 			<Input label={texts.labels.lastNames} value={values.lastNames} name="lastNames" onChange={onChange} />
 			<Input label={texts.labels.email} value={values.email} name="email" onChange={onChange} />
-			<Switch label={texts.labels.active} checked={values.active} name="active" onChange={onChange} />
+			<div className="pui-input">
+				<label className="pui-input__label">
+					<Switch checked={values.active} name="active" onChange={onChange} />
+					<span className="label-content"> {texts.labels.active}</span>
+				</label>
+			</div>
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

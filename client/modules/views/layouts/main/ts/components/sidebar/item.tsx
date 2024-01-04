@@ -8,8 +8,7 @@ import { useLayoutContext } from '../../context';
 interface IProps extends Module {
 	to?: string;
 	onClick: () => void;
-	iconDarkMode: string;
-	iconLightMode: string;
+	icon: string;
 	label: string;
 }
 
@@ -28,12 +27,11 @@ export const SidebarItem: React.FC<IProps> = params => {
 		: { className: 'sidebar-item-button' };
 
 	const cls = isSelected ? 'selected' : '';
-	const icon = store.mode === 'dark' ? params.iconDarkMode : params.iconLightMode;
 
 	return (
 		<li className={`sidebar-item ${cls}`}>
 			<Container className="sidebar-item-link" onClick={params.onClick} {...properties}>
-				<div className="icon" dangerouslySetInnerHTML={{ __html: icon }} />
+				<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
 				<span>{params.label}</span>
 			</Container>
 		</li>

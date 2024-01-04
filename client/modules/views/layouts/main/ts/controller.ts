@@ -13,7 +13,10 @@ class Controller extends ReactWidgetController {
 
 	createStore(language?: string): ns_2.IWidgetStore {
 		this.#store = new StoreManager();
-		this.#store.loadSidebarItems();
 		return this.#store;
+	}
+
+	show() {
+		this.#store.loadSidebarItems();
 	}
 }

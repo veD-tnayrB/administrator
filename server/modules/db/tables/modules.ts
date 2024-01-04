@@ -5,27 +5,25 @@ export interface ModulesAttributes {
   id: string;
   label?: string;
   to?: string;
-  iconDarkMode?: string;
-  iconLightMode?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
   order?: number;
+  icon?: string;
 }
 
 export type ModulesPk = "id";
 export type ModulesId = Modules[ModulesPk];
-export type ModulesOptionalAttributes = "label" | "to" | "iconDarkMode" | "iconLightMode" | "timeCreated" | "timeUpdated" | "order";
+export type ModulesOptionalAttributes = "label" | "to" | "timeCreated" | "timeUpdated" | "order" | "icon";
 export type ModulesCreationAttributes = Optional<ModulesAttributes, ModulesOptionalAttributes>;
 
 export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes> implements ModulesAttributes {
   id!: string;
   label?: string;
   to?: string;
-  iconDarkMode?: string;
-  iconLightMode?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
   order?: number;
+  icon?: string;
 
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Modules {
@@ -43,16 +41,6 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    iconDarkMode: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'icon_dark_mode'
-    },
-    iconLightMode: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      field: 'icon_light_mode'
-    },
     timeCreated: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -65,6 +53,10 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
     },
     order: {
       type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    icon: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

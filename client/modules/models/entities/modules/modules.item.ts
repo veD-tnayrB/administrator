@@ -6,24 +6,14 @@ interface IModules {
 	id: string;
 	label: string;
 	to: string;
-	iconDarkMode: string;
-	iconLightMode: string;
+	icon: string;
 	timeCreated: Date;
 	timeUpdated: Date;
 	order: number;
 }
 
 export /*bundle*/ class Module extends Item<IModules> {
-	protected properties = [
-		'id',
-		'label',
-		'iconDarkMode',
-		'iconLightMode',
-		'to',
-		'timeCreated',
-		'timeUpdated',
-		'order',
-	];
+	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order'];
 
 	constructor(params: { id: string | undefined } = { id: undefined }) {
 		super({
