@@ -144,4 +144,24 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		if (this.currentPage === 1) return;
 		this.#navigation(1);
 	};
+
+	remove = async (params: { id: string }) => {
+		try {
+			this.fetching = true;
+			const item = new this.#collection.item();
+			const response = await item.load(params);
+			if (!response.status) throw 'RECORD_NOT_EXISTS';
+
+			const removeResponse = await item.delete();
+			if (!removeResponse) throw 'RECORD_COULDNT_BE_REMOVED';
+			console.log('REMOVE RESPONSE => ', removeResponse);
+
+			return { status: true };
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
 }

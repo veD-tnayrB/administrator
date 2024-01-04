@@ -9,12 +9,26 @@ export interface IRow {
 	index: number;
 }
 
+export /*bundle*/ enum ItemActionType {
+	EDIT = 'edit',
+	DELETE = 'delete',
+}
+
+export interface IItemAction extends React.HTMLAttributes<HTMLButtonElement> {
+	modal?: any;
+	to?: string;
+	type: ItemActionType;
+}
+
+interface itemConfig {
+	properties: string[];
+	actions: IItemAction[];
+}
+
 export interface IList {
 	row?: React.ComponentType<IRow>;
 	default?: boolean;
-	itemsConfig: {
-		properties: string[];
-	};
+	itemsConfig: itemConfig;
 }
 
 export const List = (props: IList) => {

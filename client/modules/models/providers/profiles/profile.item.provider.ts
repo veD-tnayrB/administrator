@@ -6,6 +6,7 @@ export class ProfileItemProvider extends ItemProvider {
 			endpoints: {
 				publish: 'profile',
 				get: 'profile',
+				delete: 'profile',
 			},
 		});
 	}

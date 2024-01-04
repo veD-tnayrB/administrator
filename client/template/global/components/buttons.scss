@@ -3,6 +3,12 @@ button {
 	background: transparent;
 	border-radius: 0;
 	border: 0;
+
+	&.btn--loading {
+		.button-label {
+			opacity: 0;
+		}
+	}
 }
 
 button.pui-button.btn-primary,

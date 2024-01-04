@@ -40,6 +40,7 @@ export /*bundle*/ class Route {
 		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, this.get);
 		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
 		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
+		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
 	};
 
 	list = async (req: Request, res: Response) => {
@@ -103,6 +104,22 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /update', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
+
+	delete = async (req: Request, res: Response) => {
+		try {
+			let { id } = req.params;
+			const response = await this.#manager.delete({
+				id: id as string,
+			});
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response as ISuccess);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /get', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });
 			res.status(500).send(responseError);
 		}

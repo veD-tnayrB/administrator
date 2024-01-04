@@ -4,9 +4,18 @@ import { ColumnSelectorToggler } from './column-selector-toggler';
 import { useListViewContext } from '../../../../../context';
 import { Form, Checkbox } from 'pragmate-ui/form';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { toast } from 'react-toastify';
 
 export interface IColumnSelector {
 	label: string;
+	min?: {
+		number: number;
+		label: string;
+	};
+	max?: {
+		number: number;
+		label: string;
+	};
 }
 
 export const ColumnsSelector = (props: IColumnSelector) => {
@@ -27,6 +36,16 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = event.target;
+
+		if (checked && store.propertiesDisplaying.length >= props?.max?.number) {
+			toast.error(props.max.label.replace('{{number}}', props?.max?.number.toString()));
+			return;
+		}
+
+		if (!checked && store.propertiesDisplaying.length <= props?.min?.number) {
+			toast.error(props.min.label.replace('{{number}}', props?.min?.number.toString()));
+			return;
+		}
 
 		if (!checked) store.propertiesDisplaying = store.propertiesDisplaying.filter(property => property !== name);
 		else store.propertiesDisplaying = [...store.propertiesDisplaying, name];

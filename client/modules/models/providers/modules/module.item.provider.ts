@@ -6,6 +6,7 @@ export class ModulesItemProvider extends ItemProvider {
 			endpoints: {
 				publish: 'module',
 				get: 'module',
+				delete: 'module',
 			},
 		});
 	}

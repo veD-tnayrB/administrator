@@ -32,4 +32,8 @@ export /*bundle*/ abstract class Manager {
 	get = (params: { id: string }) => {
 		return actions.data(this.#model, params, `/get/${this.#managerName}`);
 	};
+
+	delete = ({ id }: { id: string }) => {
+		return actions.remove(this.#model, { id }, `/delete/${this.#managerName}`);
+	};
 }

@@ -19,7 +19,7 @@ interface IProps {
 }
 
 export const Header = (props: IProps) => {
-	const { store } = useListViewContext();
+	const { store, list } = useListViewContext();
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
@@ -29,6 +29,15 @@ export const Header = (props: IProps) => {
 		return <li key={uuid()}>{Item.label as React.ReactNode}</li>;
 	});
 
+	const actionsGap = list.itemsConfig.actions.map(() => {
+		return <li key={uuid()}></li>;
+	});
+
 	const cls = store.fetching ? ` loading` : ``;
-	return <ul className={`header ${cls}`}>{output}</ul>;
+	return (
+		<ul className={`header ${cls}`}>
+			{output}
+			{actionsGap}
+		</ul>
+	);
 };

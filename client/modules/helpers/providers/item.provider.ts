@@ -3,6 +3,7 @@ import { Api } from '../api/api.helper';
 interface IItemEndpoints {
 	publish: string;
 	get: string;
+	delete: string;
 }
 
 export /*bundle*/ abstract class ItemProvider {
@@ -32,5 +33,9 @@ export /*bundle*/ abstract class ItemProvider {
 
 	data = async params => {
 		return this.#api.get(this.#endpoints.get + `/${params.id}`);
+	};
+
+	delete = (id: string) => {
+		return this.#api.delete(this.#endpoints.delete + `/${id}`, {});
 	};
 }

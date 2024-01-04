@@ -6,12 +6,12 @@ export interface IToggler extends HTMLButtonElement {
 }
 
 interface IProps extends IToggler {
-	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Toggler = ({ setIsModalOpen, label, ...validProps }: IProps) => {
+export const Toggler = ({ setIsOpen, label, ...validProps }: IProps) => {
 	const onToggle = () => {
-		setIsModalOpen(currentValue => !currentValue);
+		setIsOpen(currentValue => !currentValue);
 	};
 
 	return <Button onClick={onToggle} {...validProps} />;

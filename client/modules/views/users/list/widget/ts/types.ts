@@ -15,6 +15,12 @@ interface Columns {
 
 interface List {
 	columns: Columns;
+	actions: {
+		columnsSelector: {
+			min: string;
+			max: string;
+		};
+	};
 }
 
 interface SearchBar {

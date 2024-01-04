@@ -23,6 +23,12 @@
 				"email": "Email",
 				"timeCreated": "Creado el",
 				"timeUpdated": "Actualizado el"
+			},
+			"actions": {
+				"columnsSelector": {
+					"min": "No puedes seleccionar menos de {{number}} columnas",
+					"max": "No puedes seleccionar mas de {{number}} columnas"
+				}
 			}
 		}
 	},
@@ -49,6 +55,10 @@
 				"email": "Email",
 				"timeCreated": "Created at",
 				"timeUpdated": "Updated at"
+			},
+			"actions": {
+				"min": "You can't select less than {{number}} columns",
+				"max": "You can't select more than {{number}} columns"
 			}
 		}
 	}

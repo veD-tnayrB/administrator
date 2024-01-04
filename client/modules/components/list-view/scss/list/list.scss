@@ -8,36 +8,8 @@
 				opacity: 0.65;
 			}
 
-			.row {
-				width: 100%;
-			}
-
 			&.default {
 				display: table-row-group;
-
-				.row {
-					display: table-row;
-
-					span {
-						display: table-cell;
-						padding: 0.625rem 0;
-
-						&:first-child {
-							border-left: 1px solid var(--outline);
-						}
-						&:last-child {
-							border-right: 1px solid var(--outline);
-						}
-					}
-
-					&:last-child {
-						border-bottom: 1px solid var(--outline);
-					}
-
-					&:nth-child(even) {
-						background: var(--surface-variant);
-					}
-				}
 			}
 		}
 	}

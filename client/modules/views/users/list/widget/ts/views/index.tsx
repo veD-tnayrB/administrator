@@ -51,6 +51,24 @@ function View({ store }: { store: StoreManager }) {
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
+				actions: [
+					{ type: 'edit', to: '/users/managment' },
+					{
+						type: 'delete',
+						title: 'Arrecho',
+						description: 'Perro',
+						modal: {
+							title: 'Delete',
+							description: 'Are you sure you want to delete this item?',
+							close: {
+								label: 'Close',
+							},
+							confirm: {
+								label: 'Delete',
+							},
+						},
+					},
+				],
 			},
 		},
 		actions: {
@@ -60,6 +78,10 @@ function View({ store }: { store: StoreManager }) {
 			},
 			columnsSelector: {
 				label: texts.actions.columns,
+				min: {
+					label: texts.list.actions.columnsSelector.min,
+					number: 2,
+				},
 			},
 		},
 	};

@@ -1,0 +1,58 @@
+.list-view {
+	.list-container {
+		.list.default {
+			.row {
+				width: 100%;
+				display: table-row;
+
+				span {
+					display: table-cell;
+					vertical-align: middle;
+					padding: 0.625rem 0;
+
+					&:first-child {
+						border-left: 1px solid var(--outline);
+					}
+					&:last-child {
+						border-right: 1px solid var(--outline);
+					}
+				}
+
+				.row-actions {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					padding: 0 10px;
+
+					button {
+						background: transparent;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding: 0 10px;
+
+						.button-label {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+
+							svg {
+								width: 25px;
+								height: 25px;
+								fill: var(--on-surface);
+							}
+						}
+					}
+				}
+
+				&:last-child {
+					border-bottom: 1px solid var(--outline);
+				}
+
+				&:nth-child(even) {
+					background: var(--surface-variant);
+				}
+			}
+		}
+	}
+}

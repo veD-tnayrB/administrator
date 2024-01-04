@@ -1,5 +1,5 @@
 {
-	"name": "components/dialog",
+	"name": "components/modal",
 	"code": {
 		"scss": {
 			"path": "/scss",

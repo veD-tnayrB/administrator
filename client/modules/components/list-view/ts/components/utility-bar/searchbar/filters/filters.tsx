@@ -21,20 +21,24 @@ export interface IFilters {
 
 export const FiltersSearch = (props: IFilters) => {
 	const { store } = useListViewContext();
+	const [isOpen, setIsOpen] = React.useState(false);
 	const [values, setValues] = React.useState({});
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [event.target.name]: event.target.value });
 	};
 
-	const onSubmit = () => {
-		store.search(values);
+	const onSubmit = async () => {
+		await store.search(values);
+		setIsOpen(false);
 	};
 
 	const reset = () => {
 		const defaultValues = {};
 		store.propertiesToSearch.forEach(item => (defaultValues[item.name] = ''));
 		setValues(defaultValues);
+		store.clearSearch();
+		setIsOpen(false);
 	};
 
 	const output = store.propertiesToSearch.map(item => (
@@ -52,6 +56,8 @@ export const FiltersSearch = (props: IFilters) => {
 		toggler: {
 			children: <FiltersToggler label={props.label} />,
 		},
+		setIsOpen,
+		isOpen,
 	};
 
 	return (

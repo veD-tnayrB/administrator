@@ -6,6 +6,7 @@ export class WidgetItemProvider extends ItemProvider {
 			endpoints: {
 				publish: 'widget',
 				get: 'widget',
+				delete: 'widget',
 			},
 		});
 	}

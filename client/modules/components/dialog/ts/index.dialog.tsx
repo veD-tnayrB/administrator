@@ -5,10 +5,15 @@ import { Modal } from './modal';
 interface IProps extends HTMLDivElement {
 	toggler: IToggler;
 	isClose: boolean;
+	isOpen: boolean;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export /*bundle*/ const Dialog = ({ children, isClose, ...props }: IProps) => {
-	const [isModalOpen, setIsModalOpen] = React.useState(false);
+	const [isOpen, setIsOpen] = React.useState(props.isOpen === undefined ? false : null);
+	const isModalOpen = isOpen === null ? props.isOpen : isOpen;
+	const setIsModalOpen = isOpen === null ? props.setIsOpen : setIsOpen;
+
 	const ref = React.useRef(null);
 
 	React.useEffect((): (() => void) => {
@@ -26,7 +31,7 @@ export /*bundle*/ const Dialog = ({ children, isClose, ...props }: IProps) => {
 	}, [isModalOpen]);
 	return (
 		<div ref={ref} className="essential-dialog">
-			<Toggler {...props.toggler} setIsModalOpen={setIsModalOpen} />
+			<Toggler {...props.toggler} setIsOpen={setIsModalOpen} />
 			{isModalOpen && <Modal>{children}</Modal>}
 		</div>
 	);

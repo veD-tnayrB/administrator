@@ -6,6 +6,7 @@ export class UserItemProvider extends ItemProvider {
 			endpoints: {
 				publish: 'user',
 				get: 'user',
+				delete: 'user',
 			},
 		});
 	}
