@@ -155,6 +155,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			const removeResponse = await item.delete();
 			if (!removeResponse) throw 'RECORD_COULDNT_BE_REMOVED';
 
+			await this.load();
+
 			return { status: true };
 		} catch (error) {
 			console.error(error);

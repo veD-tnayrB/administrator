@@ -8,11 +8,12 @@ export interface AccessTokensAttributes {
   accessToken?: string;
   timeUpdated?: Date;
   timeCreated?: Date;
+  notificationsToken?: string;
 }
 
 export type AccessTokensPk = "id";
 export type AccessTokensId = AccessTokens[AccessTokensPk];
-export type AccessTokensOptionalAttributes = "userId" | "accessToken" | "timeUpdated" | "timeCreated";
+export type AccessTokensOptionalAttributes = "userId" | "accessToken" | "timeUpdated" | "timeCreated" | "notificationsToken";
 export type AccessTokensCreationAttributes = Optional<AccessTokensAttributes, AccessTokensOptionalAttributes>;
 
 export class AccessTokens extends Model<AccessTokensAttributes, AccessTokensCreationAttributes> implements AccessTokensAttributes {
@@ -21,6 +22,7 @@ export class AccessTokens extends Model<AccessTokensAttributes, AccessTokensCrea
   accessToken?: string;
   timeUpdated?: Date;
   timeCreated?: Date;
+  notificationsToken?: string;
 
   // AccessTokens belongsTo Users via userId
   user!: Users;
@@ -58,6 +60,11 @@ export class AccessTokens extends Model<AccessTokensAttributes, AccessTokensCrea
       type: DataTypes.DATE,
       allowNull: true,
       field: 'time_created'
+    },
+    notificationsToken: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'notifications_token'
     }
   }, {
     sequelize,

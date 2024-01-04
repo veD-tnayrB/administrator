@@ -1,0 +1,19 @@
+{
+	"name": "views/notifications/list",
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	},
+	"widget": {
+		"layout": "main-admin-layout",
+		"route": "/notifications",
+		"is": "page",
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "notifications-list"
+		}
+	}
+}

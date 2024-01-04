@@ -68,11 +68,13 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
     timeCreated: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'time_created'
     },
     timeUpdated: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'time_updated'
     },
     password: {

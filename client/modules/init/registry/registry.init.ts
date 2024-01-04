@@ -10,7 +10,8 @@ async function inializeApp() {
 			users: 'id, active, email, lastNames, names, timeCreated, timeUpdated',
 			widgets: 'id, active, identifier, metadata, order',
 			profiles: 'id, name, description, timeCreated, timeUpdated',
-			modules: 'id, label, iconDarkMode, iconLightMode, to, timeCreated, timeUpdated, order',
+			modules: 'id, label, icon, to, timeCreated, timeUpdated, order',
+			notifications: 'id, title, description, icon, timeInterval, status, timeCreated, timeUpdated',
 		});
 	} catch (e) {
 		console.error('error', e);

@@ -1,0 +1,40 @@
+{
+	"es": {
+		"title": {
+			"creating": "Creacion de notificaciones",
+			"editing": "Edicion de notificaciones"
+		},
+		"labels": {
+			"title": "Titulo",
+			"description": "Descripcion",
+			"timeInterval": "Intervalo de tiempo"
+		},
+		"actions": {
+			"reset": "Cancelar",
+			"save": "Guardar"
+		},
+		"success": {
+			"updated": "Notificacion actualizada",
+			"created": "Notification creada"
+		}
+	},
+	"en": {
+		"title": {
+			"creating": "Notifications creation",
+			"editing": "Notifications edition"
+		},
+		"labels": {
+			"title": "Title",
+			"description": "Description",
+			"timeInterval": "Time interval"
+		},
+		"actions": {
+			"reset": "cancel",
+			"save": "Save"
+		},
+		"success": {
+			"updated": "Notification updated",
+			"created": "Notification created"
+		}
+	}
+}

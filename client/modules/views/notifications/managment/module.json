@@ -1,0 +1,23 @@
+{
+	"name": "views/notifications/managment",
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	},
+	"widget": {
+		"layout": "main-admin-layout",
+		"route": "/notifications/managment/${id}",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "notifications-managment"
+		}
+	}
+}
