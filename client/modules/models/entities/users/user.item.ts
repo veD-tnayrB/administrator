@@ -2,7 +2,7 @@ import { Item } from '@beyond-js/reactive/entities';
 import { UserItemProvider } from '../../providers/users/user.item.provider';
 import config from '@essential-js/admin/config';
 
-interface IUser {
+export /*bundle*/ interface IUser {
 	id: string;
 	active: boolean;
 	email: string;

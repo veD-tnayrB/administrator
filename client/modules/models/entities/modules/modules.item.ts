@@ -2,7 +2,7 @@ import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { ModulesItemProvider } from '../../providers/modules/module.item.provider';
 
-interface IModules {
+export /*bundle*/ interface IModules {
 	id: string;
 	label: string;
 	to: string;

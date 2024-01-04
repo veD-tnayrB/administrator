@@ -6,6 +6,7 @@
 	gap: 1.25rem;
 
 	.total {
+		box-shadow: var(--primary-shadow);
 		background: var(--surface);
 		border-radius: var(--border-primary);
 		display: flex;

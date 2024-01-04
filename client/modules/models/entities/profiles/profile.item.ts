@@ -2,7 +2,7 @@ import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { ProfileItemProvider } from '../../providers/profiles/profile.item.provider';
 
-interface IProfile {
+export /*bundle*/ interface IProfile {
 	id: string;
 	name: string;
 	description: string;

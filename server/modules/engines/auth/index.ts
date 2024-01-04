@@ -49,4 +49,4 @@ class AuthManager {
 	};
 }
 
-export /*bundle*/ const auth = new AuthManager();
+export /*bundle*/ const Auth = new AuthManager();

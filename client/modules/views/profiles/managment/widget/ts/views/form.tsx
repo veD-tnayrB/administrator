@@ -1,17 +1,17 @@
 import React from 'react';
 import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
 import { IUser } from '@essential-js/admin/models';
-import { useUsersManagmentContext } from '../context';
+import { useProfilesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
+
 export const Form = () => {
-	const { store, texts } = useUsersManagmentContext();
+	const { store, texts } = useProfilesManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
-		names: store.item.names || '',
-		email: store.item.email || '',
-		lastNames: store.item.lastNames || '',
+		name: store.item.name || '',
+		description: store.item.description || '',
 		active: store.item.active || true,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
@@ -28,21 +28,20 @@ export const Form = () => {
 	const onSubmit = async () => {
 		await store.save(values);
 		toast.success(store.item.id ? texts.success.updated : texts.success.created);
-		routing.pushState('/users');
+		routing.pushState('/profiles');
 		store.reset();
 	};
 
 	const onCancel = () => {
 		setValues({});
 		store.reset();
-		routing.pushState('/users');
+		routing.pushState('/profiles');
 	};
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
-			<Input label={texts.labels.names} value={values.names} name="names" onChange={onChange} />
-			<Input label={texts.labels.lastNames} value={values.lastNames} name="lastNames" onChange={onChange} />
-			<Input label={texts.labels.email} value={values.email} name="email" onChange={onChange} />
+			<Input label={texts.labels.name} value={values.name} name="name" onChange={onChange} />
+			<Input label={texts.labels.description} value={values.description} name="description" onChange={onChange} />
 			<div className="pui-input">
 				<label className="pui-input__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />

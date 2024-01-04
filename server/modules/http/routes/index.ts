@@ -1,8 +1,9 @@
 import { Application, Request, Response } from 'express';
 import { users } from './business/users';
 import { modules } from './business/modules';
-import { AuthRoutes } from './business/auth';
+import { auth } from './business/auth';
 import { profiles } from './business/profiles';
+import { widgets } from './business/widgets';
 
 export /*bundle*/ function routes(app: Application) {
 	app.get('/', (req: Request, res: Response) => {
@@ -11,6 +12,7 @@ export /*bundle*/ function routes(app: Application) {
 
 	users.setup(app);
 	modules.setup(app);
-	AuthRoutes.setup(app);
+	auth.setup(app);
 	profiles.setup(app);
+	widgets.setup(app);
 }

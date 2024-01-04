@@ -1,11 +1,11 @@
-import { auth } from '@essential-js/admin-server/engines/auth';
+import { Auth } from '@essential-js/admin-server/engines/auth';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
 
 export class AuthRoutes {
-	static async login(req: Request, res: Response) {
+	async login(req: Request, res: Response) {
 		try {
-			const response = await auth.login({ email: req.body.email, password: req.body.password });
+			const response = await Auth.login({ email: req.body.email, password: req.body.password });
 			if (!response.status) throw response.error;
 
 			const formatedResponse = ResponseAPI.success({ data: response.data });
@@ -17,7 +17,9 @@ export class AuthRoutes {
 		}
 	}
 
-	static setup(app: Application) {
-		app.post('/login', AuthRoutes.login);
+	setup(app: Application) {
+		app.post('/login', this.login);
 	}
 }
+
+export const auth = new AuthRoutes();

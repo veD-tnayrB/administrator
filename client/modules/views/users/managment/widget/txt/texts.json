@@ -13,6 +13,10 @@
 		"actions": {
 			"reset": "Cancelar",
 			"save": "Guardar"
+		},
+		"success": {
+			"updated": "Usuario actualizado",
+			"created": "Usuario creado"
 		}
 	},
 	"en": {
@@ -29,6 +33,10 @@
 		"actions": {
 			"reset": "cancel",
 			"save": "Save"
+		},
+		"success": {
+			"updated": "User updated",
+			"created": "User created"
 		}
 	}
 }

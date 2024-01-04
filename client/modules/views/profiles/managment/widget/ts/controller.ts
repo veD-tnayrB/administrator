@@ -16,7 +16,10 @@ class Controller extends PageReactWidgetController {
 	/**
 	 * this method is executed when the widget is showd
 	 */
-	show() {}
+	show() {
+		const id = this.uri.vars.get('id');
+		this.#store.load({ id });
+	}
 
 	/**
 	 * this method is executed when the widget is hidden

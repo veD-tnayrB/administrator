@@ -1,8 +1,40 @@
 {
 	"es": {
-		"header": "Titulo de encabezado"
+		"title": {
+			"creating": "Creacion de perfiles",
+			"editing": "Edicion de perfiles"
+		},
+		"labels": {
+			"name": "Nombre",
+			"description": "Descripcion",
+			"active": "Esta activo?"
+		},
+		"actions": {
+			"reset": "Cancelar",
+			"save": "Guardar"
+		},
+		"success": {
+			"updated": "Perfil actualizado",
+			"created": "Perfil creado"
+		}
 	},
 	"en": {
-		"header": "Header title"
+		"title": {
+			"creating": "Profile creation",
+			"editing": "Profile edition"
+		},
+		"labels": {
+			"name": "Name",
+			"description": "Description",
+			"active": "Is active?"
+		},
+		"actions": {
+			"reset": "cancel",
+			"save": "Save"
+		},
+		"success": {
+			"updated": "Profile updated",
+			"created": "Profile created"
+		}
 	}
 }

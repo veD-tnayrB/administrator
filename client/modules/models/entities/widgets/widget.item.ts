@@ -2,7 +2,7 @@ import { Item } from '@beyond-js/reactive/entities';
 import { WidgetItemProvider } from '../../providers/widgets/widget.item.provider';
 import config from '@essential-js/admin/config';
 
-interface IWidget {
+export /*bundle*/ interface IWidget {
 	id: string;
 	active: boolean;
 	identifier: string;
