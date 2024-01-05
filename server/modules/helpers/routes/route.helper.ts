@@ -28,9 +28,12 @@ interface IEndpoints {
 
 export /*bundle*/ class Route {
 	#manager: Manager;
+	get manager() {
+		return this.#manager;
+	}
 	#endpoints: IEndpoints;
 
-	constructor({ manager, endpoints }: { endpoints: IEndpoints; manager: Manager }) {
+	constructor({ manager, endpoints }: { endpoints?: IEndpoints; manager: Manager }) {
 		this.#manager = manager;
 		this.#endpoints = endpoints;
 	}

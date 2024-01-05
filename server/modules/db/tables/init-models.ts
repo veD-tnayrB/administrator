@@ -52,6 +52,8 @@ export function initModels(sequelize: Sequelize) {
 
   AccessTokens.belongsTo(Users, { as: "user", foreignKey: "userId"});
   Users.hasMany(AccessTokens, { as: "accessTokens", foreignKey: "userId"});
+  UsersNotifications.belongsTo(Users, { as: "user", foreignKey: "userId"});
+  Users.hasMany(UsersNotifications, { as: "usersNotifications", foreignKey: "userId"});
 
   return {
     AccessTokens: AccessTokens,

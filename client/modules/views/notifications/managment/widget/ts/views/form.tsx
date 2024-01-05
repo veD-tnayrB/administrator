@@ -27,7 +27,7 @@ export const Form = () => {
 
 	const onSubmit = async () => {
 		await store.save(values);
-		toast.success(store.item.id ? texts.success.updated : texts.success.created);
+		toast.success(store.isCreating ? texts.success.created : texts.success.updated);
 		routing.pushState('/notifications');
 		store.reset();
 	};

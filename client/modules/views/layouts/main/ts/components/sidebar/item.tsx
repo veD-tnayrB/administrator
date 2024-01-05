@@ -14,10 +14,12 @@ interface IProps extends Module {
 
 export const SidebarItem: React.FC<IProps> = params => {
 	const { store } = useLayoutContext();
-	const [isSelected, setIsSelected] = React.useState(routing.uri.pathname === params.to);
+	const [isSelected, setIsSelected] = React.useState(
+		routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to
+	);
 	React.useEffect(() => {
 		routing.on('change', () => {
-			setIsSelected(routing.uri.pathname === params.to);
+			setIsSelected(routing.uri.pathname.includes(params.to));
 		});
 	}, []);
 

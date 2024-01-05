@@ -29,7 +29,7 @@ export const TotalItem = ({ title, amount, icon, to, index }: IProps) => {
 		},
 	};
 
-	to = to || '/';
+	to = to || '/dashboard';
 	return (
 		<motion.article {...animation} className="total">
 			<Link to={to} className={` ${linkCls}`}>

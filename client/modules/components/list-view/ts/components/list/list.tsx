@@ -2,12 +2,8 @@ import React from 'react';
 import { useListViewContext } from '../../context';
 import { Item } from '@beyond-js/reactive/entities';
 import { v4 as uuid } from 'uuid';
-import { DefaultRow } from './row';
-
-export interface IRow {
-	item: unknown;
-	index: number;
-}
+import { DefaultRow, IRow } from './row';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
 export /*bundle*/ enum ItemActionType {
 	EDIT = 'edit',
@@ -32,12 +28,15 @@ export interface IList {
 }
 
 export const List = (props: IList) => {
-	const { store } = useListViewContext();
+	const { store, itemsProperties } = useListViewContext();
 	const Row = props?.row || DefaultRow;
+	const [, setUpdate] = React.useState({});
+	useBinder([store], () => setUpdate({}), 'displaying-change');
+	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
 
 	const output = store.collection.items.map((item: typeof Item, index: number) => {
 		if (!Row) return null;
-		return <Row key={uuid()} item={item} index={index} />;
+		return <Row key={uuid()} propertiesToDisplay={propertiesToDisplay} item={item} index={index} />;
 	});
 
 	let cls = props.default ? `default` : '';

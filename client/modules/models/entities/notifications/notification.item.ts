@@ -33,4 +33,30 @@ export /*bundle*/ class Notification extends Item<INotification> {
 			...params,
 		});
 	}
+
+	launch = async () => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.launch({ id: this.id });
+			if (!response.status) response.error;
+			return { status: true };
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
+	markAsRead = async ({ userId }: { userId: string }) => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.markAsRead({ id: this.id, userId });
+			if (!response.status) response.error;
+			return { status: true };
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
 }

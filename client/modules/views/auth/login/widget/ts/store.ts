@@ -13,7 +13,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const response = await session.login(params, provider);
 			if (!response.status) throw response.error;
-			routing.pushState('/');
+			routing.pushState('/dashboard');
 		} catch (error) {
 			console.error(error);
 			this.#error = error;

@@ -3,6 +3,10 @@ import { actions } from '@bgroup/data-model/db';
 
 export /*bundle*/ abstract class Manager {
 	#model: Model;
+	get model() {
+		return this.#model;
+	}
+
 	#managerName: string;
 
 	constructor({ model, managerName }: { model: Model; managerName: string }) {

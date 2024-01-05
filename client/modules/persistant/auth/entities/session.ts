@@ -2,7 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@essential-js/admin/serverless-provider';
 import { User } from './user.item';
-
+import { NotificationsHandler } from '@essential-js/admin/notifications';
 /**
  * Interface for login parameters.
  * @typedef {Object} ILoginParams
@@ -36,9 +36,13 @@ const providers = {
  */
 class Session extends ReactiveModel<Session> {
 	#user: User = new User();
-
 	get user() {
 		return this.#user;
+	}
+
+	#notificationsHandler: NotificationsHandler;
+	get notificationsHandler() {
+		return this.#notificationsHandler;
 	}
 
 	#isLogged: boolean = false;
@@ -63,6 +67,8 @@ class Session extends ReactiveModel<Session> {
 	constructor() {
 		super();
 		this.#listenForSessionChanges();
+		globalThis.s = this;
+		this.#notificationsHandler = new NotificationsHandler({ session: this });
 	}
 
 	/**

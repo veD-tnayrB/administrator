@@ -25,7 +25,7 @@ export const Header = (props: IProps) => {
 
 	const selectedItems = props.items.filter(item => store.propertiesDisplaying.includes(item.name));
 
-	const output = selectedItems?.map((Item, index: number) => {
+	const output = selectedItems?.map(Item => {
 		return <li key={uuid()}>{Item.label as React.ReactNode}</li>;
 	});
 

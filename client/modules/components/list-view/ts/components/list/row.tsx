@@ -5,18 +5,24 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { DeleteModal } from './pre-done-actions/delete';
 import { routing } from '@beyond-js/kernel/routing';
+import { Item } from '@beyond-js/reactive/entities';
 
 const getValue = (obj: Object, prop: string) => {
 	return prop.split('.').reduce((o, p) => (o || {})[p], obj);
 };
 
-export const DefaultRow = ({ item }) => {
-	const { list, itemsProperties, store } = useListViewContext();
+export /*bundle*/ interface IRow {
+	item: unknown;
+	index: number;
+	propertiesToDisplay: string[];
+}
+
+export const DefaultRow = ({ item, propertiesToDisplay }: IRow) => {
+	const { list, store } = useListViewContext();
 	const [, setUpdate] = React.useState({});
 	const [displayDeleteModal, setDisplayModal] = React.useState(false);
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
-	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
 	const output = propertiesToDisplay.map(property => {
 		const value = getValue(item, property);
 		return <span key={uuid()}>{value}</span>;

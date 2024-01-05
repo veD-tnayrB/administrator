@@ -35,7 +35,8 @@
 						"description": "Estas seguro de querer eliminarlo?",
 						"confirm": "Confirmar",
 						"close": "Cancelar"
-					}
+					},
+					"launch": "Lanzar notificacion"
 				}
 			}
 		}
@@ -68,6 +69,7 @@
 				"min": "You can't select less than {{number}} columns",
 				"max": "You can't select more than {{number}} columns",
 				"item": {
+					"launch": "Trigger notification",
 					"edit": "Edit",
 					"delete": {
 						"title": "Remove",

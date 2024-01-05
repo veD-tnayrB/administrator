@@ -28,6 +28,7 @@ interface List {
 				confirm: string;
 				close: string;
 			};
+			launch: string;
 		};
 	};
 }

@@ -6,6 +6,7 @@ import { useTexts } from '@essential-js/admin/helpers';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
 import { ITexts } from '../types';
+import { Row } from './row';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
@@ -51,24 +52,9 @@ function View({ store }: { store: StoreManager }) {
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'title', 'description', 'timeInterval', 'timeCreated', 'timeUpdated'],
-				actions: [
-					{ type: 'edit', to: '/notifications/managment', title: texts.list.actions.item.edit },
-					{
-						type: 'delete',
-						title: texts.list.actions.item.delete.title,
-						modal: {
-							title: texts.list.actions.item.delete.title,
-							description: texts.list.actions.item.delete.description,
-							close: {
-								label: texts.list.actions.item.delete.close,
-							},
-							confirm: {
-								label: texts.list.actions.item.delete.confirm,
-							},
-						},
-					},
-				],
+				actions: [{ type: 'edit', to: '/notifications/managment', title: texts.list.actions.item.edit }],
 			},
+			row: Row,
 		},
 		actions: {
 			create: {

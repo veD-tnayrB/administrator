@@ -6,7 +6,7 @@
 	},
 	"widget": {
 		"layout": "main-admin-layout",
-		"route": "/",
+		"route": "/dashboard",
 		"is": "page",
 		"scss": {
 			"path": "/widget/scss",

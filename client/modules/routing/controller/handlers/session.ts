@@ -11,7 +11,8 @@ function validate(route: string) {
 	const isSessionActive: boolean = session.isLogged;
 
 	if (!isSessionActive && !isANoSessionRoute) return { pathname: '/auth/login' };
-	if (isSessionActive && isANoSessionRoute) return { pathname: '/' };
+	if (isSessionActive && isANoSessionRoute) return { pathname: '/dashboard' };
+	if (route === '/') return { pathname: '/dashboard' };
 
 	return { pathname: route };
 }

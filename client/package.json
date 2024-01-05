@@ -47,15 +47,16 @@
 	"dependencies": {
 		"@beyond-js/kernel": "~0.1.9",
 		"@beyond-js/react-18-widgets": "~1.0.1",
-		"@beyond-js/reactive": "^1.1.6",
+		"@beyond-js/reactive": "1.1.6",
 		"@bgroup/helpers": "^1.0.3",
 		"@bgroup/http-suite": "^1.0.0",
+		"@firebase/app": "^0.9.23",
 		"chart.js": "^4.4.1",
 		"firebase": "^10.6.0",
 		"framer-motion": "^10.16.12",
 		"http-suite": "^0.0.1",
-		"i": "^0.3.7",
-		"npm": "^10.2.5",
+		"idb": "^7.1.1",
+		"npm-force-resolutions": "^0.0.10",
 		"react": "^18.2.0",
 		"react-chartjs-2": "^5.2.0",
 		"react-dom": "^18.2.0",
@@ -68,9 +69,13 @@
 		"@types/react": "^18.0.26",
 		"@types/react-dom": "^18.0.9"
 	},
+	"resolutions": {
+		"idb": "7.1.1"
+	},
 	"static": {
 		"includes": [
-			"assets"
+			"assets",
+			"firebase-messaging-sw.js"
 		]
 	}
 }

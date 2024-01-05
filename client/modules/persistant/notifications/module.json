@@ -1,0 +1,7 @@
+{
+	"name": "notifications",
+	"ts": {
+		"path": "./",
+		"files": ["*"]
+	}
+}
