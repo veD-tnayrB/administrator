@@ -15,7 +15,6 @@ class NotificationsRoutes extends Route {
 		try {
 			const params = req.body;
 			const response = this.manager.launch(params);
-			console.log('RESPONSE LAUNCH => ', response);
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response);
 			return res.status(200).json(formatedResponse);

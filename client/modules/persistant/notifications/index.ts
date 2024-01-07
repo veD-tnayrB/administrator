@@ -25,7 +25,6 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 			this.fetching = true;
 			await this.#provider.init({ credentials: FIREBASE_CREDENTIALS });
 			this.#token = this.#provider.deviceToken;
-			console.log('TOKEN => ', this.#token);
 		} catch (error) {
 			return { status: false, error };
 		} finally {

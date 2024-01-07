@@ -13,8 +13,6 @@ export class NotificationsManager extends Manager {
 			const notification = notificationFind.get({ plain: true });
 			if (!notification) throw 'NOTIFICATION_DOESNT_EXISTS';
 
-			console.log('Notification =>', notification);
-
 			const usersNotificationsFind = await DB.models.UsersNotifications.findAll({
 				where: { notificationId: params.id },
 				attributes: ['userId'],
@@ -31,7 +29,6 @@ export class NotificationsManager extends Manager {
 			});
 
 			const tokens = tokensFind.map(token => token.get({ plain: true }));
-			console.log('TOKENS => ', tokens);
 
 			// Mapear los tokens a la estructura deseada
 			const result = tokens.map(token => {
@@ -49,10 +46,7 @@ export class NotificationsManager extends Manager {
 
 			const notifications = result.map(notification => sender.send(notification));
 
-			console.log('NOTIFICATIONS GENERAL => ', result);
-
 			const response = await Promise.all(notifications);
-			console.log('FINAL RESPONSE => ', response);
 
 			return { status: true, data: result };
 		} catch (error) {
