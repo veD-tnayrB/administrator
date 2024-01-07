@@ -1,7 +1,9 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { AccessTokens, AccessTokensId } from './access_tokens';
+import type { Profiles, ProfilesId } from './profiles';
 import type { UsersNotifications, UsersNotificationsId } from './users_notifications';
+import type { UsersProfiles, UsersProfilesId } from './users_profiles';
 
 export interface UsersAttributes {
   id: string;
@@ -41,6 +43,18 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
   hasAccessToken!: Sequelize.HasManyHasAssociationMixin<AccessTokens, AccessTokensId>;
   hasAccessTokens!: Sequelize.HasManyHasAssociationsMixin<AccessTokens, AccessTokensId>;
   countAccessTokens!: Sequelize.HasManyCountAssociationsMixin;
+  // Users belongsToMany Profiles via userId and profileId
+  profileIdProfiles!: Profiles[];
+  getProfileIdProfiles!: Sequelize.BelongsToManyGetAssociationsMixin<Profiles>;
+  setProfileIdProfiles!: Sequelize.BelongsToManySetAssociationsMixin<Profiles, ProfilesId>;
+  addProfileIdProfile!: Sequelize.BelongsToManyAddAssociationMixin<Profiles, ProfilesId>;
+  addProfileIdProfiles!: Sequelize.BelongsToManyAddAssociationsMixin<Profiles, ProfilesId>;
+  createProfileIdProfile!: Sequelize.BelongsToManyCreateAssociationMixin<Profiles>;
+  removeProfileIdProfile!: Sequelize.BelongsToManyRemoveAssociationMixin<Profiles, ProfilesId>;
+  removeProfileIdProfiles!: Sequelize.BelongsToManyRemoveAssociationsMixin<Profiles, ProfilesId>;
+  hasProfileIdProfile!: Sequelize.BelongsToManyHasAssociationMixin<Profiles, ProfilesId>;
+  hasProfileIdProfiles!: Sequelize.BelongsToManyHasAssociationsMixin<Profiles, ProfilesId>;
+  countProfileIdProfiles!: Sequelize.BelongsToManyCountAssociationsMixin;
   // Users hasMany UsersNotifications via userId
   usersNotifications!: UsersNotifications[];
   getUsersNotifications!: Sequelize.HasManyGetAssociationsMixin<UsersNotifications>;
@@ -53,6 +67,18 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
   hasUsersNotification!: Sequelize.HasManyHasAssociationMixin<UsersNotifications, UsersNotificationsId>;
   hasUsersNotifications!: Sequelize.HasManyHasAssociationsMixin<UsersNotifications, UsersNotificationsId>;
   countUsersNotifications!: Sequelize.HasManyCountAssociationsMixin;
+  // Users hasMany UsersProfiles via userId
+  usersProfiles!: UsersProfiles[];
+  getUsersProfiles!: Sequelize.HasManyGetAssociationsMixin<UsersProfiles>;
+  setUsersProfiles!: Sequelize.HasManySetAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  addUsersProfile!: Sequelize.HasManyAddAssociationMixin<UsersProfiles, UsersProfilesId>;
+  addUsersProfiles!: Sequelize.HasManyAddAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  createUsersProfile!: Sequelize.HasManyCreateAssociationMixin<UsersProfiles>;
+  removeUsersProfile!: Sequelize.HasManyRemoveAssociationMixin<UsersProfiles, UsersProfilesId>;
+  removeUsersProfiles!: Sequelize.HasManyRemoveAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  hasUsersProfile!: Sequelize.HasManyHasAssociationMixin<UsersProfiles, UsersProfilesId>;
+  hasUsersProfiles!: Sequelize.HasManyHasAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  countUsersProfiles!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Users {
     return Users.init({

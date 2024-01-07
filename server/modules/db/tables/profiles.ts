@@ -1,5 +1,8 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
+import type { Users, UsersId } from './users';
+import type { UsersProfiles, UsersProfilesId } from './users_profiles';
 
 export interface ProfilesAttributes {
   id: string;
@@ -21,6 +24,42 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
   timeCreated?: Date;
   timeUpdated?: Date;
 
+  // Profiles hasMany ProfileModulePermissions via profileId
+  profileModulePermissions!: ProfileModulePermissions[];
+  getProfileModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileModulePermissions>;
+  setProfileModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  addProfileModulePermission!: Sequelize.HasManyAddAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  addProfileModulePermissions!: Sequelize.HasManyAddAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  createProfileModulePermission!: Sequelize.HasManyCreateAssociationMixin<ProfileModulePermissions>;
+  removeProfileModulePermission!: Sequelize.HasManyRemoveAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  removeProfileModulePermissions!: Sequelize.HasManyRemoveAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  hasProfileModulePermission!: Sequelize.HasManyHasAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  hasProfileModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
+  countProfileModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
+  // Profiles belongsToMany Users via profileId and userId
+  userIdUsers!: Users[];
+  getUserIdUsers!: Sequelize.BelongsToManyGetAssociationsMixin<Users>;
+  setUserIdUsers!: Sequelize.BelongsToManySetAssociationsMixin<Users, UsersId>;
+  addUserIdUser!: Sequelize.BelongsToManyAddAssociationMixin<Users, UsersId>;
+  addUserIdUsers!: Sequelize.BelongsToManyAddAssociationsMixin<Users, UsersId>;
+  createUserIdUser!: Sequelize.BelongsToManyCreateAssociationMixin<Users>;
+  removeUserIdUser!: Sequelize.BelongsToManyRemoveAssociationMixin<Users, UsersId>;
+  removeUserIdUsers!: Sequelize.BelongsToManyRemoveAssociationsMixin<Users, UsersId>;
+  hasUserIdUser!: Sequelize.BelongsToManyHasAssociationMixin<Users, UsersId>;
+  hasUserIdUsers!: Sequelize.BelongsToManyHasAssociationsMixin<Users, UsersId>;
+  countUserIdUsers!: Sequelize.BelongsToManyCountAssociationsMixin;
+  // Profiles hasMany UsersProfiles via profileId
+  usersProfiles!: UsersProfiles[];
+  getUsersProfiles!: Sequelize.HasManyGetAssociationsMixin<UsersProfiles>;
+  setUsersProfiles!: Sequelize.HasManySetAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  addUsersProfile!: Sequelize.HasManyAddAssociationMixin<UsersProfiles, UsersProfilesId>;
+  addUsersProfiles!: Sequelize.HasManyAddAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  createUsersProfile!: Sequelize.HasManyCreateAssociationMixin<UsersProfiles>;
+  removeUsersProfile!: Sequelize.HasManyRemoveAssociationMixin<UsersProfiles, UsersProfilesId>;
+  removeUsersProfiles!: Sequelize.HasManyRemoveAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  hasUsersProfile!: Sequelize.HasManyHasAssociationMixin<UsersProfiles, UsersProfilesId>;
+  hasUsersProfiles!: Sequelize.HasManyHasAssociationsMixin<UsersProfiles, UsersProfilesId>;
+  countUsersProfiles!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Profiles {
     return Profiles.init({

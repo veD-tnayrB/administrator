@@ -2,31 +2,20 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
 
-export interface ModulesAttributes {
+export interface PermissionsAttributes {
   id: string;
-  label?: string;
-  to?: string;
-  timeCreated?: Date;
-  timeUpdated?: Date;
-  order?: number;
-  icon?: string;
+  name: string;
 }
 
-export type ModulesPk = "id";
-export type ModulesId = Modules[ModulesPk];
-export type ModulesOptionalAttributes = "label" | "to" | "timeCreated" | "timeUpdated" | "order" | "icon";
-export type ModulesCreationAttributes = Optional<ModulesAttributes, ModulesOptionalAttributes>;
+export type PermissionsPk = "id";
+export type PermissionsId = Permissions[PermissionsPk];
+export type PermissionsCreationAttributes = PermissionsAttributes;
 
-export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes> implements ModulesAttributes {
+export class Permissions extends Model<PermissionsAttributes, PermissionsCreationAttributes> implements PermissionsAttributes {
   id!: string;
-  label?: string;
-  to?: string;
-  timeCreated?: Date;
-  timeUpdated?: Date;
-  order?: number;
-  icon?: string;
+  name!: string;
 
-  // Modules hasMany ProfileModulePermissions via moduleId
+  // Permissions hasMany ProfileModulePermissions via permissionId
   profileModulePermissions!: ProfileModulePermissions[];
   getProfileModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileModulePermissions>;
   setProfileModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
@@ -39,42 +28,20 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
   hasProfileModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
   countProfileModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Modules {
-    return Modules.init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof Permissions {
+    return Permissions.init({
     id: {
       type: DataTypes.CHAR(36),
       allowNull: false,
       primaryKey: true
     },
-    label: {
+    name: {
       type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    to: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    timeCreated: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      field: 'time_created'
-    },
-    timeUpdated: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      field: 'time_updated'
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    icon: {
-      type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'modules',
+    tableName: 'permissions',
     timestamps: false,
     indexes: [
       {
