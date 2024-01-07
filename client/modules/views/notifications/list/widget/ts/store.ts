@@ -28,4 +28,17 @@ export class StoreManager extends StoreListView {
 			this.fetching = false;
 		}
 	};
+
+	startJob = async (id: string) => {
+		try {
+			this.fetching = true;
+			const notification = new Notification();
+			const response = await notification.load({ id });
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
 }

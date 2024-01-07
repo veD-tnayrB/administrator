@@ -12,13 +12,30 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('LOGIN error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: `Server error of ${exc}` });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
+			return res.status(500).json(errorResponse);
+		}
+	}
+
+	async getUser(req: Request, res: Response) {
+		try {
+			const params = req.query;
+			if (!params.token) throw 'TOKEN_NOT_PROVIDED';
+			const response = await Auth.getUser(params);
+			if (!response.status) throw response.error;
+
+			const formatedResponse = ResponseAPI.success({ data: response.data });
+			return res.json(formatedResponse);
+		} catch (exc) {
+			console.error('LOGIN error:', exc);
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
 			return res.status(500).json(errorResponse);
 		}
 	}
 
 	setup(app: Application) {
 		app.post('/login', this.login);
+		app.get('/auth/get-user', this.getUser);
 	}
 }
 

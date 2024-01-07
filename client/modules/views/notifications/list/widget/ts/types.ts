@@ -29,6 +29,7 @@ interface List {
 				close: string;
 			};
 			launch: string;
+			startJob: string;
 		};
 	};
 }

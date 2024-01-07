@@ -8,7 +8,7 @@ export class UserItemProvider {
 		return this.#api.post('login', params);
 	};
 
-	data = (params: { id: string }) => {
-		return this.#api.post('user', params);
+	data = (params: { token: string }) => {
+		return this.#api.get('auth/get-user', params);
 	};
 }

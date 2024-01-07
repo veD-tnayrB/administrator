@@ -36,7 +36,8 @@
 						"confirm": "Confirmar",
 						"close": "Cancelar"
 					},
-					"launch": "Lanzar notificacion"
+					"launch": "Lanzar notificacion",
+					"startJob": "Correr"
 				}
 			}
 		}
@@ -76,7 +77,8 @@
 						"description": "Are you sure you want to delete it?",
 						"confirm": "Confirm",
 						"close": "Cancel"
-					}
+					},
+					"startJob": "Run"
 				}
 			}
 		}

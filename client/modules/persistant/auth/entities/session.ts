@@ -45,7 +45,7 @@ class Session extends ReactiveModel<Session> {
 		return this.#notificationsHandler;
 	}
 
-	#isLogged: boolean = false;
+	#isLogged: boolean = !!localStorage.getItem('__session');
 
 	/**
 	 * Getter to check if the user is logged in.
@@ -55,7 +55,7 @@ class Session extends ReactiveModel<Session> {
 		return this.#isLogged || !!localStorage.getItem('__session');
 	}
 
-	#token: string | null = null;
+	#token: string | null = JSON.parse(localStorage.getItem('__session'))?.token;
 	get token() {
 		const values = JSON.parse(localStorage.getItem('__session'));
 		return this.#token || values?.token || null;
@@ -69,6 +69,7 @@ class Session extends ReactiveModel<Session> {
 		this.#listenForSessionChanges();
 		globalThis.s = this;
 		this.#notificationsHandler = new NotificationsHandler({ session: this });
+		if (this.#isLogged) this.load();
 	}
 
 	/**
@@ -96,13 +97,14 @@ class Session extends ReactiveModel<Session> {
 			const loadResponse = await this.#user.login(loadParams);
 			if (!loadResponse.status) throw loadResponse.error.message;
 
-			this.#isLogged = true;
 			const toSave = {
 				token: loadResponse.data.token,
 			};
 			localStorage.setItem('__session', JSON.stringify(toSave));
 			this.#token = loadResponse.data.token;
-
+			console.log('Auth: Logged in', loadResponse.data);
+			this.#user.set({ ...loadResponse.data.user, loaded: true });
+			this.#isLogged = true;
 			this.triggerEvent('user-changed');
 			this.triggerEvent('token-changed');
 			return { status: true };
@@ -144,6 +146,25 @@ class Session extends ReactiveModel<Session> {
 		}
 	};
 
+	load = async () => {
+		try {
+			this.fetching = true;
+			const response = await this.#user.load({ token: this.#token });
+			if (!response.status) throw response.error;
+			console.log('response => ', response.data);
+
+			this.#isLogged = true;
+			this.#user.set({ ...response.data.user, loaded: true });
+			this.triggerEvent('user-changed');
+			return { status: true };
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	/**
 	 * Method to log out the current user.
 	 * @async
@@ -174,16 +195,12 @@ class Session extends ReactiveModel<Session> {
 	 */
 	#listenForSessionChanges = async () => {
 		auth.onAuthStateChanged(async user => {
-			if (!user) {
-				// Verificar si previamente había un usuario autenticado.
-				if (this.#isLogged) {
-					return this.logout();
-				}
-				return;
+			if (!user && this.#isLogged) {
+				return this.logout();
 			}
 
 			// Si hay un usuario, continuar con la carga del usuario.
-			const loadResponse = await this.#user.load({ email: user.email });
+			const loadResponse = await this.#user.load({ token: this.#token });
 			if (!loadResponse.status) throw loadResponse.error.message;
 			this.#isLogged = true;
 			this.triggerEvent('user-changed');

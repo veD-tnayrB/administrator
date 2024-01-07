@@ -8,11 +8,24 @@ interface IUser {
 	lastNames: string;
 	names: string;
 	timeCreated: Date;
+	profiles: { id: string; name: string }[];
+	permissions: { id: string; name: string }[];
 	timeUpdated: Date;
 }
 
 export /*bundle*/ class User extends ReactiveModel<IUser> {
 	private provider: UserItemProvider = new UserItemProvider();
+	protected properties = [
+		'id',
+		'names',
+		'lastNames',
+		'email',
+		'active',
+		'timeCreated',
+		'timeUpdated',
+		'permissions',
+		'profiles',
+	];
 
 	get fullName() {
 		let namesArray = this.names.split(' ');
@@ -23,7 +36,18 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 
 	constructor() {
 		super();
-		this.reactiveProps(['id', 'names', 'lastNames', 'email', 'active', 'timeCreated', 'timeUpdated']);
+		this.reactiveProps([
+			'id',
+			'names',
+			'lastNames',
+			'email',
+			'active',
+			'timeCreated',
+			'timeUpdated',
+			'permissions',
+			'profiles',
+			'loaded',
+		]);
 	}
 
 	login = async (params: { email: string; password?: string }) => {
@@ -40,10 +64,10 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
-	data = async ({ id }: { id: string }) => {
+	load = async (params: { token: string }) => {
 		try {
 			this.fetching = true;
-			const response = await this.provider.data({ id });
+			const response = await this.provider.data(params);
 			if (!response.status) throw response.error;
 			return response;
 		} catch (error) {
@@ -53,4 +77,17 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 			this.fetching = false;
 		}
 	};
+
+	set(data: this): void {
+		this.properties.forEach((property: string | { name: string }) => {
+			if (typeof property === 'object') {
+				if (data.hasOwnProperty(property.name)) {
+				}
+				return;
+			}
+			if (data.hasOwnProperty(property)) this[property] = data[property];
+		});
+
+		this.triggerEvent();
+	}
 }

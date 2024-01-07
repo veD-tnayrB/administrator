@@ -1,8 +1,10 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Module, Modules } from '@essential-js/admin/models';
+import { session } from '@essential-js/admin/auth';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#mode: 'dark' | 'light' = 'light';
+	#session: session = session;
 	get mode() {
 		return this.#mode;
 	}
@@ -15,14 +17,29 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	constructor() {
 		super();
 		this.#loadTheme();
+		this.#session.on('change', () => {
+			console.log('ME CAGO EN LA PUTA');
+
+			this.loadSidebarItems();
+		});
 	}
 
 	loadSidebarItems = async () => {
 		try {
 			this.fetching = true;
+			const sessionsIsntLoaded = !this.#session.isLogged;
+			const alreadyLoaded = !!this.#sidebarCollection.items.length;
+			console.log('SESSIONS ISNT LOADED', sessionsIsntLoaded, this.#session.user);
+
+			if (sessionsIsntLoaded || alreadyLoaded) return;
+
 			const response = await this.#sidebarCollection.load();
 			if (!response.status) throw response.error;
-			this.#sidebarCollection.items.sort((a: Module, b: Module) => a.order - b.order);
+
+			const userModuleIds = this.#session.user.permissions.map(permission => permission.moduleId);
+			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));
+			userModules.sort((a, b) => a.order - b.order);
+			this.#sidebarCollection.items = userModules;
 		} catch (error) {
 			console.error('ERROR LOADING SIDEBAR ITEMS ', error);
 			return { status: false, error };
