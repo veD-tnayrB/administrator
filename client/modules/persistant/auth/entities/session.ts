@@ -102,7 +102,6 @@ class Session extends ReactiveModel<Session> {
 			};
 			localStorage.setItem('__session', JSON.stringify(toSave));
 			this.#token = loadResponse.data.token;
-			console.log('[LOGIN]', loadResponse.data);
 			this.#user.set({ ...loadResponse.data.user, loaded: true });
 			this.#isLogged = true;
 			this.triggerEvent('user-changed');
@@ -150,10 +149,8 @@ class Session extends ReactiveModel<Session> {
 		try {
 			this.fetching = true;
 			if (!this.#isLogged) return;
-			console.log('THIS.ISLOGGED => ', this.#isLogged);
 			const response = await this.#user.load({ token: this.#token });
 			if (!response.status) throw response.error;
-			console.log('[LOAD]', response.data);
 
 			this.#isLogged = true;
 			this.#user.set({ ...response.data.user, loaded: true });
@@ -197,11 +194,12 @@ class Session extends ReactiveModel<Session> {
 	 */
 	#listenForSessionChanges = async () => {
 		auth.onAuthStateChanged(async user => {
-			if (!user && this.#isLogged) {
+			if (!this.#user && this.#isLogged) {
 				return this.logout();
 			}
 
 			// Si hay un usuario, continuar con la carga del usuario.
+			if (!this.#isLogged) return;
 			const loadResponse = await this.#user.load({ token: this.#token });
 			if (!loadResponse.status) throw loadResponse.error.message;
 			this.#isLogged = true;

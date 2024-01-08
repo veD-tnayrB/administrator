@@ -55,9 +55,7 @@ export class NotificationsManager extends Manager {
 		}
 	};
 
-	markAsRead = async (params: { userId: string; notificationId: string }) => {
-		// console.log('MESSAGE RECEIVED', params);
-	};
+	markAsRead = async (params: { userId: string; notificationId: string }) => {};
 }
 
 export /*bundle*/ const Notifications = new NotificationsManager();

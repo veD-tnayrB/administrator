@@ -4,7 +4,6 @@ import { session } from '@essential-js/admin/auth';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#mode: 'dark' | 'light' = 'light';
-	#session: session = session;
 	get mode() {
 		return this.#mode;
 	}
@@ -17,8 +16,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	constructor() {
 		super();
 		this.#loadTheme();
-		this.#session.on('change', () => {
-			console.log('[SIDEBAR SESSION CHANGE]');
+		session.on('user-changed', () => {
 			this.loadSidebarItems();
 		});
 	}
@@ -26,16 +24,15 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	loadSidebarItems = async () => {
 		try {
 			this.fetching = true;
-			const sessionsIsntLoaded = !this.#session.isLogged;
+			const isSessionLoaded = session.isLogged;
 			const alreadyLoaded = !!this.#sidebarCollection.items.length;
 
-			console.log('[SIDEBAR LOAD]');
-			if (sessionsIsntLoaded || alreadyLoaded) return;
+			if (!isSessionLoaded || alreadyLoaded) return;
 
 			const response = await this.#sidebarCollection.load();
 			if (!response.status) throw response.error;
 
-			const userModuleIds = this.#session.user.permissions.map(permission => permission.moduleId);
+			const userModuleIds = session.user.permissions.map(permission => permission.moduleId);
 			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));
 			userModules.sort((a, b) => a.order - b.order);
 			this.#sidebarCollection.items = userModules;
