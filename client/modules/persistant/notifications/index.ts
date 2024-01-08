@@ -34,6 +34,5 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 
 	#onMessageReceived = async params => {
 		const response = await this.#api.put('notification/markAsRead', { id: '', userId: '' });
-		console.log('[ON_MESSAGE_RECEIVED] => ', response, params);
 	};
 }

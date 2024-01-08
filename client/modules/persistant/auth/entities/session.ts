@@ -102,7 +102,7 @@ class Session extends ReactiveModel<Session> {
 			};
 			localStorage.setItem('__session', JSON.stringify(toSave));
 			this.#token = loadResponse.data.token;
-			console.log('Auth: Logged in', loadResponse.data);
+			console.log('[LOGIN]', loadResponse.data);
 			this.#user.set({ ...loadResponse.data.user, loaded: true });
 			this.#isLogged = true;
 			this.triggerEvent('user-changed');
@@ -149,9 +149,11 @@ class Session extends ReactiveModel<Session> {
 	load = async () => {
 		try {
 			this.fetching = true;
+			if (!this.#isLogged) return;
+			console.log('THIS.ISLOGGED => ', this.#isLogged);
 			const response = await this.#user.load({ token: this.#token });
 			if (!response.status) throw response.error;
-			console.log('response => ', response.data);
+			console.log('[LOAD]', response.data);
 
 			this.#isLogged = true;
 			this.#user.set({ ...response.data.user, loaded: true });

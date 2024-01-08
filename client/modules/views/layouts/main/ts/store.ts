@@ -18,8 +18,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		super();
 		this.#loadTheme();
 		this.#session.on('change', () => {
-			console.log('ME CAGO EN LA PUTA');
-
+			console.log('[SIDEBAR SESSION CHANGE]');
 			this.loadSidebarItems();
 		});
 	}
@@ -29,8 +28,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const sessionsIsntLoaded = !this.#session.isLogged;
 			const alreadyLoaded = !!this.#sidebarCollection.items.length;
-			console.log('SESSIONS ISNT LOADED', sessionsIsntLoaded, this.#session.user);
 
+			console.log('[SIDEBAR LOAD]');
 			if (sessionsIsntLoaded || alreadyLoaded) return;
 
 			const response = await this.#sidebarCollection.load();

@@ -56,7 +56,7 @@ export class NotificationsManager extends Manager {
 	};
 
 	markAsRead = async (params: { userId: string; notificationId: string }) => {
-		console.log('MESSAGE RECEIVED', params);
+		// console.log('MESSAGE RECEIVED', params);
 	};
 }
 
