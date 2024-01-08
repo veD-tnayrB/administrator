@@ -5,7 +5,8 @@ import { StoreManager } from './store';
 import { useTexts } from '@essential-js/admin/helpers';
 import { module } from 'beyond_context';
 import { ToastContainer } from 'react-toastify';
-
+import { useCheckPermissions } from '@essential-js/admin/helpers';
+import { routing } from '@beyond-js/kernel/routing';
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
@@ -15,8 +16,10 @@ declare global {
 }
 
 export function Layout({ store }: { store: StoreManager }) {
+	const hasPermissions = useCheckPermissions();
 	const [ready, texts] = useTexts(module.specifier);
 
+	if (!hasPermissions) return null;
 	if (!ready) return;
 
 	const contextValue: IContext = {

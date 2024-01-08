@@ -1,0 +1,24 @@
+{
+	"es": {
+		"403": {
+			"title": "Acceso denegado",
+			"description": "Al parecer no tiene los permisos suficientes como para acceder a este modulo, si entro por equivocacion cliquee el boton para volver a la home, caso contrario contacte con un administrador"
+		},
+		"404": {
+			"title": "Pagina no encontrada",
+			"description": "Aparentemente estas intentando acceder a una pagina que no existe, lo comun es que la url proporcionada tengo un error, por favor checkeela"
+		},
+		"goBack": "Volver"
+	},
+	"en": {
+		"403": {
+			"title": "Access denied",
+			"description": "Apparently you do not have sufficient permissions to access this module, if you entered by mistake click the button to return to the home page, otherwise contact an administrator."
+		},
+		"404": {
+			"title": "Page not found",
+			"description": "Apparently you are trying to access a page that does not exist, it is common that the url provided has an error, please check it."
+		},
+		"goBack": "Back home"
+	}
+}

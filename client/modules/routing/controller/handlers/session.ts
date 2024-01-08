@@ -10,6 +10,7 @@ function validate(route: string) {
 	const isANoSessionRoute: boolean = noSession.some(path => route.startsWith(path));
 	const isSessionActive: boolean = session.isLogged;
 
+	if (route.includes('/error')) return { pathname: route };
 	if (!isSessionActive && !isANoSessionRoute) return { pathname: '/auth/login' };
 	if (isSessionActive && isANoSessionRoute) return { pathname: '/dashboard' };
 	if (route === '/') return { pathname: '/dashboard' };
