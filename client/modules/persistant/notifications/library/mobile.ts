@@ -41,6 +41,7 @@ export class Mobile {
 		if ((this.device = 'Android' && globalThis?.cordova?.plugin?.customfcmreceiver)) {
 			// Custom FCM receiver plugin
 			globalThis.cordova.plugin.customfcmreceiver.registerReceiver(message =>
+				console.log('Received custom message: ', message)
 			);
 		}
 
@@ -111,6 +112,7 @@ export class Mobile {
 		);
 
 		globalThis.FirebasePlugin.registerInstallationIdChangeListener((installationId: string | number) =>
+			console.log('Installation ID changed - new ID: ' + installationId)
 		);
 	}
 

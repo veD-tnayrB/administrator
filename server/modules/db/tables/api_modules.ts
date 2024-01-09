@@ -1,22 +1,26 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { ProfileApiModulePermissions, ProfileApiModulePermissionsId } from './profile_api_module_permissions';
-import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
 
-export interface PermissionsAttributes {
+export interface ApiModulesAttributes {
   id: string;
   name: string;
+  timeCreated?: Date;
+  timeUpdated?: Date;
 }
 
-export type PermissionsPk = "id";
-export type PermissionsId = Permissions[PermissionsPk];
-export type PermissionsCreationAttributes = PermissionsAttributes;
+export type ApiModulesPk = "id";
+export type ApiModulesId = ApiModules[ApiModulesPk];
+export type ApiModulesOptionalAttributes = "timeCreated" | "timeUpdated";
+export type ApiModulesCreationAttributes = Optional<ApiModulesAttributes, ApiModulesOptionalAttributes>;
 
-export class Permissions extends Model<PermissionsAttributes, PermissionsCreationAttributes> implements PermissionsAttributes {
+export class ApiModules extends Model<ApiModulesAttributes, ApiModulesCreationAttributes> implements ApiModulesAttributes {
   id!: string;
   name!: string;
+  timeCreated?: Date;
+  timeUpdated?: Date;
 
-  // Permissions hasMany ProfileApiModulePermissions via permissionId
+  // ApiModules hasMany ProfileApiModulePermissions via apiModuleId
   profileApiModulePermissions!: ProfileApiModulePermissions[];
   getProfileApiModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileApiModulePermissions>;
   setProfileApiModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
@@ -28,21 +32,9 @@ export class Permissions extends Model<PermissionsAttributes, PermissionsCreatio
   hasProfileApiModulePermission!: Sequelize.HasManyHasAssociationMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
   hasProfileApiModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
   countProfileApiModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
-  // Permissions hasMany ProfileModulePermissions via permissionId
-  profileModulePermissions!: ProfileModulePermissions[];
-  getProfileModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileModulePermissions>;
-  setProfileModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  addProfileModulePermission!: Sequelize.HasManyAddAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  addProfileModulePermissions!: Sequelize.HasManyAddAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  createProfileModulePermission!: Sequelize.HasManyCreateAssociationMixin<ProfileModulePermissions>;
-  removeProfileModulePermission!: Sequelize.HasManyRemoveAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  removeProfileModulePermissions!: Sequelize.HasManyRemoveAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  hasProfileModulePermission!: Sequelize.HasManyHasAssociationMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  hasProfileModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
-  countProfileModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Permissions {
-    return Permissions.init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof ApiModules {
+    return ApiModules.init({
     id: {
       type: DataTypes.CHAR(36),
       allowNull: false,
@@ -51,10 +43,22 @@ export class Permissions extends Model<PermissionsAttributes, PermissionsCreatio
     name: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    timeCreated: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'time_created'
+    },
+    timeUpdated: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'time_updated'
     }
   }, {
     sequelize,
-    tableName: 'permissions',
+    tableName: 'api_modules',
     timestamps: false,
     indexes: [
       {
