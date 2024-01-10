@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { ApiRoutes, ApiRoutesId } from './api_routes';
 import type { ProfileApiModulePermissions, ProfileApiModulePermissionsId } from './profile_api_module_permissions';
 
 export interface ApiModulesAttributes {
@@ -20,6 +21,18 @@ export class ApiModules extends Model<ApiModulesAttributes, ApiModulesCreationAt
   timeCreated?: Date;
   timeUpdated?: Date;
 
+  // ApiModules hasMany ApiRoutes via apiModuleId
+  apiRoutes!: ApiRoutes[];
+  getApiRoutes!: Sequelize.HasManyGetAssociationsMixin<ApiRoutes>;
+  setApiRoutes!: Sequelize.HasManySetAssociationsMixin<ApiRoutes, ApiRoutesId>;
+  addApiRoute!: Sequelize.HasManyAddAssociationMixin<ApiRoutes, ApiRoutesId>;
+  addApiRoutes!: Sequelize.HasManyAddAssociationsMixin<ApiRoutes, ApiRoutesId>;
+  createApiRoute!: Sequelize.HasManyCreateAssociationMixin<ApiRoutes>;
+  removeApiRoute!: Sequelize.HasManyRemoveAssociationMixin<ApiRoutes, ApiRoutesId>;
+  removeApiRoutes!: Sequelize.HasManyRemoveAssociationsMixin<ApiRoutes, ApiRoutesId>;
+  hasApiRoute!: Sequelize.HasManyHasAssociationMixin<ApiRoutes, ApiRoutesId>;
+  hasApiRoutes!: Sequelize.HasManyHasAssociationsMixin<ApiRoutes, ApiRoutesId>;
+  countApiRoutes!: Sequelize.HasManyCountAssociationsMixin;
   // ApiModules hasMany ProfileApiModulePermissions via apiModuleId
   profileApiModulePermissions!: ProfileApiModulePermissions[];
   getProfileApiModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileApiModulePermissions>;

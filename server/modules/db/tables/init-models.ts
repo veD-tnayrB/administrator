@@ -3,6 +3,8 @@ import { AccessTokens as _AccessTokens } from "./access_tokens";
 import type { AccessTokensAttributes, AccessTokensCreationAttributes } from "./access_tokens";
 import { ApiModules as _ApiModules } from "./api_modules";
 import type { ApiModulesAttributes, ApiModulesCreationAttributes } from "./api_modules";
+import { ApiRoutes as _ApiRoutes } from "./api_routes";
+import type { ApiRoutesAttributes, ApiRoutesCreationAttributes } from "./api_routes";
 import { Modules as _Modules } from "./modules";
 import type { ModulesAttributes, ModulesCreationAttributes } from "./modules";
 import { Notifications as _Notifications } from "./notifications";
@@ -27,6 +29,7 @@ import type { WidgetsAttributes, WidgetsCreationAttributes } from "./widgets";
 export {
   _AccessTokens as AccessTokens,
   _ApiModules as ApiModules,
+  _ApiRoutes as ApiRoutes,
   _Modules as Modules,
   _Notifications as Notifications,
   _Permissions as Permissions,
@@ -44,6 +47,8 @@ export type {
   AccessTokensCreationAttributes,
   ApiModulesAttributes,
   ApiModulesCreationAttributes,
+  ApiRoutesAttributes,
+  ApiRoutesCreationAttributes,
   ModulesAttributes,
   ModulesCreationAttributes,
   NotificationsAttributes,
@@ -69,6 +74,7 @@ export type {
 export function initModels(sequelize: Sequelize) {
   const AccessTokens = _AccessTokens.initModel(sequelize);
   const ApiModules = _ApiModules.initModel(sequelize);
+  const ApiRoutes = _ApiRoutes.initModel(sequelize);
   const Modules = _Modules.initModel(sequelize);
   const Notifications = _Notifications.initModel(sequelize);
   const Permissions = _Permissions.initModel(sequelize);
@@ -82,8 +88,12 @@ export function initModels(sequelize: Sequelize) {
 
   Profiles.belongsToMany(Users, { as: 'userIdUsers', through: UsersProfiles, foreignKey: "profileId", otherKey: "userId" });
   Users.belongsToMany(Profiles, { as: 'profileIdProfiles', through: UsersProfiles, foreignKey: "userId", otherKey: "profileId" });
+  ApiRoutes.belongsTo(ApiModules, { as: "apiModule", foreignKey: "apiModuleId"});
+  ApiModules.hasMany(ApiRoutes, { as: "apiRoutes", foreignKey: "apiModuleId"});
   ProfileApiModulePermissions.belongsTo(ApiModules, { as: "apiModule", foreignKey: "apiModuleId"});
   ApiModules.hasMany(ProfileApiModulePermissions, { as: "profileApiModulePermissions", foreignKey: "apiModuleId"});
+  ProfileApiModulePermissions.belongsTo(ApiRoutes, { as: "apiRoute", foreignKey: "apiRouteId"});
+  ApiRoutes.hasMany(ProfileApiModulePermissions, { as: "profileApiModulePermissions", foreignKey: "apiRouteId"});
   ProfileModulePermissions.belongsTo(Modules, { as: "module", foreignKey: "moduleId"});
   Modules.hasMany(ProfileModulePermissions, { as: "profileModulePermissions", foreignKey: "moduleId"});
   ProfileApiModulePermissions.belongsTo(Permissions, { as: "permission", foreignKey: "permissionId"});
@@ -106,6 +116,7 @@ export function initModels(sequelize: Sequelize) {
   return {
     AccessTokens: AccessTokens,
     ApiModules: ApiModules,
+    ApiRoutes: ApiRoutes,
     Modules: Modules,
     Notifications: Notifications,
     Permissions: Permissions,

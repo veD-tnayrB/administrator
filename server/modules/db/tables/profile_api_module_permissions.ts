@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { ApiModules, ApiModulesId } from './api_modules';
+import type { ApiRoutes, ApiRoutesId } from './api_routes';
 import type { Permissions, PermissionsId } from './permissions';
 import type { Profiles, ProfilesId } from './profiles';
 
@@ -11,11 +12,12 @@ export interface ProfileApiModulePermissionsAttributes {
   permissionId: string;
   timeCreated?: Date;
   timeUpdated?: Date;
+  apiRouteId?: string;
 }
 
 export type ProfileApiModulePermissionsPk = "id";
 export type ProfileApiModulePermissionsId = ProfileApiModulePermissions[ProfileApiModulePermissionsPk];
-export type ProfileApiModulePermissionsOptionalAttributes = "timeCreated" | "timeUpdated";
+export type ProfileApiModulePermissionsOptionalAttributes = "timeCreated" | "timeUpdated" | "apiRouteId";
 export type ProfileApiModulePermissionsCreationAttributes = Optional<ProfileApiModulePermissionsAttributes, ProfileApiModulePermissionsOptionalAttributes>;
 
 export class ProfileApiModulePermissions extends Model<ProfileApiModulePermissionsAttributes, ProfileApiModulePermissionsCreationAttributes> implements ProfileApiModulePermissionsAttributes {
@@ -25,12 +27,18 @@ export class ProfileApiModulePermissions extends Model<ProfileApiModulePermissio
   permissionId!: string;
   timeCreated?: Date;
   timeUpdated?: Date;
+  apiRouteId?: string;
 
   // ProfileApiModulePermissions belongsTo ApiModules via apiModuleId
   apiModule!: ApiModules;
   getApiModule!: Sequelize.BelongsToGetAssociationMixin<ApiModules>;
   setApiModule!: Sequelize.BelongsToSetAssociationMixin<ApiModules, ApiModulesId>;
   createApiModule!: Sequelize.BelongsToCreateAssociationMixin<ApiModules>;
+  // ProfileApiModulePermissions belongsTo ApiRoutes via apiRouteId
+  apiRoute!: ApiRoutes;
+  getApiRoute!: Sequelize.BelongsToGetAssociationMixin<ApiRoutes>;
+  setApiRoute!: Sequelize.BelongsToSetAssociationMixin<ApiRoutes, ApiRoutesId>;
+  createApiRoute!: Sequelize.BelongsToCreateAssociationMixin<ApiRoutes>;
   // ProfileApiModulePermissions belongsTo Permissions via permissionId
   permission!: Permissions;
   getPermission!: Sequelize.BelongsToGetAssociationMixin<Permissions>;
@@ -87,6 +95,15 @@ export class ProfileApiModulePermissions extends Model<ProfileApiModulePermissio
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'time_updated'
+    },
+    apiRouteId: {
+      type: DataTypes.CHAR(36),
+      allowNull: true,
+      references: {
+        model: 'api_routes',
+        key: 'id'
+      },
+      field: 'api_route_id'
     }
   }, {
     sequelize,
@@ -120,6 +137,13 @@ export class ProfileApiModulePermissions extends Model<ProfileApiModulePermissio
         using: "BTREE",
         fields: [
           { name: "permission_id" },
+        ]
+      },
+      {
+        name: "api_route_id",
+        using: "BTREE",
+        fields: [
+          { name: "api_route_id" },
         ]
       },
     ]

@@ -36,6 +36,7 @@ export class Mobile {
 		);
 
 		globalThis.FirebasePlugin.registerAuthStateChangeListener(userSignedIn =>
+			console.log('Auth state changed: User signed ' + (userSignedIn ? 'in' : 'out'))
 		);
 
 		if ((this.device = 'Android' && globalThis?.cordova?.plugin?.customfcmreceiver)) {

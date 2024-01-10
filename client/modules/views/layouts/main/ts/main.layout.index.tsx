@@ -6,7 +6,6 @@ import { useTexts } from '@essential-js/admin/helpers';
 import { module } from 'beyond_context';
 import { ToastContainer } from 'react-toastify';
 import { useCheckPermissions } from '@essential-js/admin/helpers';
-import { routing } from '@beyond-js/kernel/routing';
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
