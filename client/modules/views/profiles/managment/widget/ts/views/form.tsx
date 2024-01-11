@@ -6,6 +6,7 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
+import { Select } from '@essential-js/admin/components/select';
 
 export const Form = () => {
 	const { store, texts } = useProfilesManagmentContext();
@@ -13,7 +14,9 @@ export const Form = () => {
 		name: store.item.name || '',
 		description: store.item.description || '',
 		active: store.item.active || true,
+		modules: '',
 	});
+	const [selectedModule, setSelectedModule] = React.useState();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
 	useBinder([store], () => setIsLoading(store.fetching));
@@ -21,7 +24,7 @@ export const Form = () => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-
+		console.log({ name, rawValue });
 		setValues({ ...values, [name]: value });
 	};
 
@@ -48,6 +51,17 @@ export const Form = () => {
 					<span className="label-content"> {texts.labels.active}</span>
 				</label>
 			</div>
+
+			<Select
+				options={[
+					{ label: 'Users', value: 'b' },
+					{ label: 'Notifications', value: 'a' },
+				]}
+				onSelect={onChange}
+				name="modules"
+				value={values.modules}
+				label="Modules"
+			/>
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

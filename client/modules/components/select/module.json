@@ -1,0 +1,13 @@
+{
+	"name": "components/select",
+	"code": {
+		"scss": {
+			"path": "/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/ts",
+			"files": ["*"]
+		}
+	}
+}

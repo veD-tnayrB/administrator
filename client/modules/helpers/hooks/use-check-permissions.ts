@@ -10,9 +10,9 @@ export /*bundle */ const useCheckPermissions = () => {
 	});
 
 	React.useEffect(() => {
-		if (!session.isLogged) return;
+		if (!session.isLogged || !session.user.permissions) return;
 		const userModules = session.user.permissions.map(permission => permission.module.to);
-		const isAllowed = userModules.includes(currentRoute);
+		const isAllowed = userModules.some(item => currentRoute.includes(item));
 
 		if (!isAllowed) return routing.pushState('/error/403');
 		setHasPermission(isAllowed);
