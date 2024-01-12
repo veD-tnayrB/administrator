@@ -4,7 +4,6 @@ import { useSelectContext } from './context';
 export const Toggler = () => {
 	const { value, options, isOpen } = useSelectContext();
 	const currentValue = options.find(option => option.value === value);
-	console.log(currentValue, value);
 
 	const cls = isOpen ? 'open' : '';
 	return (

@@ -24,7 +24,6 @@ export const Form = () => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-		console.log({ name, rawValue });
 		setValues({ ...values, [name]: value });
 	};
 
