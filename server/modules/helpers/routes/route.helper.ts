@@ -2,7 +2,6 @@ import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { jwt } from '@bgroup/helpers/jwt';
-import { checkPermissions } from '../middlewares/permissions';
 
 interface ISuccess {
 	status: boolean;
@@ -40,11 +39,11 @@ export /*bundle*/ class Route {
 	}
 
 	setup = (app: Application) => {
-		app.get(`/${this.#endpoints.plural}`, jwt.verify, checkPermissions, this.list);
-		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, checkPermissions, this.get);
-		app.post(`/${this.#endpoints.singular}`, jwt.verify, checkPermissions, this.create);
-		app.put(`/${this.#endpoints.singular}`, jwt.verify, checkPermissions, this.update);
-		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, checkPermissions, this.delete);
+		app.get(`/${this.#endpoints.plural}`, jwt.verify, this.list);
+		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, this.get);
+		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
+		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
+		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
 	};
 
 	list = async (req: Request, res: Response) => {
