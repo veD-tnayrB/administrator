@@ -1,5 +1,7 @@
 import { Modules } from '@essential-js/admin-server/engines/modules';
-import { Route } from '@essential-js/admin-server/helpers';
+import { Route, ISuccess, ResponseType } from '@essential-js/admin-server/helpers';
+import { Request, Response } from 'express';
+import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
 class ModulesRoutes extends Route {
 	constructor() {
@@ -11,6 +13,21 @@ class ModulesRoutes extends Route {
 			},
 		});
 	}
+
+	get = async (req: Request, res: Response) => {
+		try {
+			const response: ResponseType = await this.manager.get({
+				...req.params,
+			});
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response as ISuccess);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /get', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
 }
 
 export const modules = new ModulesRoutes();

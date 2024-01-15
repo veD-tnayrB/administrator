@@ -6,7 +6,7 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
-import { Select } from '@essential-js/admin/components/select';
+import { Modules } from './modules';
 
 export const Form = () => {
 	const { store, texts } = useProfilesManagmentContext();
@@ -51,16 +51,7 @@ export const Form = () => {
 				</label>
 			</div>
 
-			<Select
-				options={[
-					{ label: 'Users', value: 'b' },
-					{ label: 'Notifications', value: 'a' },
-				]}
-				onSelect={onChange}
-				name="modules"
-				value={values.modules}
-				label="Modules"
-			/>
+			<Modules />
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

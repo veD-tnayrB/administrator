@@ -3,7 +3,7 @@ import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { jwt } from '@bgroup/helpers/jwt';
 
-interface ISuccess {
+export /*bundle*/ interface ISuccess {
 	status: boolean;
 	data: {
 		entries: object[];
@@ -20,7 +20,7 @@ interface IError {
 	};
 }
 
-type ResponseType = ISuccess | IError;
+export /*bundle*/ type ResponseType = ISuccess | IError;
 interface IEndpoints {
 	plural: string;
 	singular: string;

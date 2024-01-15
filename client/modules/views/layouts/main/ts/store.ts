@@ -27,6 +27,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const isSessionLoaded = session.isLogged;
 			const alreadyLoaded = !!this.#sidebarCollection.items.length;
 
+			console.log('this.#sidebarCollection.items', this.#sidebarCollection.items);
 			if (!isSessionLoaded || alreadyLoaded) return;
 
 			const response = await this.#sidebarCollection.load();
@@ -35,6 +36,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const userModuleIds = session.user.permissions.map(permission => permission.moduleId);
 			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));
 			userModules.sort((a, b) => a.order - b.order);
+			console.log('USER MODULES => ', userModules);
 			this.#sidebarCollection.items = userModules;
 		} catch (error) {
 			console.error('ERROR LOADING SIDEBAR ITEMS ', error);

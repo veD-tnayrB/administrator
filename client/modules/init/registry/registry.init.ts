@@ -12,6 +12,7 @@ async function inializeApp() {
 			profiles: 'id, name, description, timeCreated, timeUpdated',
 			modules: 'id, label, icon, to, timeCreated, timeUpdated, order',
 			notifications: 'id, title, description, icon, timeInterval, status, timeCreated, timeUpdated',
+			permissions: 'id, name, timeCreated, timeUpdated',
 		});
 	} catch (e) {
 		console.error('error', e);

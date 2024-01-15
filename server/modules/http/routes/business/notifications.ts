@@ -1,5 +1,5 @@
 import { Notifications } from '@essential-js/admin-server/engines/notifications';
-import { Route, checkPermissions } from '@essential-js/admin-server/helpers';
+import { Route } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
 import { jwt } from '@bgroup/helpers/jwt';
@@ -40,13 +40,13 @@ class NotificationsRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		app.get(`/notifications`, jwt.verify, checkPermissions, this.list);
-		app.get(`/notification/:id`, jwt.verify, checkPermissions, this.get);
-		app.post(`/notification`, jwt.verify, checkPermissions, this.create);
-		app.put(`/notification`, jwt.verify, checkPermissions, this.update);
-		app.delete(`/notification/:id`, jwt.verify, checkPermissions, this.delete);
-		app.post('/notification/launch', jwt.verify, checkPermissions, this.launch);
-		app.put('/notification/markAsRead', jwt.verify, checkPermissions, this.markAsRead);
+		app.get(`/notifications`, jwt.verify, this.list);
+		app.get(`/notification/:id`, jwt.verify, this.get);
+		app.post(`/notification`, jwt.verify, this.create);
+		app.put(`/notification`, jwt.verify, this.update);
+		app.delete(`/notification/:id`, jwt.verify, this.delete);
+		app.post('/notification/launch', jwt.verify, this.launch);
+		app.put('/notification/markAsRead', jwt.verify, this.markAsRead);
 	};
 }
 

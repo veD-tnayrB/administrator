@@ -1,6 +1,5 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { ProfileApiModulePermissions, ProfileApiModulePermissionsId } from './profile_api_module_permissions';
 import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
 import type { Users, UsersId } from './users';
 import type { UsersProfiles, UsersProfilesId } from './users_profiles';
@@ -25,18 +24,6 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
   timeCreated?: Date;
   timeUpdated?: Date;
 
-  // Profiles hasMany ProfileApiModulePermissions via profileId
-  profileApiModulePermissions!: ProfileApiModulePermissions[];
-  getProfileApiModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileApiModulePermissions>;
-  setProfileApiModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  addProfileApiModulePermission!: Sequelize.HasManyAddAssociationMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  addProfileApiModulePermissions!: Sequelize.HasManyAddAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  createProfileApiModulePermission!: Sequelize.HasManyCreateAssociationMixin<ProfileApiModulePermissions>;
-  removeProfileApiModulePermission!: Sequelize.HasManyRemoveAssociationMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  removeProfileApiModulePermissions!: Sequelize.HasManyRemoveAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  hasProfileApiModulePermission!: Sequelize.HasManyHasAssociationMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  hasProfileApiModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileApiModulePermissions, ProfileApiModulePermissionsId>;
-  countProfileApiModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
   // Profiles hasMany ProfileModulePermissions via profileId
   profileModulePermissions!: ProfileModulePermissions[];
   getProfileModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileModulePermissions>;

@@ -25,8 +25,7 @@
 	},
 	"libraries": {
 		"imports": [
-			"pragmate-ui",
-			"@bgroup/http-suite"
+			"pragmate-ui"
 		]
 	},
 	"modules": {
@@ -47,9 +46,9 @@
 	"dependencies": {
 		"@beyond-js/kernel": "~0.1.9",
 		"@beyond-js/react-18-widgets": "~1.0.1",
-		"@beyond-js/reactive": "1.1.6",
+		"@beyond-js/reactive": "1.1.9",
 		"@bgroup/helpers": "^1.0.3",
-		"@bgroup/http-suite": "^1.0.0",
+		"@bgroup/http-suite": "^1.0.2",
 		"@firebase/app": "^0.9.23",
 		"chart.js": "^4.4.1",
 		"firebase": "^10.6.0",
