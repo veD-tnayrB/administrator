@@ -46,7 +46,7 @@ export class ModulesManager extends Manager {
 			};
 		});
 
-		console.log('RESULT => ');
+		console.log('RESULT => ', result);
 
 		return { status: true, data: result };
 	};
