@@ -35,14 +35,8 @@ export const WelcomeWidget = () => {
 	useBinder([session], () => setNames(session.user.names));
 
 	const animation = {
-		initial: { y: -5, opacity: 0 },
-		animate: { y: 0, opacity: 1 },
-		transition: {
-			delay: 1 * 0.1,
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
 	};
 
 	return (

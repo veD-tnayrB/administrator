@@ -18,15 +18,9 @@ export const TotalItem = ({ title, amount, icon, to, index }: IProps) => {
 	const linkCls = to ? 'cursor-pointer' : 'cursor-default';
 
 	const animation = {
-		initial: { y: -5, opacity: 0 },
-		animate: { y: 0, opacity: 1 },
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
 		...hasLinkAnimations,
-		transition: {
-			delay: index * 0.2,
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
 	};
 
 	to = to || '/dashboard';

@@ -1,4 +1,3 @@
-// SidebarItem.tsx
 import React from 'react';
 import { Link } from 'pragmate-ui/link';
 import { routing } from '@beyond-js/kernel/routing';

@@ -17,11 +17,11 @@ export const RegisteredUsersWidget = () => {
 		manager.load();
 	}, []);
 
-	const primary = getComputedStyle(document.documentElement).getPropertyValue('--chart-1');
-	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--chart-2');
-	const tertiary = getComputedStyle(document.documentElement).getPropertyValue('--chart-3');
-	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--chart-4');
-	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--chart-5');
+	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
+	const tertiary = getComputedStyle(document.documentElement).getPropertyValue('--tertiary');
+	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--error');
+	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--success');
 
 	const values = data.map(item => item.value);
 	const labels = data.map(item => item.label);
@@ -46,14 +46,8 @@ export const RegisteredUsersWidget = () => {
 	};
 
 	const animation = {
-		initial: { y: -5, opacity: 0 },
-		animate: { y: 0, opacity: 1 },
-		transition: {
-			delay: 2 * 0.5,
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
 	};
 
 	return (

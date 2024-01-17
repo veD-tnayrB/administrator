@@ -4,6 +4,7 @@
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 1.25rem;
+	min-height: 112px;
 
 	.total {
 		box-shadow: var(--primary-shadow);
@@ -22,6 +23,11 @@
 			.icon {
 				width: 3rem;
 				height: 3rem;
+
+				svg,
+				path {
+					stroke: var(--on-surface);
+				}
 			}
 
 			.content {

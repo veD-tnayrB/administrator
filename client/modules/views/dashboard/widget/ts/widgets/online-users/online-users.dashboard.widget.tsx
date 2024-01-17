@@ -17,8 +17,8 @@ export const OnlineUsersWidget = () => {
 		manager.load();
 	}, []);
 
-	const primary = getComputedStyle(document.documentElement).getPropertyValue('--chart-1');
-	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--chart-2');
+	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--tertiary');
 
 	const values = data.map(item => item.value);
 	const labels = data.map(item => item.label);
@@ -43,14 +43,8 @@ export const OnlineUsersWidget = () => {
 	};
 
 	const animation = {
-		initial: { y: -5, opacity: 0 },
-		animate: { y: 0, opacity: 1 },
-		transition: {
-			delay: 2 * 0.7,
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
+		initial: { opacity: 0 },
+		animate: { opacity: 1 },
 	};
 
 	return (

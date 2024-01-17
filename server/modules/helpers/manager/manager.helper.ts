@@ -30,6 +30,7 @@ export /*bundle*/ abstract class Manager {
 	};
 
 	update = (params: Partial<{ [key: string]: unknown }>) => {
+		console.log('UPDATE => ', params);
 		return actions.publish(this.#model, params, `/update/${this.#managerName}`);
 	};
 
