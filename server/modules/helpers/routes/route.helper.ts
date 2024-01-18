@@ -1,8 +1,7 @@
 import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
-import { jwt } from '@bgroup/helpers/jwt';
-
+import { jwt } from '../middlewares/jwt';
 export /*bundle*/ interface ISuccess {
 	status: boolean;
 	data: {

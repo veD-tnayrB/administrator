@@ -1,11 +1,12 @@
 import { DB } from '@essential-js/admin-server/db';
 import { MD5 } from '@bgroup/helpers/md5';
-import { jwt } from '@bgroup/helpers/jwt';
+import { jwt } from '@essential-js/admin-server/helpers';
 import { v4 as uuid } from 'uuid';
 
 export interface ILoginParams {
 	email: string;
 	password?: string;
+	notificationsToken?: string;
 }
 
 class AuthManager {
@@ -30,10 +31,12 @@ class AuthManager {
 			const payload = { email: user.email, id: user.id, generatedAt: Date.now() };
 			const token = jwt.generate(payload, process.env.JWT_EXPIRE_TIME);
 
+			console.log('NOTIFICATIONS TOKEN S=> ', params.notificationsToken);
 			await this.#accessTokensModel.create({
 				id: uuid(),
 				userId: user.id,
 				accessToken: token,
+				notificationsToken: params.notificationsToken,
 			});
 
 			let profiles = await this.#usersProfilesModel.findAll({

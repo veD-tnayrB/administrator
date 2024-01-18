@@ -50,7 +50,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		]);
 	}
 
-	login = async (params: { email: string; password?: string }) => {
+	login = async (params: { email: string; password?: string; notificationsToken: string }) => {
 		try {
 			this.fetching = true;
 			const response = await this.provider.login(params);

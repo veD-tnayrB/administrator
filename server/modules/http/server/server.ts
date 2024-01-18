@@ -2,7 +2,7 @@ import * as express from 'express';
 import { Connections } from './connections';
 import { routes, hmr } from '@essential-js/admin-server/routes';
 import * as cors from 'cors';
-import { jwt } from '@bgroup/helpers/jwt';
+import { jwt } from '@essential-js/admin-server/helpers';
 
 export class Server {
 	#instance;

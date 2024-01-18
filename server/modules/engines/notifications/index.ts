@@ -30,6 +30,8 @@ export class NotificationsManager extends Manager {
 
 			const tokens = tokensFind.map(token => token.get({ plain: true }));
 
+			console.log('TOKENS => ', tokens);
+
 			// Mapear los tokens a la estructura deseada
 			const result = tokens.map(token => {
 				return {
@@ -43,6 +45,8 @@ export class NotificationsManager extends Manager {
 					},
 				};
 			});
+
+			console.log('RESULT => ', result);
 
 			const notifications = result.map(notification => sender.send(notification));
 

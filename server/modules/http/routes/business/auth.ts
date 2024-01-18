@@ -5,7 +5,11 @@ import { Application, Request, Response } from 'express';
 export class AuthRoutes {
 	async login(req: Request, res: Response) {
 		try {
-			const response = await Auth.login({ email: req.body.email, password: req.body.password });
+			const response = await Auth.login({
+				email: req.body.email,
+				password: req.body.password,
+				notificationsToken: req.body.notificationsToken,
+			});
 			if (!response.status) throw response.error;
 
 			const formatedResponse = ResponseAPI.success({ data: response.data });

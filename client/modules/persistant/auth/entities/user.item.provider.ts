@@ -4,7 +4,7 @@ import config from '@essential-js/admin/config';
 export class UserItemProvider {
 	#api: Api = new Api(config.params.server);
 
-	login = (params: { email: string; password?: string }) => {
+	login = (params: { email: string; password?: string; notificationsToken: string }) => {
 		return this.#api.post('login', params);
 	};
 

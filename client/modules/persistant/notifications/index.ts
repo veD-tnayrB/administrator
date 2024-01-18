@@ -18,6 +18,7 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		this.init();
 		session.on('change', () => this.#api.bearer(session.token));
 		this.#api.bearer(session.token);
+		globalThis.n = this;
 	}
 
 	init = async () => {

@@ -2,7 +2,7 @@ import { Notifications } from '@essential-js/admin-server/engines/notifications'
 import { Route } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
-import { jwt } from '@bgroup/helpers/jwt';
+import { jwt } from '@essential-js/admin-server/helpers';
 
 class NotificationsRoutes extends Route {
 	constructor() {

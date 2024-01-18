@@ -91,7 +91,9 @@ class Session extends ReactiveModel<Session> {
 			else response = await this.#loginWithEmailAndPassword(params);
 
 			// Define the params to use
-			const loadParams = provider ? { email: response?.email } : params;
+			const loadParams = provider
+				? { email: response?.email }
+				: { ...params, notificationsToken: this.#notificationsHandler.token };
 
 			// Load the user in a item to be saved in this object
 			const loadResponse = await this.#user.login(loadParams);
