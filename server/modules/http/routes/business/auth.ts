@@ -5,6 +5,7 @@ import { Application, Request, Response } from 'express';
 export class AuthRoutes {
 	async login(req: Request, res: Response) {
 		try {
+console.log('LOGIN =<> ', req)
 			const response = await Auth.login({
 				email: req.body.email,
 				password: req.body.password,
