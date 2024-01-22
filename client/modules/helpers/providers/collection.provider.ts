@@ -4,6 +4,10 @@ import { Api } from '../api/api.helper';
 
 export /*bundle*/ abstract class CollectionProvider {
 	#api: Api = new Api();
+	get api() {
+		return this.#api;
+	}
+
 	#endpoints: {
 		list: string;
 	};

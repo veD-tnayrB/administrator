@@ -37,13 +37,13 @@ export /*bundle*/ class Route {
 		this.#endpoints = endpoints;
 	}
 
-	setup = (app: Application) => {
+	setup(app: Application) {
 		app.get(`/${this.#endpoints.plural}`, jwt.verify, this.list);
 		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, this.get);
 		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
 		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
 		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
-	};
+	}
 
 	list = async (req: Request, res: Response) => {
 		try {

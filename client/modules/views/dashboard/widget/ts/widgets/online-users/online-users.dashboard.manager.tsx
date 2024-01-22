@@ -22,27 +22,22 @@ export class OnlineUsersWidgetManager extends ReactiveModel<OnlineUsersWidgetMan
 		try {
 			this.fetching = true;
 
-			const response = await this.#collection.load();
-			if (!response.status) throw new Error(response.error);
+			const activesResponse = await this.#collection.load({ where: { active: 1 } });
+			if (!activesResponse.status) throw new Error(activesResponse.error);
+			const actives = activesResponse.data.length;
 
-			const totals = {
-				active: 0,
-				inactive: 0,
-			};
-
-			response.data.forEach(item => {
-				if (item.active) return totals.active++;
-				totals.inactive++;
-			});
+			const inactivesResponse = await this.#collection.load({ where: { active: 0 } });
+			if (!inactivesResponse.status) throw new Error(inactivesResponse.error);
+			const inactives = inactivesResponse.data.length;
 
 			this.#data = [
 				{
-					label: 'Activos',
-					value: totals.active,
+					label: 'Actives',
+					value: actives,
 				},
 				{
-					label: 'Inactivos',
-					value: totals.inactive,
+					label: 'Inactives',
+					value: inactives,
 				},
 			];
 		} catch (error) {

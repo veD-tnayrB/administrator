@@ -8,4 +8,8 @@ export class UsersCollectionProvider extends CollectionProvider {
 			},
 		});
 	}
+
+	getRegisteredUsersByMonth = (params: { year: number }) => {
+		return this.api.get(`users/get-registered-users-by-month/${params.year}`);
+	};
 }

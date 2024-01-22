@@ -13,4 +13,19 @@ export /*bundle*/ class Users extends Collection {
 			item: User,
 		});
 	}
+
+	getRegisteredUsersByMonth = async (params: { year: number }) => {
+		try {
+			this.fetching = true;
+
+			const response = await this.provider.getRegisteredUsersByMonth(params);
+			if (!response.status) throw response;
+
+			return response;
+		} catch (error) {
+			return error;
+		} finally {
+			this.fetching = false;
+		}
+	};
 }
