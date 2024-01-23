@@ -27,7 +27,6 @@ export const OnlineUsersWidget = () => {
 		labels,
 		datasets: [
 			{
-				label: 'Actives users',
 				data: values,
 				backgroundColor: [primary, secondary],
 			},

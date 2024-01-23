@@ -8,20 +8,22 @@ export class UsersManager extends Manager {
 	}
 
 	getRegisteredUsersByMonth = async (params: { year: number }) => {
-		const startOfYear = `${params.year}-01-01 00:00:00`;
-		const endOfYear = `${params.year}-12-31 23:59:50`;
+		const startOfYear = new Date(params.year, 0, 1);
+		const endOfYear = new Date(params.year + 1, 0, 1);
 
 		const users = await this.model.findAll({
+			attributes: [
+				[Sequelize.fn('MONTH', Sequelize.col('time_created')), 'month'],
+				[Sequelize.fn('COUNT', Sequelize.col('id')), 'count'],
+			],
 			where: {
 				timeCreated: {
 					[Op.between]: [startOfYear, endOfYear],
 				},
 			},
+			group: [Sequelize.fn('MONTH', Sequelize.col('time_created'))],
+			order: [[Sequelize.fn('MONTH', Sequelize.col('time_created')), 'ASC']],
 		});
-
-		console.log('STAT YEAR AND END => ', startOfYear, endOfYear);
-
-		const usersPerMonth = users.map(user => user.get({ plain: true }));
 
 		const getMonthName = monthNumber => {
 			const monthNames = [
@@ -41,24 +43,30 @@ export class UsersManager extends Manager {
 			return monthNames[monthNumber - 1];
 		};
 
-		let lastMonthCount = 0;
-		console.log('usersPerMonth= < ', usersPerMonth);
-		const formattedData = usersPerMonth.map((data, index) => {
-			const month = data.getDataValue('month');
-			const count = data.getDataValue('count');
-			const improved =
-				lastMonthCount === 0 ? 'N/A' : `${(((count - lastMonthCount) / lastMonthCount) * 100).toFixed(2)}%`;
-			lastMonthCount = count;
+		// Inicializar los datos para cada mes
+		const monthlyData = Array.from({ length: 12 }, (_, i) => ({
+			label: getMonthName(i + 1),
+			improved: 'N/A',
+			value: 0,
+		}));
 
-			return {
-				label: getMonthName(month),
-				improved: improved,
-				value: count,
-			};
+		// Llenar los datos obtenidos de la base de datos
+		users.forEach(user => {
+			const monthIndex = user.getDataValue('month') - 1;
+			monthlyData[monthIndex].value = user.getDataValue('count');
 		});
 
-		console.log('OFMRATED DATA= > ', formattedData);
-		return { status: true, data: [] };
+		// Calcular el porcentaje de mejora
+		let lastMonthCount = 0;
+		monthlyData.forEach((data, index) => {
+			if (index !== 0 && lastMonthCount !== 0) {
+				const improvement = ((data.value - lastMonthCount) / lastMonthCount) * 100;
+				monthlyData[index].improved = `${improvement.toFixed(2)}%`;
+			}
+			lastMonthCount = data.value;
+		});
+
+		return { status: true, data: monthlyData };
 	};
 }
 

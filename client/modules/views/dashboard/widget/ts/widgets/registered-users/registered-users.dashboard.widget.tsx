@@ -4,6 +4,7 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Bar } from 'react-chartjs-2';
 import { Chart, LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend } from 'chart.js';
 import { motion } from 'framer-motion';
+import { YearHandler } from './year-handler';
 
 Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend);
 
@@ -25,6 +26,8 @@ export const RegisteredUsersWidget = () => {
 
 	const values = data.map(item => item.value);
 	const labels = data.map(item => item.label);
+
+	console.log(labels);
 
 	const chart = {
 		labels,
@@ -52,8 +55,9 @@ export const RegisteredUsersWidget = () => {
 
 	return (
 		<div className="registered-users-widget">
-			<motion.section {...animation}>
+			<motion.section {...animation} className="container">
 				<h3 className="text-center">Registered Users</h3>
+				<YearHandler manager={manager} />
 				<Bar data={chart} options={options} />
 			</motion.section>
 		</div>

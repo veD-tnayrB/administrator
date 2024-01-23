@@ -4,4 +4,31 @@
 	border-radius: var(--border-primary);
 	padding: 1.5rem 0.75rem;
 	width: calc(100% - 350px);
+
+	section.container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		.year-handler {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+
+			button {
+				min-height: 28px;
+				padding: 0 0.6rem;
+				background: var(--background);
+				border-radius: 5px;
+
+				.button-label {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+			}
+		}
+	}
 }

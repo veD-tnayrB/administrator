@@ -1,5 +1,4 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { HARDCODED_DATA } from './data';
 import { Users } from '@essential-js/admin/models';
 
 export interface IRegisteredUser {
@@ -15,19 +14,26 @@ export class RegisteredUsersWidgetManager extends ReactiveModel<RegisteredUsersW
 		return this.#data;
 	}
 
+	#selectedYear: number = 2024;
+	get selectedYear() {
+		return this.#selectedYear;
+	}
+
+	set selectedYear(value: number) {
+		this.#selectedYear = value;
+		this.load();
+	}
+
 	load = async () => {
 		try {
 			this.fetching = true;
-			const response = await this.#collection.getRegisteredUsersByMonth({ year: 2024 });
-			console.log('RESPONSE 222 => ', response);
-			setTimeout(() => {
-				this.#data = HARDCODED_DATA;
-				this.fetching = false;
-			}, 1000);
+			const response = await this.#collection.getRegisteredUsersByMonth({ year: this.#selectedYear });
+			this.#data = response.data;
 		} catch (error) {
 			console.error(error);
 			return error;
 		} finally {
+			this.fetching = false;
 		}
 	};
 }
