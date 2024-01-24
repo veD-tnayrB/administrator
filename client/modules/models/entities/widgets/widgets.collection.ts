@@ -13,4 +13,6 @@ export /*bundle*/ class Widgets extends Collection {
 			item: Widget,
 		});
 	}
+
+	getTotals = this.provider.getTotals;
 }

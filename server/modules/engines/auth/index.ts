@@ -31,7 +31,6 @@ class AuthManager {
 			const payload = { email: user.email, id: user.id, generatedAt: Date.now() };
 			const token = jwt.generate(payload, process.env.JWT_EXPIRE_TIME);
 
-			console.log('NOTIFICATIONS TOKEN S=> ', params.notificationsToken);
 			await this.#accessTokensModel.create({
 				id: uuid(),
 				userId: user.id,

@@ -27,8 +27,6 @@ export const RegisteredUsersWidget = () => {
 	const values = data.map(item => item.value);
 	const labels = data.map(item => item.label);
 
-	console.log(labels);
-
 	const chart = {
 		labels,
 		datasets: [

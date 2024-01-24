@@ -9,11 +9,7 @@ export interface ITotalItem {
 	to?: string;
 }
 
-interface IProps extends ITotalItem {
-	index: number;
-}
-
-export const TotalItem = ({ title, amount, icon, to, index }: IProps) => {
+export const TotalItem = ({ title, amount, icon, to }: ITotalItem) => {
 	const hasLinkAnimations = to ? { whileHover: { scale: 1.05 } } : {};
 	const linkCls = to ? 'cursor-pointer' : 'cursor-default';
 

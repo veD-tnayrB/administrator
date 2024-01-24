@@ -8,4 +8,8 @@ export class WidgetsCollectionProvider extends CollectionProvider {
 			},
 		});
 	}
+
+	getTotals = () => {
+		return this.api.get('widgets/get-totals');
+	};
 }

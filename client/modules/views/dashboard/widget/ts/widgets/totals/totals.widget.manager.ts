@@ -1,26 +1,25 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { ITotalItem } from './components/total.item.widget';
-import { HARDCODED_DATA } from './data';
+import { Widgets } from '@essential-js/admin/models';
 
 export class TotalsWidgetManager extends ReactiveModel<TotalsWidgetManager> {
-	#data: ITotalItem[] = [];
+	#data: Record<string, number> = {};
+	#totalsCollection: Widgets = new Widgets();
 
 	get data() {
 		return this.#data;
 	}
 
-	load = () => {
+	load = async () => {
 		try {
 			this.fetching = true;
-
-			setTimeout(() => {
-				this.#data = HARDCODED_DATA;
-				this.fetching = false;
-			}, 1000);
+			const response = await this.#totalsCollection.getTotals();
+			if (!response.status) throw response.error;
+			this.#data = response.data;
 		} catch (error) {
 			console.error(error);
 			return error;
 		} finally {
+			this.fetching = false;
 		}
 	};
 }

@@ -11,6 +11,8 @@ import { ProfileModulePermissions as _ProfileModulePermissions } from "./profile
 import type { ProfileModulePermissionsAttributes, ProfileModulePermissionsCreationAttributes } from "./profile_module_permissions";
 import { Profiles as _Profiles } from "./profiles";
 import type { ProfilesAttributes, ProfilesCreationAttributes } from "./profiles";
+import { Totals as _Totals } from "./totals";
+import type { TotalsAttributes, TotalsCreationAttributes } from "./totals";
 import { Users as _Users } from "./users";
 import type { UsersAttributes, UsersCreationAttributes } from "./users";
 import { UsersNotifications as _UsersNotifications } from "./users_notifications";
@@ -27,6 +29,7 @@ export {
   _Permissions as Permissions,
   _ProfileModulePermissions as ProfileModulePermissions,
   _Profiles as Profiles,
+  _Totals as Totals,
   _Users as Users,
   _UsersNotifications as UsersNotifications,
   _UsersProfiles as UsersProfiles,
@@ -46,6 +49,8 @@ export type {
   ProfileModulePermissionsCreationAttributes,
   ProfilesAttributes,
   ProfilesCreationAttributes,
+  TotalsAttributes,
+  TotalsCreationAttributes,
   UsersAttributes,
   UsersCreationAttributes,
   UsersNotificationsAttributes,
@@ -63,6 +68,7 @@ export function initModels(sequelize: Sequelize) {
   const Permissions = _Permissions.initModel(sequelize);
   const ProfileModulePermissions = _ProfileModulePermissions.initModel(sequelize);
   const Profiles = _Profiles.initModel(sequelize);
+  const Totals = _Totals.initModel(sequelize);
   const Users = _Users.initModel(sequelize);
   const UsersNotifications = _UsersNotifications.initModel(sequelize);
   const UsersProfiles = _UsersProfiles.initModel(sequelize);
@@ -92,6 +98,7 @@ export function initModels(sequelize: Sequelize) {
     Permissions: Permissions,
     ProfileModulePermissions: ProfileModulePermissions,
     Profiles: Profiles,
+    Totals: Totals,
     Users: Users,
     UsersNotifications: UsersNotifications,
     UsersProfiles: UsersProfiles,

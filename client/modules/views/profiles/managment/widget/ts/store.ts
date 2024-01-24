@@ -43,7 +43,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const permissionsResponse = await this.#permissions.load();
 			if (!permissionsResponse.status) throw response.error;
 
-			console.log('ITEMS permissions => ', this.#permissions.items);
 			this.#modules.items.forEach(module => {
 				this.#modulesPermissions.set(module.id, []);
 			});
