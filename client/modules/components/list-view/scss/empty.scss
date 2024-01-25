@@ -1,0 +1,23 @@
+.list-view {
+	.empty {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.2rem;
+		font-weight: normal;
+
+		svg {
+			stroke-width: 1;
+			width: 45px;
+			height: 45px;
+		}
+
+		p {
+			width: 50%;
+			min-width: 400px;
+			text-align: center;
+		}
+	}
+}

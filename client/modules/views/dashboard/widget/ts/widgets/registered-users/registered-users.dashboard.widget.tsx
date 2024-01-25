@@ -5,6 +5,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart, LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend } from 'chart.js';
 import { motion } from 'framer-motion';
 import { YearHandler } from './year-handler';
+import { RegisteredUsersEmpty } from './registered-users-empty.dashboard';
 
 Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend);
 
@@ -51,12 +52,16 @@ export const RegisteredUsersWidget = () => {
 		animate: { opacity: 1 },
 	};
 
+	const content = values.every(val => val === 0) ? <RegisteredUsersEmpty /> : <Bar data={chart} options={options} />;
+
+	console.log('values => ', values);
+
 	return (
 		<div className="registered-users-widget">
 			<motion.section {...animation} className="container">
 				<h3 className="text-center">Registered Users</h3>
 				<YearHandler manager={manager} />
-				<Bar data={chart} options={options} />
+				{content}
 			</motion.section>
 		</div>
 	);

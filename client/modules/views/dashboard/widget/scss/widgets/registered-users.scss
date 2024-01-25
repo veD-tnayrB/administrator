@@ -4,11 +4,15 @@
 	border-radius: var(--border-primary);
 	padding: 1.5rem 0.75rem;
 	width: calc(100% - 350px);
+	min-width: 460px;
+	min-height: 272px;
 
 	section.container {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		overflow-x: auto;
+		height: 100%;
 
 		.year-handler {
 			width: 100%;
@@ -28,6 +32,34 @@
 					align-items: center;
 					justify-content: center;
 				}
+			}
+		}
+
+		canvas {
+			min-width: 800px;
+			min-height: 400px;
+			width: 100%;
+		}
+
+		.empty {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			font-weight: normal;
+
+			svg {
+				stroke-width: 1;
+				width: 45px;
+				height: 45px;
+			}
+
+			p {
+				width: 50%;
+				min-width: 400px;
+				text-align: center;
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import { useListViewContext } from '../../context';
 import { List } from './list';
 import { Header } from './header';
 import { Loading } from '../../loading';
+import { Empty } from '../empty';
 
 export const ListContainer = () => {
 	const { store, list, header } = useListViewContext();
@@ -14,11 +15,13 @@ export const ListContainer = () => {
 
 	if (!store.ready) return <Loading />;
 
+	const content = store.collection.items.length > 0 ? <List {...list} /> : <Empty />;
+
 	return (
 		<div className={`list-container ${cls}`}>
 			{store.fetching && <Spinner />}
 			{header && <Header {...header} />}
-			<List {...list} />
+			{content}
 		</div>
 	);
 };
