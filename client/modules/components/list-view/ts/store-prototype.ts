@@ -67,7 +67,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		} catch (error) {
 			console.error(error);
 		} finally {
-			console.log('NUA');
+			this.fetching = false;
+			this.ready = true;
 		}
 	};
 
