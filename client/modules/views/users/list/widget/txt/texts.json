@@ -2,7 +2,10 @@
 	"es": {
 		"actions": {
 			"create": "Crear",
-			"columns": "Columnas"
+			"columns": "Columnas",
+			"columnsSelector": {
+				"title": "Seleccione las columnas que quiere que aparezcan"
+			}
 		},
 		"title": "Usuarios",
 		"searchbar": {
@@ -44,7 +47,10 @@
 	"en": {
 		"actions": {
 			"create": "Create",
-			"columns": "Columns"
+			"columns": "Columns",
+			"columnsSelector": {
+				"title": "Select the columns you want to appear"
+			}
 		},
 		"title": "Users",
 		"searchbar": {

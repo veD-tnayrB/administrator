@@ -31,6 +31,10 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
+
+					svg {
+						fill: var(--on-surface);
+					}
 				}
 			}
 		}
@@ -49,6 +53,7 @@
 			justify-content: center;
 			font-size: 1.2rem;
 			font-weight: normal;
+			fill: var(--on-surface);
 
 			svg {
 				stroke-width: 1;

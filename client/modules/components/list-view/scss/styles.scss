@@ -2,6 +2,10 @@
 	width: 100%;
 	display: grid;
 	gap: 20px;
+	background: var(--surface);
+	padding: 1.7rem 1.2rem;
+	border-radius: 10px;
+	box-shadow: var(--primary-shadow);
 
 	.list-container {
 		overflow: hidden;

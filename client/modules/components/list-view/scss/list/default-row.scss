@@ -4,6 +4,7 @@
 			.row {
 				width: 100%;
 				display: table-row;
+				background: var(--surface-variant);
 
 				span {
 					display: table-cell;
@@ -11,10 +12,10 @@
 					padding: 0.625rem 0;
 
 					&:first-child {
-						border-left: 1px solid var(--outline);
+						border-left: 2px solid var(--outline);
 					}
 					&:last-child {
-						border-right: 1px solid var(--outline);
+						border-right: 2px solid var(--outline);
 					}
 				}
 
@@ -50,7 +51,7 @@
 				}
 
 				&:nth-child(even) {
-					background: var(--surface-variant);
+					background: var(--surface);
 				}
 			}
 		}

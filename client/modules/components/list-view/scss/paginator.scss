@@ -2,6 +2,10 @@ footer.list-view-paginator {
 	.paginator {
 		display: flex;
 		align-items: center;
+		border-radius: 5px;
+		overflow: hidden;
+		width: -moz-fit-content;
+		width: fit-content;
 
 		.panel {
 			background: var(--primary);
@@ -24,7 +28,6 @@ footer.list-view-paginator {
 
 		.action {
 			background: var(--primary);
-			border-radius: 20px;
 			display: flex;
 			align-items: center;
 

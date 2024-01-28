@@ -16,6 +16,7 @@ export interface IColumnSelector {
 		number: number;
 		label: string;
 	};
+	title?: string;
 }
 
 export const ColumnsSelector = (props: IColumnSelector) => {
@@ -70,6 +71,7 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 	return (
 		<div className="column-selector">
 			<Dialog {...options}>
+				<h4>{props.title}</h4>
 				<Form>{output}</Form>
 			</Dialog>
 		</div>

@@ -54,7 +54,6 @@ export const RegisteredUsersWidget = () => {
 
 	const content = values.every(val => val === 0) ? <RegisteredUsersEmpty /> : <Bar data={chart} options={options} />;
 
-	console.log('values => ', values);
 
 	return (
 		<div className="registered-users-widget">

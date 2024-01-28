@@ -70,7 +70,9 @@ export const FiltersSearch = (props: IFilters) => {
 						<Button onClick={reset} variant="secondary" type="reset">
 							{props.actions.reset.label}
 						</Button>
-						<Button type="submit">{props.actions.apply.label}</Button>
+						<Button variant="primary" type="submit">
+							{props.actions.apply.label}
+						</Button>
 					</div>
 				</Form>
 			</Dialog>

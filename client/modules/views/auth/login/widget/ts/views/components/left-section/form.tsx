@@ -64,7 +64,7 @@ export const LeftSectionForm = () => {
 					onChange={onChange}
 				/>
 
-				<Button type="submit">{texts.submit}</Button>
+				<Button variant="primary" type="submit">{texts.submit}</Button>
 			</Form>
 
 			<div className="or-container">

@@ -76,6 +76,7 @@ function View({ store }: { store: StoreManager }) {
 				label: texts.actions.create,
 			},
 			columnsSelector: {
+				title: texts.actions.columnsSelector.title,
 				label: texts.actions.columns,
 				min: {
 					label: texts.list.actions.columnsSelector.min,

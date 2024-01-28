@@ -37,16 +37,12 @@ export class ModulesManager extends Manager {
 	// 		modulesPermissions.set(permission.moduleId, existingPermissions);
 	// 	});
 
-	// 	console.log('PER,ONS => ', modulesPermissions);
-
 	// 	const result = modules.map(module => {
 	// 		return {
 	// 			...module,
 	// 			permissions: modulesPermissions.get(module.id) || [],
 	// 		};
 	// 	});
-
-	// 	console.log('RESULT => ', result);
 
 	// 	return { status: true, data: result };
 	// };

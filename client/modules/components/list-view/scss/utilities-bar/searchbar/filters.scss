@@ -1,5 +1,6 @@
 .filters {
 	position: relative;
+	border-radius: 20px;
 
 	.filter-toggler {
 		display: flex;
@@ -18,10 +19,14 @@
 		}
 	}
 
+	.modal {
+		border-radius: 10px;
+	}
 	form {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1rem;
+		padding: 0.2rem 0;
 
 		input {
 			font-size: 0.8rem;
