@@ -49,6 +49,7 @@ function View({ store }: { store: StoreManager }) {
 		},
 		list: {
 			default: true,
+			isSelecteable: true,
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
 				actions: [

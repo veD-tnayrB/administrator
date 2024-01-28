@@ -6,7 +6,7 @@
 				display: table-row;
 				background: var(--surface-variant);
 
-				span {
+				span.field {
 					display: table-cell;
 					vertical-align: middle;
 					padding: 0.625rem 0;
@@ -16,6 +16,10 @@
 					}
 					&:last-child {
 						border-right: 2px solid var(--outline);
+					}
+
+					.pui-checkbox--label {
+						justify-content: center;
 					}
 				}
 

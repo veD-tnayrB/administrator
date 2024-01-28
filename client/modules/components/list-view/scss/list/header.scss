@@ -10,6 +10,14 @@
 				opacity: 0.65;
 			}
 
+			.check-all {
+				padding: 0 1rem;
+
+				.pui-checkbox--label {
+					justify-content: center;
+				}
+			}
+
 			li {
 				display: table-cell;
 				padding: 0.625rem 0;
@@ -18,12 +26,10 @@
 			}
 
 			li:first-child {
-				// border-top-left-radius: 20px;
 				border-left: 1px solid var(--outline);
 			}
 
 			li:last-child {
-				// border-top-right-radius: 20px;
 				border-right: 1px solid var(--outline);
 			}
 		}

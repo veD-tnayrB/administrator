@@ -5,7 +5,7 @@
 	padding: 1.5rem 0.75rem;
 	width: calc(100% - 350px);
 	min-width: 460px;
-	min-height: 272px;
+	min-height: 302px;
 
 	section.container {
 		display: flex;
@@ -40,8 +40,6 @@
 		}
 
 		canvas {
-			min-width: 800px;
-			min-height: 400px;
 			width: 100%;
 		}
 

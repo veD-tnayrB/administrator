@@ -5,19 +5,20 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { DeleteModal } from './pre-done-actions/delete';
 import { routing } from '@beyond-js/kernel/routing';
-import { Item } from '@beyond-js/reactive/entities';
+import { Checkbox } from 'pragmate-ui/form';
 
 const getValue = (obj: Object, prop: string) => {
 	return prop.split('.').reduce((o, p) => (o || {})[p], obj);
 };
 
 export /*bundle*/ interface IRow {
-	item: unknown;
+	item: Record<string, any>;
 	index: number;
 	propertiesToDisplay: string[];
+	selectedItems?: Map<string, Record<string, any>>;
 }
 
-export const DefaultRow = ({ item, propertiesToDisplay }: IRow) => {
+export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) => {
 	const { list, store } = useListViewContext();
 	const [, setUpdate] = React.useState({});
 	const [displayDeleteModal, setDisplayModal] = React.useState(false);
@@ -25,7 +26,11 @@ export const DefaultRow = ({ item, propertiesToDisplay }: IRow) => {
 
 	const output = propertiesToDisplay.map(property => {
 		const value = getValue(item, property);
-		return <span key={uuid()}>{value}</span>;
+		return (
+			<span className="field" key={uuid()}>
+				{value}
+			</span>
+		);
 	});
 
 	const onClickDelete = () => setDisplayModal(true);
@@ -35,15 +40,23 @@ export const DefaultRow = ({ item, propertiesToDisplay }: IRow) => {
 	const includesDelete = list.itemsConfig.actions.find(item => item.type === 'delete');
 	const displayActions = includesEdit || includesDelete;
 
-	const onClickEdit = () => {
-		routing.pushState(`${includesEdit.to}/${item.id}`);
-	};
+	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);
+	const onSelect = () => store.selectItem({ id: item.id });
+
+	const includeCheck = list.isSelecteable;
+	const isItemSelected = selectedItems?.has(item.id);
 
 	return (
 		<li className="row default-row">
+			{includeCheck && (
+				<span className="check-item field">
+					<Checkbox checked={isItemSelected} onChange={onSelect} id={item.id} />
+				</span>
+			)}
+
 			{output}
 			{displayActions && (
-				<span className="actions-container">
+				<span className="actions-container field">
 					<div className="row-actions">
 						{includesEdit && (
 							<Button onClick={onClickEdit} title={includesEdit.title}>
