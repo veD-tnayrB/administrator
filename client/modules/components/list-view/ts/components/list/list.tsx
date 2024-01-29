@@ -35,11 +35,11 @@ export const List = (props: IList) => {
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
 
-	const output = store.collection.items.map((item: typeof Item, index: number) => {
+	const output = store.collection.items.map((item: Record<string, any>, index: number) => {
 		if (!Row) return null;
 		return (
 			<Row
-				key={uuid()}
+				key={item.id}
 				propertiesToDisplay={propertiesToDisplay}
 				item={item}
 				index={index}
@@ -50,5 +50,6 @@ export const List = (props: IList) => {
 
 	let cls = props.default ? `default` : '';
 	cls += store.fetching ? ` loading` : '';
+	console.log('ITEMS => ', store.collection.items);
 	return <ul className={`list ${cls}`}>{output}</ul>;
 };

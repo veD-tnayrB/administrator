@@ -33,21 +33,28 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 		);
 	});
 
-	const onClickDelete = () => setDisplayModal(true);
-	const onCloseDelete = () => setDisplayModal(false);
+	const onClickDelete = event => {
+		event.stopPropagation();
+		setDisplayModal(true);
+	};
+	const onCloseDelete = event => {
+		event.stopPropagation();
+		setDisplayModal(false);
+	};
 
 	const includesEdit = list.itemsConfig.actions.find(item => item.type === 'edit');
 	const includesDelete = list.itemsConfig.actions.find(item => item.type === 'delete');
 	const displayActions = includesEdit || includesDelete;
 
 	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);
-	const onSelect = () => store.selectItem({ id: item.id });
+	const onSelect = event => store.selectItem({ id: item.id });
 
 	const includeCheck = list.isSelecteable;
 	const isItemSelected = selectedItems?.has(item.id);
+	const selectableCls = list.isSelecteable ? 'selectable' : '';
 
 	return (
-		<li className="row default-row">
+		<li className={`row default-row ${selectableCls}`} onClick={onSelect}>
 			{includeCheck && (
 				<span className="check-item field">
 					<Checkbox checked={isItemSelected} onChange={onSelect} id={item.id} />

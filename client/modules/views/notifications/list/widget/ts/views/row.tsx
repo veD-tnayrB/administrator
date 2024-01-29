@@ -5,11 +5,15 @@ import { Button } from 'pragmate-ui/components';
 import { useNotificationsListContext } from '../context';
 import { routing } from '@beyond-js/kernel/routing';
 
-export const Row = ({ propertiesToDisplay, item }: IRow) => {
+export const Row = ({ propertiesToDisplay, item, ...props }: IRow) => {
 	const { texts, store } = useNotificationsListContext();
 	const output = propertiesToDisplay.map((property: string) => {
 		const value = item[property];
-		return <span key={uuid()}>{value}</span>;
+		return (
+			<span className="field" key={uuid()}>
+				{value}
+			</span>
+		);
 	});
 
 	const onLaunch = () => store.launchNotification(item.id);
@@ -20,7 +24,7 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 		<li className="row">
 			{output}
 			<div className="actions">
-				<span className="actions-container">
+				<span className="actions-container field">
 					<div className="row-actions">
 						<Button onClick={onEdit} title={texts.list.actions.item.edit}>
 							<svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">

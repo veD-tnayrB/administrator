@@ -6,6 +6,10 @@
 				display: table-row;
 				background: var(--surface-variant);
 
+				&.selectable {
+					cursor: pointer;
+				}
+
 				span.field {
 					display: table-cell;
 					vertical-align: middle;
