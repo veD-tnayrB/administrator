@@ -1,17 +1,13 @@
 import React from 'react';
 import { Button } from 'pragmate-ui/components';
-import { useListViewContext } from '../context';
-import { StoreListView } from '../store-prototype';
+import { useListViewContext } from '../../context';
+import { ILengthHandler, LengthHandler } from './length-handler';
 
 export interface IPaginator {
 	texts: {
 		of: string;
 	};
-
-	onNext: StoreListView['onNext'];
-	onPrev: StoreListView['onPrev'];
-	onFirstPage: StoreListView['onFirstPage'];
-	onLastPage: StoreListView['onLastPage'];
+	lengthHandler?: ILengthHandler;
 }
 
 export const Paginator = (props: IPaginator) => {
@@ -77,6 +73,7 @@ export const Paginator = (props: IPaginator) => {
 					</Button>
 				</div>
 			</div>
+			<LengthHandler />
 		</footer>
 	);
 };

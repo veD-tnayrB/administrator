@@ -4,7 +4,7 @@ import { IList } from './components/list/list';
 import { IContext, ListViewContext } from './context';
 import { StoreListView } from './store-prototype';
 import { IHeader } from './components/list/header';
-import { IPaginator, Paginator } from './components/paginator';
+import { IPaginator, Paginator } from './components/paginator/paginator';
 import { ISearchbar } from './components/utility-bar/searchbar/searchbar';
 import { IActions } from './components/utility-bar/actions/actions';
 import { ListContainer } from './components/list/wrapper';

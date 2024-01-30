@@ -1,11 +1,26 @@
 footer.list-view-paginator {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+
+	.length-handler {
+		font-size: 1.1rem;
+		padding: 0.2rem 0.5rem;
+		border: 1px solid var(--outline);
+		outline: transparent;
+		cursor: pointer;
+
+		&:focus {
+			border: 1px solid var(--on-surface);
+		}
+	}
+
 	.paginator {
 		display: flex;
 		align-items: center;
 		border-radius: 5px;
 		overflow: hidden;
-		width: -moz-fit-content;
-		width: fit-content;
 
 		.panel {
 			background: var(--primary);

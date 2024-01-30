@@ -71,10 +71,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	load = async () => {
 		try {
-			console.log('load');
 			const response = await this.#collection.load({ start: this.#collection.next || 0, limit: this.#limit });
 			if (!response.status) throw response.error;
-			console.log('RESPONSE => ', response.data);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -84,8 +82,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	search = async (search: { [key: string]: unknown } | string) => {
 		try {
-			console.log('search');
-
 			this.fetching = true;
 			const properties = this.propertiesToSearch.map(item => item.name);
 			const query = {};
@@ -99,7 +95,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				where: query,
 				...this.#params,
 			});
-			this.triggerEvent();
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -109,15 +104,15 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	#navigation = async (page: number) => {
 		try {
-			console.log('navigation');
-
 			this.fetching = true;
 			this.#params = {
 				...this.#params,
 				limit: this.#limit,
 				start: this.#limit * (page - 1),
 			};
+			console.log('PARAMS +> ', this.#params);
 			const response = await this.#collection.load(this.#params);
+			console.log('ITEMS => ', this.#collection.items);
 			if (!response.status) throw new Error(response.error);
 		} catch (error) {
 			console.error('error', error);
@@ -127,15 +122,12 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	clearSearch = async () => {
-		console.log('clear search');
-
 		this.fetching = true;
 		await this.#collection.load({ start: 0, limit: this.#limit });
 		this.fetching = false;
 	};
 
 	onNext = () => {
-		console.log('page change next');
 		if (this.fetching) return;
 		const page = this.currentPage + 1;
 		if (page > this.totalPages) return;
@@ -143,8 +135,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	onLastPage = () => {
-		console.log('page change last');
-
 		if (this.fetching) return;
 		const page = this.totalPages;
 		if (this.currentPage === page) return;
@@ -152,8 +142,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	onPrev = () => {
-		console.log('page change prev');
-
 		if (this.fetching) return;
 		const page = this.currentPage - 1;
 		if (page < 1) return;
@@ -161,17 +149,18 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	onFirstPage = () => {
-		console.log('page first');
-
 		if (this.fetching) return;
 		if (this.currentPage === 1) return;
 		this.#navigation(1);
 	};
 
+	onLengthChange = (length: number) => {
+		this.#limit = length;
+		this.#navigation(1);
+	};
+
 	remove = async (params: { id: string }) => {
 		try {
-			console.log('remove');
-
 			this.fetching = true;
 			const item = new this.#collection.item();
 			const response = await item.load(params);
@@ -192,7 +181,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	selectItem = ({ id }: { id: string }) => {
-		console.log('select item');
 		const item = this.#collection.items.find(item => item.id === id);
 
 		if (this.#selectedItems.has(id)) {
@@ -205,8 +193,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	selectAllItems = () => {
-		console.log('selectAllItems');
-
 		if (this.#selectedItems.size === this.#collection.items.length) {
 			this.#selectedItems.clear();
 			this.triggerEvent();

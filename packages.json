@@ -2,5 +2,6 @@
 	"/server/package.json",
 	"/client/package.json",
 	"../../Workspace/Baleares/public/http-suite/library/package.json",
-	"../../Workspace/Baleares/public/pragmate-ui/library/package.json"
+	"../../Workspace/Baleares/public/pragmate-ui/library/package.json",
+	"../../Workspace/Baleares/public/reactive-model/library/package.json"
 ]

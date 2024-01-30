@@ -25,7 +25,8 @@
 	},
 	"libraries": {
 		"imports": [
-			"pragmate-ui"
+			"pragmate-ui",
+			"@beyond-js/reactive"
 		]
 	},
 	"modules": {

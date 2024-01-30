@@ -1,7 +1,5 @@
 import React from 'react';
 import { useListViewContext } from '../../context';
-import { Item } from '@beyond-js/reactive/entities';
-import { v4 as uuid } from 'uuid';
 import { DefaultRow, IRow } from './row';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
@@ -50,6 +48,5 @@ export const List = (props: IList) => {
 
 	let cls = props.default ? `default` : '';
 	cls += store.fetching ? ` loading` : '';
-	console.log('ITEMS => ', store.collection.items);
 	return <ul className={`list ${cls}`}>{output}</ul>;
 };
