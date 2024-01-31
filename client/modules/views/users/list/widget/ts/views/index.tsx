@@ -84,6 +84,9 @@ function View({ store }: { store: StoreManager }) {
 					number: 2,
 				},
 			},
+			generateReport: {
+				label: 'Generate Report',
+			},
 		},
 	};
 	return (

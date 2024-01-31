@@ -28,7 +28,8 @@ export /*bundle*/ abstract class ItemProvider {
 		timeUpdated: string;
 	}) => {
 		const method = params.isNew ? 'post' : 'put';
-		return this.#api[method](this.#endpoints.publish, { body: params });
+		console.log('first publish', params, method);
+		return this.#api[method](this.#endpoints.publish, params);
 	};
 
 	data = async params => {

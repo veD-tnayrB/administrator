@@ -14,6 +14,11 @@
 	"modules": {
 		"path": "modules"
 	},
+	"libraries": {
+		"imports": [
+			"@bgroup/data-model"
+		]
+	},
 	"deployment": {
 		"distributions": [
 			{
@@ -30,6 +35,7 @@
 	},
 	"dependencies": {
 		"@beyond-js/kernel": "~0.1.9",
+		"@bggroup/excel": "^1.0.1",
 		"@bgroup/data-model": "^1.0.1",
 		"@bgroup/helpers": "^1.0.4",
 		"dotenv": "^16.3.1",

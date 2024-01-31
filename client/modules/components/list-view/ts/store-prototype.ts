@@ -48,7 +48,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return Math.ceil(this.#collection.total / this.#limit);
 	}
 
-	#params = {
+	#params: Record<string, any> = {
 		limit: this.#limit,
 		start: 0,
 		order: 'timeUpdated',
@@ -91,10 +91,11 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				query[item] = value;
 			});
 
-			await this.#collection.load({
+			this.#params = {
 				where: query,
 				...this.#params,
-			});
+			};
+			await this.#collection.load(this.#params);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -201,5 +202,10 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 		this.#collection.items.forEach(item => this.#selectedItems.set(item.id, item));
 		this.triggerEvent();
+	};
+
+	generateReport = async ({ header }: { header: { label: string; name: string }[] }) => {
+		const response = await this.#collection.generateReport({ header, params: this.#params });
+		console.log('RESPONSE => ', response);
 	};
 }

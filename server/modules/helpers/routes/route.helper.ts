@@ -43,6 +43,7 @@ export /*bundle*/ class Route {
 		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
 		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
 		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
+		app.post(`/${this.#endpoints.plural}/generate-report`, jwt.verify, this.generateReport);
 	}
 
 	list = async (req: Request, res: Response) => {
@@ -99,7 +100,7 @@ export /*bundle*/ class Route {
 
 	update = async (req: Request, res: Response) => {
 		try {
-			const data = req.body.body;
+			const data = req.body;
 			const response = await this.#manager.update(data);
 			if (!response.status) throw response.error;
 			const formatedResponse = ResponseAPI.success({ data: response.data });
@@ -122,6 +123,20 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
+
+	generateReport = async (req: Request, res: Response) => {
+		try {
+			let { params, header } = req.body;
+			const response: ResponseType = await this.#manager.generateReport({ header, params });
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response as ISuccess);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /list', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });
 			res.status(500).send(responseError);
 		}
