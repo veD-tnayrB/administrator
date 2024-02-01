@@ -33,15 +33,14 @@ export /*bundle*/ abstract class Manager {
 
 	list = (params: Partial<{ [key: string]: unknown }>) => {
 		const or = [];
-		let where = {};
-		if (params.where) {
+		if (params?.where) {
 			Object.entries(params.where).forEach(([key, value]) => {
 				or.push({ [key]: value });
 			});
 
-			where = !!Object.keys(params.where).length ? { or } : {};
+			params.where = !!Object.keys(params.where).length ? { or } : {};
 		}
-		return actions.list(this.#model, { ...params, where }, `/list/${this.#managerName}`);
+		return actions.list(this.#model, { ...params }, `/list/${this.#managerName}`);
 	};
 
 	create = (params: Partial<{ [key: string]: any }>) => {
@@ -69,7 +68,7 @@ export /*bundle*/ abstract class Manager {
 		params: { [key: string]: any };
 	}) => {
 		try {
-			console.log('params => ', params, header);
+			if (!params) return { status: true };
 			const response = await this.list(params);
 			const formatedItems = response.data.entries.map(item => {
 				let newItem = {};
@@ -80,10 +79,6 @@ export /*bundle*/ abstract class Manager {
 			});
 
 			const formatedHeader = header.map(item => ({ header: item.label, key: item.name }));
-
-			console.log('DIRNAME +> ', __dirname);
-			console.log('FORMATED ITEMS => ', formatedItems);
-			console.log('FORMATED HEADER => ', formatedHeader);
 
 			const excel = new Excel();
 			const specs: IParamsExcel = {
@@ -101,9 +96,9 @@ export /*bundle*/ abstract class Manager {
 			};
 
 			const excelResponse = await excel.create(specs);
-			console.log('excelResponse => ', excelResponse);
+			if (!excelResponse.status) throw response.error;
 
-			return { status: true };
+			return { status: true, data: excelResponse.data };
 		} catch (error) {
 			console.error(error);
 			return { status: false, error };

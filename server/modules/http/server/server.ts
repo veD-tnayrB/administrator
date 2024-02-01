@@ -8,7 +8,7 @@ export class Server {
 	#instance;
 	#connections;
 	#app;
-	#port = 5000;
+	#port = 5001;
 	#router;
 
 	constructor() {

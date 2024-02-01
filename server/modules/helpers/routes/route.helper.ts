@@ -2,6 +2,8 @@ import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { jwt } from '../middlewares/jwt';
+import * as path from 'path';
+
 export /*bundle*/ interface ISuccess {
 	status: boolean;
 	data: {
@@ -43,7 +45,7 @@ export /*bundle*/ class Route {
 		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
 		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
 		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
-		app.post(`/${this.#endpoints.plural}/generate-report`, jwt.verify, this.generateReport);
+		app.post(`/${this.#endpoints.plural}/generate-report`, this.generateReport);
 	}
 
 	list = async (req: Request, res: Response) => {
@@ -134,6 +136,9 @@ export /*bundle*/ class Route {
 			const response: ResponseType = await this.#manager.generateReport({ header, params });
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);
+
+			const excelPath = path.join(__dirname, response.data.pathFile);
+			return res.sendFile(excelPath);
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /list', exc);

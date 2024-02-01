@@ -21,12 +21,13 @@
 				"name": "Essential"
 			}
 		},
-		"server": "http://localhost:5000/"
+		"server": "http://localhost:5001/"
 	},
 	"libraries": {
 		"imports": [
 			"pragmate-ui",
-			"@beyond-js/reactive"
+			"@beyond-js/reactive",
+			"@bgroup/http-suite"
 		]
 	},
 	"modules": {

@@ -1,6 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
+import config from '@essential-js/admin/config';
 
 export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListView> {
 	#id: string;
@@ -111,9 +112,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				limit: this.#limit,
 				start: this.#limit * (page - 1),
 			};
-			console.log('PARAMS +> ', this.#params);
 			const response = await this.#collection.load(this.#params);
-			console.log('ITEMS => ', this.#collection.items);
 			if (!response.status) throw new Error(response.error);
 		} catch (error) {
 			console.error('error', error);
@@ -205,7 +204,22 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	generateReport = async ({ header }: { header: { label: string; name: string }[] }) => {
-		const response = await this.#collection.generateReport({ header, params: this.#params });
-		console.log('RESPONSE => ', response);
+		try {
+			this.fetching = true;
+			const response = await this.#collection.generateReport({ header, params: this.#params });
+
+			const a = document.createElement('a');
+			a.href = response.data;
+			a.download = 'report.xlsx';
+			document.body.appendChild(a);
+			a.click();
+			a.remove(); // Limpia el DOM eliminando el enlace
+			window.URL.revokeObjectURL(response.data);
+		} catch (error) {
+			console.error('ERROR DOWNLOADING EXCEL', error);
+			return error;
+		} finally {
+			this.fetching = false;
+		}
 	};
 }

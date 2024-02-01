@@ -33,8 +33,8 @@ export /*bundle*/ class Users extends Collection {
 		try {
 			this.fetching = true;
 			const response = await this.provider.generateReport(params);
-			if (!response.status) throw response;
-			return response;
+			const downloadExcelUrl = URL.createObjectURL(response);
+			return { status: true, data: downloadExcelUrl };
 		} catch (error) {
 			console.error(error);
 			return error;
