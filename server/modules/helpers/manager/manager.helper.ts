@@ -63,11 +63,14 @@ export /*bundle*/ abstract class Manager {
 	generateReport = async ({
 		header,
 		params,
+		type,
 	}: {
 		header: { label: string; name: string }[];
 		params: { [key: string]: any };
+		type: 'xlsx' | 'csv';
 	}) => {
 		try {
+			console.log('PARAMS => ', params, header, type);
 			if (!params) return { status: true };
 			const response = await this.list(params);
 			const formatedItems = response.data.entries.map(item => {
@@ -81,10 +84,15 @@ export /*bundle*/ abstract class Manager {
 			const formatedHeader = header.map(item => ({ header: item.label, key: item.name }));
 
 			const excel = new Excel();
+
+			const date = new Date();
+			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '-');
+			const alternativeName = `Report-${formattedDate}`;
+
 			const specs: IParamsExcel = {
 				pathname: `output`,
-				filename: `${this.#managerName || 'Report'}.xlsx`,
-				type: 'xlsx',
+				filename: `${this.#managerName || alternativeName}.${type}`,
+				type,
 				sheetData: [
 					{
 						sheetName: 'Sheet1',
@@ -96,6 +104,7 @@ export /*bundle*/ abstract class Manager {
 			};
 
 			const excelResponse = await excel.create(specs);
+			console.log('EXCEL RESPONSE => ', excelResponse);
 			if (!excelResponse.status) throw response.error;
 
 			return { status: true, data: excelResponse.data };

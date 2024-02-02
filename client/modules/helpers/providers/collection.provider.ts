@@ -25,7 +25,11 @@ export /*bundle*/ abstract class CollectionProvider {
 		return this.#api.get(`${this.#endpoints.list}${query}`);
 	};
 
-	generateReport = async (params: { header: { label: string; name: string }[]; params: { [key: string]: any } }) => {
-		return this.#api.post(`${this.#endpoints.list}/generate-report`, params);
+	generateReport = async (params: {
+		type: 'xlsx' | 'csv';
+		header: { label: string; name: string }[];
+		params: { [key: string]: any };
+	}) => {
+		return this.#api.post(`${this.#endpoints.list}/generate-report/${params.type}`, params);
 	};
 }

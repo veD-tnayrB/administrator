@@ -45,7 +45,7 @@ export /*bundle*/ class Route {
 		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
 		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
 		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
-		app.post(`/${this.#endpoints.plural}/generate-report`, this.generateReport);
+		app.post(`/${this.#endpoints.plural}/generate-report/:type`, this.generateReport);
 	}
 
 	list = async (req: Request, res: Response) => {
@@ -133,13 +133,13 @@ export /*bundle*/ class Route {
 	generateReport = async (req: Request, res: Response) => {
 		try {
 			let { params, header } = req.body;
-			const response: ResponseType = await this.#manager.generateReport({ header, params });
+			const { type } = req.params;
+			const response: ResponseType = await this.#manager.generateReport({ header, params, type });
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);
 
 			const excelPath = path.join(__dirname, response.data.pathFile);
 			return res.sendFile(excelPath);
-			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /list', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });

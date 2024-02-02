@@ -203,17 +203,20 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.triggerEvent();
 	};
 
-	generateReport = async ({ header }: { header: { label: string; name: string }[] }) => {
+	generateReport = async ({ header, type }: { header: { label: string; name: string }[]; type: 'xlsx' | 'csv' }) => {
 		try {
 			this.fetching = true;
-			const response = await this.#collection.generateReport({ header, params: this.#params });
+			const response = await this.#collection.generateReport({ header, params: this.#params, type });
+
+			const date = new Date();
+			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '-');
 
 			const a = document.createElement('a');
 			a.href = response.data;
-			a.download = 'report.xlsx';
+			a.download = `Report-${formattedDate}.${type}`;
 			document.body.appendChild(a);
 			a.click();
-			a.remove(); // Limpia el DOM eliminando el enlace
+			a.remove();
 			window.URL.revokeObjectURL(response.data);
 		} catch (error) {
 			console.error('ERROR DOWNLOADING EXCEL', error);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useListViewContext } from '../../../../context';
+import { useListViewContext } from '../../../../../context';
 import { Button } from 'pragmate-ui/components';
 
 export interface IGenerateReport {
@@ -7,15 +7,15 @@ export interface IGenerateReport {
 	onClick?: Function;
 }
 
-export const GenerateReport = (props: IGenerateReport) => {
+export const GenerateExcel = (props: IGenerateReport) => {
 	const { store, header } = useListViewContext();
 
 	const onClick = () => {
 		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
-		store.generateReport({ header: selectedItems });
+		store.generateReport({ header: selectedItems, type: 'xlsx' });
 	};
 
-	const title = props.label || 'Generate Report';
+	const title = props.label || 'Generate Excel';
 	return (
 		<Button title={title} onClick={onClick} variant="secondary" className="generate-report">
 			<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">

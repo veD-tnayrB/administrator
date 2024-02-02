@@ -29,7 +29,11 @@ export /*bundle*/ class Users extends Collection {
 		}
 	};
 
-	generateReport = async (params: { header: { label: string; name: string }[]; params: { [key: string]: any } }) => {
+	generateReport = async (params: {
+		header: { label: string; name: string }[];
+		type: 'xlsx' | 'csv';
+		params: { [key: string]: any };
+	}) => {
 		try {
 			this.fetching = true;
 			const response = await this.provider.generateReport(params);

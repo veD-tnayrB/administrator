@@ -85,7 +85,8 @@ function View({ store }: { store: StoreManager }) {
 				},
 			},
 			generateReport: {
-				label: 'Generate Report',
+				excel: true,
+				csv: true,
 			},
 		},
 	};
