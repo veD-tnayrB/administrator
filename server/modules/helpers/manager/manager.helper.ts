@@ -70,7 +70,6 @@ export /*bundle*/ abstract class Manager {
 		type: 'xlsx' | 'csv';
 	}) => {
 		try {
-			console.log('PARAMS => ', params, header, type);
 			if (!params) return { status: true };
 			const response = await this.list(params);
 			const formatedItems = response.data.entries.map(item => {
@@ -100,11 +99,10 @@ export /*bundle*/ abstract class Manager {
 						columnsHeader: formatedHeader,
 					},
 				],
-				options: [],
+				options: {},
 			};
 
 			const excelResponse = await excel.create(specs);
-			console.log('EXCEL RESPONSE => ', excelResponse);
 			if (!excelResponse.status) throw response.error;
 
 			return { status: true, data: excelResponse.data };

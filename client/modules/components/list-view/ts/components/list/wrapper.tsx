@@ -9,7 +9,7 @@ import { Empty } from '../empty';
 export const ListContainer = () => {
 	const { store, list, header } = useListViewContext();
 
-	const isEmpty = store.collection.items.length === 0;
+	const isEmpty = store.items.length === 0;
 	let cls = list.default ? `default` : ``;
 	cls += !store.ready ? ` loading` : ``;
 	cls += isEmpty ? ' empty' : '';

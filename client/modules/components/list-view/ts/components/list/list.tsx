@@ -33,7 +33,7 @@ export const List = (props: IList) => {
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
 
-	const output = store.collection.items.map((item: Record<string, any>, index: number) => {
+	const output = store.items.map((item: Record<string, any>, index: number) => {
 		if (!Row) return null;
 		return (
 			<Row

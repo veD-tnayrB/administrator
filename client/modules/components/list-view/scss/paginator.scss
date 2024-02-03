@@ -7,9 +7,12 @@ footer.list-view-paginator {
 	.length-handler {
 		font-size: 1.1rem;
 		padding: 0.2rem 0.5rem;
-		border: 1px solid var(--outline);
+		border: 1px solid transparent;
+		outline: transparent;
 		outline: transparent;
 		cursor: pointer;
+		background: var(--primary);
+		color: var(--on-primary);
 
 		&:focus {
 			border: 1px solid var(--on-surface);

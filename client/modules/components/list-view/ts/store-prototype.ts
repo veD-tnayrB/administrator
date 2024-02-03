@@ -14,14 +14,19 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return this.#collection;
 	}
 
+	#items: Collection['items'] = [];
+	get items() {
+		return this.#items;
+	}
+
 	#selectedItems: Map<string, Record<string, any>> = new Map();
 	get selectedItems() {
 		return this.#selectedItems;
 	}
 
 	get isAllPageSelected() {
-		const selectedItems = this.#collection.items.filter(item => this.#selectedItems.has(item.id));
-		return selectedItems.length === this.#collection.items.length;
+		const selectedItems = this.#items.filter(item => this.#selectedItems.has(item.id));
+		return selectedItems.length === this.#items.length;
 	}
 
 	#limit: number = 5;
@@ -74,6 +79,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		try {
 			const response = await this.#collection.load({ start: this.#collection.next || 0, limit: this.#limit });
 			if (!response.status) throw response.error;
+			this.#items = response.data;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -96,7 +102,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				where: query,
 				...this.#params,
 			};
-			await this.#collection.load(this.#params);
+			const response = await this.#collection.load(this.#params);
+			this.#items = response.data;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -114,6 +121,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			};
 			const response = await this.#collection.load(this.#params);
 			if (!response.status) throw new Error(response.error);
+			this.#items = response.data;
 		} catch (error) {
 			console.error('error', error);
 		} finally {
@@ -123,7 +131,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	clearSearch = async () => {
 		this.fetching = true;
-		await this.#collection.load({ start: 0, limit: this.#limit });
+		const response = await this.#collection.load({ start: 0, limit: this.#limit });
+		this.#items = response.data;
 		this.fetching = false;
 	};
 
@@ -193,13 +202,13 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	selectAllItems = () => {
-		if (this.#selectedItems.size === this.#collection.items.length) {
+		if (this.#selectedItems.size === this.#items.length) {
 			this.#selectedItems.clear();
 			this.triggerEvent();
 			return;
 		}
 
-		this.#collection.items.forEach(item => this.#selectedItems.set(item.id, item));
+		this.#items.forEach(item => this.#selectedItems.set(item.id, item));
 		this.triggerEvent();
 	};
 
