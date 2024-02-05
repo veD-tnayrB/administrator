@@ -61,6 +61,11 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		des: 'DES',
 	};
 
+	set params(params: Record<string, any>) {
+		this.#params = params;
+		this.#updateUrl();
+	}
+
 	constructor({ collection, id }: { collection: Collection; id: string }) {
 		super();
 
@@ -73,6 +78,9 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 		this.#propertiesDisplaying = JSON.parse(localStorage.getItem(this.#id) || '[]');
 		this.#collection = collection;
+
+		const urlParams = this.#getUrlParams();
+		if (!!Object.entries(urlParams).length) this.#params = urlParams;
 	}
 
 	load = async () => {
@@ -114,7 +122,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	#navigation = async (page: number) => {
 		try {
 			this.fetching = true;
-			this.#params = {
+			this.params = {
 				...this.#params,
 				limit: this.#limit,
 				start: this.#limit * (page - 1),
@@ -131,7 +139,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	clearSearch = async () => {
 		this.fetching = true;
-		const response = await this.#collection.load({ start: 0, limit: this.#limit });
+		const response = await this.#collection.load(this.#params);
 		this.#items = response.data;
 		this.fetching = false;
 	};
@@ -233,5 +241,23 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		} finally {
 			this.fetching = false;
 		}
+	};
+
+	#updateUrl = () => {
+		const params = new URLSearchParams();
+		for (const [key, value] of Object.entries(this.#params)) {
+			const formatedValue = typeof value === 'object' ? JSON.stringify(value) : value;
+			params.append(key, formatedValue);
+		}
+		window.history.replaceState({}, '', window.location.pathname + '?' + params.toString());
+	};
+
+	#getUrlParams = () => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const params = {};
+		for (const [key, value] of urlParams) {
+			params[key] = value;
+		}
+		return params;
 	};
 }
