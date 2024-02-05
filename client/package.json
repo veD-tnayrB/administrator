@@ -26,7 +26,6 @@
 	"libraries": {
 		"imports": [
 			"pragmate-ui",
-			"@beyond-js/reactive",
 			"@bgroup/http-suite"
 		]
 	},
