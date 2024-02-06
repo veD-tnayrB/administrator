@@ -14,7 +14,7 @@ export class TotalsWidgetManager extends ReactiveModel<TotalsWidgetManager> {
 			this.fetching = true;
 			const response = await this.#totalsCollection.getTotals();
 			if (!response.status) throw response.error;
-			// this.#data = response.data;
+			this.#data = response.data;
 		} catch (error) {
 			console.error(error);
 			return error;

@@ -22,10 +22,7 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 	const onClear = () => {
 		onFocus();
 		setValues('');
-		if (hasBeenSubmitted) {
-			store.load();
-		}
-
+		store.clearSearch();
 		setHasBeenSubmitted(false);
 	};
 

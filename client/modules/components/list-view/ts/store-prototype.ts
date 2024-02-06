@@ -106,11 +106,14 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				query[item] = value;
 			});
 
-			this.#params = {
+			const { start, ...propsToSend } = this.#params;
+
+			const params = {
 				where: query,
-				...this.#params,
+				...propsToSend,
+				start: 0,
 			};
-			const response = await this.#collection.load(this.#params);
+			const response = await this.#collection.load(params);
 			this.#items = response.data;
 		} catch (error) {
 			console.error(error);
@@ -138,10 +141,19 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	clearSearch = async () => {
-		this.fetching = true;
-		const response = await this.#collection.load(this.#params);
-		this.#items = response.data;
-		this.fetching = false;
+		try {
+			this.fetching = true;
+			this.#params = {
+				...this.#params,
+				start: 0,
+			};
+			const response = await this.#collection.load(this.#params);
+			this.#items = response.data;
+		} catch (error) {
+			console.error(error);
+		} finally {
+			this.fetching = false;
+		}
 	};
 
 	onNext = () => {

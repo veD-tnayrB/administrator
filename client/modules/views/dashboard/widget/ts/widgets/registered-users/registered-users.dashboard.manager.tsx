@@ -28,7 +28,7 @@ export class RegisteredUsersWidgetManager extends ReactiveModel<RegisteredUsersW
 		try {
 			this.fetching = true;
 			const response = await this.#collection.getRegisteredUsersByMonth({ year: this.#selectedYear });
-			// this.#data = response.data;
+			this.#data = response.data;
 		} catch (error) {
 			console.error(error);
 			return error;
