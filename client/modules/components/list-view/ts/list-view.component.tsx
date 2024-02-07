@@ -3,7 +3,7 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { IList } from './components/list/list';
 import { IContext, ListViewContext } from './context';
 import { StoreListView } from './store-prototype';
-import { IHeader } from './components/list/header';
+import { IHeader } from './components/list/header/header';
 import { IPaginator, Paginator } from './components/paginator/paginator';
 import { ISearchbar } from './components/utility-bar/searchbar/searchbar';
 import { IActions } from './components/utility-bar/actions/actions';

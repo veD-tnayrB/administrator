@@ -1,8 +1,10 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { useListViewContext } from '../../context';
+import { useListViewContext } from '../../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Checkbox } from 'pragmate-ui/form';
+import { Button } from 'pragmate-ui/components';
+import { EditRemoveActions } from './edit-remove-actions';
 
 export interface IHeader {
 	items?: IHeaderItem;
@@ -30,10 +32,6 @@ export const Header = (props: IProps) => {
 		return <li key={uuid()}>{Item.label as React.ReactNode}</li>;
 	});
 
-	const actionsGap = list.itemsConfig.actions.map(() => {
-		return <li key={uuid()}></li>;
-	});
-
 	const includeSelectAll = list.isSelecteable;
 	const cls = store.fetching ? ` loading` : ``;
 	return (
@@ -45,7 +43,7 @@ export const Header = (props: IProps) => {
 			)}
 
 			{output}
-			{actionsGap}
+			<EditRemoveActions />
 		</ul>
 	);
 };

@@ -76,6 +76,8 @@ function View({ store }: { store: StoreManager }) {
 				to: '/users/managment/create',
 				label: texts.actions.create,
 			},
+			editAll: true,
+			removeAll: true,
 			columnsSelector: {
 				title: texts.actions.columnsSelector.title,
 				label: texts.actions.columns,

@@ -5,15 +5,22 @@
 				width: 100%;
 				display: table-row;
 				background: var(--surface-variant);
+				border: 1px solid transparent;
 
-				&.selectable {
+				&.selectable:hover {
+					cursor: pointer;
+
+					box-shadow: var(--primary-shadow), var(--primary-shadow), 0 1px 2px 0 var(--surface),
+						0 2px 4px 2px #5858580f;
+					z-index: 3;
+					position: relative;
 					cursor: pointer;
 				}
 
 				span.field {
 					display: table-cell;
 					vertical-align: middle;
-					padding: 0.625rem 0;
+					padding: 0.5rem 0;
 
 					&:first-child {
 						border-left: 2px solid var(--outline);
@@ -27,13 +34,22 @@
 					}
 				}
 
+				&:hover {
+					.row-actions {
+						visibility: visible;
+					}
+				}
+
 				.row-actions {
+					visibility: hidden;
 					display: flex;
 					align-items: center;
+					justify-content: center;
 					gap: 10px;
 					padding: 0 10px;
 
 					button {
+						min-height: 0px;
 						background: transparent;
 						display: flex;
 						align-items: center;
@@ -41,14 +57,15 @@
 						padding: 0 10px;
 
 						.button-label {
+							height: fit-content;
 							display: flex;
 							align-items: center;
 							justify-content: center;
 
 							svg {
-								width: 25px;
-								height: 25px;
-								fill: var(--on-surface);
+								width: 20px;
+								height: 20px;
+								stroke: var(--on-surface);
 							}
 						}
 					}

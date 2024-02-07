@@ -2,7 +2,7 @@ import React from 'react';
 import { Spinner } from '@essential-js/admin/components/spinner';
 import { useListViewContext } from '../../context';
 import { List } from './list';
-import { Header } from './header';
+import { Header } from './header/header';
 import { Loading } from '../../loading';
 import { Empty } from '../empty';
 
