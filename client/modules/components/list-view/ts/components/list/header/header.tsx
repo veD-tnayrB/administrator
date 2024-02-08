@@ -3,11 +3,14 @@ import { v4 as uuid } from 'uuid';
 import { useListViewContext } from '../../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Checkbox } from 'pragmate-ui/form';
-import { Button } from 'pragmate-ui/components';
-import { EditRemoveActions } from './edit-remove-actions';
+import { IHeaderActionButton, RemoveAction } from './remove-actions';
 
 export interface IHeader {
 	items?: IHeaderItem;
+	actions: {
+		edit: IHeaderActionButton;
+		remove: IHeaderActionButton;
+	};
 }
 
 interface IDefaultHeaderItem {
@@ -29,7 +32,11 @@ export const Header = (props: IProps) => {
 	const selectedItems = props.items.filter(item => store.propertiesDisplaying.includes(item.name));
 
 	const output = selectedItems?.map(Item => {
-		return <li key={uuid()}>{Item.label as React.ReactNode}</li>;
+		return (
+			<li key={uuid()}>
+				<div className="label">{Item.label as React.ReactNode}</div>
+			</li>
+		);
 	});
 
 	const includeSelectAll = list.isSelecteable;
@@ -38,12 +45,14 @@ export const Header = (props: IProps) => {
 		<ul className={`header ${cls}`}>
 			{includeSelectAll && (
 				<li className="check-all">
-					<Checkbox checked={store.isAllPageSelected} onChange={store.selectAllItems} />
+					<div className="check-container">
+						<Checkbox checked={store.isAllPageSelected} onChange={store.selectAllItems} />
+					</div>
 				</li>
 			)}
 
 			{output}
-			<EditRemoveActions />
+			<RemoveAction />
 		</ul>
 	);
 };

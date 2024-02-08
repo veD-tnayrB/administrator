@@ -209,8 +209,29 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		}
 	};
 
+	bulkRemove = async () => {
+		try {
+			this.fetching = true;
+
+			this.#selectedItems.forEach(async item => {
+				const response = await item.delete();
+				if (!response) throw 'RECORD_COULDNT_BE_REMOVED';
+			});
+
+			await this.load();
+			this.#selectedItems = new Map();
+			this.triggerEvent();
+			return { status: true };
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	selectItem = ({ id }: { id: string }) => {
-		const item = this.#collection.items.find(item => item.id === id);
+		const item = this.#items.find(item => item.id === id);
 
 		if (this.#selectedItems.has(id)) {
 			this.#selectedItems.delete(id);

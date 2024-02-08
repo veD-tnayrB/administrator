@@ -6,9 +6,10 @@
 			gap: 0.5rem;
 
 			button.generate-report {
-				background: var(--success-80);
-				border-radius: 5px;
-				padding: 0.5rem;
+				border-radius: var(--border-tertiary);
+				padding: 0 0.5rem;
+				background: transparent;
+				border: 1px solid var(--success-70);
 
 				.button-label {
 					display: flex;
@@ -16,14 +17,20 @@
 					gap: 0.5rem;
 
 					svg {
-						width: 21px;
-						height: 21px;
-						fill: var(--on-primary);
+						width: 20px;
+						height: 20px;
+						fill: var(--success-70);
 					}
 				}
 
 				&:hover {
 					background: var(--success-70);
+
+					.button-label {
+						svg {
+							fill: var(--on-primary);
+						}
+					}
 				}
 			}
 		}

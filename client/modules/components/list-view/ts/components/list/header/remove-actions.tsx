@@ -1,30 +1,23 @@
 import React from 'react';
 import { Button } from 'pragmate-ui/components';
 import { useListViewContext } from '../../../context';
+import { BulkRemoveModal } from './bulk-remove-modal';
 
-export const EditRemoveActions = () => {
+export interface IHeaderActionButton extends React.HTMLAttributes<HTMLButtonElement> {
+	to?: string;
+}
+
+export const RemoveAction = () => {
 	const { store } = useListViewContext();
+	const [modals, setModals] = React.useState({ delete: false });
 	const displayCls = !!store.selectedItems.size ? 'show' : '';
+
+	const onToggleDeleteModal = () => setModals({ ...modals, delete: !modals.delete });
+
 	return (
 		<li>
-			<div className={`actions ${displayCls}`}>
-				<Button>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						stroke="currentColor"
-						className="lucide lucide-pen-line icon">
-						<path d="M12 20h9" />
-						<path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-					</svg>
-				</Button>
-				<Button>
+			<div className={`actions header-actions ${displayCls}`}>
+				<Button onClick={onToggleDeleteModal}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -44,6 +37,7 @@ export const EditRemoveActions = () => {
 					</svg>
 				</Button>
 			</div>
+			{modals.delete && <BulkRemoveModal onToggleDeleteModal={onToggleDeleteModal} />}
 		</li>
 	);
 };

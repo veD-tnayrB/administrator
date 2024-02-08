@@ -13,62 +13,85 @@ export interface IPaginator {
 export const Paginator = (props: IPaginator) => {
 	const { store } = useListViewContext();
 
-	const since = `${store.currentPage || 0} - ${store.limit} `;
-	const to = `${props?.texts?.of || '/'} ${store.collection.total}`;
+	const since = `${store.currentPage || 0}-${store.limit} `;
+	const to = `${props?.texts?.of || ' of '} ${store.collection.total}`;
+	const isFirstPage = store.currentPage === 1;
+	const isLastPage = store.currentPage === store.totalPages;
+
 	return (
 		<footer className="list-view-paginator">
 			<div className="paginator">
-				<div className="left-actions action">
-					<Button className="left" onClick={store.onFirstPage}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							className="w-6 h-6">
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
-							/>
-						</svg>
-					</Button>
-					<Button onClick={store.onPrev}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							className="w-6 h-6">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-						</svg>
-					</Button>
-				</div>
 				<div className="panel">
 					<p>
-						{since} <span className="to">{to}</span>
+						{since}
+						{to}
 					</p>
 				</div>
 
-				<div className="right-actions action">
-					<Button onClick={store.onNext}>
+				<div className="left-actions action">
+					<Button className="left" onClick={store.onFirstPage} disabled={isFirstPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							className="w-6 h-6">
-							<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="lucide lucide-chevrons-left">
+							<path d="m11 17-5-5 5-5" />
+							<path d="m18 17-5-5 5-5" />
 						</svg>
 					</Button>
-					<Button className="right" onClick={store.onLastPage}>
+					<Button onClick={store.onPrev} disabled={isFirstPage} className="disabled-class-to-teest">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
 							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							className="w-6 h-6">
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
-							/>
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="lucide lucide-chevron-left">
+							<path d="m15 18-6-6 6-6" />
+						</svg>
+					</Button>
+				</div>
+
+				<div className="right-actions action">
+					<Button onClick={store.onNext} disabled={isLastPage}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="lucide lucide-chevron-right">
+							<path d="m9 18 6-6-6-6" />
+						</svg>
+					</Button>
+					<Button className="right" disabled={isLastPage} onClick={store.onLastPage}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="lucide lucide-chevrons-right">
+							<path d="m6 17 5-5-5-5" />
+							<path d="m13 17 5-5-5-5" />
 						</svg>
 					</Button>
 				</div>

@@ -1,12 +1,13 @@
 .list-view {
 	form.list-view-searchbar-container {
 		background: var(--surface);
-		border: 2px solid var(--outline);
+		border: 1px solid var(--outline);
 		width: 18rem;
 		padding: 0 0.5rem;
 		display: grid;
 		align-items: center;
 		grid-template-columns: 1.5rem 1fr 1.5rem;
+		border-radius: var(--border-tertiary);
 
 		.clear-button {
 			width: 1.5rem;
@@ -28,10 +29,10 @@
 		}
 
 		&:has(.pui-input.list-view-searchbar > input:focus) {
-			border: 2px solid var(--on-surface);
+			border: 1px solid var(--primary);
 
 			svg {
-				stroke: var(--on-surface);
+				stroke: var(--primary);
 			}
 		}
 

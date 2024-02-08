@@ -22,6 +22,7 @@ export interface IColumnSelector {
 export const ColumnsSelector = (props: IColumnSelector) => {
 	const { store, header } = useListViewContext();
 	const [, setUpdate] = React.useState({});
+	const [isOpen, setIsOpen] = React.useState(false);
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
 	React.useMemo(() => {
@@ -33,6 +34,8 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 		toggler: {
 			children: <ColumnSelectorToggler {...props} />,
 		},
+		isOpen,
+		setIsOpen,
 	};
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,8 +71,9 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 		);
 	});
 
+	const cls = isOpen ? 'open' : '';
 	return (
-		<div className="column-selector">
+		<div className={`column-selector ${cls}`}>
 			<Dialog {...options}>
 				<h4>{props.title}</h4>
 				<Form>{output}</Form>

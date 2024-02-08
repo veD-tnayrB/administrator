@@ -25,7 +25,10 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
 	const output = propertiesToDisplay.map(property => {
-		const value = getValue(item, property);
+		let value = getValue(item, property);
+		if (property === 'timeCreated' || property === 'timeUpdated') {
+			value = new Date(value).toLocaleString().split(',')[0];
+		}
 		return (
 			<span className="field" key={uuid()}>
 				{value}
@@ -47,7 +50,7 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 	const displayActions = includesEdit || includesDelete;
 
 	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);
-	const onSelect = event => store.selectItem({ id: item.id });
+	const onSelect = () => store.selectItem({ id: item.id });
 
 	const includeCheck = list.isSelecteable;
 	const isItemSelected = selectedItems?.has(item.id);

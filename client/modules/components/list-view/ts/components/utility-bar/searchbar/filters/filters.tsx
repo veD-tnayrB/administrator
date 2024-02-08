@@ -43,12 +43,7 @@ export const FiltersSearch = (props: IFilters) => {
 
 	const output = store.propertiesToSearch.map(item => (
 		<div key={item.name} className="pui-input">
-			<input
-				{...item}
-				placeholder={item.placeholder || item.label}
-				value={values[item.name] || ''}
-				onChange={onChange}
-			/>
+			<input {...item} placeholder={item.label} value={values[item.name] || ''} onChange={onChange} />
 		</div>
 	));
 
@@ -60,8 +55,10 @@ export const FiltersSearch = (props: IFilters) => {
 		isOpen,
 	};
 
+	const cls = isOpen ? 'open' : '';
+
 	return (
-		<div className="filters">
+		<div className={`filters ${cls}`}>
 			<Dialog {...options}>
 				<Form onSubmit={onSubmit}>
 					<h4>{props.title}</h4>

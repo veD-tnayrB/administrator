@@ -19,8 +19,8 @@ export interface IActions {
 
 export const ActionsContainer = (props: IActions) => {
 	const actions = props.customs || [];
-	if (props.create) actions.unshift(<CreateAction {...props.create} />);
 	if (props.columnsSelector) actions.push(<ColumnsSelector {...props.columnsSelector} />);
+	if (props.create) actions.unshift(<CreateAction {...props.create} />);
 
 	const output = actions?.map(action => <div key={uuid()}>{action}</div>);
 	return (

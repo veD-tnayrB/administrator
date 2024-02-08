@@ -7,7 +7,7 @@ import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 export const Form = () => {
-	const { store, texts } = useUsersManagmentContext();
+	const { store } = useUsersManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
 		names: store.item.names || '',
 		email: store.item.email || '',
@@ -27,7 +27,7 @@ export const Form = () => {
 
 	const onSubmit = async () => {
 		await store.save(values);
-		toast.success(store.item.id ? texts.success.updated : texts.success.created);
+		toast.success(store.item.id ? 'User updated successfully' : 'User created successfully');
 		routing.pushState('/users');
 		store.reset();
 	};
@@ -40,22 +40,22 @@ export const Form = () => {
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
-			<Input label={texts.labels.names} value={values.names} name="names" onChange={onChange} />
-			<Input label={texts.labels.lastNames} value={values.lastNames} name="lastNames" onChange={onChange} />
-			<Input label={texts.labels.email} value={values.email} name="email" onChange={onChange} />
+			<Input label="Names" value={values.names} name="names" onChange={onChange} />
+			<Input label="Last names" value={values.lastNames} name="lastNames" onChange={onChange} />
+			<Input label="Email" value={values.email} name="email" onChange={onChange} />
 			<div className="pui-input">
 				<label className="pui-input__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
-					<span className="label-content"> {texts.labels.active}</span>
+					<span className="label-content"> Is active?</span>
 				</label>
 			</div>
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
-					{texts.actions.reset}
+					Cancel
 				</Button>
-				<Button type="submit" fetching={isLoading}>
-					{texts.actions.save}
+				<Button type="submit" variant="primary" fetching={isLoading}>
+					Save
 				</Button>
 			</div>
 		</FormUI>

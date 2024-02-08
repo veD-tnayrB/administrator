@@ -14,5 +14,5 @@ export const Toggler = ({ setIsOpen, label, ...validProps }: IProps) => {
 		setIsOpen(currentValue => !currentValue);
 	};
 
-	return <Button variant="primary" onClick={onToggle} {...validProps} />;
+	return <Button onClick={onToggle} {...validProps} />;
 };

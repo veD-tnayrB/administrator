@@ -1,26 +1,64 @@
 .list-view {
 	.actions-container {
 		.column-selector {
-			.column-selector-toggler {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 0.5rem;
+			&.open {
+				button {
+					background: var(--primary);
+					color: var(---primary);
 
-				p {
-					color: var(--on-primary);
+					.button-label {
+						color: var(---primary);
+					}
+
+					.column-selector-toggler {
+						svg {
+							stroke: var(--on-primary);
+						}
+					}
+				}
+			}
+
+			button {
+				border: 1px solid var(--primary);
+				border-radius: var(--border-tertiary);
+				padding: 0 0.5rem;
+
+				&:hover {
+					color: var(---on-primary);
+					background: var(--primary);
+
+					.column-selector-toggler {
+						p {
+							color: var(--on-primary);
+						}
+
+						svg {
+							stroke: var(--on-primary);
+						}
+					}
 				}
 
-				svg {
-					stroke: var(--on-primary);
-					width: 20px;
-					height: 20px;
+				.column-selector-toggler {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.5rem;
+
+					p {
+						color: var(--primary);
+					}
+
+					svg {
+						stroke: var(--primary);
+						width: 20px;
+						height: 20px;
+					}
 				}
 			}
 
 			.essential-dialog {
 				.modal {
-					border-radius: 10px;
+					border-radius: var(--border-primary);
 					right: 0;
 					display: flex;
 					flex-direction: column;

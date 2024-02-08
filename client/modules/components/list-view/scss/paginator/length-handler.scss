@@ -1,0 +1,16 @@
+footer.list-view-paginator {
+	.length-handler {
+		font-size: 1rem;
+		padding: 0.2rem 0.5rem;
+		border: 1px solid var(--outline);
+		outline: transparent;
+		outline: transparent;
+		cursor: pointer;
+		color: var(--on-surface);
+		border-radius: var(--border-secondary);
+
+		&:focus {
+			border: 1px solid var(--on-surface);
+		}
+	}
+}

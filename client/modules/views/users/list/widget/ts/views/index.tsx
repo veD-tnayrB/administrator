@@ -1,51 +1,45 @@
 import React from 'react';
 import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
-import { module } from 'beyond_context';
-import { useTexts } from '@essential-js/admin/helpers';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { ITexts } from '../types';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
-	const [ready, texts] = useTexts<ITexts>(module.specifier);
 	const [update, setUpdate] = React.useState({});
-
 	useBinder([store], () => setUpdate({}));
-
-	if (!ready) return null;
 
 	const contextValue: IContext = {
 		store,
-		texts,
 	};
 
 	const listProperties = {
 		store,
 		viewHeader: {
-			title: texts.title,
+			title: 'Users',
 		},
 		searchbar: {
-			placeholder: texts.searchbar.placeholder,
+			placeholder: 'Search...',
 			filters: {
-				title: texts.searchbar.filtersDialog.title,
-				label: texts.searchbar.filtersDialog.label,
+				title: 'Filter by specific column',
 				actions: {
-					apply: { label: texts.searchbar.filtersDialog.apply },
-					reset: { label: texts.searchbar.filtersDialog.reset },
+					apply: { label: 'Search' },
+					reset: { label: 'Reset' },
 				},
 			},
 		},
 		header: {
 			items: [
-				{ label: texts.list.columns.id, name: 'id' },
-				{ label: texts.list.columns.names, name: 'names' },
-				{ label: texts.list.columns.lastNames, name: 'lastNames' },
-				{ label: texts.list.columns.email, name: 'email' },
-				{ label: texts.list.columns.timeCreated, name: 'timeCreated' },
-				{ label: texts.list.columns.timeUpdated, name: 'timeUpdated' },
+				{ label: 'ID', name: 'id' },
+				{ label: 'Names', name: 'names' },
+				{ label: 'Last names', name: 'lastNames' },
+				{ label: 'Email', name: 'email' },
+				{ label: 'Created at', name: 'timeCreated' },
+				{ label: 'Updated at', name: 'timeUpdated' },
 			],
+			actions: {
+				edit: { to: '/users/managment' },
+			},
 		},
 		list: {
 			default: true,
@@ -53,18 +47,18 @@ function View({ store }: { store: StoreManager }) {
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
 				actions: [
-					{ type: 'edit', to: '/users/managment', title: texts.list.actions.item.edit },
+					{ type: 'edit', to: '/users/managment', title: 'Edit' },
 					{
 						type: 'delete',
-						title: texts.list.actions.item.delete.title,
+						title: 'Remove',
 						modal: {
-							title: texts.list.actions.item.delete.title,
-							description: texts.list.actions.item.delete.description,
+							title: 'Remove',
+							description: 'Are you sure you want to remove this user?',
 							close: {
-								label: texts.list.actions.item.delete.close,
+								label: 'Cancel',
 							},
 							confirm: {
-								label: texts.list.actions.item.delete.confirm,
+								label: 'Remove',
 							},
 						},
 					},
@@ -74,15 +68,15 @@ function View({ store }: { store: StoreManager }) {
 		actions: {
 			create: {
 				to: '/users/managment/create',
-				label: texts.actions.create,
+				label: 'Create',
 			},
 			editAll: true,
 			removeAll: true,
 			columnsSelector: {
-				title: texts.actions.columnsSelector.title,
-				label: texts.actions.columns,
+				title: 'Select the columns you want to appear',
+				label: '',
 				min: {
-					label: texts.list.actions.columnsSelector.min,
+					label: `You can't select less than {{number}} columns`,
 					number: 2,
 				},
 			},

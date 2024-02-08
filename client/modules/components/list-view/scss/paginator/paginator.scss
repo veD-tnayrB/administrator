@@ -1,0 +1,27 @@
+footer.list-view-paginator {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	width: 100%;
+
+	.paginator {
+		display: flex;
+		align-items: center;
+		border-radius: 5px;
+		overflow: hidden;
+
+		.panel {
+			display: flex;
+			align-items: center;
+			min-width: min-content;
+
+			p {
+				color: var(--on-surface);
+				padding: 5.5px;
+				display: flex;
+				align-items: center;
+				min-width: 80px;
+			}
+		}
+	}
+}

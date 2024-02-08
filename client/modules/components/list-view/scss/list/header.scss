@@ -12,12 +12,18 @@
 			.check-all {
 				padding: 0 1rem;
 
-				.pui-checkbox--label {
+				.check-container {
+					display: flex;
+					align-items: center;
 					justify-content: center;
+					.pui-checkbox--label {
+						display: flex;
+						justify-content: center;
+					}
 				}
 			}
 
-			.actions {
+			.header-actions {
 				height: 26px;
 				visibility: hidden;
 				display: flex;
@@ -34,6 +40,7 @@
 					min-height: 0px;
 
 					.button-label {
+						padding: 0;
 						display: flex;
 						align-items: center;
 						justify-content: center;
@@ -49,10 +56,16 @@
 
 			li {
 				display: table-cell;
-				padding: 0.5rem 0;
+				vertical-align: middle;
 				border-top: 1px solid var(--outline);
 				border-bottom: 1px solid var(--outline);
-				height: 26px;
+
+				div.label {
+					padding: 0.4rem 0;
+					height: 100%;
+					display: flex;
+					align-items: center;
+				}
 			}
 
 			li:first-child {

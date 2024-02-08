@@ -1,21 +1,57 @@
 .filters {
 	position: relative;
-	border-radius: 20px;
+	border-radius: var(--border-tertiary);
 
-	.filter-toggler {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
+	&.open {
+		button {
+			background: var(--primary);
 
-		p {
-			color: var(--on-primary);
+			.filter-toggler {
+				p {
+					color: var(--on-primary);
+				}
+
+				svg {
+					stroke: var(--on-primary);
+				}
+			}
+		}
+	}
+
+	button {
+		border: 1px solid var(--primary);
+		border-radius: var(--border-tertiary);
+		padding: 0 0.5rem;
+
+		&:hover {
+			background: var(--primary);
+
+			.filter-toggler {
+				p {
+					color: var(---on-primary);
+				}
+
+				svg {
+					stroke: var(--on-primary);
+				}
+			}
 		}
 
-		svg {
-			stroke: var(--on-primary);
-			width: 20px;
-			height: 20px;
+		.filter-toggler {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+
+			p {
+				color: var(--primary);
+			}
+
+			svg {
+				stroke: var(--primary);
+				width: 20px;
+				height: 20px;
+			}
 		}
 	}
 
