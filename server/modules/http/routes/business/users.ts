@@ -1,5 +1,5 @@
 import { Users } from '@essential-js/admin-server/engines/users';
-import { Route, ISuccess, ResponseType } from '@essential-js/admin-server/helpers';
+import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
 
@@ -31,7 +31,7 @@ class UsersRoutes extends Route {
 
 	setup = (app: Application) => {
 		super.setup(app);
-		app.get('/users/get-registered-users-by-month/:year', this.getRegisteredUsersByMonth);
+		app.get('/users/get-registered-users-by-month/:year', checkToken, this.getRegisteredUsersByMonth);
 	};
 }
 

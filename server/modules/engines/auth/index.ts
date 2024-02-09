@@ -1,6 +1,6 @@
 import { DB } from '@essential-js/admin-server/db';
 import { MD5 } from '@bgroup/helpers/md5';
-import { jwt } from '@essential-js/admin-server/helpers';
+import * as jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 
 export interface ILoginParams {
@@ -29,7 +29,7 @@ class AuthManager {
 
 			const user = userInstance.get({ plain: true });
 			const payload = { email: user.email, id: user.id, generatedAt: Date.now() };
-			const token = jwt.generate(payload, process.env.JWT_EXPIRE_TIME);
+			const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE_TIME });
 
 			await this.#accessTokensModel.create({
 				id: uuid(),

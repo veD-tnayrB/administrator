@@ -24,11 +24,11 @@ const ConfirmModal = ({ title, description, close, confirm }: IProps) => {
 
 			<footer>
 				<div className="actions">
-					<Button variant="secondary" {...close}>
-						{close.label}
-					</Button>
 					<Button variant="primary" {...confirm}>
 						{confirm.label}
+					</Button>
+					<Button variant="secondary" {...close}>
+						{close.label}
 					</Button>
 				</div>
 			</footer>

@@ -1,13 +1,16 @@
 import { Notifications } from '@essential-js/admin-server/engines/notifications';
-import { Route } from '@essential-js/admin-server/helpers';
+import { Route, checkToken } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
-import { jwt } from '@essential-js/admin-server/helpers';
 
 class NotificationsRoutes extends Route {
 	constructor() {
 		super({
 			manager: Notifications,
+			endpoints: {
+				plural: 'notifications',
+				singular: 'notification',
+			},
 		});
 	}
 
@@ -40,13 +43,9 @@ class NotificationsRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		app.get(`/notifications`, jwt.verify, this.list);
-		app.get(`/notification/:id`, jwt.verify, this.get);
-		app.post(`/notification`, jwt.verify, this.create);
-		app.put(`/notification`, jwt.verify, this.update);
-		app.delete(`/notification/:id`, jwt.verify, this.delete);
-		app.post('/notification/launch', jwt.verify, this.launch);
-		app.put('/notification/markAsRead', jwt.verify, this.markAsRead);
+		super.setup(app);
+		app.post('/notification/launch', checkToken, this.launch);
+		app.put('/notification/markAsRead', checkToken, this.markAsRead);
 	};
 }
 

@@ -1,5 +1,5 @@
 import { Widgets } from '@essential-js/admin-server/engines/widgets';
-import { Route, ISuccess, ResponseType } from '@essential-js/admin-server/helpers';
+import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
 import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
@@ -29,7 +29,7 @@ class WidgetsRoutes extends Route {
 
 	setup = (app: Application) => {
 		super.setup(app);
-		app.get('/widgets/get-totals', this.getTotals);
+		app.get('/widgets/get-totals', checkToken, this.getTotals);
 	};
 }
 

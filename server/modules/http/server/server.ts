@@ -2,7 +2,6 @@ import * as express from 'express';
 import { Connections } from './connections';
 import { routes, hmr } from '@essential-js/admin-server/routes';
 import * as cors from 'cors';
-import { jwt } from '@essential-js/admin-server/helpers';
 
 export class Server {
 	#instance;
@@ -19,7 +18,6 @@ export class Server {
 		try {
 			this.#app = express();
 			this.#app.use(express.json());
-			jwt.init(process.env.JWT_SECRET);
 			this.#setHeader();
 			this.#app.use(express.urlencoded({ extended: true }));
 			this.#app.use(express.json());

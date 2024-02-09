@@ -1,7 +1,7 @@
 import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
-import { jwt } from '../middlewares/jwt';
+import { checkToken } from '../middlewares/jwt';
 import * as path from 'path';
 
 export /*bundle*/ interface ISuccess {
@@ -40,12 +40,12 @@ export /*bundle*/ class Route {
 	}
 
 	setup(app: Application) {
-		app.get(`/${this.#endpoints.plural}`, jwt.verify, this.list);
-		app.get(`/${this.#endpoints.singular}/:id`, jwt.verify, this.get);
-		app.post(`/${this.#endpoints.singular}`, jwt.verify, this.create);
-		app.put(`/${this.#endpoints.singular}`, jwt.verify, this.update);
-		app.delete(`/${this.#endpoints.singular}/:id`, jwt.verify, this.delete);
-		app.post(`/${this.#endpoints.plural}/generate-report/:type`, this.generateReport);
+		app.get(`/${this.#endpoints.plural}`, checkToken, this.list);
+		app.get(`/${this.#endpoints.singular}/:id`, checkToken, this.get);
+		app.post(`/${this.#endpoints.singular}`, checkToken, this.create);
+		app.put(`/${this.#endpoints.singular}`, checkToken, this.update);
+		app.delete(`/${this.#endpoints.singular}/:id`, checkToken, this.delete);
+		app.post(`/${this.#endpoints.plural}/generate-report/:type`, checkToken, this.generateReport);
 	}
 
 	list = async (req: Request, res: Response) => {

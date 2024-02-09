@@ -1,6 +1,7 @@
 import { Auth } from '@essential-js/admin-server/engines/auth';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
+import { checkToken } from '@essential-js/admin-server/helpers';
 
 export class AuthRoutes {
 	async login(req: Request, res: Response) {
@@ -39,7 +40,7 @@ export class AuthRoutes {
 
 	setup(app: Application) {
 		app.post('/login', this.login);
-		app.get('/auth/get-user', this.getUser);
+		app.get('/auth/get-user', checkToken, this.getUser);
 	}
 }
 
