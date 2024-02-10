@@ -1,4 +1,5 @@
-button {
+button,
+button.pui-button {
 	cursor: pointer;
 	background: transparent;
 	border-radius: 0;
@@ -8,6 +9,10 @@ button {
 		.button-label {
 			opacity: 0;
 		}
+	}
+
+	.button-label {
+		font-size: 0.9rem;
 	}
 }
 

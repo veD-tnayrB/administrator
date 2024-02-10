@@ -50,7 +50,9 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 	const displayActions = includesEdit || includesDelete;
 
 	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);
-	const onSelect = () => store.selectItem({ id: item.id });
+	const onSelect = () => {
+		if (list.isSelecteable) store.selectItem({ id: item.id });
+	};
 
 	const includeCheck = list.isSelecteable;
 	const isItemSelected = selectedItems?.has(item.id);
