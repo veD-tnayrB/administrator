@@ -6,7 +6,7 @@ import { useNotificationsListContext } from '../context';
 import { routing } from '@beyond-js/kernel/routing';
 
 export const Row = ({ propertiesToDisplay, item, ...props }: IRow) => {
-	const { texts, store } = useNotificationsListContext();
+	const { store } = useNotificationsListContext();
 	const output = propertiesToDisplay.map((property: string) => {
 		const value = item[property];
 		return (
@@ -26,7 +26,7 @@ export const Row = ({ propertiesToDisplay, item, ...props }: IRow) => {
 			<div className="actions">
 				<span className="actions-container field">
 					<div className="row-actions">
-						<Button onClick={onEdit} title={texts.list.actions.item.edit}>
+						<Button onClick={onEdit} title="Edit">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"
@@ -43,7 +43,7 @@ export const Row = ({ propertiesToDisplay, item, ...props }: IRow) => {
 								<path d="m15 5 3 3" />
 							</svg>
 						</Button>
-						<Button onClick={onLaunch} title={texts.list.actions.item.launch}>
+						<Button onClick={onLaunch} title="Launch">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="24"

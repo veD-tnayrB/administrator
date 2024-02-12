@@ -1,70 +1,61 @@
 import React from 'react';
 import { StoreManager } from '../store';
 import { IContext, NotificationsListContext } from '../context';
-import { module } from 'beyond_context';
-import { useTexts } from '@essential-js/admin/helpers';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { ITexts } from '../types';
 import { Row } from './row';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
-	const [ready, texts] = useTexts<ITexts>(module.specifier);
 	const [update, setUpdate] = React.useState({});
-
 	useBinder([store], () => setUpdate({}));
-
-	if (!ready) return null;
 
 	const contextValue: IContext = {
 		store,
-		texts,
 	};
 
 	const listProperties = {
 		store,
 		viewHeader: {
-			title: texts.title,
+			title: 'Notifications',
 		},
 		searchbar: {
-			placeholder: texts.searchbar.placeholder,
+			placeholder: 'Search...',
 			filters: {
-				title: texts.searchbar.filtersDialog.title,
-				label: texts.searchbar.filtersDialog.label,
+				title: 'Filtrar',
 				actions: {
-					apply: { label: texts.searchbar.filtersDialog.apply },
-					reset: { label: texts.searchbar.filtersDialog.reset },
+					apply: { label: 'Buscar' },
+					reset: { label: 'Reset' },
 				},
 			},
 		},
 		header: {
 			items: [
-				{ label: texts.list.columns.id, name: 'id' },
-				{ label: texts.list.columns.title, name: 'title' },
-				{ label: texts.list.columns.description, name: 'description' },
-				{ label: texts.list.columns.timeInterval, name: 'timeInterval' },
-				{ label: texts.list.columns.timeCreated, name: 'timeCreated' },
-				{ label: texts.list.columns.timeUpdated, name: 'timeUpdated' },
+				{ label: 'ID', name: 'id' },
+				{ label: 'Titulo', name: 'title' },
+				{ label: 'Description', name: 'description' },
+				{ label: 'Time interval', name: 'timeInterval' },
+				{ label: 'Created at', name: 'timeCreated' },
+				{ label: 'Updated at', name: 'timeUpdated' },
 			],
 		},
 		list: {
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'title', 'description', 'timeInterval', 'timeCreated', 'timeUpdated'],
-				actions: [{ type: 'edit', to: '/notifications/managment', title: texts.list.actions.item.edit }],
+				actions: [{ type: 'edit', to: '/notifications/managment', title: 'Edit' }],
 			},
 			row: Row,
 		},
 		actions: {
 			create: {
 				to: '/notifications/managment/create',
-				label: texts.actions.create,
+				label: 'Create',
 			},
 			columnsSelector: {
-				label: texts.actions.columns,
+				label: 'Columns',
 				min: {
-					label: texts.list.actions.columnsSelector.min,
+					label: "You can't select less than {{number}} columns",
 					number: 2,
 				},
 			},
