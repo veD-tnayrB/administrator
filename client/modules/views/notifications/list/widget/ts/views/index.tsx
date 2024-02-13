@@ -22,7 +22,7 @@ function View({ store }: { store: StoreManager }) {
 		searchbar: {
 			placeholder: 'Search...',
 			filters: {
-				title: 'Filtrar',
+				title: 'Filter',
 				actions: {
 					apply: { label: 'Buscar' },
 					reset: { label: 'Reset' },

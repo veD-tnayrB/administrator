@@ -18,44 +18,43 @@ function View({ store }: { store: StoreManager }) {
 	const listProperties = {
 		store,
 		viewHeader: {
-			title: texts.title,
+			title: 'Profiles',
 		},
 		searchbar: {
-			placeholder: texts.searchbar.placeholder,
+			placeholder: 'Search...',
 			filters: {
-				title: texts.searchbar.filtersDialog.title,
-				label: texts.searchbar.filtersDialog.label,
+				label: 'Filter',
 				actions: {
-					apply: { label: texts.searchbar.filtersDialog.apply },
-					reset: { label: texts.searchbar.filtersDialog.reset },
+					apply: { label: 'Search' },
+					reset: { label: 'Reset' },
 				},
 			},
 		},
 		header: {
 			items: [
-				{ label: texts.list.columns.id, name: 'id' },
-				{ label: texts.list.columns.name, name: 'name' },
-				{ label: texts.list.columns.description, name: 'description' },
-				{ label: texts.list.columns.timeCreated, name: 'timeCreated' },
-				{ label: texts.list.columns.timeUpdated, name: 'timeUpdated' },
+				{ label: 'ID', name: 'id' },
+				{ label: 'Name', name: 'name' },
+				{ label: 'Description', name: 'description' },
+				{ label: 'Created at', name: 'timeCreated' },
+				{ label: 'Updated at', name: 'timeUpdated' },
 			],
 		},
 		list: {
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'name', 'description', 'timeCreated', 'timeUpdated'],
-				actions: [{ type: 'edit', to: '/profiles/managment', title: texts.list.actions.item.edit }],
+				actions: [{ type: 'edit', to: '/profiles/managment', title: 'Edit' }],
 			},
 		},
 		actions: {
 			create: {
 				to: '/profiles/managment/create',
-				label: texts.actions.create,
+				label: 'Create',
 			},
 			columnsSelector: {
-				label: texts.actions.columns,
+				label: 'Columns',
 				min: {
-					label: texts.list.actions.columnsSelector.min,
+					label: "You can't select less than {{number}} columns",
 					number: 2,
 				},
 			},
