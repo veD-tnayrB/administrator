@@ -3,18 +3,15 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { useTexts } from '@essential-js/admin/helpers';
 import { module } from 'beyond_context';
 import { StoreManager } from '../store';
-import { ITexts } from '../types';
 import { ListView } from '@essential-js/admin/components/list-view';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
-	const [ready, texts] = useTexts<ITexts>(module.specifier);
 	const [update, setUpdate] = React.useState({});
 	useBinder([store], () => {
 		setUpdate({});
 	});
 
-	if (!ready) return null;
 	const listProperties = {
 		store,
 		viewHeader: {

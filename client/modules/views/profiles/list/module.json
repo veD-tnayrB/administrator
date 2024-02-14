@@ -11,9 +11,5 @@
 		"element": {
 			"name": "profiles-list"
 		}
-	},
-	"txt": {
-		"path": "/widget/txt",
-		"files": "*"
 	}
 }
