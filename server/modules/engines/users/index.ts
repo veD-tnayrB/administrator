@@ -1,6 +1,7 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager } from '@essential-js/admin-server/helpers';
 import Sequelize, { Op } from 'sequelize';
+import { Excel } from '@bggroup/excel/excel';
 
 export class UsersManager extends Manager {
 	constructor() {
@@ -67,6 +68,22 @@ export class UsersManager extends Manager {
 		});
 
 		return { status: true, data: monthlyData };
+	};
+
+	bulkImport = async (filepath: string) => {
+		try {
+			// Example code to read an Excel file in XLSX format
+			const excel = new Excel();
+			const readParams = {
+				filePath: filepath,
+				type: 'xlsx',
+			};
+
+			const response = await excel.read(readParams);
+			console.log('EXCEL RESPONSE => ', response);
+		} catch (error) {
+			return { status: false, error };
+		}
 	};
 }
 

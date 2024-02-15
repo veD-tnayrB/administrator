@@ -46,4 +46,18 @@ export /*bundle*/ class Users extends Collection {
 			this.fetching = false;
 		}
 	};
+
+	import = async params => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.import(params);
+			console.log('RESPONSE IMPORT => ', response);
+			return { status: true };
+		} catch (error) {
+			console.error(error);
+			return error;
+		} finally {
+			this.fetching = false;
+		}
+	};
 }

@@ -28,3 +28,5 @@ firebase-credentials.ts
 firebase-credentials.js
 .beyond
 .env
+temp
+output

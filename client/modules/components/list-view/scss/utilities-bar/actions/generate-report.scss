@@ -5,7 +5,8 @@
 			align-items: center;
 			gap: 0.5rem;
 
-			button.generate-report {
+			button.generate-report,
+			button.import {
 				border-radius: var(--border-tertiary);
 				padding: 0 0.5rem;
 				background: transparent;

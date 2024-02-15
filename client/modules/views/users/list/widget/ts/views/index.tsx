@@ -84,6 +84,7 @@ function View({ store }: { store: StoreManager }) {
 				excel: true,
 				csv: true,
 			},
+			import: true,
 		},
 	};
 	return (

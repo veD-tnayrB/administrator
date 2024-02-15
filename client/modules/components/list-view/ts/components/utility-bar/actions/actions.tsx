@@ -4,6 +4,7 @@ import { CreateAction, ICreateAction } from './pre-done/create';
 import { ColumnsSelector, IColumnSelector } from './pre-done/column-selector/column-selector';
 import { IGenerateReport } from './pre-done/generate-csv';
 import { ReportsContainer } from './pre-done/reports/reports-container';
+import { IImport } from './pre-done/reports/import';
 
 export type IActionsItems = React.ReactNode[];
 
@@ -15,6 +16,7 @@ export interface IActions {
 		excel: IGenerateReport;
 		csv: IGenerateReport;
 	};
+	import: IImport;
 }
 
 export const ActionsContainer = (props: IActions) => {

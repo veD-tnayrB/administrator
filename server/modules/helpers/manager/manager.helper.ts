@@ -1,21 +1,6 @@
 import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
-import { Excel } from '@bggroup/excel/excel';
-import * as path from 'path';
-
-export type TSheetData = {
-	sheetName: string;
-	data: object[];
-	columnsHeader: object[];
-};
-
-export interface IParamsExcel {
-	pathname: string;
-	options: object;
-	filename: string;
-	sheetData: Array<TSheetData>;
-	type: 'csv' | 'xlsx';
-}
+import { IGenerateReport, generateReport } from './cases/generate-report';
 
 export /*bundle*/ abstract class Manager {
 	#model: Model;
@@ -59,55 +44,7 @@ export /*bundle*/ abstract class Manager {
 		return actions.remove(this.#model, { id }, `/delete/${this.#managerName}`);
 	};
 
-	generateReport = async ({
-		header,
-		params,
-		type,
-	}: {
-		header: { label: string; name: string }[];
-		params: { [key: string]: any };
-		type: 'xlsx' | 'csv';
-	}) => {
-		try {
-			if (!params) return { status: true };
-			const response = await this.list(params);
-			const formatedItems = response.data.entries.map(item => {
-				let newItem = {};
-				header.forEach(h => {
-					newItem[h.name] = item[h.name];
-				});
-				return newItem;
-			});
-
-			const formatedHeader = header.map(item => ({ header: item.label, key: item.name }));
-
-			const excel = new Excel();
-
-			const date = new Date();
-			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '-');
-			const alternativeName = `Report-${formattedDate}`;
-
-			const specs: IParamsExcel = {
-				pathname: `output`,
-				filename: `${this.#managerName || alternativeName}.${type}`,
-				type,
-				sheetData: [
-					{
-						sheetName: 'Sheet1',
-						data: formatedItems,
-						columnsHeader: formatedHeader,
-					},
-				],
-				options: {},
-			};
-
-			const excelResponse = await excel.create(specs);
-			if (!excelResponse.status) throw response.error;
-
-			return { status: true, data: excelResponse.data };
-		} catch (error) {
-			console.error(error);
-			return { status: false, error };
-		}
+	generateReport = async ({ header, params, type }: IGenerateReport) => {
+		return generateReport({ header, params, type, model: this.#model, managerName: this.#managerName });
 	};
 }

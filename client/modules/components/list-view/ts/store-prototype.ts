@@ -276,6 +276,19 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		}
 	};
 
+	import = async (file: File) => {
+		try {
+			this.fetching = true;
+			const response = await this.#collection.import({ file });
+			return response;
+		} catch (error) {
+			console.error(error);
+			return error;
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	#updateUrl = () => {
 		const params = new URLSearchParams();
 		for (const [key, value] of Object.entries(this.#params)) {
