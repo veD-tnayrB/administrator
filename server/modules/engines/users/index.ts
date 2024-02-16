@@ -80,7 +80,36 @@ export class UsersManager extends Manager {
 			};
 
 			const response = await excel.read(readParams);
+			if (!response.status) throw 'EXCEL_READ_ERROR';
 			console.log('EXCEL RESPONSE => ', response);
+
+			const firstPage = Object.values(response.data)[0] as [];
+
+			const columns = {
+				id: ['id', 'ID', 'Id', 'iD'],
+				names: ['names', 'Names', 'Nombres'],
+				lastNames: ['last_names', 'Last Names', 'Apellidos', 'lastNames'],
+				active: ['active', 'Active', 'Activo'],
+				email: ['email', 'Email'],
+				timeCreated: ['Created at', 'Creado el', 'Created At', 'timeCreated'],
+				timeUpdated: ['Updated at', 'Actualizado el', 'Updated At', 'timeUpdated'],
+			};
+			console.log('FIRST PAGE => ', firstPage);
+
+			const mappings = firstPage.map(row => {
+				const mappedRow = {};
+				Object.entries(row).forEach(([key, value]) => {
+					const property = Object.keys(columns).find(property =>
+						columns[property].some(columnName => columnName.toLowerCase() === key.toLowerCase())
+					);
+					if (property) {
+						mappedRow[property] = value;
+					}
+				});
+				return mappedRow;
+			});
+
+			console.log('MAPPINGS => ', mappings);
 		} catch (error) {
 			return { status: false, error };
 		}
