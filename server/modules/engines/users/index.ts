@@ -2,6 +2,11 @@ import { DB } from '@essential-js/admin-server/db';
 import { Manager } from '@essential-js/admin-server/helpers';
 import Sequelize, { Op } from 'sequelize';
 import { Excel } from '@bggroup/excel/excel';
+import { v4 as uuid } from 'uuid';
+
+interface a {
+	[key: string]: string;
+}
 
 export class UsersManager extends Manager {
 	constructor() {
@@ -71,6 +76,8 @@ export class UsersManager extends Manager {
 	};
 
 	bulkImport = async (filepath: string) => {
+		const transaction = await DB.sequelize.transaction();
+
 		try {
 			// Example code to read an Excel file in XLSX format
 			const excel = new Excel();
@@ -96,7 +103,7 @@ export class UsersManager extends Manager {
 			};
 			console.log('FIRST PAGE => ', firstPage);
 
-			const mappings = firstPage.map(row => {
+			const mappings: { [key: string]: string }[] = firstPage.map(row => {
 				const mappedRow = {};
 				Object.entries(row).forEach(([key, value]) => {
 					const property = Object.keys(columns).find(property =>
@@ -110,7 +117,46 @@ export class UsersManager extends Manager {
 			});
 
 			console.log('MAPPINGS => ', mappings);
+
+			const results = [];
+
+			for (const record of mappings) {
+				try {
+					let operationResult;
+
+					if (record.id) {
+						// Actualiza si existe, de lo contrario, inserta
+						const [instance, created] = await this.model.upsert(record, {
+							transaction,
+							returning: true, // Asegúrate de que tu DB soporta 'returning'
+						});
+
+						// Revisa si la instancia es devuelta y si 'created' es un booleano
+						if (typeof created === 'boolean') {
+							operationResult = created
+								? { status: 'inserted', id: instance?.id || record.id }
+								: { status: 'updated', id: record.id };
+						} else {
+							// Asume que se ha insertado si no se puede determinar el estado
+							operationResult = { status: 'inserted', id: record.id };
+						}
+					} else {
+						// Asigna un nuevo UUID y crea un nuevo registro
+						const newRecord = await this.model.create({ ...record, id: uuid() }, { transaction });
+						operationResult = { status: 'created', id: newRecord.id };
+					}
+
+					results.push(operationResult);
+				} catch (error) {
+					results.push({ status: 'error', error: error.message, data: record });
+				}
+			}
+
+			console.log('RESULTS => ', results);
+			await transaction.commit();
+			return results;
 		} catch (error) {
+			await transaction.rollback();
 			return { status: false, error };
 		}
 	};
