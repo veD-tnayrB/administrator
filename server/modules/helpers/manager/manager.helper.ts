@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
-import { IGenerateReport, generateReport } from './cases/generate-report';
+import { generateReport } from '../excel-handler/cases/generate-report';
 
 export /*bundle*/ abstract class Manager {
 	#model: Model;

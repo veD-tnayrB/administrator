@@ -33,7 +33,6 @@ export const generateReport = async ({ header, params, type, model, managerName 
 		const response = await actions.list(model, { ...params }, `/list/${managerName}`);
 		if (!response.status) throw 'FILTER_COULDNT_BE_APPLIED';
 
-		console.log('RESPONSE ACTIONS.LIST => ', response);
 		const formatedItems = response.data.entries.map(item => {
 			let newItem = {};
 			header.forEach(h => {
@@ -41,7 +40,6 @@ export const generateReport = async ({ header, params, type, model, managerName 
 			});
 			return newItem;
 		});
-		console.log('FORMATED ENTRIES => ', formatedItems);
 
 		const formatedHeader = header.map(item => ({ header: item.label, key: item.name }));
 
