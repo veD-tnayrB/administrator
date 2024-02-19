@@ -3,7 +3,7 @@ import { DB } from '@essential-js/admin-server/db';
 import { Excel } from '@bggroup/excel/excel';
 import { Model } from 'sequelize';
 
-export interface IBulkImport {
+export /*bundle*/ interface IBulkImport {
 	filepath: string;
 }
 type TDataType = 'string' | 'number' | 'boolean' | 'date';
@@ -42,8 +42,9 @@ interface IParamsRead {
 }
 interface IParams extends IBulkImport {
 	model: Model;
+	templateConfig: Record<string, string>;
 }
-export const bulkImport = async ({ filepath, model }: IParams) => {
+export const bulkImport = async ({ filepath, model, templateConfig }: IParams) => {
 	const transaction = await DB.sequelize.transaction();
 
 	try {
@@ -54,36 +55,23 @@ export const bulkImport = async ({ filepath, model }: IParams) => {
 			type: 'xlsx',
 		};
 
+		console.log('BULK IMPORT MANAGER => ', readParams);
+
 		const response = await excel.read(readParams as IParamsRead);
 		if (!response.status) throw 'EXCEL_READ_ERROR';
-		console.log('EXCEL RESPONSE => ', response);
 
 		const firstPage = Object.values(response.data)[0] as [];
 
-		const columns = {
-			id: ['id', 'ID', 'Id', 'iD'],
-			names: ['names', 'Names', 'Nombres'],
-			lastNames: ['last_names', 'Last Names', 'Apellidos', 'lastNames'],
-			active: ['active', 'Active', 'Activo'],
-			email: ['email', 'Email'],
-			timeCreated: ['Created at', 'Creado el', 'Created At', 'timeCreated'],
-			timeUpdated: ['Updated at', 'Actualizado el', 'Updated At', 'timeUpdated'],
-		};
-		console.log('FIRST PAGE => ', firstPage);
-
-		const mappings: { [key: string]: string }[] = firstPage.map(row => {
+		const mappings: Record<string, any>[] = firstPage.map(row => {
 			const mappedRow = {};
 			Object.entries(row).forEach(([key, value]) => {
-				const property = Object.keys(columns).find(property =>
-					columns[property].some(columnName => columnName.toLowerCase() === key.toLowerCase())
-				);
-				if (property) {
-					mappedRow[property] = value;
+				const propertyName = templateConfig[key];
+				if (propertyName) {
+					mappedRow[propertyName] = value;
 				}
 			});
 			return mappedRow;
 		});
-
 		console.log('MAPPINGS => ', mappings);
 
 		const results = [];
@@ -93,23 +81,19 @@ export const bulkImport = async ({ filepath, model }: IParams) => {
 				let operationResult;
 
 				if (record.id) {
-					// Actualiza si existe, de lo contrario, inserta
 					const [instance, created] = await model.upsert(record, {
 						transaction,
-						returning: true, // Asegúrate de que tu DB soporta 'returning'
+						returning: true,
 					});
 
-					// Revisa si la instancia es devuelta y si 'created' es un booleano
 					if (typeof created === 'boolean') {
 						operationResult = created
 							? { status: 'inserted', id: instance?.id || record.id }
 							: { status: 'updated', id: record.id };
 					} else {
-						// Asume que se ha insertado si no se puede determinar el estado
 						operationResult = { status: 'inserted', id: record.id };
 					}
 				} else {
-					// Asigna un nuevo UUID y crea un nuevo registro
 					const newRecord = await model.create({ ...record, id: uuid() }, { transaction });
 					operationResult = { status: 'created', id: newRecord.id };
 				}
@@ -122,7 +106,7 @@ export const bulkImport = async ({ filepath, model }: IParams) => {
 
 		console.log('RESULTS => ', results);
 		await transaction.commit();
-		return results;
+		return { status: true, data: results };
 	} catch (error) {
 		await transaction.rollback();
 		return { status: false, error };

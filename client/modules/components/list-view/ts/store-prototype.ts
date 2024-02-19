@@ -220,7 +220,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 			await this.load();
 			this.#selectedItems = new Map();
-			this.triggerEvent();
+			await this.clearSearch();
 			return { status: true };
 		} catch (error) {
 			console.error(error);
@@ -280,6 +280,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		try {
 			this.fetching = true;
 			const response = await this.#collection.import({ file });
+			if (!response.status) throw response.error;
+			await this.load();
 			return response;
 		} catch (error) {
 			console.error(error);

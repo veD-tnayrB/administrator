@@ -45,7 +45,6 @@ export /*bundle*/ class Route {
 		app.post(`/${this.#endpoints.singular}`, checkToken, this.create);
 		app.put(`/${this.#endpoints.singular}`, checkToken, this.update);
 		app.delete(`/${this.#endpoints.singular}/:id`, checkToken, this.delete);
-		app.post(`/${this.#endpoints.plural}/generate-report/:type`, checkToken, this.generateReport);
 	}
 
 	list = async (req: Request, res: Response) => {
@@ -125,23 +124,6 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
-			res.status(500).send(responseError);
-		}
-	};
-
-	generateReport = async (req: Request, res: Response) => {
-		try {
-			let { params, header } = req.body;
-			const { type } = req.params;
-			const response: ResponseType = await this.#manager.generateReport({ header, params, type });
-			if (!response.status && 'error' in response) throw response.error;
-			const formatedResponse = ResponseAPI.success(response as ISuccess);
-
-			const excelPath = path.join(__dirname, response.data.pathFile);
-			return res.sendFile(excelPath);
-		} catch (exc) {
-			console.error('Error /list', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });
 			res.status(500).send(responseError);
 		}

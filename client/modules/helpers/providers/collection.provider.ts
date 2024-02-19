@@ -37,16 +37,15 @@ export /*bundle*/ abstract class CollectionProvider {
 	import = async params => {
 		// TODO: Change to the http-suite
 
-		const formData = new FormData();
-		formData.append('file', params.file); // 'file' es el key esperado en el backend
+		// const formData = new FormData();
+		// formData.append('file', params.file); // 'file' es el key esperado en el backend
 
-		// Realiza la solicitud fetch
-		const response = await fetch(`${config.params.server}${this.#endpoints.list}/import`, {
-			method: 'POST',
-			body: formData, // envía el objeto FormData
-			// No establezcas el Content-Type header, let fetch do it
-		});
-
-		return response;
+		// // Realiza la solicitud fetch
+		// const response = await fetch(`${config.params.server}${this.#endpoints.list}/import`, {
+		// 	method: 'POST',
+		// 	body: formData, // envía el objeto FormData
+		// 	// No establezcas el Content-Type header, let fetch do it
+		// });
+		return this.#api.post(`${this.#endpoints.list}/import`, { file: params.file, multipart: true });
 	};
 }

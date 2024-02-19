@@ -16,7 +16,7 @@ export interface IParamsExcel {
 	type: 'csv' | 'xlsx';
 }
 
-export interface IGenerateReport {
+export /*bundle*/ interface IGenerateReport {
 	header: { label: string; name: string }[];
 	params: { [key: string]: any };
 	type: 'xlsx' | 'csv';
@@ -50,7 +50,7 @@ export const generateReport = async ({ header, params, type, model, managerName 
 		const alternativeName = `Report-${formattedDate}`;
 
 		const specs: IParamsExcel = {
-			pathname: `output`,
+			pathname: `excel/temp`,
 			filename: `${managerName || alternativeName}.${type}`,
 			type,
 			sheetData: [
