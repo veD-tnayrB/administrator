@@ -43,6 +43,7 @@ class UsersRoutes extends Route {
 			form.maxFiles = 1;
 
 			let savedFilePath = ''; // Variable para almacenar la ruta del archivo guardado
+			let fileType = '';
 
 			form.on('fileBegin', (name, file) => {
 				// Crea un nuevo nombre de archivo, manteniendo la extensión original
@@ -51,6 +52,7 @@ class UsersRoutes extends Route {
 				const fullPath = path.join(form.uploadDir, newFilename);
 				file.filepath = fullPath;
 				savedFilePath = fullPath; // Guarda la ruta completa del archivo
+				fileType = extension;
 			});
 
 			await new Promise((resolve, reject) => {
@@ -61,7 +63,7 @@ class UsersRoutes extends Route {
 				});
 			});
 
-			const finalResponse = await this.manager.bulkImport({ filepath: savedFilePath });
+			const finalResponse = await this.manager.bulkImport({ filepath: savedFilePath, fileType });
 			if (!finalResponse.status) throw finalResponse.error;
 
 			// Retorna el nombre del archivo como parte de la respuesta

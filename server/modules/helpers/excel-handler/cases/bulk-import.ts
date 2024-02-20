@@ -3,9 +3,6 @@ import { DB } from '@essential-js/admin-server/db';
 import { Excel } from '@bggroup/excel/excel';
 import { Model } from 'sequelize';
 
-export /*bundle*/ interface IBulkImport {
-	filepath: string;
-}
 type TDataType = 'string' | 'number' | 'boolean' | 'date';
 
 export interface IColumnValidation {
@@ -40,19 +37,29 @@ interface IParamsRead {
 	type: 'csv' | 'xlsx';
 	sheet: string;
 }
+
+export /*bundle*/ interface IBulkImport {
+	filepath: string;
+	fileType: string;
+}
+
 interface IParams extends IBulkImport {
 	model: Model;
 	templateConfig: Record<string, string>;
 }
-export const bulkImport = async ({ filepath, model, templateConfig }: IParams) => {
+
+export const bulkImport = async ({ filepath, model, templateConfig, fileType }: IParams) => {
 	const transaction = await DB.sequelize.transaction();
+	let formatedFileType: 'csv' | 'xlsx' = fileType.split('.')[1] as 'csv' | 'xlsx';
+	formatedFileType = formatedFileType.toLowerCase() as 'csv' | 'xlsx';
+	console.log('FORMATED FILE TYPE => ', formatedFileType);
 
 	try {
 		// Example code to read an Excel file in XLSX format
 		const excel = new Excel();
 		const readParams = {
 			filePath: filepath,
-			type: 'xlsx',
+			type: formatedFileType,
 		};
 
 		console.log('BULK IMPORT MANAGER => ', readParams);
@@ -60,7 +67,9 @@ export const bulkImport = async ({ filepath, model, templateConfig }: IParams) =
 		const response = await excel.read(readParams as IParamsRead);
 		if (!response.status) throw 'EXCEL_READ_ERROR';
 
-		const firstPage = Object.values(response.data)[0] as [];
+		console.log('RESPONSE => ', response);
+
+		const firstPage = formatedFileType === 'csv' ? (response.data as []) : (Object.values(response.data)[0] as []);
 
 		const mappings: Record<string, any>[] = firstPage.map(row => {
 			const mappedRow = {};

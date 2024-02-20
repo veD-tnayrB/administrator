@@ -24,8 +24,8 @@ export /*bundle*/ class ExcelHandler {
 		return generateReport({ header, params, type, model: this.#model, managerName: this.#managerName });
 	};
 
-	bulkImport = ({ filepath }: IBulkImport) => {
-		return bulkImport({ filepath, model: this.#model, templateConfig: this.#templateConfig });
+	bulkImport = ({ filepath, fileType }: IBulkImport) => {
+		return bulkImport({ fileType, filepath, model: this.#model, templateConfig: this.#templateConfig });
 	};
 
 	getTemplate = ({ type }: { type: 'csv' | 'xlsx' }) => {
