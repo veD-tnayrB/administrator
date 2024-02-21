@@ -5,31 +5,69 @@
 			align-items: center;
 			gap: 0.5rem;
 
-			button.generate-report,
-			button.import {
-				border-radius: var(--border-tertiary);
-				padding: 0 0.5rem;
-				background: transparent;
-				border: 1px solid var(--success-70);
+			.essential-dialog {
+				button.generate-report {
+					border-radius: var(--border-tertiary);
+					padding: 0 0.5rem;
+					background: transparent;
+					border: 1px solid var(--success-70);
 
-				.button-label {
-					display: flex;
-					align-items: center;
-					gap: 0.5rem;
+					.button-label {
+						display: flex;
+						align-items: center;
+						gap: 0.5rem;
 
-					svg {
-						width: 20px;
-						height: 20px;
-						fill: var(--success-70);
+						svg {
+							width: 20px;
+							height: 20px;
+							stroke: var(--success-70);
+						}
+					}
+
+					&:hover {
+						background: var(--success-70);
+
+						.button-label {
+							svg {
+								stroke: var(--on-primary);
+							}
+						}
 					}
 				}
 
-				&:hover {
-					background: var(--success-70);
+				.modal {
+					min-width: 150px;
+					display: flex;
+					flex-direction: column;
 
-					.button-label {
-						svg {
-							fill: var(--on-primary);
+					ul {
+						display: flex;
+						flex-direction: column;
+						gap: 0.5rem;
+
+						li {
+							button.generate-report-option {
+								width: 100%;
+								min-height: 0;
+								padding: 0.2rem 0.5rem;
+
+								&:hover {
+									background: var(--surface-variant);
+								}
+
+								.button-label {
+									font-size: 0.9rem;
+									display: flex;
+									align-items: center;
+									gap: 0.5rem;
+
+									svg {
+										width: 20px;
+										height: 20px;
+										fill: var(--success-70);
+									}
+								}
+							}
 						}
 					}
 				}
