@@ -6,9 +6,13 @@ import { Dialog } from '@essential-js/admin/components/dialog';
 export const GenerateReports = () => {
 	const { store, header } = useListViewContext();
 
-	const onClick = () => {
+	const onExcel = () => {
 		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
 		store.generateReport({ header: selectedItems, type: 'xlsx' });
+	};
+	const onCSV = () => {
+		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
+		store.generateReport({ header: selectedItems, type: 'csv' });
 	};
 
 	const options = {
@@ -35,10 +39,10 @@ export const GenerateReports = () => {
 	};
 
 	return (
-		<Dialog title={title} onClick={onClick} variant="secondary" {...options}>
+		<Dialog variant="secondary" {...options}>
 			<ul>
 				<li>
-					<Button className="generate-report-option">
+					<Button onClick={onExcel} className="generate-report-option">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							x="0px"
@@ -53,7 +57,7 @@ export const GenerateReports = () => {
 				</li>
 
 				<li>
-					<Button className="generate-report-option">
+					<Button onClick={onCSV} className="generate-report-option">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
