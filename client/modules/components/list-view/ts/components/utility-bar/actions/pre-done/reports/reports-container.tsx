@@ -2,7 +2,7 @@ import React from 'react';
 import { IActions } from '../../actions';
 import { v4 as uuid } from 'uuid';
 import { GenerateCSV } from './generate-csv';
-import { Import } from './import';
+import { Import } from '../import/import';
 import { GenerateReports } from './generate-reports';
 import { GenerateExcel } from './generate-excel';
 
@@ -20,5 +20,5 @@ export const ReportsContainer = (props: IActions) => {
 
 	const output = actions?.map(action => <div key={uuid()}>{action}</div>);
 
-	return <div className="reports-container">{output}</div>;
+	return <div className="reports-file-container">{output}</div>;
 };

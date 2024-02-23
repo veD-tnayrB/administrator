@@ -269,7 +269,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			a.remove();
 			window.URL.revokeObjectURL(response.data);
 		} catch (error) {
-			console.error('ERROR DOWNLOADING EXCEL', error);
+			console.error(error);
 			return error;
 		} finally {
 			this.fetching = false;
@@ -283,6 +283,26 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			if (!response.status) throw response.error;
 			await this.load();
 			return response;
+		} catch (error) {
+			console.error(error);
+			return error;
+		} finally {
+			this.fetching = false;
+		}
+	};
+
+	getTemplate = async ({ type }: { type: 'xlsx' | 'csv' }) => {
+		try {
+			this.fetching = true;
+			const response = await this.#collection.getTemplate({ type });
+
+			const a = document.createElement('a');
+			a.href = response.data;
+			a.download = `%{${type}-Template.${type}`;
+			document.body.appendChild(a);
+			a.click();
+			a.remove();
+			window.URL.revokeObjectURL(response.data);
 		} catch (error) {
 			console.error(error);
 			return error;

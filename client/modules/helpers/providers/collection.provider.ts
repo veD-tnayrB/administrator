@@ -1,7 +1,6 @@
 import { IListParams } from '../actions/types/collection.types';
 import { Utils } from '@bgroup/helpers/utils';
 import { Api } from '../api/api.helper';
-import config from '@essential-js/admin/config';
 
 export /*bundle*/ abstract class CollectionProvider {
 	#api: Api = new Api();
@@ -34,18 +33,11 @@ export /*bundle*/ abstract class CollectionProvider {
 		return this.#api.post(`${this.#endpoints.list}/generate-report/${params.type}`, params);
 	};
 
+	getTemplate = async (params: { type: 'xlsx' | 'csv' }) => {
+		return this.#api.get(`${this.#endpoints.list}/get-template/${params.type}`);
+	};
+
 	import = async params => {
-		// TODO: Change to the http-suite
-
-		// const formData = new FormData();
-		// formData.append('file', params.file); // 'file' es el key esperado en el backend
-
-		// // Realiza la solicitud fetch
-		// const response = await fetch(`${config.params.server}${this.#endpoints.list}/import`, {
-		// 	method: 'POST',
-		// 	body: formData, // envía el objeto FormData
-		// 	// No establezcas el Content-Type header, let fetch do it
-		// });
 		return this.#api.post(`${this.#endpoints.list}/import`, { file: params.file, multipart: true });
 	};
 }

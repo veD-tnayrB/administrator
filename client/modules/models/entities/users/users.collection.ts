@@ -47,6 +47,20 @@ export /*bundle*/ class Users extends Collection {
 		}
 	};
 
+	getTemplate = async (params: { type: 'xlsx' | 'csv' }) => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.getTemplate(params);
+			const downloadExcelUrl = URL.createObjectURL(response);
+			return { status: true, data: downloadExcelUrl };
+		} catch (error) {
+			console.error(error);
+			return error;
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	import = async params => {
 		try {
 			this.fetching = true;

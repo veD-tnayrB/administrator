@@ -36,22 +36,19 @@ class UsersRoutes extends Route {
 	bulkImport = async (req: Request, res: Response) => {
 		try {
 			const form = new formidable.IncomingForm();
-
-			// Configura el directorio de carga a la carpeta temp
 			form.uploadDir = path.join(__dirname, 'excel/temp');
 			form.keepExtensions = true;
 			form.maxFiles = 1;
 
-			let savedFilePath = ''; // Variable para almacenar la ruta del archivo guardado
+			let savedFilePath = '';
 			let fileType = '';
 
 			form.on('fileBegin', (name, file) => {
-				// Crea un nuevo nombre de archivo, manteniendo la extensión original
 				const extension = path.extname(file.originalFilename);
 				const newFilename = `${Date.now()}${extension}`;
 				const fullPath = path.join(form.uploadDir, newFilename);
 				file.filepath = fullPath;
-				savedFilePath = fullPath; // Guarda la ruta completa del archivo
+				savedFilePath = fullPath;
 				fileType = extension;
 			});
 
@@ -66,7 +63,6 @@ class UsersRoutes extends Route {
 			const finalResponse = await this.manager.bulkImport({ filepath: savedFilePath, fileType });
 			if (!finalResponse.status) throw finalResponse.error;
 
-			// Retorna el nombre del archivo como parte de la respuesta
 			return res.status(200).json({
 				status: true,
 				results: finalResponse.data,

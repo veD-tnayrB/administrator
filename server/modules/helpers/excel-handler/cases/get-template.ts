@@ -43,7 +43,9 @@ export const getTemplate = async ({ type, templateConfig, managerName }: IParams
 			options: {},
 		};
 
+		console.log('PARAMS CREATE EXCEL => ', params);
 		const excelResponse = await excel.create(params);
+		console.log('EXCEL RESPONSE => ', excelResponse);
 		if (!excelResponse.status) throw 'EXCEL_TEMPLATE_GENERATION_ERROR';
 
 		return { status: true, data: excelResponse.data };

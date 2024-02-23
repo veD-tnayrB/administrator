@@ -3,17 +3,11 @@ import { useListViewContext } from '../../../../../context';
 import { Button } from 'pragmate-ui/components';
 import { Dialog } from '@essential-js/admin/components/dialog';
 
-export const GenerateReports = () => {
-	const { store, header } = useListViewContext();
+export const DownloadTemplate = () => {
+	const { store } = useListViewContext();
 
-	const onExcel = () => {
-		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
-		store.generateReport({ header: selectedItems, type: 'xlsx' });
-	};
-	const onCSV = () => {
-		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
-		store.generateReport({ header: selectedItems, type: 'csv' });
-	};
+	const onExcel = () => store.getTemplate({ type: 'xlsx' });
+	const onCSV = () => store.getTemplate({ type: 'csv' });
 
 	const options = {
 		toggler: {
@@ -28,14 +22,14 @@ export const GenerateReports = () => {
 					strokeWidth="2"
 					strokeLinecap="round"
 					strokeLinejoin="round"
-					className="lucide lucide-files">
-					<path d="M20 7h-3a2 2 0 0 1-2-2V2" />
-					<path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z" />
-					<path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8" />
+					className="lucide lucide-download">
+					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+					<polyline points="7 10 12 15 17 10" />
+					<line x1="12" x2="12" y1="15" y2="3" />
 				</svg>
 			),
 			className: 'generate-report',
-			title: 'Generate Report',
+			title: 'Download Template',
 		},
 	};
 

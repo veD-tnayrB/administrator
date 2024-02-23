@@ -4,7 +4,9 @@ import { CreateAction, ICreateAction } from './pre-done/create';
 import { ColumnsSelector, IColumnSelector } from './pre-done/column-selector/column-selector';
 import { IGenerateReport } from './pre-done/generate-csv';
 import { ReportsContainer } from './pre-done/reports/reports-container';
-import { IImport } from './pre-done/reports/import';
+import { IImport } from './pre-done/import/import';
+import { TemplatesContainer } from './pre-done/download-template/templates-container';
+import { ITemplate } from './pre-done/download-template/template-csv';
 
 export type IActionsItems = React.ReactNode[];
 
@@ -17,6 +19,10 @@ export interface IActions {
 		csv: IGenerateReport;
 	};
 	import: IImport;
+	downloadTemplate: {
+		excel: ITemplate;
+		csv: ITemplate;
+	};
 }
 
 export const ActionsContainer = (props: IActions) => {
@@ -28,7 +34,10 @@ export const ActionsContainer = (props: IActions) => {
 	return (
 		<div className="actions-container">
 			{output}
-			<ReportsContainer {...props} />
+			<div className="reports-container">
+				<ReportsContainer {...props} />
+				<TemplatesContainer {...props} />
+			</div>
 		</div>
 	);
 };
