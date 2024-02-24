@@ -298,7 +298,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 			const a = document.createElement('a');
 			a.href = response.data;
-			a.download = `%{${type}-Template.${type}`;
+			const nameType = type === 'xlsx' ? 'Excel' : 'CSV';
+			a.download = `%${nameType}-Template.${type}`;
 			document.body.appendChild(a);
 			a.click();
 			a.remove();

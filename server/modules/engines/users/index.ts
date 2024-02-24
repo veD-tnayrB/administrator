@@ -12,7 +12,7 @@ export class UsersManager extends Manager {
 			model: this.model,
 			managerName: 'users',
 			templateConfig: {
-				id: 'id',
+				ID: 'id',
 				Names: 'names',
 				'Last names': 'lastNames',
 				Active: 'active',

@@ -50,38 +50,31 @@ interface IParams extends IBulkImport {
 
 export const bulkImport = async ({ filepath, model, templateConfig, fileType }: IParams) => {
 	const transaction = await DB.sequelize.transaction();
-	let formatedFileType: 'csv' | 'xlsx' = fileType.split('.')[1] as 'csv' | 'xlsx';
-	formatedFileType = formatedFileType.toLowerCase() as 'csv' | 'xlsx';
-	console.log('FORMATED FILE TYPE => ', formatedFileType);
+	let formattedFileType: 'csv' | 'xlsx' = fileType.split('.')[1] as 'csv' | 'xlsx';
+	formattedFileType = formattedFileType.toLowerCase() as 'csv' | 'xlsx';
 
 	try {
-		// Example code to read an Excel file in XLSX format
 		const excel = new Excel();
 		const readParams = {
 			filePath: filepath,
-			type: formatedFileType,
+			type: formattedFileType,
 		};
-
-		console.log('BULK IMPORT MANAGER => ', readParams);
 
 		const response = await excel.read(readParams as IParamsRead);
 		if (!response.status) throw 'EXCEL_READ_ERROR';
 
-		console.log('RESPONSE => ', response);
-
-		const firstPage = formatedFileType === 'csv' ? (response.data as []) : (Object.values(response.data)[0] as []);
-
+		const firstPage = formattedFileType === 'csv' ? (response.data as []) : (Object.values(response.data)[0] as []);
 		const mappings: Record<string, any>[] = firstPage.map(row => {
-			const mappedRow = {};
-			Object.entries(row).forEach(([key, value]) => {
-				const propertyName = templateConfig[key];
+			return Object.keys(row).reduce((acc, current) => {
+				const propertyName = templateConfig[current];
 				if (propertyName) {
-					mappedRow[propertyName] = value;
+					acc[propertyName] = row[current];
 				}
-			});
-			return mappedRow;
+				return acc;
+			}, {});
 		});
-		console.log('MAPPINGS => ', mappings);
+
+		console.log('RESULT => ', mappings);
 
 		const results = [];
 
@@ -90,19 +83,19 @@ export const bulkImport = async ({ filepath, model, templateConfig, fileType }: 
 				let operationResult;
 
 				if (record.id) {
-					const [instance, created] = await model.upsert(record, {
-						transaction,
-						returning: true,
-					});
-
-					if (typeof created === 'boolean') {
-						operationResult = created
-							? { status: 'inserted', id: instance?.id || record.id }
-							: { status: 'updated', id: record.id };
+					// Verifica si el registro ya existe
+					const existingRecord = await model.findByPk(record.id, { transaction });
+					if (existingRecord) {
+						// Actualiza el registro existente
+						await model.update(record, { where: { id: record.id }, transaction });
+						operationResult = { status: 'updated', id: record.id };
 					} else {
-						operationResult = { status: 'inserted', id: record.id };
+						// Crea un nuevo registro si el ID proporcionado no existe
+						const newRecord = await model.create({ ...record }, { transaction });
+						operationResult = { status: 'created', id: newRecord.id };
 					}
 				} else {
+					// Asigna un nuevo ID y crea un registro nuevo
 					const newRecord = await model.create({ ...record, id: uuid() }, { transaction });
 					operationResult = { status: 'created', id: newRecord.id };
 				}
@@ -113,11 +106,10 @@ export const bulkImport = async ({ filepath, model, templateConfig, fileType }: 
 			}
 		}
 
-		console.log('RESULTS => ', results);
 		await transaction.commit();
 		return { status: true, data: results };
 	} catch (error) {
 		await transaction.rollback();
-		return { status: false, error };
+		return { status: false, error: error.message || 'Error during bulk import' };
 	}
 };
