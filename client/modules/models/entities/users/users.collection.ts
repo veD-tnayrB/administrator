@@ -65,7 +65,6 @@ export /*bundle*/ class Users extends Collection {
 		try {
 			this.fetching = true;
 			const response = await this.provider.import(params);
-			console.log('RESPONSE IMPORT => ', response);
 			return { status: true };
 		} catch (error) {
 			console.error(error);

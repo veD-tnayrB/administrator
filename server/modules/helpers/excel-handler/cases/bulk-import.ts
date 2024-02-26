@@ -74,7 +74,6 @@ export const bulkImport = async ({ filepath, model, templateConfig, fileType }: 
 			}, {});
 		});
 
-		console.log('RESULT => ', mappings);
 
 		const results = [];
 
