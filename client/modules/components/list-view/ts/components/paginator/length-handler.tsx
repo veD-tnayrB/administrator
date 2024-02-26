@@ -7,9 +7,11 @@ export interface ILengthHandler {
 
 export const LengthHandler = (props: ILengthHandler) => {
 	const { store } = useListViewContext();
+	const [value, setValue] = React.useState(store.limit);
 
 	const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = Number(event.target.value);
+		setValue(value);
 		store.onLengthChange(value);
 	};
 
@@ -20,7 +22,7 @@ export const LengthHandler = (props: ILengthHandler) => {
 		</option>
 	));
 	return (
-		<select className="length-handler" onChange={onChange} title="Length handler">
+		<select value={value} className="length-handler" onChange={onChange} title="Length handler">
 			{output}
 		</select>
 	);

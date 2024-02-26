@@ -70,7 +70,6 @@ function View({ store }: { store: StoreManager }) {
 				to: '/users/managment/create',
 				label: 'Create',
 			},
-			editAll: true,
 			removeAll: true,
 			columnsSelector: {
 				title: 'Select the columns you want to appear',

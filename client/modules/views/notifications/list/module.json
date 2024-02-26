@@ -1,9 +1,5 @@
 {
 	"name": "views/notifications/list",
-	"txt": {
-		"path": "/widget/txt",
-		"files": "*"
-	},
 	"widget": {
 		"layout": "main-admin-layout",
 		"route": "/notifications",

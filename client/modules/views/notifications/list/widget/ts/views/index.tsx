@@ -24,7 +24,7 @@ function View({ store }: { store: StoreManager }) {
 			filters: {
 				title: 'Filter',
 				actions: {
-					apply: { label: 'Buscar' },
+					apply: { label: 'Search' },
 					reset: { label: 'Reset' },
 				},
 			},
@@ -53,7 +53,7 @@ function View({ store }: { store: StoreManager }) {
 				label: 'Create',
 			},
 			columnsSelector: {
-				label: 'Columns',
+				title: 'Select the columns you want to appear',
 				min: {
 					label: "You can't select less than {{number}} columns",
 					number: 2,

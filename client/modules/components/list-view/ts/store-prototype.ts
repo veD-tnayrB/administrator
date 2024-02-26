@@ -79,7 +79,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.#propertiesDisplaying = JSON.parse(localStorage.getItem(this.#id) || '[]');
 		this.#collection = collection;
 
-		const urlParams = this.#getUrlParams();
+		const urlParams: Record<string, string> = this.#getUrlParams();
+		this.#limit = Number(urlParams?.limit) || this.#limit;
 		if (!!Object.entries(urlParams).length) this.#params = urlParams;
 	}
 

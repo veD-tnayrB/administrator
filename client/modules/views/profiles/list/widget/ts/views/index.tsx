@@ -49,12 +49,21 @@ function View({ store }: { store: StoreManager }) {
 				label: 'Create',
 			},
 			columnsSelector: {
-				label: 'Columns',
+				title: 'Select the columns you want to appear',
 				min: {
 					label: "You can't select less than {{number}} columns",
 					number: 2,
 				},
 			},
+			generateReport: {
+				excel: true,
+				csv: true,
+			},
+			downloadTemplate: {
+				excel: true,
+				csv: true,
+			},
+			import: true,
 		},
 	};
 

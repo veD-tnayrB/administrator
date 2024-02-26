@@ -8,7 +8,11 @@ import { routing } from '@beyond-js/kernel/routing';
 export const Row = ({ propertiesToDisplay, item, ...props }: IRow) => {
 	const { store } = useNotificationsListContext();
 	const output = propertiesToDisplay.map((property: string) => {
-		const value = item[property];
+		let value = item[property];
+
+		if (property === 'timeCreated' || property === 'timeUpdated') {
+			value = new Date(value).toLocaleString().split(',')[0];
+		}
 		return (
 			<span className="field" key={uuid()}>
 				{value}
