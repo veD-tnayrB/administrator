@@ -12,6 +12,10 @@ export /*bundle*/ abstract class CollectionProvider {
 		list: string;
 	};
 
+	get endpoints() {
+		return this.#endpoints;
+	}
+
 	constructor(params: { endpoints: { list: string } }) {
 		if (!params?.endpoints) throw new Error('Endpoints are required');
 		this.#endpoints = params.endpoints;
@@ -23,21 +27,5 @@ export /*bundle*/ abstract class CollectionProvider {
 		const query = Utils.convertObjectToQuery(rawQuery);
 
 		return this.#api.get(`${this.#endpoints.list}${query}`);
-	};
-
-	generateReport = async (params: {
-		type: 'xlsx' | 'csv';
-		header: { label: string; name: string }[];
-		params: { [key: string]: any };
-	}) => {
-		return this.#api.post(`${this.#endpoints.list}/generate-report/${params.type}`, params);
-	};
-
-	getTemplate = async (params: { type: 'xlsx' | 'csv' }) => {
-		return this.#api.get(`${this.#endpoints.list}/get-template/${params.type}`);
-	};
-
-	import = async params => {
-		return this.#api.post(`${this.#endpoints.list}/import`, { file: params.file, multipart: true });
 	};
 }
