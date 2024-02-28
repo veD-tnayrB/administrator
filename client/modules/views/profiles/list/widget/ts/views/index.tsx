@@ -20,7 +20,7 @@ function View({ store }: { store: StoreManager }) {
 		searchbar: {
 			placeholder: 'Search...',
 			filters: {
-				label: 'Filter',
+				title: 'Filter by specific column',
 				actions: {
 					apply: { label: 'Search' },
 					reset: { label: 'Reset' },
