@@ -1,0 +1,46 @@
+import { DB } from '@essential-js/admin-server/db';
+
+export class Publish {
+	static model: DB.models.Users = DB.models.Users;
+	static usersProfilesModel: DB.models.UsersProfiles = DB.models.UsersProfiles;
+
+	static handleProfiles = async (userId: string, profiles: string[], transaction) => {
+		if (!profiles) return;
+		await Publish.usersProfilesModel.destroy({ where: { userId } }, { transaction });
+
+		if (profiles.length > 0) {
+			const profilesToCreate = profiles.map(profileId => ({ userId, profileId }));
+			await Publish.usersProfilesModel.bulkCreate(profilesToCreate, { transaction });
+		}
+	};
+
+	static create = async (params, target: string) => {
+		const transaction = await DB.sequelize.transaction();
+		try {
+			const { profilesIds, ...userParams } = params;
+			const user = await Publish.model.create(userParams, { transaction });
+			await this.handleProfiles(user.id, profilesIds || [], transaction);
+
+			await transaction.commit();
+			return { status: true, data: { id: user.id } };
+		} catch (error) {
+			await transaction.rollback();
+			return { status: false, error: { error, target } };
+		}
+	};
+
+	static update = async (params, target: string) => {
+		const transaction = await DB.sequelize.transaction();
+		try {
+			const { id, profilesIds, ...userParams } = params;
+			await Publish.model.update(userParams, { where: { id }, transaction });
+			await this.handleProfiles(id, profilesIds, transaction);
+
+			await transaction.commit();
+			return { status: true, data: { id } };
+		} catch (error) {
+			await transaction.rollback();
+			return { status: false, error: { error, target } };
+		}
+	};
+}

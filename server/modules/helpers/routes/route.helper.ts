@@ -87,7 +87,7 @@ export /*bundle*/ class Route {
 
 	create = async (req: Request, res: Response) => {
 		try {
-			const data = req.body.body;
+			const data = req.body;
 			const response = await this.#manager.create(data);
 			if (!response.status) throw response.error;
 			const formatedResponse = ResponseAPI.success({ data: response.data });

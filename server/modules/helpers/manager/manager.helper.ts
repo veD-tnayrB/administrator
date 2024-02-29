@@ -9,6 +9,9 @@ export /*bundle*/ abstract class Manager {
 	}
 
 	#managerName: string;
+	get managerName() {
+		return this.#managerName;
+	}
 
 	constructor({ model, managerName }: { model: Model; managerName: string }) {
 		if (!model) throw new Error('DB_MODEL_IS_REQUIRED');

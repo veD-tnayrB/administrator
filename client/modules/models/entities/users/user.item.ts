@@ -7,13 +7,14 @@ export /*bundle*/ interface IUser {
 	active: boolean;
 	email: string;
 	lastNames: string;
+	profiles: string[];
 	names: string;
 	timeCreated: Date;
 	timeUpdated: Date;
 }
 
 export /*bundle*/ class User extends Item<IUser> {
-	protected properties = ['id', 'active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated'];
+	protected properties = ['id', 'active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated', 'profiles'];
 
 	get fullName() {
 		let namesArray = this.names.split(' ');

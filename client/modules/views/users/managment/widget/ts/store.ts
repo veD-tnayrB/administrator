@@ -35,7 +35,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 
 			await this.#item.set(values);
-			const response = await this.#item.publish();
+			const response = await this.#item.publish({
+				...values,
+				profilesIds: ['0502b4cd-aabb-11ee-a26d-543aacbde303'],
+			});
 
 			if (!response.status) throw response.error;
 			return { status: true };

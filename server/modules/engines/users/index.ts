@@ -1,9 +1,11 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } from '@essential-js/admin-server/helpers';
 import { IGetRegisteredUsersByMonth, getRegisteredUsersByMonth } from './cases/get-registered-users-by-month';
+import { Publish } from './cases/publish';
 
 export class UsersManager extends Manager {
 	declare model: typeof DB.models.Users;
+	declare managerName: string;
 	#excelHandler: ExcelHandler;
 
 	constructor() {
@@ -37,6 +39,14 @@ export class UsersManager extends Manager {
 
 	getTemplate = (params: IGetTemplate) => {
 		return this.#excelHandler.getTemplate(params);
+	};
+
+	create = params => {
+		return Publish.create(params, `/create/${this.managerName}`);
+	};
+
+	update = params => {
+		return Publish.update(params, `/update/${this.managerName}`);
 	};
 }
 
