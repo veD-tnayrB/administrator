@@ -10,6 +10,12 @@ div.pui-input {
 		border-radius: 2px;
 	}
 
+	.pui-switch__label {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
 	.pui-input__label {
 		height: 100%;
 		position: absolute;
@@ -21,10 +27,6 @@ div.pui-input {
 		text-transform: capitalize;
 		color: var(--text-color);
 		transition: all 0.2s ease-out;
-
-		&:has(> .pui-element-switch) {
-			gap: 1rem;
-		}
 
 		.pui-element-switch {
 			.pui-element-switch__label {
@@ -46,5 +48,29 @@ div.pui-input {
 		left: 0.5rem;
 		color: var(--text-color);
 		transform: translateY(-35px);
+	}
+
+	&.fixed-label {
+		.pui-input__label {
+			height: 100%;
+			position: relative;
+			font-size: 0.85rem;
+			left: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			text-transform: capitalize;
+			color: var(--text-color);
+			transition: all 0.2s ease-out;
+		}
+
+		&:focus-within .pui-input__label,
+		input:not(:placeholder-shown) ~ .pui-input__label {
+			background: transparent;
+			padding: 0;
+			left: 0;
+			color: var(--text-color);
+			transform: translateY(0);
+		}
 	}
 }

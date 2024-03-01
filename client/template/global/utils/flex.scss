@@ -1,0 +1,87 @@
+// Definición de un mapa de espaciados para los gaps
+$spacing: (
+	0: 0,
+	1: 0.25rem,
+	2: 0.5rem,
+	3: 0.75rem,
+	4: 1rem,
+);
+$flex-directions: (
+	row: row,
+	row-reverse: row-reverse,
+	col: column,
+	col-reverse: column-reverse,
+);
+$flex-wraps: (
+	nowrap: nowrap,
+	wrap: wrap,
+	wrap-reverse: wrap-reverse,
+);
+$flex-justify: (
+	start: flex-start,
+	end: flex-end,
+	center: center,
+	between: space-between,
+	around: space-around,
+	evenly: space-evenly,
+);
+$flex-align: (
+	start: flex-start,
+	end: flex-end,
+	center: center,
+	stretch: stretch,
+	baseline: baseline,
+);
+
+// Mixin para flex item
+@mixin flex-item($grow: 0, $shrink: 1, $basis: auto) {
+	flex-grow: $grow;
+	flex-shrink: $shrink;
+	flex-basis: $basis;
+}
+// Extensión del mixin para incluir gap
+@mixin flex-container($direction: row, $wrap: nowrap, $justify: flex-start, $align: stretch, $gap: null) {
+	display: flex;
+	flex-direction: map-get($flex-directions, $direction);
+	flex-wrap: map-get($flex-wraps, $wrap);
+	justify-content: map-get($flex-justify, $justify);
+	align-items: map-get($flex-align, $align);
+	@if $gap != null {
+		gap: map-get($spacing, $gap);
+	}
+}
+
+// Uso de mixins para crear clases
+.flex {
+	@include flex-container(row, wrap, flex-start, stretch);
+}
+
+.flex-col-gap {
+	@include flex-container(col, nowrap, center, center);
+}
+
+.flex-row {
+	@include flex-container(row);
+}
+
+.flex-col {
+	@include flex-container(col);
+}
+
+.flex-grow {
+	@include flex-item(1);
+}
+
+.flex-shrink {
+	@include flex-item(0);
+}
+
+.flex-1 {
+	@include flex-item(1, 1, 0%);
+}
+
+@each $key, $value in $spacing {
+	.gap-#{$key} {
+		gap: $value;
+	}
+}

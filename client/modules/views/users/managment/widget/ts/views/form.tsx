@@ -40,11 +40,19 @@ export const Form = () => {
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
-			<Input label="Names" value={values.names} name="names" onChange={onChange} />
-			<Input label="Last names" value={values.lastNames} name="lastNames" onChange={onChange} />
-			<Input label="Email" value={values.email} name="email" onChange={onChange} />
+			<div className="flex gap-4 w-full">
+				<Input className="fixed-label" label="Names" value={values.names} name="names" onChange={onChange} />
+				<Input
+					className="fixed-label"
+					label="Last names"
+					value={values.lastNames}
+					name="lastNames"
+					onChange={onChange}
+				/>
+			</div>
+			<Input className="fixed-label" label="Email" value={values.email} name="email" onChange={onChange} />
 			<div className="pui-input">
-				<label className="pui-input__label">
+				<label className="pui-switch__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
 					<span className="label-content"> Is active?</span>
 				</label>
