@@ -32,6 +32,7 @@ export /*bundle*/ abstract class ItemProvider {
 	};
 
 	data = async params => {
+		console.log('PARAMS= > ', params);
 		return this.#api.get(this.#endpoints.get + `/${params.id}`);
 	};
 

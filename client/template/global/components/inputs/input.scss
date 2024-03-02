@@ -1,19 +1,15 @@
 div.pui-input {
+	border-radius: 4px;
 	position: relative;
-	border-radius: 2px;
 	margin: 0;
 	transition: all 0.2s linear;
+	min-height: 38px;
 
 	input {
 		border: 1px solid transparent;
+		border-radius: 4px;
 		background: var(--background);
-		border-radius: 2px;
-	}
-
-	.pui-switch__label {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
+		padding: 0.35rem 1rem;
 	}
 
 	.pui-input__label {
@@ -27,18 +23,6 @@ div.pui-input {
 		text-transform: capitalize;
 		color: var(--text-color);
 		transition: all 0.2s ease-out;
-
-		.pui-element-switch {
-			.pui-element-switch__label {
-				background: var(--surface);
-
-				&.active {
-					.label__btn--slider {
-						background: var(--primary);
-					}
-				}
-			}
-		}
 	}
 
 	&:focus-within .pui-input__label,

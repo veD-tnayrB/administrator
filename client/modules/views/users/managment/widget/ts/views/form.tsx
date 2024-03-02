@@ -6,6 +6,8 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
+import { Select } from '@essential-js/admin/components/select';
+
 export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
@@ -15,6 +17,8 @@ export const Form = () => {
 		active: store.item.active || true,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
+	const formatedOptions = store.profiles.items.map(item => ({ label: item.name, value: item.id }));
+	console.log('STORE.ITEM => ', store.item);
 
 	useBinder([store], () => setIsLoading(store.fetching));
 
@@ -41,22 +45,39 @@ export const Form = () => {
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
 			<div className="flex gap-4 w-full">
-				<Input className="fixed-label" label="Names" value={values.names} name="names" onChange={onChange} />
 				<Input
-					className="fixed-label"
+					className="fixed-label w-full"
+					label="Names"
+					value={values.names}
+					name="names"
+					placeholder="John"
+					onChange={onChange}
+				/>
+				<Input
+					className="fixed-label w-full"
 					label="Last names"
+					placeholder="Doe"
 					value={values.lastNames}
 					name="lastNames"
 					onChange={onChange}
 				/>
 			</div>
-			<Input className="fixed-label" label="Email" value={values.email} name="email" onChange={onChange} />
+			<Input
+				placeholder="johnDoe@gmail.com"
+				className="fixed-label"
+				label="Email"
+				value={values.email}
+				name="email"
+				onChange={onChange}
+			/>
 			<div className="pui-input">
 				<label className="pui-switch__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
 					<span className="label-content"> Is active?</span>
 				</label>
 			</div>
+
+			<Select options={formatedOptions} isMulti label="Profiles" />
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

@@ -1,0 +1,27 @@
+div.pui-input {
+	.pui-switch__label {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+
+		.pui-element-switch {
+			.pui-element-switch__label.primary {
+				opacity: 0.6;
+				background: var(--surface);
+				border: 1px solid var(--primary);
+
+				.label__btn--slider {
+					background: var(--primary);
+				}
+
+				&.active {
+					opacity: 1;
+					background: var(--surface);
+					.label__btn--slider {
+						background: var(--primary);
+					}
+				}
+			}
+		}
+	}
+}

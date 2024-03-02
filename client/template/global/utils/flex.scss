@@ -39,6 +39,7 @@ $flex-align: (
 	flex-shrink: $shrink;
 	flex-basis: $basis;
 }
+
 // Extensión del mixin para incluir gap
 @mixin flex-container($direction: row, $wrap: nowrap, $justify: flex-start, $align: stretch, $gap: null) {
 	display: flex;
@@ -53,19 +54,35 @@ $flex-align: (
 
 // Uso de mixins para crear clases
 .flex {
-	@include flex-container(row, wrap, flex-start, stretch);
-}
-
-.flex-col-gap {
-	@include flex-container(col, nowrap, center, center);
+	@include flex-container;
 }
 
 .flex-row {
 	@include flex-container(row);
 }
 
+.flex-row-reverse {
+	@include flex-container(row-reverse);
+}
+
 .flex-col {
 	@include flex-container(col);
+}
+
+.flex-col-reverse {
+	@include flex-container(col-reverse);
+}
+
+.flex-wrap {
+	@include flex-container(row, wrap);
+}
+
+.flex-wrap-reverse {
+	@include flex-container(row, wrap-reverse);
+}
+
+.flex-nowrap {
+	@include flex-container(row, nowrap);
 }
 
 .flex-grow {
@@ -83,5 +100,17 @@ $flex-align: (
 @each $key, $value in $spacing {
 	.gap-#{$key} {
 		gap: $value;
+	}
+}
+
+@each $key, $value in $flex-justify {
+	.justify-#{$key} {
+		justify-content: $value;
+	}
+}
+
+@each $key, $value in $flex-align {
+	.items-#{$key} {
+		align-items: $value;
 	}
 }

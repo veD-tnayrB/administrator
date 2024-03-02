@@ -7,6 +7,11 @@
 	display: flex;
 	flex-direction: column;
 	gap: 2.5rem;
+
+	h1 {
+		font-size: 1.5rem;
+	}
+
 	.managment-form {
 		display: flex;
 		flex-direction: column;

@@ -1,0 +1,46 @@
+.pui-select__container {
+	display: flex;
+	flex-direction: column;
+
+	.pui-input__label {
+		order: 0;
+	}
+
+	.pui-select {
+		cursor: pointer;
+		.css-b62m3t-container {
+			.pui-react-select__control.css-13cymwt-control,
+			.pui-react-select__control--is-focused {
+				border: 1px solid transparent;
+
+				.pui-react-select__value-container {
+					.pui-react-select__multi-value {
+						background: var(--surface);
+
+						.pui-react-select__multi-value__label {
+							color: var(--on-background);
+						}
+
+						.css-tj5bde-Svg {
+							fill: var(--on-surface);
+						}
+					}
+				}
+			}
+
+			.pui-react-select__control--is-focused {
+				box-shadow: none;
+				border-color: var(--primary);
+			}
+
+			.pui-react-select__menu-list {
+				background: var(--surface);
+				box-shadow: 0px 7px 8px #58585805;
+
+				.pui-react-select__option {
+					color: var(--on-surface);
+				}
+			}
+		}
+	}
+}

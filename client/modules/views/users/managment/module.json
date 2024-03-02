@@ -6,7 +6,7 @@
 	},
 	"widget": {
 		"layout": "main-admin-layout",
-		"route": "/users/managment/${mode}",
+		"route": "/users/managment/${id}",
 		"is": "page",
 		"scss": {
 			"path": "/widget/scss",
