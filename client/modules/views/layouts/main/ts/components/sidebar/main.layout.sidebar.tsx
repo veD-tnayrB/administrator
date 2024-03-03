@@ -11,7 +11,7 @@ export const Sidebar = () => {
 	const [items, setItems] = React.useState(store.sidebarCollection.items);
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [theme, setTheme] = React.useState(store.mode);
-	useBinder([store], () => setTheme(store.mode), 'theme-changed');
+	useBinder([store], () => setTheme(store.mode), ['theme-changed']);
 
 	useBinder([store], () => {
 		setItems(store.sidebarCollection.items);
@@ -30,7 +30,7 @@ export const Sidebar = () => {
 	return (
 		<nav className="main-layout-sidebar">
 			<div className="sidebar-content">
-				<SidebarHeader />
+				<SidebarHeader theme={theme} />
 				{panel}
 			</div>
 		</nav>

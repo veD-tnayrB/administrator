@@ -48,6 +48,23 @@ export class UsersManager extends Manager {
 	update = params => {
 		return Publish.update(params, `/update/${this.managerName}`);
 	};
+
+	get = async (params: { id: string }) => {
+		try {
+			const specs: any = { where: { id: params.id } };
+			const dataModel = await this.model.findOne(specs);
+			if (!dataModel) throw 'RECORD_NOT_EXIST';
+
+			const data = dataModel.get({ plain: true });
+
+			const profiles = await DB.models.UsersProfiles.findAll({ where: { userId: params.id } });
+			data.profiles = profiles.map(profile => profile.dataValues.profileId);
+
+			return { status: true, data };
+		} catch (exc) {
+			return { status: false, error: { message: exc, target: `/get/${this.managerName}` } };
+		}
+	};
 }
 
 export /*bundle*/ const Users = new UsersManager();

@@ -22,7 +22,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.#isCreating = true;
 			const profilesResponse = await this.#profiles.load();
 			if (!profilesResponse.status) throw profilesResponse.error;
-			return this.triggerEvent();
+			this.ready = true;
+			return;
 		}
 		try {
 			this.fetching = true;
@@ -32,6 +33,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const profilesResponse = await this.#profiles.load();
 			if (!profilesResponse.status) throw profilesResponse.error;
 
+			this.ready = true;
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
@@ -60,7 +62,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	reset = () => {
-		this.#item = new User();
 		this.triggerEvent();
 	};
 }

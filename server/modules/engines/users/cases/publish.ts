@@ -17,9 +17,9 @@ export class Publish {
 	static create = async (params, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
-			const { profilesIds, ...userParams } = params;
+			const { profiles, ...userParams } = params;
 			const user = await Publish.model.create(userParams, { transaction });
-			await this.handleProfiles(user.id, profilesIds || [], transaction);
+			await this.handleProfiles(user.id, profiles || [], transaction);
 
 			await transaction.commit();
 			return { status: true, data: { id: user.id } };
@@ -32,9 +32,9 @@ export class Publish {
 	static update = async (params, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
-			const { id, profilesIds, ...userParams } = params;
+			const { id, profiles, ...userParams } = params;
 			await Publish.model.update(userParams, { where: { id }, transaction });
-			await this.handleProfiles(id, profilesIds, transaction);
+			await this.handleProfiles(id, profiles, transaction);
 
 			await transaction.commit();
 			return { status: true, data: { id } };

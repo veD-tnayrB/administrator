@@ -8,19 +8,28 @@ import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 import { Select } from '@essential-js/admin/components/select';
 
+const DEFAULT_VALUES = {
+	names: '',
+	email: '',
+	lastNames: '',
+	active: true,
+	profiles: [],
+};
+
 export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
-		names: store.item.names || '',
-		email: store.item.email || '',
-		lastNames: store.item.lastNames || '',
-		active: store.item.active || true,
+		names: store.item.names || DEFAULT_VALUES.names,
+		email: store.item.email || DEFAULT_VALUES.email,
+		lastNames: store.item.lastNames || DEFAULT_VALUES.lastNames,
+		active: store.item.active || DEFAULT_VALUES.active,
+		profiles: store.item.profiles || DEFAULT_VALUES.profiles,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const formatedOptions = store.profiles.items.map(item => ({ label: item.name, value: item.id }));
-	console.log('STORE.ITEM => ', store.item);
 
 	useBinder([store], () => setIsLoading(store.fetching));
+	if (!store.ready) return null;
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
@@ -28,17 +37,22 @@ export const Form = () => {
 
 		setValues({ ...values, [name]: value });
 	};
+	const onSelectChange = params => {
+		const values = params.map(item => item.value);
+		setValues(currentValues => ({ ...currentValues, profiles: values }));
+	};
 
 	const onSubmit = async () => {
 		await store.save(values);
-		toast.success(store.item.id ? 'User updated successfully' : 'User created successfully');
+		const message = store.isCreating ? 'User created successfully' : 'User updated successfully';
+		toast.success(message);
 		routing.pushState('/users');
 		store.reset();
 	};
 
 	const onCancel = () => {
-		setValues({});
-		store.reset();
+		// setValues(DEFAULT_VALUES);
+		// store.reset();
 		routing.pushState('/users');
 	};
 
@@ -70,6 +84,15 @@ export const Form = () => {
 				name="email"
 				onChange={onChange}
 			/>
+
+			<Select
+				onChange={onSelectChange}
+				options={formatedOptions}
+				isMulti
+				label="Profiles"
+				value={values.profiles}
+			/>
+
 			<div className="pui-input">
 				<label className="pui-switch__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
@@ -77,13 +100,11 @@ export const Form = () => {
 				</label>
 			</div>
 
-			<Select options={formatedOptions} isMulti label="Profiles" />
-
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
 					Cancel
 				</Button>
-				<Button type="submit" variant="primary" fetching={isLoading}>
+				<Button type="submit" variant="primary" loading={isLoading}>
 					Save
 				</Button>
 			</div>
