@@ -1,0 +1,45 @@
+.pui-breadcrumb__container .breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+}
+.pui-breadcrumb__container .breadcrumb a {
+  text-decoration: none;
+  position: relative;
+  align-items: center;
+  height: 100%;
+  margin: 0 1px;
+  display: flex;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.pui-breadcrumb__container .breadcrumb a:hover, .pui-breadcrumb__container .breadcrumb a:hover:after, .pui-breadcrumb__container .breadcrumb a:hover:before {
+  height: 100%;
+  color: var(--on-surface);
+}
+.pui-breadcrumb__container .breadcrumb a:hover .pui-breadcrumb__separator, .pui-breadcrumb__container .breadcrumb a:hover:after .pui-breadcrumb__separator, .pui-breadcrumb__container .breadcrumb a:hover:before .pui-breadcrumb__separator {
+  color: var(--on-surface);
+}
+.pui-breadcrumb__container .breadcrumb a:hover {
+  transition: all 0.2s;
+}
+.pui-breadcrumb__container {
+  background: transparent;
+  align-items: center;
+  display: flex;
+  padding: 0;
+}
+.pui-breadcrumb__container .breadcrumb {
+  display: flex;
+  padding: 0;
+}
+.pui-breadcrumb__container .breadcrumb li {
+  margin: 0;
+  display: inline-block;
+}
+.pui-breadcrumb__container .breadcrumb .breadcrumbs__item--checked {
+  color: var(--secondary);
+}
+
+
+/*# sourceMappingURL=breadcrumb.css.map*/

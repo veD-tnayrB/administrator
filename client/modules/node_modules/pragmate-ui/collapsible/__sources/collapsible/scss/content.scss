@@ -1,0 +1,8 @@
+.collapsible__container {
+	.collapsible__content {
+		display: none;
+		&.collapsible__content--opened {
+			display: block;
+		}
+	}
+}

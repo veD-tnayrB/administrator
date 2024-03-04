@@ -1,0 +1,44 @@
+.pui-checkbox {
+	&:hover {
+		/* On mouse-over, add a grey background color */
+		input ~ .checkmark {
+			background-color: var(--outline);
+		}
+		/* When the checkbox is checked, add a blue background */
+		input:checked ~ .checkmark {
+			background-color: var(--primary);
+		}
+	}
+
+	input:checked ~ .checkmark:after {
+		display: block;
+	}
+
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 25px;
+		width: 25px;
+		background-color: var(--outline);
+
+		/* Create the checkmark/indicator (hidden when not checked) */
+		.checkmark:after {
+			content: '';
+			position: absolute;
+			display: none;
+		}
+
+		&:after {
+			left: 9px;
+			top: 5px;
+			width: 5px;
+			height: 10px;
+			border: solid white;
+			border-width: 0 3px 3px 0;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+	}
+}

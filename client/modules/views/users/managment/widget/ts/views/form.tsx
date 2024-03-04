@@ -1,77 +1,65 @@
 import React from 'react';
-import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
-import { IUser } from '@essential-js/admin/models';
+import { Input, Switch } from 'pragmate-ui/form';
 import { useUsersManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
-import { toast } from 'react-toastify';
 import { Select } from '@essential-js/admin/components/select';
-
-const DEFAULT_VALUES = {
-	names: '',
-	email: '',
-	lastNames: '',
-	active: true,
-	profiles: [],
-};
+import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
 
 export const Form = () => {
 	const { store } = useUsersManagmentContext();
-	const [values, setValues] = React.useState<Partial<IUser>>({
-		names: store.item.names || DEFAULT_VALUES.names,
-		email: store.item.email || DEFAULT_VALUES.email,
-		lastNames: store.item.lastNames || DEFAULT_VALUES.lastNames,
-		active: store.item.active || DEFAULT_VALUES.active,
-		profiles: store.item.profiles || DEFAULT_VALUES.profiles,
-	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
+	const [error, setError] = React.useState('');
 	const formatedOptions = store.profiles.items.map(item => ({ label: item.name, value: item.id }));
+	const [item, setItem] = React.useState(store.item.getProperties());
 
-	useBinder([store], () => setIsLoading(store.fetching));
+	useBinder([store], () => {
+		setIsLoading(store.fetching);
+		setError(store.error);
+		setItem(store.item.getProperties());
+	});
+
 	if (!store.ready) return null;
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-
-		setValues({ ...values, [name]: value });
+		setItem(currentValue => ({ ...currentValue, [name]: value }));
 	};
 	const onSelectChange = params => {
 		const values = params.map(item => item.value);
-		setValues(currentValues => ({ ...currentValues, profiles: values }));
+		setItem(currentValues => ({ ...currentValues, profiles: values }));
 	};
 
-	const onSubmit = async () => {
-		await store.save(values);
-		const message = store.isCreating ? 'User created successfully' : 'User updated successfully';
-		toast.success(message);
-		routing.pushState('/users');
-		store.reset();
+	const onSubmit = (event: React.FormEvent) => {
+		event.preventDefault();
+		store.save();
 	};
-
 	const onCancel = () => {
-		// setValues(DEFAULT_VALUES);
-		// store.reset();
 		routing.pushState('/users');
 	};
+
+	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
 	return (
-		<FormUI onSubmit={onSubmit} className="managment-form">
+		<form onSubmit={onSubmit} className="managment-form">
+			<Alert type={IAlert.Error}>{error}</Alert>
 			<div className="flex gap-4 w-full">
 				<Input
 					className="fixed-label w-full"
 					label="Names"
-					value={values.names}
+					value={item.names}
 					name="names"
 					placeholder="John"
 					onChange={onChange}
+					required
 				/>
 				<Input
 					className="fixed-label w-full"
 					label="Last names"
 					placeholder="Doe"
-					value={values.lastNames}
+					value={item.lastNames}
 					name="lastNames"
 					onChange={onChange}
 				/>
@@ -80,7 +68,7 @@ export const Form = () => {
 				placeholder="johnDoe@gmail.com"
 				className="fixed-label"
 				label="Email"
-				value={values.email}
+				value={item.email}
 				name="email"
 				onChange={onChange}
 			/>
@@ -90,13 +78,13 @@ export const Form = () => {
 				options={formatedOptions}
 				isMulti
 				label="Profiles"
-				value={values.profiles}
+				value={item.profiles || []}
 			/>
 
 			<div className="pui-input">
 				<label className="pui-switch__label">
-					<Switch checked={values.active} name="active" onChange={onChange} />
-					<span className="label-content"> Is active?</span>
+					<Switch checked={item.active} name="active" onChange={onChange} />
+					<span className="label-content">{activeSwitchLabel}</span>
 				</label>
 			</div>
 
@@ -108,6 +96,6 @@ export const Form = () => {
 					Save
 				</Button>
 			</div>
-		</FormUI>
+		</form>
 	);
 };

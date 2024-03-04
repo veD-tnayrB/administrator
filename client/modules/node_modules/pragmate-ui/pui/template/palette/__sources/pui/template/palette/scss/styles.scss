@@ -1,0 +1,43 @@
+.component__container {
+	max-width: 1140px;
+	margin: auto;
+
+	.contents {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 2rem;
+		&__buttons {
+			display: flex;
+			gap: 0.5rem;
+		}
+	}
+}
+.palette-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0rem;
+	padding: 1rem 0;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(14, 1fr);
+
+	&--neutral {
+		.palette__color-container {
+			padding: 1rem;
+		}
+	}
+	.pragmate-tooltip {
+		&:nth-child(n + 8) {
+			color: #000;
+		}
+	}
+	.palette__color-container {
+		padding: 1rem;
+		font-size: 0.75rem;
+		aspect-ratio: 1/1;
+		display: grid;
+		padding: 0;
+		place-items: center;
+	}
+}

@@ -22,7 +22,8 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 	const { list, store } = useListViewContext();
 	const [, setUpdate] = React.useState({});
 	const [displayDeleteModal, setDisplayModal] = React.useState(false);
-	useBinder([store], () => setUpdate({}), 'displaying-change');
+	useBinder([store], () => setUpdate({}), ['displaying-change']);
+	useBinder([item], () => setUpdate({}));
 
 	const output = propertiesToDisplay.map(property => {
 		let value = getValue(item, property);

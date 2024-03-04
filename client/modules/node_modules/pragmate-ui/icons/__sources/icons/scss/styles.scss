@@ -1,0 +1,24 @@
+.pui-icon {
+	height: 20px;
+	width: 20px;
+	position: relative;
+
+	fill: var(--text-color);
+
+	&.circle {
+		border-radius: 50%;
+		padding: 5px;
+	}
+	&.xs {
+		height: 15px;
+		width: 15px;
+	}
+	&.md {
+		height: 25px;
+		width: 25px;
+	}
+	&.lg {
+		height: 35px;
+		width: 35px;
+	}
+}

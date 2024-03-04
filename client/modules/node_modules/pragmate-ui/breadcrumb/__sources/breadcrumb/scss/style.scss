@@ -1,0 +1,19 @@
+.pui-breadcrumb__container {
+	background: transparent;
+	align-items: center;
+	display: flex;
+	padding: 0;
+
+	.breadcrumb {
+		display: flex;
+		padding: 0;
+		li {
+			margin: 0;
+			display: inline-block;
+		}
+
+		.breadcrumbs__item--checked {
+			color: var(--secondary);
+		}
+	}
+}

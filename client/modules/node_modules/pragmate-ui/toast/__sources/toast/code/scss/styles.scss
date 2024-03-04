@@ -1,0 +1,51 @@
+@import 'keyframes';
+$toast-content-color: var(--text-color);
+
+.pui-toast__container {
+	max-height: 100vh;
+	position: fixed;
+	z-index: 50;
+	display: grid;
+	gap: 1rem;
+	z-index: 1001; //one more than modal component
+
+	.toast {
+		border-radius: 10px;
+		max-width: 300px;
+		padding: 0.6rem 1.2rem 0.6rem 0.8rem;
+		display: grid;
+		grid-template-columns: 25px calc(100% - 25px);
+		gap: 0.5rem;
+		align-items: center;
+		z-index: 1001;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+
+		p.message {
+			color: $toast-content-color;
+			line-height: 1;
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		svg.pui-icon {
+			width: 25px;
+			height: 25px;
+			stroke: $toast-content-color;
+			fill: $toast-content-color;
+		}
+
+		&.enter {
+			animation: toast-enter 0.4s cubic-bezier(0.75, -0.5, 0, 1.75) both;
+		}
+
+		&.exit {
+			animation: toast-exit 0.4s cubic-bezier(0.75, -0.5, 0, 1.75) both;
+		}
+
+		.icon {
+			width: 25px;
+			height: 25px;
+		}
+	}
+}

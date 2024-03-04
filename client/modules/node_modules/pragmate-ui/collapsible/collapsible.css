@@ -1,0 +1,58 @@
+.accordion-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--outline);
+  cursor: pointer;
+}
+.accordion-item__header .accordion-item__header-icon .accordion-item__header-icon--opened .pui-icon {
+  transform: rotate(90deg);
+}
+
+.accordion-item.accordion-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.accordion-item.accordion-item--disabled .accordion-item__header {
+  cursor: not-allowed;
+}
+.accordion-item.accordion-item--opened .accordion-item__content {
+  height: auto;
+  display: block;
+}
+.accordion-item .accordion-item__content {
+  padding: 1rem 0;
+  height: 0;
+  overflow: hidden;
+  display: none;
+}
+.accordion-item .accordion-item__content.accordion-item__content--opened {
+  height: auto;
+}
+.collapsible__container .collapsible__content {
+  display: none;
+}
+.collapsible__container .collapsible__content.collapsible__content--opened {
+  display: block;
+}
+.collapsible__container .collapsible__header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+}
+.collapsible__container .collapsible__header .collapsible__button {
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease;
+}
+.collapsible__container .collapsible__header .collapsible__button.collapsible__button--opened {
+  transform: rotate(90deg);
+}
+
+
+/*# sourceMappingURL=collapsible.css.map*/

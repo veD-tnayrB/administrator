@@ -1,0 +1,52 @@
+:host-context(html[data-beyond-mode='dark']) {
+	--alert-border-radius: var(--border-radius-base);
+	/* Info Alert Colors */
+	--pui-on-info: var(--info-70);
+	--pui-info-icon-color: var(--info-80);
+	--pui-info-container: var(--info-30);
+	--pui-info-border-color: var(--info);
+
+	/* Warning Alert Colors */
+	--pui-on-warning: var(--warning-70);
+	--pui-warning-icon-color: var(--warning-80);
+	--pui-warning-container: var(--warning-30);
+	--pui-warning-border-color: var(--warning);
+
+	/* Success Alert Colors */
+	--pui-on-success: var(--success-70);
+	--pui-success-icon-color: var(--success-80);
+	--pui-success-container: var(--success-30);
+	--pui-success-border-color: var(--success);
+
+	/* Error/Danger Alert Colors */
+	--pui-on-error: var(--error-100);
+	--pui-error-icon-color: var(--error-80);
+	--pui-error-container: var(--error-30);
+	--pui-error-border-color: var(--error);
+}
+:host-context(html) {
+	--alert-border-radius: var(--border-radius-base);
+	/* Info Alert Colors */
+	--pui-on-info: var(--info-30);
+	--pui-info-icon-color: var(--info-30);
+	--pui-info-container: var(--info-90);
+	--pui-info-border-color: var(--info);
+
+	/* Warning Alert Colors */
+	--pui-on-warning: var(--warning-70);
+	--pui-warning-icon-color: var(--warning-80);
+	--pui-warning-container: var(--warning-30);
+	--pui-warning-border-color: var(--warning);
+
+	/* Success Alert Colors */
+	--pui-on-success: var(--success-70);
+	--pui-success-icon-color: var(--success-80);
+	--pui-success-container: var(--success-30);
+	--pui-success-border-color: var(--success);
+
+	/* Error/Danger Alert Colors */
+	--pui-on-error: var(--error-100);
+	--pui-error-icon-color: var(--error-80);
+	--pui-error-container: var(--error-30);
+	--pui-error-border-color: var(--error);
+}

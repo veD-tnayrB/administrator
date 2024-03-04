@@ -1,0 +1,10 @@
+{
+  "amd": "./config.amd.js",
+  "sjs": "./config.sjs.js",
+  "browser": "./config.browser.mjs",
+  "module": "./config.browser.mjs",
+  "node": {
+    "import": "./config.mjs",
+    "require": "./config.cjs.js"
+  }
+}

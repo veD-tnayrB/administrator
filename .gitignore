@@ -30,3 +30,5 @@ firebase-credentials.js
 .env
 temp
 output
+!client/modules/node_modules
+!server/modules/node_modules

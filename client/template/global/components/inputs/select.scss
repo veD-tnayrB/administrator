@@ -9,6 +9,8 @@
 	.pui-select {
 		cursor: pointer;
 		.css-b62m3t-container {
+			border-radius: var(--border-tertiary);
+
 			.pui-react-select__control.css-13cymwt-control,
 			.pui-react-select__control--is-focused {
 				border: 1px solid transparent;

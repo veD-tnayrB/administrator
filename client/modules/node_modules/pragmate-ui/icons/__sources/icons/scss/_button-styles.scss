@@ -1,0 +1,20 @@
+@mixin button-styles($button-variants) {
+	@each $type, $colors in $button-variants {
+		$background: nth($colors, 1);
+		$fill-color: nth($colors, 2);
+
+		&.btn-#{$type},
+		.pragmate.icon {
+			svg {
+				fill: $fill-color;
+			}
+
+			background-color: $background;
+
+			&:disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+		}
+	}
+}

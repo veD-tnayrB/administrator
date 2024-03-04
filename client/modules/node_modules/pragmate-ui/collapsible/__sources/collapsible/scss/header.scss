@@ -1,0 +1,19 @@
+.collapsible__container {
+	.collapsible__header {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		
+		flex-flow: wrap;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		cursor: pointer;
+		.collapsible__button {
+			transform: rotate(-90deg);
+			transition: transform 0.2s ease;
+			&.collapsible__button--opened {
+				transform: rotate(90deg);
+			}
+		}
+	}
+}

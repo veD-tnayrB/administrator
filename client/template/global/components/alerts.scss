@@ -1,0 +1,9 @@
+div.alert {
+	border-radius: var(--border-tertiary);
+}
+
+div.alert.alert--error {
+	color: var(--on-error);
+	background: var(--error);
+	border: 1px solid transparent;
+}

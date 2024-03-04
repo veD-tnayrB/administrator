@@ -1,0 +1,30 @@
+.pui-empty-section {
+	text-align: center;
+	display: flex;
+	flex-flow: column;
+	justify-items: center;
+	align-items: center;
+	flex: 1; /* Expand to take available space */
+	min-height: 0; /* Ensure content can overflow without generating scroll */
+
+	h3 {
+		margin: 1rem 0;
+		padding: 0;
+
+		&:first-letter {
+			text-transform: uppercase;
+		}
+	}
+	.content {
+		display: flex;
+		gap: 1rem;
+	}
+
+	svg {
+		width: 45px;
+		height: 45px;
+		display: grid;
+		margin: auto;
+		fill: var(--text-color);
+	}
+}

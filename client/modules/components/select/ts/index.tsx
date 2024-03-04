@@ -9,7 +9,10 @@ export /*bundle*/ const Select = props => {
 	return (
 		<div className="pui-input pui-select__container fixed-label">
 			<label className="pui-input__label">
-				<span className="label-content">{props?.label}</span>
+				<span className="label-content">
+					{props?.label}
+					{props?.required && ' *'}
+				</span>
 			</label>
 
 			<ReactSelect {...props} value={value} />

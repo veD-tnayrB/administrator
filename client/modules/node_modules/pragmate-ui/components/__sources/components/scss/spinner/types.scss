@@ -1,0 +1,21 @@
+$colors: primary, secondary, on-primary, on-secondary, tertiary, on-tertiary;
+
+@function getStrokeColor($color) {
+	@if (str-index($color, 'on-') == 1) {
+		@return 'var(--' + $color + ')';
+	} @else {
+		@return 'var(--' + $color + ')';
+	}
+}
+
+.pragmate-element-spinner {
+	@each $color in $colors {
+		&.#{$color} {
+			svg {
+				circle {
+					stroke: #{getStrokeColor($color)};
+				}
+			}
+		}
+	}
+}

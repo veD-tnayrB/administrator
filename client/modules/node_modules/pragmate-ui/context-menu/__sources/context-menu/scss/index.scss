@@ -1,0 +1,48 @@
+$ds-context-menu-background: var(--surface-dim);
+$ds-icon-color: var(--text-color);
+$ds-context-menu-item-hover: var(--primary);
+$ds-context-menu-border-radius: 3px !default;
+.pui-context-menu {
+	padding: 0;
+	background: $ds-context-menu-background;
+	border-radius: $ds-context-menu-border-radius;
+	z-index: 1000;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	min-width: 200px;
+	cursor: pointer;
+
+	svg {
+		fill: $ds-icon-color;
+		height: 14px;
+		width: 14px;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		margin: 0;
+		align-items: center;
+
+		li {
+			padding: 5px 15px;
+			align-items: center;
+			display: flex;
+			gap: 5px;
+
+			&:first-child {
+				border-top-left-radius: $ds-context-menu-border-radius;
+				border-top-right-radius: $ds-context-menu-border-radius;
+			}
+
+			&:last-child {
+				border-bottom-left-radius: $ds-context-menu-border-radius;
+				border-bottom-right-radius: $ds-context-menu-border-radius;
+			}
+
+			&:hover {
+				background: $ds-context-menu-item-hover;
+			}
+		}
+	}
+}

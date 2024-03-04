@@ -1,0 +1,47 @@
+$label-color: var(--text-color);
+$input-border-color: #ccc;
+$input-border-color-focus: #007bff;
+$label-font-size: 1.125rem;
+$label-font-size-small: 0.875rem;
+$transition-speed: 0.2s;
+$placeholder-devices: '::-webkit-input-', '::-moz-', ':-ms-input-', '::-ms-input-', '::';
+
+.pui-input.pui-input--floating {
+	position: relative;
+
+	input {
+		font-size: $label-font-size;
+		background: transparent;
+		width: 100%;
+		font-size: 1rem;
+		box-sizing: border-box;
+		@each $placeholder in $placeholder-devices {
+			&#{nth($placeholder, 1)}placeholder {
+				color: transparent;
+			}
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	&:focus-within .pui-input__label.floating-label,
+	input:not(:placeholder-shown) ~ .pui-input__label.floating-label {
+		top: -0.8rem;
+		background: var(--surface);
+		padding: 0.2rem 0.5rem;
+		border-radius: var(--border-radius-base);
+		font-size: 0.625rem;
+		color: $label-color;
+	}
+
+	label.pui-input__label.floating-label {
+		position: absolute;
+		pointer-events: none;
+		left: 1rem;
+		top: 0.5rem;
+		transition: $transition-speed ease all;
+	}
+	&.left-icon label.pui-input__label.floating-label {
+		left: 2rem;
+	}
+}

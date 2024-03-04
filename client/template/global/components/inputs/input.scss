@@ -1,5 +1,5 @@
 div.pui-input {
-	border-radius: 4px;
+	border-radius: var(--border-tertiary);
 	position: relative;
 	margin: 0;
 	transition: all 0.2s linear;
@@ -7,7 +7,7 @@ div.pui-input {
 
 	input {
 		border: 1px solid transparent;
-		border-radius: 4px;
+		border-radius: var(--border-tertiary);
 		background: var(--background);
 		padding: 0.35rem 1rem;
 	}
