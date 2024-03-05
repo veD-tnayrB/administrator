@@ -17,8 +17,15 @@ export const Form = () => {
 	useBinder([store], () => {
 		setIsLoading(store.fetching);
 		setError(store.error);
-		setItem(store.item.getProperties());
 	});
+
+	useBinder(
+		[store],
+		() => {
+			setItem(store.item.getProperties());
+		},
+		'hide'
+	);
 
 	if (!store.ready) return null;
 
@@ -34,7 +41,7 @@ export const Form = () => {
 
 	const onSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		store.save();
+		store.save(item);
 	};
 	const onCancel = () => {
 		routing.pushState('/users');

@@ -1,5 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Notification, INotification } from '@essential-js/admin/models';
+import { routing } from '@beyond-js/kernel/routing';
+import { toast } from 'react-toastify';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Notification = new Notification();
@@ -15,6 +17,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	load = async ({ id }: { id: string }) => {
 		if (id === 'create') {
 			this.#isCreating = true;
+			this.ready = true;
 			return this.triggerEvent();
 		}
 		try {
@@ -22,6 +25,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
+			this.ready = true;
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
@@ -38,6 +42,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.publish();
 
 			if (!response.status) throw response.error;
+
+			toast.success(this.isCreating ? 'Notification created' : 'Notification updated');
+			routing.pushState('/notifications');
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };

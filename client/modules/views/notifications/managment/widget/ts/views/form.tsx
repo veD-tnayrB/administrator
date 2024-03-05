@@ -8,12 +8,8 @@ import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 
 export const Form = () => {
-	const { store, texts } = useNotificationsManagmentContext();
-	const [values, setValues] = React.useState<Partial<IUser>>({
-		title: store.item.title || '',
-		description: store.item.description || '',
-		timeInterval: store.item.timeInterval || 0,
-	});
+	const { store } = useNotificationsManagmentContext();
+	const [values, setValues] = React.useState<Partial<IUser>>(store.item.getProperties());
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
 	useBinder([store], () => setIsLoading(store.fetching));
@@ -25,30 +21,31 @@ export const Form = () => {
 		setValues({ ...values, [name]: value });
 	};
 
-	const onSubmit = async () => {
-		await store.save(values);
-		toast.success(store.isCreating ? texts.success.created : texts.success.updated);
-		routing.pushState('/notifications');
-		store.reset();
+	const onSubmit = () => {
+		store.save(values);
 	};
 
 	const onCancel = () => {
-		setValues({});
-		store.reset();
 		routing.pushState('/notifications');
 	};
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
-			<Input label={texts.labels.title} value={values.title} name="title" onChange={onChange} />
-			<Input label={texts.labels.description} value={values.description} name="description" onChange={onChange} />
+			<Input className="fixed-label" label="Title" value={values.title} name="title" onChange={onChange} />
 			<Input
+				className="fixed-label"
+				label="Description"
+				value={values.description}
+				name="description"
+				onChange={onChange}
+			/>
+			{/* <Input
 				label={texts.labels.timeInterval}
 				value={values.timeInterval}
 				name="timeInterval"
 				type="number"
 				onChange={onChange}
-			/>
+			/> */}
 			{/* <div className="pui-input">
 				<label className="pui-input__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
@@ -58,10 +55,10 @@ export const Form = () => {
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
-					{texts.actions.reset}
+					Cancel
 				</Button>
-				<Button type="submit" fetching={isLoading}>
-					{texts.actions.save}
+				<Button variant="primary" type="submit" fetching={isLoading}>
+					Save
 				</Button>
 			</div>
 		</FormUI>

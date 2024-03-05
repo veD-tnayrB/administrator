@@ -60,17 +60,17 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		}
 	};
 
-	save = async () => {
+	save = async (values: Partial<IUser>) => {
 		try {
 			this.fetching = true;
 
-			console.log('VALUEA => ', this.#item);
-			const validationResults = this.#validateValues(this.#item);
+			const validationResults = this.#validateValues(values);
 			if (validationResults) {
 				this.#error = validationResults;
 				throw new Error(validationResults);
 			}
 
+			await this.#item.set(values);
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;
 
@@ -96,7 +96,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	reset = () => {
-		this.#item = new User();
-		this.triggerEvent();
+		this.triggerEvent('hide');
 	};
 }

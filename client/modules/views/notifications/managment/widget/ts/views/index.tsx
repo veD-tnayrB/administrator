@@ -8,20 +8,17 @@ import { ITexts } from '../types';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
-	const [ready, texts] = useTexts<ITexts>(module.specifier);
-
-	if (!ready) return null;
+	if (!store.ready) return null;
 
 	const contextValue: IContext = {
 		store,
-		texts,
 	};
 
-	const mode = store.isCreating ? 'creating' : 'editing';
+	const mode = store.isCreating ? 'Creation' : 'Edition';
 	return (
 		<NotificationsManagmentContext.Provider value={contextValue}>
 			<div className="page-container managment-page">
-				<h1>{texts.title[mode]}</h1>
+				<h1>Notifications {mode}</h1>
 				<Form />
 			</div>
 		</NotificationsManagmentContext.Provider>
