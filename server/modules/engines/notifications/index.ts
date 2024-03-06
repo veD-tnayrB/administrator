@@ -56,6 +56,8 @@ export class NotificationsManager extends Manager {
 	};
 
 	markAsRead = async (params: { userId: string; notificationId: string }) => {};
+
+	publish;
 }
 
 export /*bundle*/ const Notifications = new NotificationsManager();

@@ -4,7 +4,7 @@ import config from '@essential-js/admin/config';
 if (config.params.environment === 'development') {
 	(async () => {
 		try {
-			const launchers = ['@essential-js/admin-server'];
+			const launchers = ['@essential-js/admin-server/node'];
 			const instances = launchers.map(launcher => local.launchers.get(launcher));
 			const promises = instances.map(instance => instance.status);
 			const results = await Promise.all(promises);
