@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
+import type { ProfilesNotifications, ProfilesNotificationsId } from './profiles_notifications';
 import type { Users, UsersId } from './users';
 import type { UsersProfiles, UsersProfilesId } from './users_profiles';
 
@@ -57,6 +58,24 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
 		ProfileModulePermissionsId
 	>;
 	countProfileModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
+	// Profiles hasMany ProfilesNotifications via profileId
+	profilesNotifications!: ProfilesNotifications[];
+	getProfilesNotifications!: Sequelize.HasManyGetAssociationsMixin<ProfilesNotifications>;
+	setProfilesNotifications!: Sequelize.HasManySetAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	addProfilesNotification!: Sequelize.HasManyAddAssociationMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	addProfilesNotifications!: Sequelize.HasManyAddAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	createProfilesNotification!: Sequelize.HasManyCreateAssociationMixin<ProfilesNotifications>;
+	removeProfilesNotification!: Sequelize.HasManyRemoveAssociationMixin<
+		ProfilesNotifications,
+		ProfilesNotificationsId
+	>;
+	removeProfilesNotifications!: Sequelize.HasManyRemoveAssociationsMixin<
+		ProfilesNotifications,
+		ProfilesNotificationsId
+	>;
+	hasProfilesNotification!: Sequelize.HasManyHasAssociationMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	hasProfilesNotifications!: Sequelize.HasManyHasAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	countProfilesNotifications!: Sequelize.HasManyCountAssociationsMixin;
 	// Profiles belongsToMany Users via profileId and userId
 	userIdUsers!: Users[];
 	getUserIdUsers!: Sequelize.BelongsToManyGetAssociationsMixin<Users>;

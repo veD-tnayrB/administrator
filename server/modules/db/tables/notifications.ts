@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { ProfilesNotifications, ProfilesNotificationsId } from './profiles_notifications';
 
 export interface NotificationsAttributes {
 	id: string;
@@ -36,6 +37,25 @@ export class Notifications
 	declare status?: string;
 	declare timeCreated?: Date;
 	declare timeUpdated?: Date;
+
+	// Notifications hasMany ProfilesNotifications via notificationId
+	profilesNotifications!: ProfilesNotifications[];
+	getProfilesNotifications!: Sequelize.HasManyGetAssociationsMixin<ProfilesNotifications>;
+	setProfilesNotifications!: Sequelize.HasManySetAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	addProfilesNotification!: Sequelize.HasManyAddAssociationMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	addProfilesNotifications!: Sequelize.HasManyAddAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	createProfilesNotification!: Sequelize.HasManyCreateAssociationMixin<ProfilesNotifications>;
+	removeProfilesNotification!: Sequelize.HasManyRemoveAssociationMixin<
+		ProfilesNotifications,
+		ProfilesNotificationsId
+	>;
+	removeProfilesNotifications!: Sequelize.HasManyRemoveAssociationsMixin<
+		ProfilesNotifications,
+		ProfilesNotificationsId
+	>;
+	hasProfilesNotification!: Sequelize.HasManyHasAssociationMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	hasProfilesNotifications!: Sequelize.HasManyHasAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
+	countProfilesNotifications!: Sequelize.HasManyCountAssociationsMixin;
 
 	static initModel(sequelize: Sequelize.Sequelize): typeof Notifications {
 		return Notifications.init(

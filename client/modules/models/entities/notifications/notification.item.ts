@@ -1,6 +1,8 @@
 import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { NotificationItemProvider } from '../../providers/notifications/notification.item.provider';
+import { IUser } from '../users/user.item';
+import { IProfile } from '../profiles/profile.item';
 
 export /*bundle*/ interface INotification {
 	id: string;
@@ -11,6 +13,8 @@ export /*bundle*/ interface INotification {
 	status: string;
 	timeCreated: Date;
 	timeUpdated: Date;
+	users: IUser[];
+	profiles: IProfile[];
 }
 
 export /*bundle*/ class Notification extends Item<INotification> {
@@ -23,6 +27,8 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		'status',
 		'timeCreated',
 		'timeUpdated',
+		'profiles',
+		'users',
 	];
 
 	constructor(params: { id: string | undefined } = { id: undefined }) {

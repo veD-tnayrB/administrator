@@ -21,11 +21,11 @@ export class Publish {
 		if (!profiles.length)
 			await Publish.profilesNotificationsModel.destroy({ where: { notificationId } }, { transaction });
 
-		if (profiles.length > 0) {
+		if (profiles.length) {
 			const profilesToCreate = profiles.map(profileId => ({ notificationId, profileId }));
 			await Publish.profilesNotificationsModel.bulkCreate(profilesToCreate, { transaction });
 		}
-		if (users.length > 0) {
+		if (users.length) {
 			const usersToCreate = users.map(userId => ({ notificationId, userId }));
 			await Publish.usersNotificationsModel.bulkCreate(usersToCreate, { transaction });
 		}
