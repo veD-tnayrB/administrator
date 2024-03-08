@@ -22,6 +22,9 @@ export type IHeaderItem = IDefaultHeaderItem[];
 
 interface IProps {
 	items?: IHeaderItem;
+	bulkActions: {
+		remove: boolean;
+	};
 }
 
 export const Header = (props: IProps) => {
@@ -39,6 +42,8 @@ export const Header = (props: IProps) => {
 		);
 	});
 
+	const includeBuilkRemove = props.bulkActions.remove;
+
 	const includeSelectAll = list.isSelecteable;
 	const cls = store.fetching ? ` loading` : ``;
 	return (
@@ -52,7 +57,7 @@ export const Header = (props: IProps) => {
 			)}
 
 			{output}
-			<RemoveAction />
+			{includeBuilkRemove && <RemoveAction />}
 		</ul>
 	);
 };

@@ -2,11 +2,23 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Notification, INotification } from '@essential-js/admin/models';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
+import { ProfilesManager } from './managers/profiles';
+import { UsersManager } from './managers/users';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Notification = new Notification();
 	get item() {
 		return this.#item;
+	}
+
+	#profiles: ProfilesManager = new ProfilesManager();
+	get profiles() {
+		return this.#profiles;
+	}
+
+	#users: UsersManager = new UsersManager();
+	get users() {
+		return this.#users;
 	}
 
 	#isCreating: boolean = false;
@@ -16,6 +28,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	load = async ({ id }: { id: string }) => {
 		if (id === 'create') {
+			await this.#profiles.load();
+			await this.#users.load();
 			this.#isCreating = true;
 			this.ready = true;
 			return this.triggerEvent();
@@ -25,7 +39,12 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
+
 			this.ready = true;
+
+			await this.#profiles.load();
+			await this.#users.load({ active: true });
+
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };

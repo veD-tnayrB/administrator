@@ -1,11 +1,13 @@
 import React from 'react';
-import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
+import { Form as FormUI, Input } from 'pragmate-ui/form';
 import { IUser } from '@essential-js/admin/models';
 import { useNotificationsManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
-import { toast } from 'react-toastify';
+import { TabsContainer, Tabs, Tab, Panes } from 'pragmate-ui/tabs';
+import { Profiles } from './tabs/profiles';
+import { Users } from './tabs/users';
 
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
@@ -52,6 +54,17 @@ export const Form = () => {
 					<span className="label-content"> {texts.labels.active}</span>
 				</label>
 			</div> */}
+
+			<TabsContainer onChange={onChange} active={0}>
+				<Tabs>
+					<Tab>Associated profiles</Tab>
+					<Tab>Associated individual users</Tab>
+				</Tabs>
+				<Panes>
+					<Profiles />
+					<Users />
+				</Panes>
+			</TabsContainer>
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

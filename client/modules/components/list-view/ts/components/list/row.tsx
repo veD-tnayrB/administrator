@@ -46,8 +46,8 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 		setDisplayModal(false);
 	};
 
-	const includesEdit = list.itemsConfig.actions.find(item => item.type === 'edit');
-	const includesDelete = list.itemsConfig.actions.find(item => item.type === 'delete');
+	const includesEdit = list.itemsConfig?.actions?.find(item => item.type === 'edit');
+	const includesDelete = list.itemsConfig?.actions?.find(item => item.type === 'delete');
 	const displayActions = includesEdit || includesDelete;
 
 	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);

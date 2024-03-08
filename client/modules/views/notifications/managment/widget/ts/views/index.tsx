@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { Form } from './form';
 import { StoreManager } from '../store';
-import { useTexts } from '@essential-js/admin/helpers';
-import { module } from 'beyond_context';
 import { IContext, NotificationsManagmentContext } from '../context';
-import { ITexts } from '../types';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
