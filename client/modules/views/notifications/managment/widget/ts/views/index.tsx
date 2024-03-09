@@ -5,6 +5,7 @@ import { IContext, NotificationsManagmentContext } from '../context';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
+	console.log('STORE => ', store.ready);
 	if (!store.ready) return null;
 
 	const contextValue: IContext = {

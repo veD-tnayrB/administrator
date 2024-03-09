@@ -42,7 +42,7 @@ export const Header = (props: IProps) => {
 		);
 	});
 
-	const includeBuilkRemove = props.bulkActions.remove;
+	const includeBuilkRemove = props?.bulkActions?.remove;
 
 	const includeSelectAll = list.isSelecteable;
 	const cls = store.fetching ? ` loading` : ``;

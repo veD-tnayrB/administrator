@@ -26,7 +26,7 @@ export const Profiles = () => {
 				{ label: 'Updated at', name: 'timeUpdated' },
 			],
 			bulkActions: {
-				remove: true,
+				remove: false,
 			},
 		},
 		list: {

@@ -28,10 +28,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	load = async ({ id }: { id: string }) => {
 		if (id === 'create') {
+			this.ready = true;
 			await this.#profiles.load();
 			await this.#users.load();
 			this.#isCreating = true;
-			this.ready = true;
 			return this.triggerEvent();
 		}
 		try {
