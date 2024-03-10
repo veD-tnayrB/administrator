@@ -1,5 +1,5 @@
 .list-view {
-	form.list-view-searchbar-container {
+	.list-view-searchbar-container {
 		background: var(--surface);
 		border: 1px solid var(--outline);
 		width: 18rem;
@@ -37,8 +37,10 @@
 		}
 
 		div.pui-input.list-view-searchbar {
+			min-height: 0;
 			width: 100%;
 			input {
+				font-size: 0.9rem;
 				width: 100%;
 				background: var(--surface);
 				border-radius: 10px;

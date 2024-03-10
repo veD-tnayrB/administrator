@@ -12,8 +12,7 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 		setValues(event.target.value);
 	};
 
-	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+	const onSearch = () => {
 		onFocus();
 		store.search(values);
 		setHasBeenSubmitted(true);
@@ -28,11 +27,17 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 
 	const onFocus = () => inputRef?.current?.focus();
 
+	const onKeyDown = event => {
+		if (event.key === 'Enter') {
+			onSearch();
+		}
+	};
+
 	const displayClear = values || hasBeenSubmitted;
 	const resetCls = displayClear ? 'show' : '';
 
 	return (
-		<form className="list-view-searchbar-container" onSubmit={onSubmit}>
+		<div className="list-view-searchbar-container" onClick={onFocus}>
 			<svg xmlns="http://www.w3.org/2000/svg" onClick={onFocus} fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 				<path
 					strokeLinecap="round"
@@ -49,16 +54,17 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 					value={values}
 					onChange={onChange}
 					type="text"
+					onKeyDown={onKeyDown}
 				/>
 			</div>
 
 			{displayClear && (
-				<button type="reset" onClick={onClear} className={`clear-button ${resetCls}`}>
+				<button onClick={onClear} className={`clear-button ${resetCls}`} type="reset">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 					</svg>
 				</button>
 			)}
-		</form>
+		</div>
 	);
 };

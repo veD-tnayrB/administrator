@@ -24,6 +24,7 @@ export const FiltersSearch = (props: IFilters) => {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [values, setValues] = React.useState({});
 
+	if (!props?.actions) return null;
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [event.target.name]: event.target.value });
 	};

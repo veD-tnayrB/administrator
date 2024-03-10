@@ -68,7 +68,7 @@ function View({ store }: { store: StoreManager }) {
 	};
 
 	return (
-		<div className="page-container">
+		<div className="page-container  list-page-container">
 			<ListView {...listProperties} />
 		</div>
 	);

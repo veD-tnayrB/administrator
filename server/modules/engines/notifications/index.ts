@@ -1,6 +1,7 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager } from '@essential-js/admin-server/helpers';
 import { sender } from './sender';
+import { IPublish, Publish } from './cases/publish';
 
 export class NotificationsManager extends Manager {
 	constructor() {
@@ -57,7 +58,13 @@ export class NotificationsManager extends Manager {
 
 	markAsRead = async (params: { userId: string; notificationId: string }) => {};
 
-	publish;
+	create = (params: IPublish) => {
+		return Publish.create(params, '/notifications/create');
+	};
+
+	update = (params: IPublish) => {
+		return Publish.create(params, '/notifictations/update');
+	};
 }
 
 export /*bundle*/ const Notifications = new NotificationsManager();

@@ -1,7 +1,12 @@
 import { StoreListView } from '@essential-js/admin/components/list-view';
-import { Profiles } from '@essential-js/admin/models';
+import { Profiles, Profile } from '@essential-js/admin/models';
 
 export class ProfilesManager extends StoreListView {
+	declare collection: Profiles;
+	declare propertiesToSearch: { label: string; name: string }[];
+	declare selectedItems: Map<string, Profile>;
+	declare load: () => Promise<void>;
+
 	constructor() {
 		super({ collection: new Profiles() });
 		this.propertiesToSearch = [

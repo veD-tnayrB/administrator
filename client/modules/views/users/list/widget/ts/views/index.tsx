@@ -92,7 +92,7 @@ function View({ store }: { store: StoreManager }) {
 	};
 	return (
 		<UsersListContext.Provider value={contextValue}>
-			<div className="page-container">
+			<div className="page-container  list-page-container">
 				<ListView {...listProperties} />
 			</div>
 		</UsersListContext.Provider>

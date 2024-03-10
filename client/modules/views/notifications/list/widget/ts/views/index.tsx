@@ -63,7 +63,7 @@ function View({ store }: { store: StoreManager }) {
 	};
 	return (
 		<NotificationsListContext.Provider value={contextValue}>
-			<div className="page-container">
+			<div className="page-container list-page-container">
 				<ListView {...listProperties} />
 			</div>
 		</NotificationsListContext.Provider>
