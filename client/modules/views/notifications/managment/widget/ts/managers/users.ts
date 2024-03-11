@@ -5,7 +5,7 @@ export class UsersManager extends StoreListView {
 	declare collection: Users;
 	declare propertiesToSearch: { label: string; name: string }[];
 	declare selectedItems: Map<string, User>;
-	declare load: (params?: { active: boolean }) => Promise<void>;
+	declare load: (params?: Record<string, any>) => Promise<void>;
 
 	constructor() {
 		super({ collection: new Users() });

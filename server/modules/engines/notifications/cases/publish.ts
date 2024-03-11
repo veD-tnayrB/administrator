@@ -1,4 +1,5 @@
 import { DB } from '@essential-js/admin-server/db';
+import { v4 as uuid } from 'uuid';
 
 export interface IPublish {
 	id: string;
@@ -22,14 +23,12 @@ export class Publish {
 			await Publish.profilesNotificationsModel.destroy({ where: { notificationId } }, { transaction });
 
 		if (profiles.length) {
-			const profilesToCreate = profiles.map(profileId => ({ notificationId, profileId }));
-			console.log('PROFILES TO CREATE => ', profilesToCreate);
+			const profilesToCreate = profiles.map(profileId => ({ id: uuid(), notificationId, profileId }));
 
 			await Publish.profilesNotificationsModel.bulkCreate(profilesToCreate, { transaction });
 		}
 		if (users.length) {
-			const usersToCreate = users.map(userId => ({ notificationId, userId }));
-			console.log('USERS TO CREATE => ', usersToCreate);
+			const usersToCreate = users.map(userId => ({ id: uuid(), notificationId, userId }));
 
 			await Publish.usersNotificationsModel.bulkCreate(usersToCreate, { transaction });
 		}
@@ -39,7 +38,6 @@ export class Publish {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, users, ...notification } = params;
-			console.log('NOTIFICATION +> ', params);
 			await Publish.model.create(notification, { transaction });
 			await this.handleRelations(params.id, profiles || [], users || [], transaction);
 

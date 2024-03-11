@@ -86,6 +86,8 @@ export function initModels(sequelize: Sequelize) {
   Modules.hasMany(ProfileModulePermissions, { as: "profileModulePermissions", foreignKey: "moduleId"});
   ProfilesNotifications.belongsTo(Notifications, { as: "notification", foreignKey: "notificationId"});
   Notifications.hasMany(ProfilesNotifications, { as: "profilesNotifications", foreignKey: "notificationId"});
+  UsersNotifications.belongsTo(Notifications, { as: "notification", foreignKey: "notificationId"});
+  Notifications.hasMany(UsersNotifications, { as: "usersNotifications", foreignKey: "notificationId"});
   ProfileModulePermissions.belongsTo(Permissions, { as: "permission", foreignKey: "permissionId"});
   Permissions.hasMany(ProfileModulePermissions, { as: "profileModulePermissions", foreignKey: "permissionId"});
   ProfileModulePermissions.belongsTo(Profiles, { as: "profile", foreignKey: "profileId"});

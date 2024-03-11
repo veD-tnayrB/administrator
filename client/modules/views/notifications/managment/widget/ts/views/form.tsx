@@ -12,7 +12,8 @@ import { Users } from './tabs/users';
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>(store.item.getProperties());
-	const [isLoading, setIsLoading] = React.useState(store.fetching);
+	const [isLoading, setIsLoading] = React.useState(true);
+	console.log('STORE= . ', store);
 
 	useBinder([store], () => setIsLoading(store.fetching));
 
@@ -30,6 +31,8 @@ export const Form = () => {
 	const onCancel = () => {
 		routing.pushState('/notifications');
 	};
+
+	console.log('IS LOADING +> ', isLoading);
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
@@ -70,7 +73,7 @@ export const Form = () => {
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
 					Cancel
 				</Button>
-				<Button variant="primary" type="submit" fetching={isLoading}>
+				<Button variant="primary" type="submit" disabled={isLoading}>
 					Save
 				</Button>
 			</div>

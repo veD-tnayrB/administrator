@@ -6,13 +6,17 @@ import type { Profiles, ProfilesId } from './profiles';
 export interface ProfilesNotificationsAttributes {
   profileId: string;
   notificationId: string;
+  id: string;
 }
 
+export type ProfilesNotificationsPk = "id";
+export type ProfilesNotificationsId = ProfilesNotifications[ProfilesNotificationsPk];
 export type ProfilesNotificationsCreationAttributes = ProfilesNotificationsAttributes;
 
 export class ProfilesNotifications extends Model<ProfilesNotificationsAttributes, ProfilesNotificationsCreationAttributes> implements ProfilesNotificationsAttributes {
   profileId!: string;
   notificationId!: string;
+  id!: string;
 
   // ProfilesNotifications belongsTo Notifications via notificationId
   notification!: Notifications;
@@ -44,6 +48,11 @@ export class ProfilesNotifications extends Model<ProfilesNotificationsAttributes
         key: 'id'
       },
       field: 'notification_id'
+    },
+    id: {
+      type: DataTypes.CHAR(36),
+      allowNull: false,
+      primaryKey: true
     }
   }, {
     sequelize,
@@ -51,14 +60,22 @@ export class ProfilesNotifications extends Model<ProfilesNotificationsAttributes
     timestamps: false,
     indexes: [
       {
-        name: "fk_profile",
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "fk_profiles_notifications_profile",
         using: "BTREE",
         fields: [
           { name: "profile_id" },
         ]
       },
       {
-        name: "fk_notification",
+        name: "fk_profiles_notifications_notification",
         using: "BTREE",
         fields: [
           { name: "notification_id" },

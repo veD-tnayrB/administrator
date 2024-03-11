@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { ProfilesNotifications, ProfilesNotificationsId } from './profiles_notifications';
+import type { UsersNotifications, UsersNotificationsId } from './users_notifications';
 
 export interface NotificationsAttributes {
   id: string;
@@ -40,6 +41,18 @@ export class Notifications extends Model<NotificationsAttributes, NotificationsC
   hasProfilesNotification!: Sequelize.HasManyHasAssociationMixin<ProfilesNotifications, ProfilesNotificationsId>;
   hasProfilesNotifications!: Sequelize.HasManyHasAssociationsMixin<ProfilesNotifications, ProfilesNotificationsId>;
   countProfilesNotifications!: Sequelize.HasManyCountAssociationsMixin;
+  // Notifications hasMany UsersNotifications via notificationId
+  usersNotifications!: UsersNotifications[];
+  getUsersNotifications!: Sequelize.HasManyGetAssociationsMixin<UsersNotifications>;
+  setUsersNotifications!: Sequelize.HasManySetAssociationsMixin<UsersNotifications, UsersNotificationsId>;
+  addUsersNotification!: Sequelize.HasManyAddAssociationMixin<UsersNotifications, UsersNotificationsId>;
+  addUsersNotifications!: Sequelize.HasManyAddAssociationsMixin<UsersNotifications, UsersNotificationsId>;
+  createUsersNotification!: Sequelize.HasManyCreateAssociationMixin<UsersNotifications>;
+  removeUsersNotification!: Sequelize.HasManyRemoveAssociationMixin<UsersNotifications, UsersNotificationsId>;
+  removeUsersNotifications!: Sequelize.HasManyRemoveAssociationsMixin<UsersNotifications, UsersNotificationsId>;
+  hasUsersNotification!: Sequelize.HasManyHasAssociationMixin<UsersNotifications, UsersNotificationsId>;
+  hasUsersNotifications!: Sequelize.HasManyHasAssociationsMixin<UsersNotifications, UsersNotificationsId>;
+  countUsersNotifications!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Notifications {
     return Notifications.init({

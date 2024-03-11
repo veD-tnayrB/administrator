@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
+import type { Notifications, NotificationsId } from './notifications';
 import type { Users, UsersId } from './users';
 
 export interface UsersNotificationsAttributes {
@@ -22,6 +23,11 @@ export class UsersNotifications extends Model<UsersNotificationsAttributes, User
   timeCreated?: Date;
   timeUpdated?: Date;
 
+  // UsersNotifications belongsTo Notifications via notificationId
+  notification!: Notifications;
+  getNotification!: Sequelize.BelongsToGetAssociationMixin<Notifications>;
+  setNotification!: Sequelize.BelongsToSetAssociationMixin<Notifications, NotificationsId>;
+  createNotification!: Sequelize.BelongsToCreateAssociationMixin<Notifications>;
   // UsersNotifications belongsTo Users via userId
   user!: Users;
   getUser!: Sequelize.BelongsToGetAssociationMixin<Users>;
@@ -38,6 +44,10 @@ export class UsersNotifications extends Model<UsersNotificationsAttributes, User
     notificationId: {
       type: DataTypes.CHAR(36),
       allowNull: true,
+      references: {
+        model: 'notifications',
+        key: 'id'
+      },
       field: 'notification_id'
     },
     userId: {
@@ -75,10 +85,17 @@ export class UsersNotifications extends Model<UsersNotificationsAttributes, User
         ]
       },
       {
-        name: "user_id",
+        name: "fk_users_notifications_user",
         using: "BTREE",
         fields: [
           { name: "user_id" },
+        ]
+      },
+      {
+        name: "fk_users_notifications_notification",
+        using: "BTREE",
+        fields: [
+          { name: "notification_id" },
         ]
       },
     ]

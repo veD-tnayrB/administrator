@@ -28,11 +28,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	load = async ({ id }: { id: string }) => {
 		if (id === 'create') {
-			this.ready = true;
 			await this.#profiles.load();
-			await this.#users.load();
+			await this.#users.load({ active: true });
 			this.#isCreating = true;
-			return this.triggerEvent();
+			this.triggerEvent();
+			return;
 		}
 		try {
 			this.fetching = true;
@@ -40,11 +40,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
-			this.ready = true;
-
 			await this.#profiles.load();
-			await this.#users.load({ active: true });
-
+			console.log('THIS.#ITEM => ', this.#item);
+			await this.#users.load({ active: true, order: 'id' });
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
