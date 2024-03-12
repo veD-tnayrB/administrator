@@ -5,7 +5,7 @@ export class ProfilesManager extends StoreListView {
 	declare collection: Profiles;
 	declare propertiesToSearch: { label: string; name: string }[];
 	declare selectedItems: Map<string, Profile>;
-	declare load: () => Promise<void>;
+	declare load: (params?: Record<string, any>) => Promise<void>;
 
 	constructor() {
 		super({ collection: new Profiles() });

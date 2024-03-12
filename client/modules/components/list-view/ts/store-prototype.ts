@@ -84,9 +84,9 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		if (!!Object.entries(urlParams).length) this.#params = urlParams;
 	}
 
-	load = async () => {
+	load = async (params: Record<string, any> = {}) => {
 		try {
-			const response = await this.#collection.load(this.#params);
+			const response = await this.#collection.load({ ...this.#params, ...params });
 			if (!response.status) throw response.error;
 			this.#items = response.data;
 		} catch (error) {

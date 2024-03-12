@@ -13,7 +13,6 @@ export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>(store.item.getProperties());
 	const [isLoading, setIsLoading] = React.useState(true);
-	console.log('STORE= . ', store);
 
 	useBinder([store], () => setIsLoading(store.fetching));
 
@@ -31,8 +30,6 @@ export const Form = () => {
 	const onCancel = () => {
 		routing.pushState('/notifications');
 	};
-
-	console.log('IS LOADING +> ', isLoading);
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">

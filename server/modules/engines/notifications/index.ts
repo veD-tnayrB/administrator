@@ -3,6 +3,7 @@ import { Manager } from '@essential-js/admin-server/helpers';
 import { sender } from './sender';
 import { IPublish, Publish } from './cases/publish';
 import { Get, IGet } from './cases/get';
+import { List } from './cases/list';
 
 export class NotificationsManager extends Manager {
 	constructor() {

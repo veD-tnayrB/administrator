@@ -16,20 +16,19 @@ export class Get {
 				include: [
 					{
 						model: Get.usersNotificationsModel,
-						attributes: ['userId'], // Solo selecciona la columna userId
-						as: 'usersNotifications', // El nombre del alias definido en las asociaciones
+						attributes: ['userId'],
+						as: 'usersNotifications',
 					},
 					{
 						model: Get.profilesNotificationsModel,
-						attributes: ['profileId'], // Solo selecciona la columna profileId
-						as: 'profilesNotifications', // El nombre del alias definido en las asociaciones
+						attributes: ['profileId'],
+						as: 'profilesNotifications',
 					},
 				],
 			});
 			if (!notificationFind) throw 'NOTIFICATION_DOESNT_EXISTS';
 			const notification = notificationFind.dataValues;
 
-			// Como ahora 'notification' incluye las asociaciones, puedes extraer los IDs directamente
 			const users = notification.usersNotifications.map(un => un.dataValues.userId);
 			const profiles = notification.profilesNotifications.map(pn => pn.dataValues.profileId);
 
