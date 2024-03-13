@@ -7,7 +7,6 @@ export const Profiles = () => {
 
 	const listProperties = {
 		store: store.profiles,
-
 		searchbar: {
 			placeholder: 'Search...',
 		},

@@ -2,6 +2,7 @@ import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
 import { generateReport } from '../excel-handler/cases/generate-report';
 import Sequelize from 'sequelize';
+import { List } from './list';
 
 export /*bundle*/ abstract class Manager {
 	#model: Model;
@@ -21,21 +22,9 @@ export /*bundle*/ abstract class Manager {
 	}
 
 	list = (params: { where: { ids?: string; [key: string]: unknown }; [key: string]: unknown }) => {
-		console.log('PARAMS +> ', params);
-		const ids = params?.where?.ids.split(',') || [];
+		const ids = params?.where?.ids ? params?.where?.ids.split(',') : [];
 
-		console.log('IDS => ', ids);
-
-		const order = [
-			[
-				params.order === 'id' ? Sequelize.fn('FIELD', Sequelize.col('id'), ...ids) : params.order,
-				params.asc || 'DESC',
-			],
-		];
-
-		console.log('ORDER =<> ', order);
-
-		return actions.list(this.#model, { ...params, order }, `/list/${this.#managerName}`);
+		return List.execute(this.#model, { ...params, ids }, `/list/${this.#managerName}`);
 	};
 
 	create = (params: Partial<{ [key: string]: any }>) => {

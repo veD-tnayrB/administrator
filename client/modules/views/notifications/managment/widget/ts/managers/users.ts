@@ -16,4 +16,21 @@ export class UsersManager extends StoreListView {
 			{ label: 'Email', name: 'email' },
 		];
 	}
+
+	// setSelectedsItems = (ids: string[]) => {
+	// 	ids.forEach(id => {
+	// 		const item = this.items.find(item => item.id === id);
+
+	// 		if (this.selectedItems.has(id)) {
+	// 			this.selectedItems.delete(id);
+	// 		} else {
+	// 			this.selectedItems.set(id, item);
+	// 		}
+	// 	});
+
+	// 	this.triggerEvent();
+	// };
+	setSelectedsItems = (ids: string[]) => {
+		ids.forEach(id => this.selectItem({ id }));
+	};
 }

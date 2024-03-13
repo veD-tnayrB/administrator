@@ -1,13 +1,13 @@
 import React from 'react';
-import { useNotificationsManagmentContext } from '../../context';
+import { useNotificationsManagmentContext } from '../../../context';
 import { ListView } from '@essential-js/admin/components/list-view';
+import { UsersRow } from './row';
 
 export const Users = () => {
 	const { store } = useNotificationsManagmentContext();
 
 	const listProperties = {
 		store: store.users,
-
 		searchbar: {
 			placeholder: 'Search...',
 		},

@@ -17,6 +17,7 @@ export class Publish {
 	static profilesNotificationsModel: DB.models.ProfilesNotifications = DB.models.ProfilesNotifications;
 
 	static handleRelations = async (notificationId: string, profiles: string[], users: string[], transaction) => {
+		// TODO: Bryant: handle relations the register are being repetitive, isnt being validated the second time save
 		if (!users.length)
 			await Publish.usersNotificationsModel.destroy({ where: { notificationId } }, { transaction });
 		if (!profiles.length)

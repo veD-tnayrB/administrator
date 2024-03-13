@@ -16,4 +16,8 @@ export class ProfilesManager extends StoreListView {
 			{ label: 'Email', name: 'email' },
 		];
 	}
+
+	setSelectedsItems = (ids: string[]) => {
+		ids.forEach(id => this.selectItem({ id }));
+	};
 }

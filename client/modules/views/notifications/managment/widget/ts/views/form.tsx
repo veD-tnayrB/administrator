@@ -57,12 +57,12 @@ export const Form = () => {
 
 			<TabsContainer onChange={onChange} active={0}>
 				<Tabs>
-					<Tab>Associated profiles</Tab>
 					<Tab>Associated individual users</Tab>
+					<Tab>Associated profiles</Tab>
 				</Tabs>
 				<Panes>
-					<Profiles />
 					<Users />
+					<Profiles />
 				</Panes>
 			</TabsContainer>
 

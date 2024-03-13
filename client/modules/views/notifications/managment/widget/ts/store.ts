@@ -38,18 +38,24 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 
 			const response = await this.#item.load({ id });
-			globalThis.i = this.#item;
 			if (!response.status) throw response.error;
-			console.log('REPSONSE= > ', response);
 
 			await this.#profiles.load({ order: 'id', ids: response.data.profiles });
-			await this.#users.load({ active: true, order: 'id', ids: response.data.users });
+			await this.#users.load({ active: 1, order: 'id', ids: response.data.users });
+
+			console.log('RESPONSE => ', { users: response.data.users, profiles: response.data.profiles });
+			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
 		} finally {
 			this.fetching = false;
 		}
+	};
+
+	setItemsSelected = ({ users, profiles }: { profiles: string[]; users: string[] }) => {
+		this.#users.setSelectedsItems(users);
+		this.#profiles.setSelectedsItems(profiles);
 	};
 
 	save = async (values: Partial<INotification>) => {
