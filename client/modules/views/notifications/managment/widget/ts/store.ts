@@ -11,6 +11,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#item;
 	}
 
+	#currentTab: number = 0;
+	get currentTab() {
+		return this.#currentTab;
+	}
+
 	#profiles: ProfilesManager = new ProfilesManager();
 	get profiles() {
 		return this.#profiles;
@@ -43,7 +48,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			await this.#profiles.load({ order: 'id', ids: response.data.profiles });
 			await this.#users.load({ active: 1, order: 'id', ids: response.data.users });
 
-			console.log('RESPONSE => ', { users: response.data.users, profiles: response.data.profiles });
 			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
 			return { status: true };
 		} catch (error) {
@@ -78,8 +82,17 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		}
 	};
 
+	setTab = (tab: number) => {
+		this.#currentTab = tab;
+		this.triggerEvent('tabs.changed');
+	};
+
 	reset = () => {
 		this.#item = new Notification();
+		this.setTab(0);
+		this.triggerEvent('tabs.changed');
+		this.#users.resetAll();
+		this.#profiles.resetAll();
 		this.triggerEvent();
 	};
 }

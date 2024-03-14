@@ -17,20 +17,8 @@ export class UsersManager extends StoreListView {
 		];
 	}
 
-	// setSelectedsItems = (ids: string[]) => {
-	// 	ids.forEach(id => {
-	// 		const item = this.items.find(item => item.id === id);
-
-	// 		if (this.selectedItems.has(id)) {
-	// 			this.selectedItems.delete(id);
-	// 		} else {
-	// 			this.selectedItems.set(id, item);
-	// 		}
-	// 	});
-
-	// 	this.triggerEvent();
-	// };
 	setSelectedsItems = (ids: string[]) => {
-		ids.forEach(id => this.selectItem({ id }));
+		ids.forEach(id => this.selectedItems.set(id));
+		this.triggerEvent();
 	};
 }

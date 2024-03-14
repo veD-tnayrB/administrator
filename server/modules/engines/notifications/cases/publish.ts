@@ -18,10 +18,12 @@ export class Publish {
 
 	static handleRelations = async (notificationId: string, profiles: string[], users: string[], transaction) => {
 		// TODO: Bryant: handle relations the register are being repetitive, isnt being validated the second time save
-		if (!users.length)
-			await Publish.usersNotificationsModel.destroy({ where: { notificationId } }, { transaction });
-		if (!profiles.length)
-			await Publish.profilesNotificationsModel.destroy({ where: { notificationId } }, { transaction });
+		const notification = await Publish.model.findOne({ where: { id: notificationId }, transaction });
+		if ((!notification && profiles.length) || users.length) throw 'NOTIFICATION_DOESNT_EXISTS';
+		if (!notification) throw 'NOTIFICATION_WASNT_CREATED_CORRECTLY';
+
+		await Publish.usersNotificationsModel.destroy({ where: { notificationId } }, { transaction });
+		await Publish.profilesNotificationsModel.destroy({ where: { notificationId } }, { transaction });
 
 		if (profiles.length) {
 			const profilesToCreate = profiles.map(profileId => ({ id: uuid(), notificationId, profileId }));

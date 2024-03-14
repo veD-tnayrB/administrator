@@ -18,6 +18,7 @@ export class ProfilesManager extends StoreListView {
 	}
 
 	setSelectedsItems = (ids: string[]) => {
-		ids.forEach(id => this.selectItem({ id }));
+		ids.forEach(id => this.selectedItems.set(id));
+		this.triggerEvent();
 	};
 }

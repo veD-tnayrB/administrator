@@ -3,6 +3,8 @@ import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
 import config from '@essential-js/admin/config';
 
+const DEFAULT_LIMIT = 5;
+
 export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListView> {
 	#id: string;
 	get id() {
@@ -29,7 +31,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return selectedItems.length === this.#items.length;
 	}
 
-	#limit: number = 5;
+	#limit: number = DEFAULT_LIMIT;
 
 	get limit() {
 		return this.#limit;
@@ -86,6 +88,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	load = async (params: Record<string, any> = {}) => {
 		try {
+			this.#params = { ...this.#params, ...params };
 			const response = await this.#collection.load({ ...this.#params, ...params });
 			if (!response.status) throw response.error;
 			this.#items = response.data;
@@ -329,5 +332,12 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			params[key] = value;
 		}
 		return params;
+	};
+
+	resetAll = () => {
+		this.#limit = DEFAULT_LIMIT;
+		this.#selectedItems = new Map();
+		this.clearSearch();
+		this.triggerEvent();
 	};
 }

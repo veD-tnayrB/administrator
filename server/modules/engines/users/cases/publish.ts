@@ -5,10 +5,9 @@ export class Publish {
 	static usersProfilesModel: DB.models.UsersProfiles = DB.models.UsersProfiles;
 
 	static handleProfiles = async (userId: string, profiles: string[], transaction) => {
-		if (!profiles) return;
 		await Publish.usersProfilesModel.destroy({ where: { userId } }, { transaction });
 
-		if (profiles.length > 0) {
+		if (profiles.length) {
 			const profilesToCreate = profiles.map(profileId => ({ userId, profileId }));
 			await Publish.usersProfilesModel.bulkCreate(profilesToCreate, { transaction });
 		}

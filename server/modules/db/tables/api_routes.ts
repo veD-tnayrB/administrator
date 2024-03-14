@@ -17,8 +17,8 @@ export type ApiRoutesCreationAttributes = ApiRoutesAttributes;
 export class ApiRoutes extends Model<ApiRoutesAttributes, ApiRoutesCreationAttributes> implements ApiRoutesAttributes {
 	declare id: string;
 	declare path: string;
-	method: string;
-	apiModuleId: string;
+	declare method: string;
+	declare apiModuleId: string;
 
 	// ApiRoutes belongsTo ApiModules via apiModuleId
 	apiModule!: ApiModules;

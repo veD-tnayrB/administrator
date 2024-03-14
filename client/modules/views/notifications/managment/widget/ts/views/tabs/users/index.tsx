@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNotificationsManagmentContext } from '../../../context';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { UsersRow } from './row';
 
 export const Users = () => {
 	const { store } = useNotificationsManagmentContext();

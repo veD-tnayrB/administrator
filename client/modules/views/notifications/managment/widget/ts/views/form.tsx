@@ -5,9 +5,7 @@ import { useNotificationsManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
-import { TabsContainer, Tabs, Tab, Panes } from 'pragmate-ui/tabs';
-import { Profiles } from './tabs/profiles';
-import { Users } from './tabs/users';
+import { Tabs } from './tabs';
 
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
@@ -23,13 +21,8 @@ export const Form = () => {
 		setValues({ ...values, [name]: value });
 	};
 
-	const onSubmit = () => {
-		store.save(values);
-	};
-
-	const onCancel = () => {
-		routing.pushState('/notifications');
-	};
+	const onSubmit = () => store.save(values);
+	const onCancel = () => routing.pushState('/notifications');
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
@@ -55,16 +48,7 @@ export const Form = () => {
 				</label>
 			</div> */}
 
-			<TabsContainer onChange={onChange} active={0}>
-				<Tabs>
-					<Tab>Associated individual users</Tab>
-					<Tab>Associated profiles</Tab>
-				</Tabs>
-				<Panes>
-					<Users />
-					<Profiles />
-				</Panes>
-			</TabsContainer>
+			<Tabs />
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
