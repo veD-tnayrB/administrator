@@ -22,7 +22,6 @@ export const UsersRow = ({ propertiesToDisplay, item, ...props }) => {
 		store.users.selectItem({ id: item.id });
 	};
 
-	console.log('STORE.USERS.SELECTEDITEMS => ', store.users.selectedItems, props.selectedItems);
 	const isItemSelected = store.users.selectedItems.has(item.id);
 
 	return (

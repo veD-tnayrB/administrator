@@ -9,7 +9,6 @@ export const Tabs = () => {
 	const { store } = useNotificationsManagmentContext();
 	const [active, setActive] = React.useState(store.currentTab);
 
-	console.log('ACTIVE +> ', active, store.currentTab);
 	useBinder([store], () => setActive(store.currentTab), ['tabs.changed']);
 
 	const onTabsSelected = (event, index: number) => {

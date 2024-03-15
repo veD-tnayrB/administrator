@@ -33,6 +33,7 @@ export const List = (props: IList) => {
 	const Row = props?.row || DefaultRow;
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}), 'displaying-change');
+
 	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
 
 	const output = store.items.map((item: Record<string, any>, index: number) => {

@@ -12,6 +12,7 @@ export const Profiles = () => {
 		},
 		header: {
 			items: [
+				{ label: 'ID', name: 'id' },
 				{ label: 'Name', name: 'name' },
 				{ label: 'Description', name: 'description' },
 			],
@@ -23,7 +24,7 @@ export const Profiles = () => {
 			default: true,
 			isSelecteable: true,
 			itemsConfig: {
-				properties: ['id', 'name', 'description', 'timeCreated', 'timeUpdated'],
+				properties: ['id', 'name', 'description'],
 			},
 		},
 	};

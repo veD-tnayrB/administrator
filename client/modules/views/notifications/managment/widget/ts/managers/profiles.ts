@@ -15,6 +15,7 @@ export class ProfilesManager extends StoreListView {
 			{ label: 'Description', name: 'description' },
 			{ label: 'Email', name: 'email' },
 		];
+		this.propertiesDisplaying = ['id', 'name', 'description'];
 	}
 
 	setSelectedsItems = (ids: string[]) => {
