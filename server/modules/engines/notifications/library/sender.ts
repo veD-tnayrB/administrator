@@ -1,4 +1,4 @@
-import { NotifierBridge } from './library/notifier.library';
+import { NotifierBridge } from './notifier.library';
 
 const credentials = {
 	type: process.env.FIREBASE_TYPE,

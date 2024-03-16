@@ -1,0 +1,30 @@
+article.collapsible__container {
+	// box-shadow: var(--primary-shadow);
+	border-radius: 4px 4px 0px 0px;
+
+	.collapsible__header {
+		border-radius: 4px 4px 0px 0px;
+		background: var(--background);
+		box-shadow: none;
+		padding: 0px 15px;
+
+		h3 {
+			margin: 10px 0;
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: var(--on-surface);
+		}
+	}
+
+	section.collapsible__content.collapsible__content--opened {
+		display: grid;
+		grid-gap: 1rem;
+		border-right: 2px solid var(--background);
+		border-left: 2px solid var(--background);
+		border-bottom: 2px solid var(--background);
+	}
+	.collapsible__content {
+		min-height: 50px;
+		padding: 10px;
+	}
+}

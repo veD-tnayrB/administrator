@@ -32,11 +32,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 
 	load = async ({ id }: { id: string }) => {
+		console.log('INCOMING ID =>', id);
 		if (id === 'create') {
+			console.log('THISSSSSSSSSSSSSSSSSSSSSSS');
 			await this.#profiles.load();
 			await this.#users.load({ active: 1 });
 			this.#isCreating = true;
-			this.triggerEvent();
+			this.ready = true;
 			return;
 		}
 		try {
@@ -49,6 +51,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			await this.#users.load({ active: 1, order: 'id', ids: response.data.users });
 
 			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
+			this.ready = true;
+
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
@@ -88,6 +92,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	reset = () => {
+		this.ready = false;
 		this.#item = new Notification();
 		this.setTab(0);
 		this.triggerEvent('tabs.changed');

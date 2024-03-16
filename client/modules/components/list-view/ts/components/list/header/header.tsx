@@ -43,6 +43,8 @@ export const Header = (props: IProps) => {
 	});
 
 	const includeBuilkRemove = props?.bulkActions?.remove;
+	const includesEdit = list.itemsConfig?.actions?.find(item => item.type === 'edit');
+	const includesDelete = list.itemsConfig?.actions?.find(item => item.type === 'delete');
 
 	const includeSelectAll = list.isSelecteable;
 	const cls = store.fetching ? ` loading` : ``;
@@ -58,6 +60,16 @@ export const Header = (props: IProps) => {
 
 			{output}
 			{includeBuilkRemove && <RemoveAction />}
+			{includesDelete && (
+				<li>
+					<div className="label"></div>
+				</li>
+			)}
+			{includesEdit && (
+				<li>
+					<div className="label"></div>
+				</li>
+			)}
 		</ul>
 	);
 };
