@@ -1,0 +1,73 @@
+$spacing: (
+	0: 0rem,
+	px: 0.0625rem,
+	1: 0.25rem,
+	2: 0.5rem,
+	3: 0.75rem,
+	4: 1rem,
+	5: 1.25rem,
+	6: 1.5rem,
+	96: 24rem,
+);
+
+@each $key, $value in $spacing {
+	.p-#{$key} {
+		padding: $value !important;
+	}
+
+	.pt-#{$key} {
+		padding-top: $value !important;
+	}
+
+	.pr-#{$key} {
+		padding-right: $value !important;
+	}
+
+	.pb-#{$key} {
+		padding-bottom: $value !important;
+	}
+
+	.pl-#{$key} {
+		padding-left: $value !important;
+	}
+
+	.px-#{$key} {
+		padding-right: $value !important;
+		padding-left: $value !important;
+	}
+
+	.py-#{$key} {
+		padding-top: $value !important;
+		padding-bottom: $value !important;
+	}
+
+	.m-#{$key} {
+		margin: $value !important;
+	}
+
+	.mt-#{$key} {
+		margin-top: $value !important;
+	}
+
+	.mr-#{$key} {
+		margin-right: $value !important;
+	}
+
+	.mb-#{$key} {
+		margin-bottom: $value !important;
+	}
+
+	.ml-#{$key} {
+		margin-left: $value !important;
+	}
+
+	.mx-#{$key} {
+		margin-right: $value !important;
+		margin-left: $value !important;
+	}
+
+	.my-#{$key} {
+		margin-top: $value !important;
+		margin-bottom: $value !important;
+	}
+}

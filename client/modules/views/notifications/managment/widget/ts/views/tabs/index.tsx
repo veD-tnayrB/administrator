@@ -2,6 +2,7 @@ import React from 'react';
 import { TabsContainer, Tabs as PuiTabs, Tab, Panes } from 'pragmate-ui/tabs';
 import { Profiles } from './profiles';
 import { Users } from './users';
+import { CollapsibleContainer, CollapsibleHeader, CollapsibleContent } from 'pragmate-ui/collapsible';
 import { useNotificationsManagmentContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
@@ -16,15 +17,22 @@ export const Tabs = () => {
 	};
 
 	return (
-		<TabsContainer onChange={onTabsSelected} active={active}>
-			<PuiTabs>
-				<Tab>Associated profiles</Tab>
-				<Tab>Associated individual users</Tab>
-			</PuiTabs>
-			<Panes>
-				<Profiles />
-				<Users />
-			</Panes>
-		</TabsContainer>
+		<CollapsibleContainer>
+			<CollapsibleHeader>
+				<h3>Associations</h3>
+			</CollapsibleHeader>
+			<CollapsibleContent>
+				<TabsContainer onChange={onTabsSelected} active={active}>
+					<PuiTabs>
+						<Tab>Associated profiles</Tab>
+						<Tab>Associated individual users</Tab>
+					</PuiTabs>
+					<Panes>
+						<Profiles />
+						<Users />
+					</Panes>
+				</TabsContainer>
+			</CollapsibleContent>
+		</CollapsibleContainer>
 	);
 };
