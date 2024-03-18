@@ -3,49 +3,26 @@ import { Checkbox } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
 import { Input } from 'pragmate-ui/form';
 import { RRule } from 'rrule';
-import { DaySelector } from './day-selector';
-import { TimeSelector } from './time-selector';
+import { Days } from './days';
+import { WeeklyOptionContext } from './context';
+
+const daysOfWeek = [
+	{ label: 'Monday', value: 1 },
+	{ label: 'Tuesday', value: 2 },
+	{ label: 'Wednesday', value: 3 },
+	{ label: 'Thursday', value: 4 },
+	{ label: 'Friday', value: 5 },
+	{ label: 'Saturday', value: 6 },
+	{ label: 'Sunday', value: 0 },
+];
 
 export const Weekly = ({ onRRulesGenerated }) => {
 	const [repeatWeekly, setRepeatWeekly] = useState(true);
 	const [selectedDays, setSelectedDays] = useState([]);
 	const [notificationTimes, setNotificationTimes] = useState({});
-	const [startDate, setStartDate] = useState(new Date());
-
-	const handleDayChange = day => {
-		const updatedSelectedDays = selectedDays.includes(day)
-			? selectedDays.filter(d => d !== day)
-			: [...selectedDays, day];
-		setSelectedDays(updatedSelectedDays);
-
-		if (!updatedSelectedDays.includes(day)) {
-			const updatedTimes = { ...notificationTimes };
-			delete updatedTimes[day];
-			setNotificationTimes(updatedTimes);
-		} else {
-			setNotificationTimes({ ...notificationTimes, [day]: ['09:00'] }); // Default time when a new day is selected
-		}
-	};
-
-	const addTimeForDay = day => {
-		const updatedTimes = { ...notificationTimes, [day]: [...(notificationTimes[day] || []), ''] };
-		setNotificationTimes(updatedTimes);
-	};
-
-	const updateTimeForDay = (day, index, time) => {
-		const updatedDayTimes = [...notificationTimes[day]];
-		updatedDayTimes[index] = time;
-		setNotificationTimes({ ...notificationTimes, [day]: updatedDayTimes });
-	};
-
-	const removeTimeForDay = (day, index) => {
-		const updatedDayTimes = notificationTimes[day].filter((_, i) => i !== index);
-		if (updatedDayTimes.length === 0) {
-			handleDayChange(day); // Remove the day if no times left
-		} else {
-			setNotificationTimes({ ...notificationTimes, [day]: updatedDayTimes });
-		}
-	};
+	const [startDate, setStartDate] = useState(new Date().toDateString());
+	const [orderedDayOfWeek, setOrderedDayOfWeek] = useState(daysOfWeek);
+	console.log('orderedDayOfWeek => ', orderedDayOfWeek);
 
 	const generateRRule = () => {
 		let rruleOptions = {
@@ -70,35 +47,57 @@ export const Weekly = ({ onRRulesGenerated }) => {
 		onRRulesGenerated(rrule.toString());
 	};
 
+	const onRepeatWeekly = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setOrderedDayOfWeek(daysOfWeek);
+		setRepeatWeekly(event.target.checked);
+	};
+
+	const reorderDaysOfWeek = (startDate: string) => {
+		const startDay = new Date(startDate).getDay();
+		const orderedDays = [...daysOfWeek];
+		while (orderedDays[0].value !== startDay) {
+			orderedDays.push(orderedDays.shift());
+		}
+		return orderedDays;
+	};
+
+	const onStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
+		setStartDate(event.target.value);
+	};
+
+	const contextValue = {
+		selectedDays,
+		setSelectedDays,
+		notificationTimes,
+		orderedDayOfWeek,
+		setNotificationTimes,
+	};
+
+	const disableSet = Object.values(notificationTimes).some(
+		(times: string[]) => !times.length || times.some(time => !time)
+	);
 	return (
-		<div>
-			<Checkbox label="Repeat weekly" checked={repeatWeekly} onChange={e => setRepeatWeekly(e.target.checked)} />
+		<WeeklyOptionContext.Provider value={contextValue}>
+			<div className="flex-col gap-4">
+				<Checkbox label="Repeat weekly" checked={repeatWeekly} onChange={onRepeatWeekly} />
+				{!repeatWeekly && (
+					<div className="pt-4">
+						<Input
+							label="Start from"
+							type="date"
+							id="start-date"
+							value={startDate}
+							onChange={onStartDate}
+						/>
+					</div>
+				)}
 
-			{!repeatWeekly && (
-				<>
-					<Input
-						label="Start from"
-						type="date"
-						id="start-date"
-						value={startDate}
-						onChange={e => setStartDate(e.target.value)}
-					/>
-				</>
-			)}
-
-			<DaySelector selectedDays={selectedDays} onDayChange={handleDayChange} />
-			{selectedDays.map(day => (
-				<TimeSelector
-					key={day}
-					times={notificationTimes[day] || []}
-					onAddTime={() => addTimeForDay(day)}
-					onUpdateTime={(index, time) => updateTimeForDay(day, index, time)}
-					onRemoveTime={index => removeTimeForDay(day, index)}
-				/>
-			))}
-			<Button onClick={generateRRule} variant="primary">
-				Set
-			</Button>
-		</div>
+				<Days />
+				<Button disabled={disableSet} onClick={generateRRule} variant="primary">
+					Set
+				</Button>
+			</div>
+		</WeeklyOptionContext.Provider>
 	);
 };
