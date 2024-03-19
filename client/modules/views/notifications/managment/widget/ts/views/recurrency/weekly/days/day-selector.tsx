@@ -3,31 +3,34 @@ import { Checkbox } from 'pragmate-ui/form';
 import { useWeeklyOptionContext } from '../context';
 
 export const DaySelector = () => {
-	const { selectedDays, setSelectedDays, notificationTimes, setNotificationTimes, orderedDayOfWeek } =
-		useWeeklyOptionContext();
+	const { selectedDays, setSelectedDays, orderedDayOfWeek } = useWeeklyOptionContext();
 
+	// Esta función maneja la selección/deselección de los días
 	const onDayChange = day => {
-		const updatedSelectedDays = selectedDays.includes(day)
-			? selectedDays.filter(d => d !== day)
-			: [...selectedDays, day];
-		setSelectedDays(updatedSelectedDays);
+		// Revisa si el día ya está seleccionado utilizando su identificador único
+		const isDaySelected = selectedDays.some(selectedDay => selectedDay.uniqueId === day.uniqueId);
 
-		if (!updatedSelectedDays.includes(day)) {
-			const updatedTimes = { ...notificationTimes };
-			delete updatedTimes[day];
-			setNotificationTimes(updatedTimes);
-		} else {
-			setNotificationTimes({ ...notificationTimes, [day]: ['09:00'] });
-		}
+		// Actualiza el estado en consecuencia
+		setSelectedDays(
+			isDaySelected
+				? selectedDays.filter(selectedDay => selectedDay.uniqueId !== day.uniqueId)
+				: [...selectedDays, day]
+		);
 	};
 
-	const output = orderedDayOfWeek.map(day => (
-		<Checkbox
-			key={day.value}
-			label={day.label}
-			checked={selectedDays.includes(day.value)}
-			onChange={() => onDayChange(day.value)}
-		/>
-	));
+	// Renderiza los checkboxes para los días de la semana
+	const output = orderedDayOfWeek.map((day, index) => {
+		// Crea un identificador único para cada día
+		const uniqueId = `${day.label}-${index}`;
+		return (
+			<Checkbox
+				key={uniqueId}
+				label={day.label}
+				checked={selectedDays.some(selectedDay => selectedDay.uniqueId === uniqueId)}
+				onChange={() => onDayChange({ ...day, uniqueId })}
+			/>
+		);
+	});
+
 	return <div>{output}</div>;
 };

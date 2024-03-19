@@ -52,18 +52,15 @@ export const Weekly = ({ onRRulesGenerated }) => {
 		setRepeatWeekly(event.target.checked);
 	};
 
-	const reorderDaysOfWeek = (startDate: string) => {
-		const startDay = new Date(startDate).getDay();
-		const orderedDays = [...daysOfWeek];
-		while (orderedDays[0].value !== startDay) {
-			orderedDays.push(orderedDays.shift());
-		}
+	const reorderDaysOfWeek = startDate => {
+		const startDay = new Date(startDate).getDay(); // getDay() devuelve 0 para domingo, 1 para lunes, etc.
+		const orderedDays = daysOfWeek.slice(startDay).concat(daysOfWeek.slice(0, startDay + 1));
 		return orderedDays;
 	};
 
 	const onStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
 		setStartDate(event.target.value);
+		setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
 	};
 
 	const contextValue = {
