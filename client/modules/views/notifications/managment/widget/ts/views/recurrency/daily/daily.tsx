@@ -29,7 +29,6 @@ export const Daily = ({ onRRulesGenerated }) => {
 		onRRulesGenerated(rrules);
 	};
 
-	console.log('NOTIFICATION TIMES +> ', notificationTimes);
 	const disabled = !notificationTimes.length || notificationTimes.some(time => !time);
 
 	return (

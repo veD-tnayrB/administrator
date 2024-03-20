@@ -17,12 +17,11 @@ const daysOfWeek = [
 ];
 
 export const Weekly = ({ onRRulesGenerated }) => {
-	const [repeatWeekly, setRepeatWeekly] = useState(true);
+	// const [repeatWeekly, setRepeatWeekly] = useState(true);
 	const [selectedDays, setSelectedDays] = useState([]);
 	const [notificationTimes, setNotificationTimes] = useState({});
 	const [startDate, setStartDate] = useState(new Date().toDateString());
 	const [orderedDayOfWeek, setOrderedDayOfWeek] = useState(daysOfWeek);
-	console.log('orderedDayOfWeek => ', orderedDayOfWeek);
 
 	const generateRRule = () => {
 		let rruleOptions = {
@@ -42,26 +41,26 @@ export const Weekly = ({ onRRulesGenerated }) => {
 			});
 		});
 
+		console.log('RRULE OPTIONS: ', rruleOptions);
 		const rrule = new RRule(rruleOptions);
 		console.log('RRule:', rrule.toString());
 		onRRulesGenerated(rrule.toString());
 	};
 
-	const onRepeatWeekly = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setOrderedDayOfWeek(daysOfWeek);
-		setRepeatWeekly(event.target.checked);
-	};
-
-	const reorderDaysOfWeek = startDate => {
-		const startDay = new Date(startDate).getDay(); // getDay() devuelve 0 para domingo, 1 para lunes, etc.
-		const orderedDays = daysOfWeek.slice(startDay).concat(daysOfWeek.slice(0, startDay + 1));
-		return orderedDays;
-	};
-
+	// const onRepeatWeekly = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 	setOrderedDayOfWeek(daysOfWeek);
+	// 	setRepeatWeekly(event.target.checked);
+	// };
 	const onStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setStartDate(event.target.value);
-		setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
+		// setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
 	};
+
+	// const reorderDaysOfWeek = startDate => {
+	// 	const startDay = new Date(startDate).getDay(); // getDay() devuelve 0 para domingo, 1 para lunes, etc.
+	// 	const orderedDays = daysOfWeek.slice(startDay).concat(daysOfWeek.slice(0, startDay + 1));
+	// 	return orderedDays;
+	// };
 
 	const contextValue = {
 		selectedDays,
@@ -77,18 +76,10 @@ export const Weekly = ({ onRRulesGenerated }) => {
 	return (
 		<WeeklyOptionContext.Provider value={contextValue}>
 			<div className="flex-col gap-4">
-				<Checkbox label="Repeat weekly" checked={repeatWeekly} onChange={onRepeatWeekly} />
-				{!repeatWeekly && (
-					<div className="pt-4">
-						<Input
-							label="Start from"
-							type="date"
-							id="start-date"
-							value={startDate}
-							onChange={onStartDate}
-						/>
-					</div>
-				)}
+				{/* <Checkbox label="Repeat weekly" checked={repeatWeekly} onChange={onRepeatWeekly} />*/}
+				<div className="pt-4">
+					<Input label="Start from" type="date" id="start-date" value={startDate} onChange={onStartDate} />
+				</div>
 
 				<Days />
 				<Button disabled={disableSet} onClick={generateRRule} variant="primary">

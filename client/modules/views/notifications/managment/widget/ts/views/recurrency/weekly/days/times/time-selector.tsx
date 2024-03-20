@@ -7,18 +7,25 @@ import { Time } from './time';
 interface IProps {
 	times: string[];
 	dayOfTheWeek: string;
-	day: number;
+	day: {
+		label: string;
+		value: number;
+		uniqueId: string;
+	};
 }
 
 export const TimeSelector = ({ times, dayOfTheWeek, day }: IProps) => {
 	const { notificationTimes, setNotificationTimes, setSelectedDays, selectedDays } = useWeeklyOptionContext();
 
 	const onAddTime = () => {
-		const updatedTimes = { ...notificationTimes, [day]: [...(notificationTimes[day] || []), ''] };
+		const selectedId = day.uniqueId;
+		const updatedTimes = { ...notificationTimes, [selectedId]: [...(notificationTimes[selectedId] || []), ''] };
 		setNotificationTimes(updatedTimes);
 	};
 
-	const output = times.map((time, index) => <Time key={uuid()} index={index} time={time} day={day} />);
+	const output = times.map((time, index) => (
+		<Time key={`${day.uniqueId}-${index}`} index={index} time={time} day={day} />
+	));
 
 	return (
 		<div className="flex-col gap-4">

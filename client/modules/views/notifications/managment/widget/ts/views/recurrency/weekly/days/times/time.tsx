@@ -5,22 +5,27 @@ import { useWeeklyOptionContext } from '../../context';
 
 interface IProps {
 	time: string;
-	day: number;
+	day: {
+		label: string;
+		value: number;
+		uniqueId: string;
+	};
 	index: number;
 }
 
 export const Time = ({ time, day, index }: IProps) => {
 	const { notificationTimes, setNotificationTimes, selectedDays, setSelectedDays } = useWeeklyOptionContext();
+	const selectedId = day.uniqueId;
+
 	const onUpdateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 
-		const updatedDayTimes = [...notificationTimes[day]];
-		updatedDayTimes[day] = value;
-		setNotificationTimes({ ...notificationTimes, [day]: updatedDayTimes });
+		const solvedTimes = notificationTimes[selectedId].map((time, i) => (i === index ? value : time));
+		setNotificationTimes(currentValue => ({ ...currentValue, [selectedId]: solvedTimes }));
 	};
 
 	const onRemoveTime = () => {
-		const updatedDayTimes = notificationTimes[day].filter((_, i) => i !== day - 1);
+		const updatedDayTimes = notificationTimes[selectedId].filter((_, i) => i !== index);
 		if (updatedDayTimes.length === 0) {
 			const updatedSelectedDays = selectedDays.includes(day)
 				? selectedDays.filter(d => d !== day)
@@ -35,7 +40,7 @@ export const Time = ({ time, day, index }: IProps) => {
 				setNotificationTimes({ ...notificationTimes, [day]: ['09:00'] });
 			}
 		} else {
-			setNotificationTimes({ ...notificationTimes, [day]: updatedDayTimes });
+			setNotificationTimes({ ...notificationTimes, [selectedId]: updatedDayTimes });
 		}
 	};
 

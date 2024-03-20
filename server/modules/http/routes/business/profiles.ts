@@ -36,7 +36,6 @@ class ProfilesRoutes extends Route {
 
 			await new Promise((resolve, reject) => {
 				form.parse(req, (err, fields, files) => {
-					console.log('Parsing files', { err, fields, files });
 					if (err) reject(err);
 					resolve({ fields, files });
 				});

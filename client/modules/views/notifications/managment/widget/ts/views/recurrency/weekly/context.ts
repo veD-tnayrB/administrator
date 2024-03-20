@@ -1,8 +1,14 @@
 import React from 'react';
 
+interface ISelectedDay {
+	label: string;
+	value: number;
+	uniqueId: string;
+}
+
 interface IContext {
-	selectedDays: number[];
-	setSelectedDays: React.Dispatch<React.SetStateAction<number[]>>;
+	selectedDays: ISelectedDay[];
+	setSelectedDays: React.Dispatch<React.SetStateAction<ISelectedDay[]>>;
 	notificationTimes: {};
 	setNotificationTimes: React.Dispatch<React.SetStateAction<{}>>;
 	orderedDayOfWeek: {
