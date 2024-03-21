@@ -20,24 +20,21 @@ export const Weekly = ({ onRRulesGenerated }) => {
 	// const [repeatWeekly, setRepeatWeekly] = useState(true);
 	const [selectedDays, setSelectedDays] = useState([]);
 	const [notificationTimes, setNotificationTimes] = useState({});
-	const [startDate, setStartDate] = useState(new Date().toDateString());
 	const [orderedDayOfWeek, setOrderedDayOfWeek] = useState(daysOfWeek);
 
 	const generateRRule = () => {
 		let rruleOptions = {
 			freq: RRule.WEEKLY,
 			byweekday: selectedDays,
-			dtstart: startDate,
 			interval: 1,
 			byhour: [],
 		};
 
-		// Aggregate all times for each selected day
-		Object.values(notificationTimes).forEach(times => {
+		Object.values(notificationTimes).forEach((times: string[]) => {
 			times.forEach(time => {
 				const [hour, minute] = time.split(':');
 				rruleOptions.byhour.push(parseInt(hour));
-				rruleOptions.byminute = parseInt(minute); // This simplifies to only consider minutes from the first time
+				rruleOptions.byminute = parseInt(minute);
 			});
 		});
 
@@ -47,21 +44,6 @@ export const Weekly = ({ onRRulesGenerated }) => {
 		onRRulesGenerated(rrule.toString());
 	};
 
-	// const onRepeatWeekly = (event: React.ChangeEvent<HTMLInputElement>) => {
-	// 	setOrderedDayOfWeek(daysOfWeek);
-	// 	setRepeatWeekly(event.target.checked);
-	// };
-	const onStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setStartDate(event.target.value);
-		// setOrderedDayOfWeek(reorderDaysOfWeek(event.target.value));
-	};
-
-	// const reorderDaysOfWeek = startDate => {
-	// 	const startDay = new Date(startDate).getDay(); // getDay() devuelve 0 para domingo, 1 para lunes, etc.
-	// 	const orderedDays = daysOfWeek.slice(startDay).concat(daysOfWeek.slice(0, startDay + 1));
-	// 	return orderedDays;
-	// };
-
 	const contextValue = {
 		selectedDays,
 		setSelectedDays,
@@ -70,17 +52,14 @@ export const Weekly = ({ onRRulesGenerated }) => {
 		setNotificationTimes,
 	};
 
-	const disableSet = Object.values(notificationTimes).some(
+	const theresNoDaySelected = selectedDays.length === 0;
+	const someTimeItsEmpty = Object.values(notificationTimes).some(
 		(times: string[]) => !times.length || times.some(time => !time)
 	);
+	const disableSet = theresNoDaySelected || someTimeItsEmpty;
 	return (
 		<WeeklyOptionContext.Provider value={contextValue}>
 			<div className="flex-col gap-4">
-				{/* <Checkbox label="Repeat weekly" checked={repeatWeekly} onChange={onRepeatWeekly} />*/}
-				<div className="pt-4">
-					<Input label="Start from" type="date" id="start-date" value={startDate} onChange={onStartDate} />
-				</div>
-
 				<Days />
 				<Button disabled={disableSet} onClick={generateRRule} variant="primary">
 					Set
