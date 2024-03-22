@@ -6,6 +6,7 @@ export const Days = () => {
 	return (
 		<div className="flex-col gap-4">
 			<DaySelector />
+			<hr className="my-4" />
 			<DayTimes />
 		</div>
 	);

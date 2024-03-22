@@ -7,6 +7,7 @@ export /*bundle*/ const Select = props => {
 			? props.value.map(value => props.options.find(option => option.value === value))
 			: [];
 	const value = props.isMulti ? multiValue : props.options.find(option => option.value === props.value);
+	console.log('IS MULTI +> ', props);
 	return (
 		<div className="pui-input pui-select__container fixed-label">
 			<label className="pui-input__label">

@@ -1,42 +1,42 @@
 import React from 'react';
-import { Checkbox } from 'pragmate-ui/form';
 import { useWeeklyOptionContext } from '../context';
+import { Select } from '@essential-js/admin/components/select';
 
 export const DaySelector = () => {
 	const { selectedDays, setSelectedDays, orderedDayOfWeek, setNotificationTimes, notificationTimes } =
 		useWeeklyOptionContext();
 
-	const onDayChange = day => {
-		const selectedId = day.uniqueId;
-		const isDayAlreadySelected = selectedDays.some(item => item.uniqueId === selectedId);
+	const onChange = (selectedOptions, props) => {
+		console.log('SELECTED OPTIONS => ', selectedOptions, props);
+		setSelectedDays(selectedOptions);
 
-		const updatedSelectedDays = isDayAlreadySelected
-			? selectedDays.filter(d => d.uniqueId !== selectedId)
-			: [...selectedDays, day];
-		setSelectedDays(updatedSelectedDays);
-
-		if (isDayAlreadySelected) {
-			const updatedTimes = { ...notificationTimes };
-			delete updatedTimes[selectedId];
-			setNotificationTimes(updatedTimes);
-		} else {
-			setNotificationTimes({ ...notificationTimes, [selectedId]: ['09:00'] });
+		if (props.action === 'remove-value') {
+			const removedOpt = props.removedValue;
+			setNotificationTimes(currentValue => {
+				delete currentValue[removedOpt.uniqueId];
+				return currentValue;
+			});
+			return;
 		}
+
+		const option = props?.option;
+		setNotificationTimes(currentValue => ({
+			...currentValue,
+			[option.uniqueId]: ['09:00'],
+		}));
 	};
 
-	// Renderiza los checkboxes para los días de la semana
-	const output = orderedDayOfWeek.map((day, index) => {
-		// Crea un identificador único para cada día
-		const uniqueId = `${day.label}-${index}`;
-		return (
-			<Checkbox
-				key={uniqueId}
-				label={day.label}
-				checked={selectedDays.some(selectedDay => selectedDay.uniqueId === uniqueId)}
-				onChange={() => onDayChange({ ...day, uniqueId })}
-			/>
-		);
+	const options = orderedDayOfWeek.map((day, index) => ({
+		value: day.value,
+		label: day.label,
+		uniqueId: `${day.label}-${index}`, // In case you need a unique identifier
+	}));
+
+	// Convert selectedDays back into the format that react-select expects
+	let value: number[] = [];
+	selectedDays.forEach(day => {
+		value.push(day.value);
 	});
 
-	return <div>{output}</div>;
+	return <Select onChange={onChange} options={options} isMulti label="Days of the week" value={value} />;
 };

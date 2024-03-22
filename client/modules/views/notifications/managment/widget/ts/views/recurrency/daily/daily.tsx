@@ -33,8 +33,9 @@ export const Daily = ({ onRRulesGenerated }) => {
 
 	return (
 		<>
-			<DailyTimes notificationTimes={notificationTimes} setNotificationTimes={setNotificationTimes} />
+			<h5 className="text-xl">Daily</h5>
 
+			<DailyTimes notificationTimes={notificationTimes} setNotificationTimes={setNotificationTimes} />
 			<EndDateDaily
 				endDate={endDate}
 				isEndEnabled={isEndEnabled}

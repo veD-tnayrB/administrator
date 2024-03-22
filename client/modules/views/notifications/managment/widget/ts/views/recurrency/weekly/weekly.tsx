@@ -60,6 +60,7 @@ export const Weekly = ({ onRRulesGenerated }) => {
 	return (
 		<WeeklyOptionContext.Provider value={contextValue}>
 			<div className="flex-col gap-4">
+				<h5 className="text-xl">Weekly</h5>
 				<Days />
 				<Button disabled={disableSet} onClick={generateRRule} variant="primary">
 					Set
