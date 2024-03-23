@@ -1,5 +1,5 @@
 article.collapsible__container {
-	// box-shadow: var(--primary-shadow);
+	box-shadow: var(--primary-shadow);
 	border-radius: 4px 4px 0px 0px;
 
 	.collapsible__header {
@@ -19,12 +19,15 @@ article.collapsible__container {
 	section.collapsible__content.collapsible__content--opened {
 		display: grid;
 		grid-gap: 1rem;
-		border-right: 2px solid var(--background);
-		border-left: 2px solid var(--background);
-		border-bottom: 2px solid var(--background);
+		border-right: 2px solid var(--outline);
+		border-left: 2px solid var(--outline);
+		border-bottom: 2px solid var(--outline);
 	}
 	.collapsible__content {
 		min-height: 50px;
+		overflow: hidden;
 		padding: 10px;
+		border-bottom-right-radius: var(--border-secondary);
+		border-bottom-left-radius: var(--border-secondary);
 	}
 }

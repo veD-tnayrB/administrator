@@ -5,18 +5,13 @@ import { Time } from './time';
 
 export const TimeSelector = () => {
 	const { selectedTimes, setSelectedTimes } = useMonthlyOptionContext();
-	const onTimeChange = (index, event) => {
-		const updatedTimes = [...selectedTimes];
-		updatedTimes[index] = event.target.value;
-		setSelectedTimes(updatedTimes);
-	};
 
 	const onAddTime = () => {
 		setSelectedTimes([...selectedTimes, '']);
 	};
 
 	const output = selectedTimes.map((time, index) => (
-		<Time key={`${time}-${index}`} index={index} time={time} onAddTime={onAddTime} onTimeChange={onTimeChange} />
+		<Time key={`${time}-${index}`} index={index} time={time} onAddTime={onAddTime} />
 	));
 
 	return (

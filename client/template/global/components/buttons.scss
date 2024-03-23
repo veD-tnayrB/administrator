@@ -30,3 +30,41 @@ button.pui-button.btn-primary,
 		color: var(--on-primary);
 	}
 }
+
+button.pui-button.bordered {
+	&.btn-primary {
+		border: 1px solid var(--primary);
+		background: transparent;
+
+		&:hover {
+			background: var(--primary);
+			border: 1px solid transparent;
+			color: var(--on-primary);
+			.button-label {
+				color: var(--on-primary);
+			}
+		}
+
+		.button-label {
+			color: var(--primary);
+		}
+	}
+
+	&.btn-secondary {
+		border: 1px solid var(--secondary);
+		background: transparent;
+
+		&:hover {
+			background: var(--secondary);
+			border: 1px solid transparent;
+			color: var(--on-secondary);
+			.button-label {
+				color: var(--on-secondary);
+			}
+		}
+
+		.button-label {
+			color: var(--secondary);
+		}
+	}
+}

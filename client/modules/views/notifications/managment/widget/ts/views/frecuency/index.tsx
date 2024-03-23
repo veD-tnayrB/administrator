@@ -12,7 +12,7 @@ enum Sections {
 	ANNUALLY = 3,
 }
 
-export const Recurrency = () => {
+export const Frecuency = () => {
 	const [selected, setSelected] = useState<Sections>(Sections.DAILY);
 
 	const onRRulesGenerated = value => {
@@ -26,7 +26,7 @@ export const Recurrency = () => {
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Recurrency</h3>
+				<h3>Frecuency</h3>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<TabsContainer onChange={onTabsSelected} active={selected}>

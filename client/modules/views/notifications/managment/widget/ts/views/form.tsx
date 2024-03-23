@@ -5,7 +5,7 @@ import { useNotificationsManagmentContext } from '../context';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { Tabs } from './tabs';
-import { Recurrency } from './recurrency';
+import { Frecuency } from './frecuency';
 
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
@@ -40,7 +40,7 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Recurrency />
+			<Frecuency />
 			{/* <Input
 				label={texts.labels.timeInterval}
 				value={values.timeInterval}

@@ -1,12 +1,17 @@
 section.pui-tabs-container {
 	overflow-x: visible;
 	.pui-tabs-menu {
+		// border-right: 2px solid var(--outline);
+		// border-left: 2px solid var(--outline);
+
 		.tabs {
 			background: var(--background);
 			justify-content: start;
 			border-top: 4px solid var(--background);
+			// border-bottom: 2px solid var(--outline);
 
 			.tab {
+				// border-bottom: 2px solid var(--outline);
 				background: var(--background);
 				padding: 0.6rem 1rem;
 				font-size: 0.8rem;
@@ -15,6 +20,8 @@ section.pui-tabs-container {
 				opacity: 0.4;
 
 				&.active {
+					border-bottom: 2px solid transparent;
+
 					background: var(--surface);
 					opacity: 1;
 					font-weight: 600;
@@ -32,4 +39,10 @@ section.pui-tabs-container {
 			}
 		}
 	}
+
+	// .tab-content {
+	// 	border-right: 2px solid var(--outline);
+	// 	border-left: 2px solid var(--outline);
+	// 	border-bottom: 2px solid var(--outline);
+	// }
 }

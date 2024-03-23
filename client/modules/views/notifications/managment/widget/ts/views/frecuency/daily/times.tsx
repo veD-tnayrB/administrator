@@ -36,7 +36,7 @@ export const DailyTimes = ({ notificationTimes, setNotificationTimes }: IProps) 
 	return (
 		<div className="flex-col gap-4">
 			<div className="flex-row ">
-				<Button className="w-1 px-3 py-1" onClick={addNotificationTime} variant="primary">
+				<Button className="w-1 px-3 py-1 bordered" onClick={addNotificationTime} variant="primary">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"

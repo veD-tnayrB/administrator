@@ -1,24 +1,28 @@
 import React from 'react';
 import { Input } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
+import { useMonthlyOptionContext } from '../context';
 
 interface IProps {
 	time: string;
-	onTimeChange: (index, event) => void;
 	onAddTime: () => void;
 	index: number;
 }
 
-export const Time = ({ index, time, onTimeChange, onAddTime }: IProps) => {
-	const handleTimeChange = event => {
-		onTimeChange(index, event);
+export const Time = ({ index, time, onAddTime }: IProps) => {
+	const { selectedTimes, setSelectedTimes } = useMonthlyOptionContext();
+
+	const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const updatedTimes = [...selectedTimes];
+		updatedTimes[index] = event.target.value;
+		setSelectedTimes(updatedTimes);
 	};
 
 	const isRemoveDisabled = index === 0;
 
 	return (
 		<div className="flex">
-			<Input className="w-full" type="time" value={time} onChange={handleTimeChange} />
+			<Input className="w-full" type="time" value={time} onChange={onTimeChange} />
 			<Button onClick={onAddTime} disabled={isRemoveDisabled}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

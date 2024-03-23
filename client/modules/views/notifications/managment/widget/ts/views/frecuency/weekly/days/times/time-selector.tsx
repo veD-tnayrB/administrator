@@ -31,7 +31,7 @@ export const TimeSelector = ({ times, dayOfTheWeek, day }: IProps) => {
 		<div className="flex-col gap-4">
 			<div className="flex-row justify-between">
 				<h3 className="flex-row items-center">{dayOfTheWeek}</h3>
-				<Button className="w-1 px-3 py-1" onClick={onAddTime} variant="primary">
+				<Button className="w-1 px-3 py-1 bordered" onClick={onAddTime} variant="primary">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"

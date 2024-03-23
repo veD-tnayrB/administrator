@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Checkbox } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
-import { Input } from 'pragmate-ui/form';
 import { RRule } from 'rrule';
 import { Days } from './days';
 import { WeeklyOptionContext } from './context';
+import { toast } from 'react-toastify';
 
 const daysOfWeek = [
 	{ label: 'Monday', value: 1 },
@@ -23,6 +22,18 @@ export const Weekly = ({ onRRulesGenerated }) => {
 	const [orderedDayOfWeek, setOrderedDayOfWeek] = useState(daysOfWeek);
 
 	const generateRRule = () => {
+		const theresNoDaySelected = selectedDays.length === 0;
+		const someTimeItsEmpty = Object.values(notificationTimes).some(
+			(times: string[]) => !times.length || times.some(time => !time)
+		);
+		const cantSave = theresNoDaySelected || someTimeItsEmpty;
+
+		if (cantSave) {
+			return toast.error(
+				'Please verify that you have set all the schedules correctly, remember that there cannot be an empty schedule.'
+			);
+		}
+
 		let rruleOptions = {
 			freq: RRule.WEEKLY,
 			byweekday: selectedDays,
@@ -52,19 +63,20 @@ export const Weekly = ({ onRRulesGenerated }) => {
 		setNotificationTimes,
 	};
 
-	const theresNoDaySelected = selectedDays.length === 0;
-	const someTimeItsEmpty = Object.values(notificationTimes).some(
-		(times: string[]) => !times.length || times.some(time => !time)
-	);
-	const disableSet = theresNoDaySelected || someTimeItsEmpty;
 	return (
 		<WeeklyOptionContext.Provider value={contextValue}>
 			<div className="flex-col gap-4">
 				<h5 className="text-xl">Weekly</h5>
+				<p>
+					Allows you to configure based on the days of the week which days you want the notification to be
+					sent, you could configure in its totality the schedules in which these are sent.
+				</p>
 				<Days />
-				<Button disabled={disableSet} onClick={generateRRule} variant="primary">
-					Set
-				</Button>
+				<div className="flex justify-end">
+					<Button onClick={generateRRule} variant="primary">
+						Set frequency
+					</Button>
+				</div>
 			</div>
 		</WeeklyOptionContext.Provider>
 	);
