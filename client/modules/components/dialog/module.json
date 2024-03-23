@@ -1,5 +1,6 @@
 {
 	"name": "components/dialog",
+	"platforms": ["web", "ios", "android"],
 	"code": {
 		"scss": {
 			"path": "/scss",

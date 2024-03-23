@@ -34,6 +34,9 @@
 				box-shadow: none;
 				border-color: var(--primary);
 			}
+			.pui-react-select__control {
+				max-height: none;
+			}
 
 			.pui-react-select__menu-list {
 				background: var(--surface);

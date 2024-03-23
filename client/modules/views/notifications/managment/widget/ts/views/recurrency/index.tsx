@@ -3,6 +3,7 @@ import { CollapsibleContainer, CollapsibleHeader, CollapsibleContent } from 'pra
 import { TabsContainer, Tabs as PuiTabs, Tab, Panes } from 'pragmate-ui/tabs';
 import { Daily } from './daily/daily';
 import { Weekly } from './weekly/weekly';
+import { Monthly } from './monthly';
 
 enum Sections {
 	DAILY = 0,
@@ -38,6 +39,7 @@ export const Recurrency = () => {
 					<Panes className="py-6 flex-col gap-4">
 						<Daily onRRulesGenerated={onRRulesGenerated} />
 						<Weekly onRRulesGenerated={onRRulesGenerated} />
+						<Monthly onRRulesGenerated={onRRulesGenerated} />
 					</Panes>
 				</TabsContainer>
 			</CollapsibleContent>

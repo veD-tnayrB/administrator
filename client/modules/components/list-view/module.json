@@ -1,5 +1,6 @@
 {
 	"name": "components/list-view",
+	"platforms": ["web", "ios", "android"],
 	"code": {
 		"scss": {
 			"path": "scss",

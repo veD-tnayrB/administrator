@@ -1,17 +1,14 @@
 {
-  "name": "components/spinner",
-  "code": {
-    "scss": {
-      "path": "/code/scss",
-      "files": [
-        "*"
-      ]
-    },
-    "ts": {
-      "path": "/code/ts",
-      "files": [
-        "*"
-      ]
-    }
-  }
+	"name": "components/spinner",
+	"platforms": ["web", "ios", "android"],
+	"code": {
+		"scss": {
+			"path": "/code/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/code/ts",
+			"files": ["*"]
+		}
+	}
 }
