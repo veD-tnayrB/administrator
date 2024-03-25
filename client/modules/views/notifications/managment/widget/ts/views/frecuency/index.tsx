@@ -1,52 +1,33 @@
 import React, { useState } from 'react';
 import { CollapsibleContainer, CollapsibleHeader, CollapsibleContent } from 'pragmate-ui/collapsible';
-import { DayPicker, SelectMultipleEventHandler } from 'react-day-picker';
-import { Input } from 'pragmate-ui/form';
+import { DayPicker } from 'react-day-picker';
+import { Select } from '@essential-js/admin/components/select';
 import { Button } from 'pragmate-ui/components';
+import { Days } from './days/days';
+import { FrecuencyManagmentContext } from './context';
+import { RRuleSet, RRule, Frequency } from 'rrule';
 
-export const Frecuency = () => {
-	const [selectedDays, setSelectedDays] = useState([]);
-	const [timesByDay, setTimesByDay] = useState({});
+export type ISelectedDays = Record<string, string[]>;
 
-	const formatDate = date => date.toISOString().split('T')[0];
-	// Maneja la selección de días
-	const handleDayClick = (date, { selected }) => {
-		console.log('PARAMS => ', date, selected);
-		const dateString = date;
-		setSelectedDays([...selectedDays, dateString]);
-		if (selected) {
-			// Si ya estaba seleccionado, deseleccionarlo
-			setSelectedDays(selectedDays.filter(selectedDay => selectedDay !== dateString));
+enum Frecuencies {
+	DAILY = 'Daily',
+	WEEKLY = 'Weekly',
+	MONTHLY = 'Monthly',
+}
 
-			// Eliminar también los horarios para ese día
-			const newTimesByDay = { ...timesByDay };
-			delete newTimesByDay[dateString];
-			setTimesByDay(newTimesByDay);
-		} else {
-			// Si no estaba seleccionado, agregarlo a la lista
-			setSelectedDays([...selectedDays, dateString]);
+export const Frecuency = ({ endDate }: { endDate: string }) => {
+	const [selectedDays, setSelectedDays] = useState<ISelectedDays>({});
+	const [frecuency, setFrecuency] = React.useState(Frecuencies.DAILY);
 
-			// Agregar un horario predeterminado para el día
-			setTimesByDay({
-				...timesByDay,
-				[dateString]: ['09:00'], // Horario predeterminado
-			});
-		}
-	};
-
-	// Agrega un nuevo horario para un día específico
-	const addNotificationTime = (day, time) => {
-		setTimesByDay({
-			...timesByDay,
-			[day]: [...(timesByDay[day] || []), time],
+	const onSelect = (selectedDates: Date[]) => {
+		const newSelectedDays = {};
+		selectedDates.forEach(day => {
+			const key = day.toDateString();
+			const currentValue = selectedDays[key] || ['09:00'];
+			newSelectedDays[key] = currentValue;
 		});
-	};
 
-	// Actualiza un horario existente para un día específico
-	const updateNotificationTime = (day, index, newTime) => {
-		const updatedDayTimes = timesByDay[day];
-		updatedDayTimes[index] = newTime;
-		setTimesByDay({ ...timesByDay, [day]: updatedDayTimes });
+		setSelectedDays(newSelectedDays);
 	};
 
 	// Guardar configuración de frecuencia
@@ -54,42 +35,77 @@ export const Frecuency = () => {
 		// TODO: save frecuency
 	};
 
-	console.log(
-		'VALUES => ',
+	const onChangeFrecuency = (selected: { value: Frecuencies; label: Frecuencies }) => {
+		setFrecuency(selected.value);
+		updateSelectedDays();
+	};
+
+	const formatedSelectedDays = Object.keys(selectedDays).map(day => new Date(day));
+
+	const updateSelectedDays = () => {
+		const ruleSet = new RRuleSet();
+		const start = new Date();
+		const until = endDate;
+		console.log('ULTIM  => ', until);
+
+		return;
+		switch (frecuency) {
+			case Frecuencies.DAILY:
+				ruleSet.rrule(new RRule({ freq: Frequency.DAILY, dtstart: start, until }));
+				break;
+			case Frecuencies.WEEKLY:
+				ruleSet.rrule(new RRule({ freq: Frequency.WEEKLY, dtstart: start, until, byweekday: [RRule.MO] })); // Ejemplo con Lunes
+				break;
+			case Frecuencies.MONTHLY:
+				ruleSet.rrule(new RRule({ freq: Frequency.MONTHLY, dtstart: start, until, bymonthday: [1] })); // Ejemplo con el 1er día del mes
+				break;
+			default:
+				break;
+		}
+
+		const dates = ruleSet.all();
+		console.log('DATES => ', dates);
+		// setSelectedDays(dates);
+	};
+
+	const contextValue = {
 		selectedDays,
-		selectedDays.map(day => new Date(day))
-	);
+		setSelectedDays,
+	};
+
+	const theresAScheduleEmpty = Object.values(selectedDays).some(times => times.some(time => !time));
+	const disabled = Object.keys(selectedDays).length === 0 || theresAScheduleEmpty;
+
+	const frencuenciesOpts = Object.values(Frecuencies).map(frencuency => ({ value: frencuency, label: frencuency }));
 
 	return (
-		<CollapsibleContainer>
-			<CollapsibleHeader>
-				<h3>Frecuency</h3>
-			</CollapsibleHeader>
-			<CollapsibleContent>
-				<DayPicker
-					modifiersClassNames={{
-						selected: 'rdp-day_selected',
-					}}
-					selectedDays={selectedDays.map(day => new Date(day))}
-					onDayClick={handleDayClick}
-					mode="multiple"
-				/>
-				{/* {selectedDays.map(dayString => (
-					<div key={dayString}>
-						<h3>{dayString}</h3>
-						{(timesByDay[dayString] || []).map((time, index) => (
-							<Input
-								key={index}
-								type="time"
-								value={time}
-								onChange={e => updateNotificationTime(dayString, index, e.target.value)}
-							/>
-						))}
-						<Button onClick={() => addNotificationTime(dayString, '')}>Add Time</Button>
+		<FrecuencyManagmentContext.Provider value={contextValue}>
+			<CollapsibleContainer>
+				<CollapsibleHeader>
+					<h3>Frecuency</h3>
+				</CollapsibleHeader>
+				<CollapsibleContent>
+					<Select value={frecuency} onChange={onChangeFrecuency} options={frencuenciesOpts} />
+					<div className="flex gap-4">
+						<DayPicker
+							modifiersClassNames={{
+								selected: 'rdp-day_selected',
+							}}
+							selected={formatedSelectedDays}
+							onSelect={onSelect}
+							mode="multiple"
+						/>
+
+						<Days selectedDays={selectedDays} />
 					</div>
-				))} */}
-				<Button onClick={onSave}>Save Frecuency</Button>
-			</CollapsibleContent>
-		</CollapsibleContainer>
+
+					<div className="flex justify-end">
+						<Button variant="primary" disabled={disabled} onClick={onSave}>
+							Save Frecuency
+						</Button>
+					</div>
+				</CollapsibleContent>
+			</CollapsibleContainer>
+		</FrecuencyManagmentContext.Provider>
 	);
 };

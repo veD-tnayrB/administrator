@@ -15,6 +15,7 @@ export /*bundle*/ interface INotification {
 	timeUpdated: Date;
 	users: IUser[];
 	profiles: IProfile[];
+	endDate: string;
 }
 
 export /*bundle*/ class Notification extends Item<INotification> {
@@ -29,6 +30,7 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		'timeUpdated',
 		'profiles',
 		'users',
+		'endDate',
 	];
 
 	constructor(params: { id: string | undefined } = { id: undefined }) {

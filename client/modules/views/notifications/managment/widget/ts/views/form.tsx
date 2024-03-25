@@ -40,7 +40,9 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Frecuency />
+			<Input label="End date" value={values.endDate} type="date" className="fixed-label" />
+
+			<Frecuency endDate={values.endDate} />
 			{/* <Input
 				label={texts.labels.timeInterval}
 				value={values.timeInterval}

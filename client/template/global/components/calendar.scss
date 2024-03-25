@@ -122,7 +122,6 @@
 
 .rdp-caption_label {
 	position: relative;
-	z-index: 1;
 	display: inline-flex;
 	align-items: center;
 	margin: 0;
@@ -271,9 +270,9 @@
 .rdp-day_selected,
 .rdp-day_selected:focus-visible,
 .rdp-day_selected:hover {
-	color: var(--rdp-selected-color);
+	color: var(--on-primary);
 	opacity: 1;
-	background-color: var(--rdp-accent-color);
+	background-color: var(--primary);
 }
 
 .rdp-day_outside {
