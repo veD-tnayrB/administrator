@@ -1,9 +1,27 @@
 div.alert {
 	border-radius: var(--border-tertiary);
-}
 
-div.alert.alert--error {
-	color: var(--on-error);
-	background: var(--error);
-	border: 1px solid transparent;
+	.alert__title-span {
+		font-weight: normal;
+	}
+
+	&.alert--success {
+		color: var(--on-success) !important;
+		background: var(--success) !important;
+	}
+
+	&.alert--error {
+		color: var(--on-error) !important;
+		background: var(--error) !important;
+	}
+
+	&.alert--info {
+		color: var(--on-info) !important;
+		background: var(--info) !important;
+	}
+
+	&.alert--warning {
+		color: var(--on-warning) !important;
+		background: var(--warning) !important;
+	}
 }

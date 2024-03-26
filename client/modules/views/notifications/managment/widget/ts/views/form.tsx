@@ -21,6 +21,11 @@ export const Form = () => {
 	const onSubmit = () => store.save(values);
 	const onCancel = () => routing.pushState('/notifications');
 
+	const givenDate = new Date(values.endDate + 'T00:00:00');
+	const currentDate = new Date();
+
+	const isEndDateValid = givenDate > currentDate;
+
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
 			<Input
@@ -40,9 +45,7 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Input label="End date" value={values.endDate} type="date" className="fixed-label" />
-
-			<Frecuency endDate={values.endDate} />
+			<Frecuency endDate={values.endDate} onEndDateChange={onChange} isEndDateValid={isEndDateValid} />
 			{/* <Input
 				label={texts.labels.timeInterval}
 				value={values.timeInterval}

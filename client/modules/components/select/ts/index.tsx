@@ -16,7 +16,7 @@ export /*bundle*/ const Select = props => {
 				</span>
 			</label>
 
-			<ReactSelect {...props} value={value} />
+			<ReactSelect {...props} value={value} isDisabled={props?.disabled} />
 		</div>
 	);
 };

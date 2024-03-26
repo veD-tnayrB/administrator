@@ -28,9 +28,7 @@ export const Times = ({ items, day }: IProps) => {
 	};
 
 	const output = items.map((item, index) => {
-		return (
-			<Time key={`${day}--${item}--${index}`} item={item} index={index} onChange={onChange} onRemove={onRemove} />
-		);
+		return <Time key={`${day}--${index}`} item={item} index={index} onChange={onChange} onRemove={onRemove} />;
 	});
 	return <div className="w-full">{output}</div>;
 };

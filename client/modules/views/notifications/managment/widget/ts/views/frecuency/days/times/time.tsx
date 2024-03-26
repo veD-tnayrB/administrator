@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from 'pragmate-ui/form';
+import { useFrecuencyManagmentContext } from '../../context';
 
 interface IProps {
 	item: string;
@@ -9,10 +10,19 @@ interface IProps {
 }
 
 export const Time = ({ item, index, onChange, onRemove }: IProps) => {
+	const { endDate } = useFrecuencyManagmentContext();
+	const isInputDisabled = !endDate;
 	const isRemoveDisabled = index === 0;
 	return (
 		<div className="w-full flex gap-4 items-center">
-			<Input type="time" className="w-full" value={item} onChange={onChange} data-index={index} />
+			<Input
+				type="time"
+				className="w-full"
+				value={item}
+				onChange={onChange}
+				data-index={index}
+				disabled={isInputDisabled}
+			/>
 			{/* <Button onClick={onRemove} disabled={isRemoveDisabled}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
