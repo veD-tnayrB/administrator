@@ -4,8 +4,14 @@ import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 import { ProfilesManager } from './managers/profiles';
 import { UsersManager } from './managers/users';
+import { FrecuencyManager } from './managers/frecuency';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
+	#frecuencyManager: FrecuencyManager = new FrecuencyManager();
+	get frecuencyManager() {
+		return this.#frecuencyManager;
+	}
+
 	#item: Notification = new Notification();
 	get item() {
 		return this.#item;
@@ -32,9 +38,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 
 	load = async ({ id }: { id: string }) => {
-		console.log('INCOMING ID =>', id);
 		if (id === 'create') {
-			console.log('THISSSSSSSSSSSSSSSSSSSSSSS');
 			await this.#profiles.load();
 			await this.#users.load({ active: 1 });
 			this.#isCreating = true;

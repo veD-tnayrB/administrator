@@ -1,6 +1,6 @@
 import React from 'react';
-import { useFrecuencyManagmentContext } from '../../context';
 import { Time } from './time';
+import { useNotificationsManagmentContext } from '../../../../context';
 
 interface IProps {
 	day: string;
@@ -8,23 +8,26 @@ interface IProps {
 }
 
 export const Times = ({ items, day }: IProps) => {
-	const { selectedDays, setSelectedDays } = useFrecuencyManagmentContext();
+	const { store } = useNotificationsManagmentContext();
+
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		const itemIndex = event.target.getAttribute('data-index');
 
-		selectedDays[day] = selectedDays[day].map((item, index) => {
+		store.frecuencyManager.selectedDays[day] = store.frecuencyManager.selectedDays[day].map((item, index) => {
 			if (index === parseInt(itemIndex)) return value;
 			return item;
 		});
 
-		setSelectedDays({ ...selectedDays });
+		store.frecuencyManager.selectedDays = store.frecuencyManager.selectedDays;
 	};
 
 	const onRemove = (event: React.MouseEvent) => {
 		const itemIndex = event.currentTarget.getAttribute('data-index');
-		selectedDays[day] = selectedDays[day].filter((item, index) => index !== parseInt(itemIndex));
-		setSelectedDays({ ...selectedDays });
+		store.frecuencyManager.selectedDays[day] = store.frecuencyManager.selectedDays[day].filter(
+			(item, index) => index !== parseInt(itemIndex)
+		);
+		store.frecuencyManager.selectedDays = store.frecuencyManager.selectedDays;
 	};
 
 	const output = items.map((item, index) => {

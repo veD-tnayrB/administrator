@@ -1,10 +1,8 @@
 import React from 'react';
-import { ISelectedDays } from '.';
 
 interface IContext {
 	endDate: string;
-	selectedDays: ISelectedDays;
-	setSelectedDays: React.Dispatch<React.SetStateAction<ISelectedDays>>;
+	isEndDateValid: boolean;
 }
 
 export const FrecuencyManagmentContext = React.createContext<IContext>({} as IContext);
