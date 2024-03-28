@@ -126,4 +126,10 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 		return newSelectedDays;
 	};
+
+	reset = () => {
+		this.#selectedFrecuency = null;
+		this.#selectedDays = {};
+		this.triggerEvent();
+	};
 }

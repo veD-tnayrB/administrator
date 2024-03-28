@@ -1,4 +1,4 @@
-$widths: (
+$sizings: (
 	'0': 0px,
 	'1px': 1px,
 	'1': 0.25rem,
@@ -41,23 +41,14 @@ $widths: (
 	'fit': fit-content,
 );
 
-@each $key, $value in $widths {
+@each $key, $value in $sizings {
 	.w-#{$key} {
 		width: $value;
 	}
 }
 
-// $heights: (
-// 	auto: auto,
-// 	full: 100%,
-// 	screen: 100vh,
-// 	1/2: 50%,
-// 	1: 0.25rem,
-// 	2: 0.5rem,
-// );
-
-// @each $name, $value in $heights {
-// 	.h-#{$name} {
-// 		height: $value;
-// 	}
-// }
+@each $name, $value in $sizings {
+	.h-#{$name} {
+		height: $value;
+	}
+}
