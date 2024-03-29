@@ -23,7 +23,14 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		this.reflectChangesInCalendar();
 	}
 
-	endDate = null;
+	#endDate = null;
+	get endDate() {
+		return this.#endDate;
+	}
+
+	set endDate(value) {
+		this.#endDate = value;
+	}
 
 	#isEndDateValid = false;
 	get isEndDateValid() {
@@ -49,7 +56,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		const start =
 			existingDates.length > 0 ? new Date(Math.min(...existingDates.map(date => date.getTime()))) : new Date();
 
-		const until = new Date(this.endDate + `T10:00:00Z`);
+		const until = new Date(this.#endDate + `T10:00:00Z`);
 		const frecuency = this.#selectedFrecuency;
 
 		const callback = this.#frecuencyHandlers[frecuency];
