@@ -16,6 +16,7 @@ export /*bundle*/ interface INotification {
 	users: IUser[];
 	profiles: IProfile[];
 	endDate: string;
+	frecuency: string[];
 }
 
 export /*bundle*/ class Notification extends Item<INotification> {
@@ -31,6 +32,7 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		'profiles',
 		'users',
 		'endDate',
+		'frecuency',
 	];
 
 	constructor(params: { id: string | undefined } = { id: undefined }) {

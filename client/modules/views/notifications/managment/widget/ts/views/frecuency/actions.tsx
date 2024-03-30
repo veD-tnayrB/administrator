@@ -28,10 +28,9 @@ export const Actions = () => {
 				};
 
 				const rrule = new RRule({
-					freq: freq[store.frecuencyManager.selectedFrecuency], // o WEEKLY, MONTHLY, etc., según necesites
+					freq: freq[store.frecuencyManager.selectedFrecuency],
 					dtstart: new Date(date.setHours(parseInt(hour), parseInt(minute))),
 					until: new Date(endDate + `T10:00:00Z`),
-					// Aquí puedes agregar otras opciones como byweekday si es recurrente semanalmente
 				});
 
 				rrules.push(rrule.toString());
