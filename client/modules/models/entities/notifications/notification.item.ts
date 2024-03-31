@@ -9,7 +9,6 @@ export /*bundle*/ interface INotification {
 	title: string;
 	description: string;
 	icon: string;
-	timeInterval: number;
 	status: string;
 	timeCreated: Date;
 	timeUpdated: Date;
@@ -25,7 +24,6 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		'title',
 		'description',
 		'icon',
-		'timeInterval',
 		'status',
 		'timeCreated',
 		'timeUpdated',

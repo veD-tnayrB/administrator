@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { ProfilesManager } from './managers/profiles';
 import { UsersManager } from './managers/users';
 import { FrecuencyManager } from './managers/frecuency';
+import { Frequency, RRule } from 'rrule';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#frecuencyManager: FrecuencyManager = new FrecuencyManager();
@@ -75,7 +76,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const profiles = [...this.#profiles.selectedItems.keys()];
 			const users = [...this.#users.selectedItems.keys()];
-			await this.#item.set({ ...values, profiles, users });
+			await this.#item.set({ ...values, frecuency: JSON.stringify(values.frecuency), profiles, users });
+			console.log('THIS.#ITEM => ', this.#item);
 			const response = await this.#item.publish();
 
 			if (!response.status) throw response.error;

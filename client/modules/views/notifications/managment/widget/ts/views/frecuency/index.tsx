@@ -15,9 +15,10 @@ interface IProps {
 	endDate: string;
 	onEndDateChange: React.ChangeEventHandler<HTMLInputElement>;
 	isEndDateValid: boolean;
+	setFrecuency: (frecuency: string[]) => void;
 }
 
-export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid }: IProps) => {
+export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuency }: IProps) => {
 	const { store } = useNotificationsManagmentContext();
 	const [, setUpdate] = React.useState({});
 	useBinder([store.frecuencyManager], () => setUpdate({}));
@@ -25,6 +26,7 @@ export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid }: IProps) 
 	const contextValue = {
 		endDate,
 		isEndDateValid,
+		setFrecuency,
 	};
 
 	return (

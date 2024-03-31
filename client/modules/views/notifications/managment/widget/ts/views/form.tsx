@@ -18,6 +18,10 @@ export const Form = () => {
 		setValues({ ...values, [name]: value });
 	};
 
+	const setFrecuency = (frecuency: string[]) => {
+		setValues({ ...values, frecuency });
+	};
+
 	const onSubmit = () => store.save(values);
 	const onCancel = () => routing.pushState('/notifications');
 
@@ -45,7 +49,12 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Frecuency endDate={values.endDate} onEndDateChange={onChange} isEndDateValid={isEndDateValid} />
+			<Frecuency
+				endDate={values.endDate}
+				setFrecuency={setFrecuency}
+				onEndDateChange={onChange}
+				isEndDateValid={isEndDateValid}
+			/>
 			{/* <Input
 				label={texts.labels.timeInterval}
 				value={values.timeInterval}

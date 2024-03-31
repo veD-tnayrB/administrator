@@ -3,7 +3,7 @@ import { Frequency, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
 
 export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
-	#selectedDays = {};
+	#selectedDays: Record<string, string[]> = {};
 	get selectedDays() {
 		return this.#selectedDays;
 	}
@@ -132,6 +132,33 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		});
 
 		return newSelectedDays;
+	};
+
+	generateRRuleFrecuency = () => {
+		let rrules = [];
+
+		Object.entries(this.#selectedDays).forEach(([dateString, times]) => {
+			const date = new Date(dateString);
+			times.forEach(time => {
+				const [hour, minute] = time.split(':');
+
+				const freq = {
+					Weekly: Frequency.WEEKLY,
+					Monthly: Frequency.MONTHLY,
+					Daily: Frequency.DAILY,
+				};
+
+				const rrule = new RRule({
+					freq: freq[this.#selectedFrecuency],
+					dtstart: new Date(date.setHours(parseInt(hour), parseInt(minute))),
+					until: new Date(this.#endDate + `T10:00:00Z`),
+				});
+
+				rrules.push(rrule.toString());
+			});
+		});
+
+		return rrules;
 	};
 
 	reset = () => {

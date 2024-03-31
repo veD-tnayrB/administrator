@@ -2,43 +2,18 @@ import React from 'react';
 import { Button } from 'pragmate-ui/components';
 import { useFrecuencyManagmentContext } from './context';
 import { useNotificationsManagmentContext } from '../../context';
-import { Frequency, RRule } from 'rrule';
 
 export const Actions = () => {
 	const { store } = useNotificationsManagmentContext();
-	const { isEndDateValid, endDate } = useFrecuencyManagmentContext();
+	const { isEndDateValid, endDate, setFrecuency } = useFrecuencyManagmentContext();
 
 	const onReset = () => {
 		store.frecuencyManager.reset();
 	};
 
 	const onSave = () => {
-		let rrules = [];
-
-		console.log('STORE => ', store.frecuencyManager.selectedFrecuency, Frequency.WEEKLY);
-		Object.entries(selectedDays).forEach(([dateString, times]) => {
-			const date = new Date(dateString);
-			times.forEach(time => {
-				const [hour, minute] = time.split(':');
-
-				const freq = {
-					Weekly: Frequency.WEEKLY,
-					Monthly: Frequency.MONTHLY,
-					Daily: Frequency.DAILY,
-				};
-
-				const rrule = new RRule({
-					freq: freq[store.frecuencyManager.selectedFrecuency],
-					dtstart: new Date(date.setHours(parseInt(hour), parseInt(minute))),
-					until: new Date(endDate + `T10:00:00Z`),
-				});
-
-				rrules.push(rrule.toString());
-			});
-		});
-
-		console.log('RRULE => ', rrules);
-		return rrules;
+		const frecuency = store.frecuencyManager.generateRRuleFrecuency();
+		setFrecuency(frecuency);
 	};
 
 	const selectedDays: Record<string, string[]> = store.frecuencyManager.selectedDays;
