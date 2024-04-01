@@ -1,6 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Frequency, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
+import { rrulestr } from 'rrule';
 
 export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	#selectedDays: Record<string, string[]> = {};
@@ -48,6 +49,40 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 			[Frecuencies.MONTHLY]: this.#monthlyHandler,
 		};
 	}
+
+	load = (rrules: string[]) => {
+		console.log('RESSULTS => ', rrules);
+		let result = {
+			frecuency: '',
+			selectedDays: {},
+		};
+
+		rrules.forEach(ruleStr => {
+			const rule = rrulestr(ruleStr);
+
+			if (!result.frecuency) {
+				result.frecuency = RRule.FREQUENCIES[rule.options.freq];
+			}
+
+			const dayKey = rule.options.dtstart.toLocaleDateString('en-US', {
+				weekday: 'long',
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			});
+
+			const timeString = rule.options.dtstart.toISOString().split('T')[1].slice(0, 5);
+
+			if (result.selectedDays[dayKey]) {
+				result.selectedDays[dayKey].push(timeString);
+			} else {
+				result.selectedDays[dayKey] = [timeString];
+			}
+		});
+		console.log('RESULT => ', result);
+		this.#selectedFrecuency = result.frecuency as Frecuencies;
+		this.#selectedDays = result.selectedDays;
+	};
 
 	reflectChangesInCalendar = () => {
 		const ruleSet = new RRuleSet();

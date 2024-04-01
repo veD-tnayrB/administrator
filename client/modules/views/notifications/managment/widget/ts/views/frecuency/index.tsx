@@ -22,7 +22,6 @@ export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuen
 	const { store } = useNotificationsManagmentContext();
 	const [, setUpdate] = React.useState({});
 	useBinder([store.frecuencyManager], () => setUpdate({}));
-
 	const contextValue = {
 		endDate,
 		isEndDateValid,
