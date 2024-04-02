@@ -50,8 +50,9 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		};
 	}
 
-	load = (rrules: string[]) => {
-		console.log('RESSULTS => ', rrules);
+	load = ({ rrules, endDate }: { rrules: string[]; endDate: string }) => {
+		console.log('RESSULTS => ', Frecuencies);
+		this.#endDate = endDate;
 		let result = {
 			frecuency: '',
 			selectedDays: {},
@@ -61,7 +62,9 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 			const rule = rrulestr(ruleStr);
 
 			if (!result.frecuency) {
-				result.frecuency = RRule.FREQUENCIES[rule.options.freq];
+				const frecuencies = [Frecuencies.MONTHLY, Frecuencies.WEEKLY, Frecuencies.DAILY];
+				console.log('OPTIONS => ', frecuencies, rule.options.freq, frecuencies[rule.options.freq - 1]);
+				result.frecuency = frecuencies[rule.options.freq - 1];
 			}
 
 			const dayKey = rule.options.dtstart.toLocaleDateString('en-US', {

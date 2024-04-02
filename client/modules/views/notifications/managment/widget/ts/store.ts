@@ -58,7 +58,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
 			console.log('F => ', this.#item.frecuency);
 			const frecuency = JSON.parse(this.#item.frecuency || '[]');
-			this.#frecuencyManager.load(frecuency);
+			this.#frecuencyManager.load({ rrules: frecuency, endDate: this.#item.endDate });
 			this.ready = true;
 
 			return { status: true };
