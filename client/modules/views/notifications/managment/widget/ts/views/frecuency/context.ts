@@ -4,6 +4,7 @@ interface IContext {
 	endDate: string;
 	isEndDateValid: boolean;
 	setFrecuency: (frecuency: string[]) => void;
+	setIsSectionOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const FrecuencyManagmentContext = React.createContext<IContext>({} as IContext);

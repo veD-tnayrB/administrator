@@ -6,6 +6,8 @@ import { useTexts } from '@essential-js/admin/helpers';
 import { module } from 'beyond_context';
 import { ToastContainer } from 'react-toastify';
 import { useCheckPermissions } from '@essential-js/admin/helpers';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
+
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
@@ -19,7 +21,7 @@ export function Layout({ store }: { store: StoreManager }) {
 	const [ready, texts] = useTexts(module.specifier);
 
 	if (!hasPermissions) return null;
-	if (!ready) return;
+	if (!ready) return <SpinnerPage />;
 
 	const contextValue: IContext = {
 		store,

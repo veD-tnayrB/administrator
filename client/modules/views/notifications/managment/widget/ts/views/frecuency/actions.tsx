@@ -5,7 +5,7 @@ import { useNotificationsManagmentContext } from '../../context';
 
 export const Actions = () => {
 	const { store } = useNotificationsManagmentContext();
-	const { isEndDateValid, endDate, setFrecuency } = useFrecuencyManagmentContext();
+	const { isEndDateValid, endDate, setFrecuency, setIsSectionOpen } = useFrecuencyManagmentContext();
 
 	const onReset = () => {
 		store.frecuencyManager.reset();
@@ -14,6 +14,7 @@ export const Actions = () => {
 	const onSave = () => {
 		const frecuency = store.frecuencyManager.generateRRuleFrecuency();
 		setFrecuency(frecuency);
+		setIsSectionOpen(false);
 	};
 
 	const selectedDays: Record<string, string[]> = store.frecuencyManager.selectedDays;

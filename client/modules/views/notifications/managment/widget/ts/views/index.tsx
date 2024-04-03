@@ -3,6 +3,7 @@ import { Form } from './form';
 import { StoreManager } from '../store';
 import { IContext, NotificationsManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
@@ -13,7 +14,7 @@ function View({ store }: { store: StoreManager }) {
 
 	useBinder([store], () => setReady(store.ready));
 
-	if (!ready) return null;
+	if (!ready) return <SpinnerPage />;
 
 	const mode = store.isCreating ? 'creation' : 'edition';
 	return (

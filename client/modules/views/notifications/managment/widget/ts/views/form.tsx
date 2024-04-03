@@ -55,13 +55,7 @@ export const Form = () => {
 				onEndDateChange={onChange}
 				isEndDateValid={isEndDateValid}
 			/>
-			{/* <Input
-				label={texts.labels.timeInterval}
-				value={values.timeInterval}
-				name="timeInterval"
-				type="number"
-				onChange={onChange}
-			/> */}
+
 			{/* <div className="pui-input">
 				<label className="pui-input__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />

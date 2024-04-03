@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Connections } from './connections';
 import { routes, hmr } from '@essential-js/admin-server/routes';
 import * as cors from 'cors';
+import { SendProgramed } from '@essential-js/admin-server/engines/notifications';
 
 export class Server {
 	#instance;
@@ -26,8 +27,10 @@ export class Server {
 			routes(this.#app);
 			//subscription to listen routes module changes.
 			hmr.on('change', this.onChange);
+			SendProgramed.startListener();
 			this.#instance = this.#app.listen(this.#port);
 			this.#connections = new Connections(this.#instance);
+			console.log('ADMIN SERVER LISTENING....');
 		} catch (exc) {
 			console.error('Error', exc);
 		}

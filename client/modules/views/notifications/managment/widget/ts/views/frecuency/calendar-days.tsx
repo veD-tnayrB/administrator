@@ -17,13 +17,13 @@ export const CalendarDays = () => {
 	};
 
 	const formatedSelectedDays = Object.keys(store.frecuencyManager.selectedDays).map(day => new Date(day));
+	const disabledDays = { after: store.frecuencyManager.endDate };
 	return (
 		<div className="flex gap-4">
 			<DayPicker
-				modifiersClassNames={{
-					selected: 'rdp-day_selected',
-				}}
+				disabled={disabledDays}
 				selected={formatedSelectedDays}
+				fixedWeeks
 				onSelect={onSelect}
 				mode="multiple"
 			/>

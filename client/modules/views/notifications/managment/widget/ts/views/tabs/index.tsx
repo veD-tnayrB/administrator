@@ -2,7 +2,11 @@ import React from 'react';
 import { TabsContainer, Tabs as PuiTabs, Tab, Panes } from 'pragmate-ui/tabs';
 import { Profiles } from './profiles';
 import { Users } from './users';
-import { CollapsibleContainer, CollapsibleHeader, CollapsibleContent } from 'pragmate-ui/collapsible';
+import {
+	CollapsibleContainer,
+	CollapsibleHeader,
+	CollapsibleContent,
+} from '@essential-js/admin/components/collapsible';
 import { useNotificationsManagmentContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 

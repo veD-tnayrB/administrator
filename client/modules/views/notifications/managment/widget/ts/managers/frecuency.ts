@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Frequency, RRule, RRuleSet } from 'rrule';
+import { Frequency, Options, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
 import { rrulestr } from 'rrule';
 
@@ -21,7 +21,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 	set selectedFrecuency(value) {
 		this.#selectedFrecuency = value;
-		this.reflectChangesInCalendar();
+		this.displayFrecuencyPattern();
 	}
 
 	#endDate = null;
@@ -31,6 +31,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 	set endDate(value) {
 		this.#endDate = value;
+		this.#filterByEndDate(value);
 	}
 
 	#isEndDateValid = false;
@@ -42,7 +43,6 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 	constructor() {
 		super();
-
 		this.#frecuencyHandlers = {
 			[Frecuencies.DAILY]: this.#dailyHandler,
 			[Frecuencies.WEEKLY]: this.#weeklyHandler,
@@ -51,7 +51,6 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	}
 
 	load = ({ rrules, endDate }: { rrules: string[]; endDate: string }) => {
-		console.log('RESSULTS => ', Frecuencies);
 		this.#endDate = endDate;
 		let result = {
 			frecuency: '',
@@ -63,16 +62,10 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 			if (!result.frecuency) {
 				const frecuencies = [Frecuencies.MONTHLY, Frecuencies.WEEKLY, Frecuencies.DAILY];
-				console.log('OPTIONS => ', frecuencies, rule.options.freq, frecuencies[rule.options.freq - 1]);
 				result.frecuency = frecuencies[rule.options.freq - 1];
 			}
 
-			const dayKey = rule.options.dtstart.toLocaleDateString('en-US', {
-				weekday: 'long',
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			});
+			const dayKey = rule.options.dtstart.toDateString();
 
 			const timeString = rule.options.dtstart.toISOString().split('T')[1].slice(0, 5);
 
@@ -82,12 +75,12 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 				result.selectedDays[dayKey] = [timeString];
 			}
 		});
-		console.log('RESULT => ', result);
 		this.#selectedFrecuency = result.frecuency as Frecuencies;
 		this.#selectedDays = result.selectedDays;
+		this.triggerEvent();
 	};
 
-	reflectChangesInCalendar = () => {
+	displayFrecuencyPattern = () => {
 		const ruleSet = new RRuleSet();
 		const existingDates = Object.keys(this.#selectedDays).map(day => new Date(day));
 
@@ -173,30 +166,60 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	};
 
 	generateRRuleFrecuency = () => {
-		let rrules = [];
+		const rrules = [];
 
 		Object.entries(this.#selectedDays).forEach(([dateString, times]) => {
 			const date = new Date(dateString);
-			times.forEach(time => {
-				const [hour, minute] = time.split(':');
 
-				const freq = {
-					Weekly: Frequency.WEEKLY,
-					Monthly: Frequency.MONTHLY,
-					Daily: Frequency.DAILY,
+			const year = date.getUTCFullYear();
+			const month = date.getUTCMonth();
+			const day = date.getUTCDate();
+
+			times.forEach(time => {
+				const [hour, minute] = time.split(':').map(Number);
+
+				const dtstart = new Date(Date.UTC(year, month, day, hour, minute));
+				const until = new Date(this.#endDate + `T23:59:59Z`);
+
+				// Opciones básicas para RRule
+				let rruleOptions: Partial<Options> = {
+					dtstart: dtstart,
+					until: until,
 				};
 
-				const rrule = new RRule({
-					freq: freq[this.#selectedFrecuency],
-					dtstart: new Date(date.setHours(parseInt(hour), parseInt(minute))),
-					until: new Date(this.#endDate + `T10:00:00Z`),
-				});
+				// Solo agrega la propiedad 'freq' si la frecuencia está definida
+				if (this.#selectedFrecuency) {
+					const freq = {
+						Weekly: RRule.WEEKLY,
+						Monthly: RRule.MONTHLY,
+						Daily: RRule.DAILY,
+					};
 
+					// Asegurarse de que la frecuencia seleccionada es válida antes de agregarla
+					if (freq[this.#selectedFrecuency]) {
+						rruleOptions.freq = freq[this.#selectedFrecuency];
+					}
+				}
+
+				const rrule = new RRule(rruleOptions);
 				rrules.push(rrule.toString());
 			});
 		});
 
 		return rrules;
+	};
+
+	#filterByEndDate = (date: Date) => {
+		const endDate = new Date(date);
+		const fixedSelectedDays = {};
+		Object.entries(this.#selectedDays).forEach(([date, times]) => {
+			const day = new Date(date);
+			if (day <= endDate) {
+				fixedSelectedDays[date] = times;
+			}
+		});
+
+		this.#selectedDays = fixedSelectedDays;
 	};
 
 	reset = () => {

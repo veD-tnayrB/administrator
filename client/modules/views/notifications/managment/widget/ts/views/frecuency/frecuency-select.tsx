@@ -19,11 +19,10 @@ export const FrencuencySelect = () => {
 	const frencuenciesOpts = Object.values(Frecuencies).map(frencuency => ({ value: frencuency, label: frencuency }));
 	const selectedDays = store.frecuencyManager.selectedDays;
 	const disabled = !Object.entries(selectedDays).length || !endDate;
-
 	return (
 		<Select
 			label="Frequency"
-			value={store.frecuencyManager.frecuency}
+			value={store.frecuencyManager.selectedFrecuency}
 			onChange={onChangeFrecuency}
 			options={frencuenciesOpts}
 			disabled={disabled}

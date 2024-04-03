@@ -1,6 +1,11 @@
 import React from 'react';
-import { CollapsibleContainer, CollapsibleHeader, CollapsibleContent } from 'pragmate-ui/collapsible';
 import { FrecuencyManagmentContext } from './context';
+import {
+	CollapsibleContainer,
+	CollapsibleHeader,
+	CollapsibleContent,
+} from '@essential-js/admin/components/collapsible';
+
 import { Alert, ITypes as AlertTypes } from 'pragmate-ui/alert';
 import { CalendarDays } from './calendar-days';
 import { Actions } from './actions';
@@ -20,21 +25,25 @@ interface IProps {
 
 export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuency }: IProps) => {
 	const { store } = useNotificationsManagmentContext();
+	const [isSectionOpen, setIsSectionOpen] = React.useState(false);
 	const [, setUpdate] = React.useState({});
 	useBinder([store.frecuencyManager], () => setUpdate({}));
 	const contextValue = {
 		endDate,
 		isEndDateValid,
 		setFrecuency,
+		setIsSectionOpen,
 	};
+
+	const contentCls = isSectionOpen ? ' collapsible__content--opened' : '';
 
 	return (
 		<FrecuencyManagmentContext.Provider value={contextValue}>
-			<CollapsibleContainer>
+			<CollapsibleContainer open={isSectionOpen} onToggle={setIsSectionOpen}>
 				<CollapsibleHeader>
 					<h3>Frecuency</h3>
 				</CollapsibleHeader>
-				<CollapsibleContent>
+				<CollapsibleContent className={contentCls}>
 					{!endDate && <Alert type={AlertTypes.Warning}>Please specify an end date</Alert>}
 
 					<EndDate onChangeEndDate={onEndDateChange} />

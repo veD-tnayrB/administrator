@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { ProfilesManager } from './managers/profiles';
 import { UsersManager } from './managers/users';
 import { FrecuencyManager } from './managers/frecuency';
-import { Frequency, RRule } from 'rrule';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#frecuencyManager: FrecuencyManager = new FrecuencyManager();
@@ -56,13 +55,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			await this.#users.load({ active: 1, order: 'id', ids: response.data.users });
 
 			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
-			console.log('F => ', this.#item.frecuency);
-			const frecuency = JSON.parse(this.#item.frecuency || '[]');
-			this.#frecuencyManager.load({ rrules: frecuency, endDate: this.#item.endDate });
+			this.#frecuencyManager.load({ rrules: this.#item.formatedFrecuency, endDate: this.#item.endDate });
+
 			this.ready = true;
 
 			return { status: true };
 		} catch (error) {
+			console.error('ERROR LOADING NOTIFICATION ', error);
 			return { status: false, error };
 		} finally {
 			this.fetching = false;
@@ -79,8 +78,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const profiles = [...this.#profiles.selectedItems.keys()];
 			const users = [...this.#users.selectedItems.keys()];
-			await this.#item.set({ ...values, frecuency: JSON.stringify(values.frecuency), profiles, users });
-			console.log('THIS.#ITEM => ', this.#item);
+			const frecuency =
+				values.frecuency === this.#item.frecuency ? this.#item.frecuency : JSON.stringify(values.frecuency);
+			await this.#item.set({ ...values, frecuency, profiles, users });
 			const response = await this.#item.publish();
 
 			if (!response.status) throw response.error;

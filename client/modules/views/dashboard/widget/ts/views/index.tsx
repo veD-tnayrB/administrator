@@ -10,6 +10,7 @@ import { TotalsWidget } from '../widgets/totals/totals.dashboard.widget';
 import { RegisteredUsersWidget } from '../widgets/registered-users/registered-users.dashboard.widget';
 import { OnlineUsersWidget } from '../widgets/online-users/online-users.dashboard.widget';
 import { WelcomeWidget } from '../widgets/welcome/welcome.dashboard.widget';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
 
 widgetStore.defineWidgets([
 	{
@@ -27,7 +28,7 @@ function View({ store }: { store: StoreManager }) {
 
 	useBinder([store], () => setData(store.collection.items));
 
-	if (!ready) return null;
+	if (!ready) return <SpinnerPage />;
 	const contextValue: IContext = {
 		store,
 		texts,

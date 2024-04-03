@@ -9,11 +9,11 @@ function getGreetings(): string {
 	const hour = date.getHours();
 
 	if (hour >= 0 && hour < 12) {
-		return 'Buenos días';
+		return 'Good morning';
 	} else if (hour >= 12 && hour < 18) {
-		return 'Buenas tardes';
+		return 'Good afternoon';
 	} else {
-		return 'Buenas noches';
+		return 'Good night';
 	}
 }
 

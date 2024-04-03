@@ -6,11 +6,12 @@ import { useTexts } from '@essential-js/admin/helpers';
 import { IContext, LoginContext } from './context';
 import { StoreManager } from '../store';
 import { ITexts } from './types';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
 	const [ready, texts] = useTexts<ITexts>(module.specifier);
-	if (!ready) return null;
+	if (!ready) return <SpinnerPage />;
 	const contextValue: IContext = {
 		texts,
 		store,

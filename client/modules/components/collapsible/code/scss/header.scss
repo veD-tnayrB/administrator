@@ -1,0 +1,31 @@
+.collapsible__container {
+	.collapsible__header {
+		display: grid;
+		grid-template-columns: 1fr auto;
+
+		flex-flow: wrap;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		cursor: pointer;
+		border-radius: 4px 4px 0px 0px;
+		background: var(--background);
+		box-shadow: none;
+		padding: 0px 15px;
+
+		h3 {
+			margin: 10px 0;
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: var(--on-surface);
+		}
+
+		.collapsible__button {
+			transform: rotate(-90deg);
+			transition: transform 0.2s ease;
+			&.collapsible__button--opened {
+				transform: rotate(90deg);
+			}
+		}
+	}
+}

@@ -33,6 +33,11 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		'frecuency',
 	];
 
+	get formatedFrecuency() {
+		if (!this.frecuency) return [];
+		return JSON.parse(this.frecuency);
+	}
+
 	constructor(params: { id: string | undefined } = { id: undefined }) {
 		super({
 			provider: NotificationItemProvider,
