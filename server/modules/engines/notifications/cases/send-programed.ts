@@ -19,6 +19,11 @@ export /*bundle*/ class SendProgramed {
 
 			const users = await SendProgramed.getUsers(notifications.data);
 			if (!users.status) throw new Error(`ERROR GETTING USERS TO NOTIFY FOR TODAY ${users.error}`);
+
+			const result = await SendProgramed.sendNotifications(users);
+			if (!result.status) throw new Error(`ERROR SENDING NOTIFICATIONS ${result.error}`);
+
+			return { status: true };
 		} catch (error) {
 			console.error('ERROR SENDING NOTIFICATIONS: ', error);
 			return { status: false, error };
@@ -29,13 +34,16 @@ export /*bundle*/ class SendProgramed {
 		try {
 			const startOfDay = new Date();
 			startOfDay.setUTCHours(0, 0, 0, 0);
+
 			const endOfDay = new Date();
 			endOfDay.setUTCHours(23, 59, 59, 999);
 
 			const notificationsFound = await DB.models.Notifications.findAll();
 			const notifications = notificationsFound.map(notification => notification.dataValues);
+
 			const notificationsToSendToday = notifications.filter(notification => {
 				const frequencies = JSON.parse(notification.frecuency || '[]');
+
 				return frequencies.some(frequencyString => {
 					const rrule = rrulestr(frequencyString);
 					return rrule.between(startOfDay, endOfDay).length > 0;
@@ -50,72 +58,118 @@ export /*bundle*/ class SendProgramed {
 
 	static async getUsers(notifications) {
 		try {
-			let notificationsWithTokens = {};
+			let results = {};
 
-			for (let notification of notifications) {
-				// ID de la notificación actual
+			for (const notification of notifications) {
 				const notificationId = notification.id;
 
-				// Usuarios directamente asociados a la notificación
-				const usersDirectly = await DB.models.UsersNotifications.findAll({
-					where: { notificationId: notificationId },
+				// Obtener Usuarios directamente asociados a las notificaciones
+				const directUsersNotifications = await DB.models.UsersNotifications.findAll({
+					where: { notificationId },
 					include: [
 						{
-							model: DB.models.AccessTokens,
-							attributes: ['userId', 'notificationToken'],
-						},
-					],
-				});
-
-				const directTokens = usersDirectly.flatMap(u =>
-					u.AccessTokens.map(token => ({
-						notificationToken: token.notificationToken,
-						userId: token.userId,
-					}))
-				);
-
-				// Perfiles asociados a la notificación
-				const profilesNotifications = await DB.models.ProfilesNotifications.findAll({
-					where: { notificationId: notificationId },
-					include: [
-						{
-							model: DB.models.UsersProfiles,
-							required: true,
+							model: DB.models.Users,
+							as: 'user',
 							include: [
 								{
 									model: DB.models.AccessTokens,
-									attributes: ['userId', 'notificationToken'],
-									required: true,
+									as: 'accessTokens',
+									attributes: ['notificationsToken'],
 								},
 							],
 						},
 					],
 				});
 
-				const profileTokens = profilesNotifications.flatMap(pn =>
-					pn.UsersProfiles.flatMap(up =>
-						up.AccessTokens.map(token => ({
-							notificationToken: token.notificationToken,
-							userId: token.userId,
-						}))
-					)
-				);
+				let directUsers = directUsersNotifications.reduce((acc, notificationInstance) => {
+					const user = notificationInstance.user.dataValues;
+					const tokens = user.accessTokens.map(accessToken => accessToken.notificationsToken);
 
-				// Combinar y deduplicar tokens
-				const allTokens = [...directTokens, ...profileTokens];
-				const uniqueTokens = Array.from(new Map(allTokens.map(token => [token.userId, token])).values());
+					acc[user.id] = {
+						...user,
+						tokens,
+					};
 
-				// Asignar los tokens únicos a su ID de notificación correspondiente
-				notificationsWithTokens[notificationId] = uniqueTokens;
+					return acc;
+				}, {});
+
+				const profilesNotificationsIncludes = [
+					{
+						model: DB.models.Profiles,
+						as: 'profile',
+						include: [
+							{
+								model: DB.models.UsersProfiles,
+								as: 'usersProfiles',
+								include: [
+									{
+										model: DB.models.Users,
+										as: 'user',
+										include: [
+											{
+												model: DB.models.AccessTokens,
+												as: 'accessTokens',
+												attributes: ['notificationsToken'],
+											},
+										],
+									},
+								],
+							},
+						],
+					},
+				];
+
+				// Obtener Perfiles asociados a las notificaciones
+				const profilesNotifications = await DB.models.ProfilesNotifications.findAll({
+					where: { notificationId },
+					include: profilesNotificationsIncludes,
+				});
+
+				let profileUsers = profilesNotifications.reduce((acc, profileNotificationInstance) => {
+					const usersProfiles = profileNotificationInstance.dataValues.profile.dataValues.usersProfiles;
+
+					usersProfiles.forEach(up => {
+						const user = up.dataValues.user.dataValues;
+						const tokens = user.accessTokens.map(accessToken => accessToken.notificationsToken);
+
+						if (!acc[user.id]) {
+							acc[user.id] = {
+								...user,
+								tokens,
+							};
+						} else {
+							// Concatenar tokens si el usuario ya está incluido por ser directo
+							acc[user.id].tokens = [...new Set([...acc[user.id].tokens, ...tokens])];
+						}
+					});
+
+					return acc;
+				}, directUsers); // Iniciar con usuarios directos para combinar
+
+				results[notificationId] = {
+					...notification,
+					users: profileUsers, // Ahora profileUsers incluye directos y perfiles
+				};
 			}
 
 			return {
 				status: true,
-				data: notificationsWithTokens,
+				data: results,
 			};
 		} catch (error) {
 			console.error('Error getting user tokens for notifications:', error);
 			return { status: false, error: error.message };
 		}
 	}
+
+	static sendNotifications = async notifications => {
+		try {
+			console.log('NOTIFICATIONS => ', notifications);
+
+			for (const notification of notifications) {
+			}
+		} catch (error) {
+			return { status: false, error };
+		}
+	};
 }
