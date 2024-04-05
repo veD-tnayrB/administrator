@@ -38,6 +38,10 @@ export /*bundle*/ class NotifierBridge {
 		return Send.execute(message);
 	}
 
+	sendMultipleCast (message) {
+		return Send.sendMultipleCast(message)
+	}
+
 	/**
 	 * Subscribes a list of tokens to a specified topic.
 	 * @param {string[]} tokens - An array of tokens to be subscribed.

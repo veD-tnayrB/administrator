@@ -22,4 +22,16 @@ export class Send {
 			return { status: false, error };
 		}
 	};
+
+	static sendMultipleCast = async message => {
+		try {
+			// Send the message using Firebase Admin SDK
+			const response = await getMessaging().sendEachForMulticast(message);
+			return { status: true, data: response };
+		} catch (error) {
+			// Log and return the error if unsuccessful
+			console.error(error);
+			return { status: false, error };
+		}
+	};
 }

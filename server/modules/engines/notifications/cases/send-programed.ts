@@ -2,6 +2,7 @@ import * as cron from 'node-cron';
 import { DB } from '@essential-js/admin-server/db';
 import { rrulestr } from 'rrule';
 import { Op } from 'sequelize';
+import { sender } from '../library/sender';
 
 export /*bundle*/ class SendProgramed {
 	static startListener() {
@@ -13,14 +14,14 @@ export /*bundle*/ class SendProgramed {
 
 	static execute = async () => {
 		try {
-			console.log('EXECUTING NOTIFICATIONS PROGRAMED');
+			console.log('EXECUTING NOTIFICATIONS PROGRAMED...');
 			const notifications = await SendProgramed.getDayNotifications();
 			if (!notifications.status) throw new Error(`ERROR GETTING NOTIFICATIONS FOR TODAY ${notifications.error}`);
 
 			const users = await SendProgramed.getUsers(notifications.data);
 			if (!users.status) throw new Error(`ERROR GETTING USERS TO NOTIFY FOR TODAY ${users.error}`);
 
-			const result = await SendProgramed.sendNotifications(users);
+			const result = await SendProgramed.sendNotifications(users.data);
 			if (!result.status) throw new Error(`ERROR SENDING NOTIFICATIONS ${result.error}`);
 
 			return { status: true };
@@ -56,9 +57,9 @@ export /*bundle*/ class SendProgramed {
 		}
 	};
 
-	static async getUsers(notifications) {
+	static getUsers = async notifications => {
 		try {
-			let results = {};
+			let results = [];
 
 			for (const notification of notifications) {
 				const notificationId = notification.id;
@@ -81,17 +82,18 @@ export /*bundle*/ class SendProgramed {
 					],
 				});
 
-				let directUsers = directUsersNotifications.reduce((acc, notificationInstance) => {
-					const user = notificationInstance.user.dataValues;
-					const tokens = user.accessTokens.map(accessToken => accessToken.notificationsToken);
+				let directUsers = directUsersNotifications.map(notificationInstance => {
+					const { dataValues: notification } = notificationInstance;
+					const user = notification.user.dataValues;
 
-					acc[user.id] = {
-						...user,
-						tokens,
+					const notificationToken = user.accessTokens.map(
+						accessToken => accessToken.dataValues.notificationsToken
+					);
+					return {
+						userId: user.id,
+						notificationToken,
 					};
-
-					return acc;
-				}, {});
+				});
 
 				const profilesNotificationsIncludes = [
 					{
@@ -125,31 +127,33 @@ export /*bundle*/ class SendProgramed {
 					include: profilesNotificationsIncludes,
 				});
 
-				let profileUsers = profilesNotifications.reduce((acc, profileNotificationInstance) => {
+				let profileUsers = profilesNotifications.flatMap(profileNotificationInstance => {
 					const usersProfiles = profileNotificationInstance.dataValues.profile.dataValues.usersProfiles;
 
-					usersProfiles.forEach(up => {
+					return usersProfiles.map(up => {
 						const user = up.dataValues.user.dataValues;
-						const tokens = user.accessTokens.map(accessToken => accessToken.notificationsToken);
 
-						if (!acc[user.id]) {
-							acc[user.id] = {
-								...user,
-								tokens,
-							};
-						} else {
-							// Concatenar tokens si el usuario ya está incluido por ser directo
-							acc[user.id].tokens = [...new Set([...acc[user.id].tokens, ...tokens])];
-						}
+						return {
+							userId: user.id,
+							notificationToken: user.accessTokens.map(
+								accessToken => accessToken.dataValues.notificationsToken
+							),
+						};
 					});
+				});
 
+				// Combinar Usuarios directos y Usuarios de Perfiles, eliminando duplicados
+				let combinedUsers = [...directUsers, ...profileUsers].reduce((acc, curr) => {
+					if (!acc.some(user => user.userId === curr.userId)) {
+						acc.push(curr);
+					}
 					return acc;
-				}, directUsers); // Iniciar con usuarios directos para combinar
+				}, []);
 
-				results[notificationId] = {
+				results.push({
 					...notification,
-					users: profileUsers, // Ahora profileUsers incluye directos y perfiles
-				};
+					users: combinedUsers,
+				});
 			}
 
 			return {
@@ -160,14 +164,30 @@ export /*bundle*/ class SendProgramed {
 			console.error('Error getting user tokens for notifications:', error);
 			return { status: false, error: error.message };
 		}
-	}
+	};
 
 	static sendNotifications = async notifications => {
 		try {
-			console.log('NOTIFICATIONS => ', notifications);
+			for (let i = 0; i < notifications.length; i++) {
+				const notification = notifications[i];
 
-			for (const notification of notifications) {
+				let tokens: string[] = [];
+				notification.users.forEach(record => {
+					tokens = [...record.notificationToken, ...tokens];
+				});
+
+				const message = {
+					notification: {
+						title: notification.title,
+						body: notification.description,
+					},
+					tokens,
+				};
+
+				const response = await sender.sendMultipleCast(message);
+				if (!response.status) throw new Error(response.error);
 			}
+			return { status: true };
 		} catch (error) {
 			return { status: false, error };
 		}
