@@ -40,19 +40,19 @@ export /*bundle*/ class SendProgramed {
 
 			const notificationsFound = await DB.models.Notifications.findAll();
 			let notificationsToSendToday = [];
-			console.log('NOTIFICATION FOUDN => ', notificationsFound);
 			for (let notification of notificationsFound.map(n => n.dataValues)) {
 				const frequencies = JSON.parse(notification.frecuency || '[]');
 
 				frequencies.forEach(frequencyString => {
 					const rrule = rrulestr(frequencyString);
-					console.log('FRECUENCY STRING => ', { frequencyString, startOfDay, endOfDay });
+
 					const occurrencesToday = rrule.between(startOfDay, endOfDay);
+					console.log('START DATE AND END DATE => ', { startOfDay, endOfDay, now: new Date() });
 
 					occurrencesToday.forEach(occurrence => {
 						notificationsToSendToday.push({
 							...notification,
-							sendAt: occurrence, // Aquí estás guardando el momento exacto de envío
+							sendAt: occurrence,
 						});
 					});
 				});
@@ -174,30 +174,37 @@ export /*bundle*/ class SendProgramed {
 	};
 
 	static sendNotifications = async notifications => {
-		console.log('SEND NOTIFICATIOPNS => ', notifications);
 		try {
 			for (let i = 0; i < notifications.length; i++) {
 				const notification = notifications[i];
+				const now = new Date();
+				const delay = notification.sendAt.getTime() - now.getTime();
+				console.log('DELAY => ', { notification, delay, now, sendAt: notification.sendAt.getTime() });
 
-				let tokens: string[] = [];
-				notification.users.forEach(record => {
-					tokens = [...record.notificationToken, ...tokens];
-				});
+				if (delay <= 0) return { status: true };
 
-				const message = {
-					notification: {
-						title: notification.title,
-						body: notification.description,
-					},
-					tokens,
-				};
-
-				const response = await sender.sendMultipleCast(message);
-				if (!response.status) throw new Error(response.error);
+				setTimeout(() => SendProgramed.sendNotification(notification), delay);
 			}
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
 		}
+	};
+
+	static sendNotification = async notification => {
+		let tokens = notification.users.flatMap(user => user.notificationToken);
+		// Deduplicar tokens por seguridad
+		tokens = [...new Set(tokens)];
+
+		const message = {
+			notification: {
+				title: notification.title,
+				body: notification.description,
+			},
+			tokens,
+		};
+
+		const response = await sender.sendMultipleCast(message);
+		if (!response.status) throw new Error(response.error);
 	};
 }
