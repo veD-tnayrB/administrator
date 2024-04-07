@@ -35,21 +35,28 @@ export /*bundle*/ class SendProgramed {
 		try {
 			const startOfDay = new Date();
 			startOfDay.setUTCHours(0, 0, 0, 0);
-
 			const endOfDay = new Date();
 			endOfDay.setUTCHours(23, 59, 59, 999);
 
 			const notificationsFound = await DB.models.Notifications.findAll();
-			const notifications = notificationsFound.map(notification => notification.dataValues);
-
-			const notificationsToSendToday = notifications.filter(notification => {
+			let notificationsToSendToday = [];
+			console.log('NOTIFICATION FOUDN => ', notificationsFound);
+			for (let notification of notificationsFound.map(n => n.dataValues)) {
 				const frequencies = JSON.parse(notification.frecuency || '[]');
 
-				return frequencies.some(frequencyString => {
+				frequencies.forEach(frequencyString => {
 					const rrule = rrulestr(frequencyString);
-					return rrule.between(startOfDay, endOfDay).length > 0;
+					console.log('FRECUENCY STRING => ', { frequencyString, startOfDay, endOfDay });
+					const occurrencesToday = rrule.between(startOfDay, endOfDay);
+
+					occurrencesToday.forEach(occurrence => {
+						notificationsToSendToday.push({
+							...notification,
+							sendAt: occurrence, // Aquí estás guardando el momento exacto de envío
+						});
+					});
 				});
-			});
+			}
 
 			return { status: true, data: notificationsToSendToday };
 		} catch (error) {
@@ -167,6 +174,7 @@ export /*bundle*/ class SendProgramed {
 	};
 
 	static sendNotifications = async notifications => {
+		console.log('SEND NOTIFICATIOPNS => ', notifications);
 		try {
 			for (let i = 0; i < notifications.length; i++) {
 				const notification = notifications[i];
