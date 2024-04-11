@@ -1,6 +1,8 @@
 import React from 'react';
 import { Select } from '@essential-js/admin/components/select';
 
+import { tz } from 'dayjs';
+console.log('dayjs.tz.names()', dayjs.tz.names());
 // Este es un ejemplo sencillo, considera usar una librería para manejar zonas horarias como `moment-timezone` o `luxon`
 const timeZones = ['UTC', 'America/New_York', 'Europe/Paris']; // Asegúrate de tener una lista completa
 
