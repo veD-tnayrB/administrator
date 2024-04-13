@@ -2,6 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Frequency, Options, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
 import { rrulestr } from 'rrule';
+import * as moment from 'moment-timezone';
 
 export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	#selectedDays: Record<string, string[]> = {};
@@ -37,6 +38,16 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	#isEndDateValid = false;
 	get isEndDateValid() {
 		return this.#isEndDateValid;
+	}
+
+	#selectedTimezone: string = `${moment.tz.guess()}`;
+	get selectedTimezone() {
+		return this.#selectedTimezone;
+	}
+
+	set selectedTimezone(value) {
+		this.#selectedTimezone = value;
+		this.triggerEvent();
 	}
 
 	#frecuencyHandlers: Record<string, (ruleInstance: RRuleSet, start: Date, until: Date) => Record<string, string[]>>;
@@ -168,26 +179,46 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	generateRRuleFrecuency = () => {
 		const rrules = [];
 
+		// Asegurarse de que #selectedTimezone tenga un valor predeterminado o haya sido establecido
+		const timezone = this.#selectedTimezone || moment.tz.guess();
+
 		Object.entries(this.#selectedDays).forEach(([dateString, times]) => {
-			const date = new Date(dateString);
-
-			const year = date.getUTCFullYear();
-			const month = date.getUTCMonth();
-			const day = date.getUTCDate();
-
 			times.forEach(time => {
 				const [hour, minute] = time.split(':').map(Number);
+				console.log('HOUR', hour, minute);
+				const formattedHour = hour.toString().padStart(2, '0');
+				const formattedMinute = minute.toString().padStart(2, '0');
 
-				const dtstart = new Date(Date.UTC(year, month, day, hour, minute));
-				const until = new Date(this.#endDate + `T23:59:59Z`);
+				// Ahora la cadena de fecha y hora estará correctamente formateada.
+				const dateTimeString = `${dateString} ${formattedHour}:${formattedMinute}`;
+				const localDate = moment.tz(dateTimeString, 'YYYY-MM-DD HH:mm', timezone);
 
+				if (!localDate.isValid()) {
+					console.error('Invalid localDate', localDate);
+					return;
+				}
+				const utcDate = localDate.clone().tz('UTC');
+
+				const dtstart = utcDate.toDate();
+				const until = moment
+					.tz(this.#endDate + ` 23:59:59`, 'YYYY-MM-DD HH:mm:ss', timezone)
+					.tz('UTC')
+					.toDate();
+
+				console.log('D START => ', {
+					dtstart: {
+						dtstart,
+						utcDate,
+						localDate,
+					},
+					until,
+				});
 				// Opciones básicas para RRule
 				let rruleOptions: Partial<Options> = {
 					dtstart: dtstart,
 					until: until,
 				};
 
-				// Solo agrega la propiedad 'freq' si la frecuencia está definida
 				if (this.#selectedFrecuency) {
 					const freq = {
 						Weekly: RRule.WEEKLY,
@@ -195,7 +226,6 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 						Daily: RRule.DAILY,
 					};
 
-					// Asegurarse de que la frecuencia seleccionada es válida antes de agregarla
 					if (freq[this.#selectedFrecuency]) {
 						rruleOptions.freq = freq[this.#selectedFrecuency];
 					}
@@ -206,6 +236,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 			});
 		});
 
+		console.log('RRULES:', rrules);
 		return rrules;
 	};
 
@@ -220,6 +251,14 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		});
 
 		this.#selectedDays = fixedSelectedDays;
+	};
+
+	getTimezones = () => {
+		const timeZones = moment.tz.names();
+		return timeZones.map(zone => {
+			const offset = moment.tz(zone).format('Z');
+			return { label: `${zone} (UTC${offset})`, value: zone };
+		});
 	};
 
 	reset = () => {

@@ -2,8 +2,7 @@
 	"/server/package.json",
 	"/client/package.json",
 	"../../Workspace/Baleares/public/http-suite/library/package.json",
-	"../../Workspace/Baleares/public/pragmate-ui/library/package.json",
+	"../../Workspace/Baleares/public/pragmate-ui/src/package.json",
 	"../../Workspace/Baleares/public/reactive-model/library/package.json",
-	"../../Workspace/Baleares/public/datamodel/project/package.json",
-	"../../Workspace/Baleares/public/http-suite/library/package.json"
+	"../../Workspace/Baleares/public/datamodel/project/package.json"
 ]

@@ -1,18 +1,20 @@
 import React from 'react';
 import { Select } from '@essential-js/admin/components/select';
-
-import { tz } from 'dayjs';
-console.log('dayjs.tz.names()', dayjs.tz.names());
-// Este es un ejemplo sencillo, considera usar una librería para manejar zonas horarias como `moment-timezone` o `luxon`
-const timeZones = ['UTC', 'America/New_York', 'Europe/Paris']; // Asegúrate de tener una lista completa
+import { useNotificationsManagmentContext } from '../../../context';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
 export const TimeZoneSelector = () => {
-	const [selectedTimeZone, setSelectedTimeZone] = React.useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
+	const { store } = useNotificationsManagmentContext();
+
+	const [selectedTimeZone, setSelectedTimeZone] = React.useState(store.frecuencyManager.selectedTimezone);
 	const [currentTime, setCurrentTime] = React.useState(new Date().toLocaleTimeString());
-	const onTimeZoneChange = selectedTimeZone => {};
+	const timezones = React.useMemo(() => store.frecuencyManager.getTimezones(), []);
+	const onTimeZoneChange = selectedTimeZone => {
+		store.frecuencyManager.selectedTimezone = selectedTimeZone;
+	};
+	useBinder([store.frecuencyManager], () => setSelectedTimeZone(store.frecuencyManager.selectedTimezone));
 
 	React.useEffect(() => {
-		onTimeZoneChange(selectedTimeZone);
 		const intervalId = setInterval(() => {
 			setCurrentTime(new Date().toLocaleTimeString('en-US', { timeZone: selectedTimeZone }));
 		}, 1000);
@@ -20,14 +22,17 @@ export const TimeZoneSelector = () => {
 		return () => clearInterval(intervalId);
 	}, [selectedTimeZone, onTimeZoneChange]);
 
-	const formatedOptions = timeZones.map(timeZone => ({ label: timeZone, value: timeZone }));
+	const onChange = event => {
+		const { value } = event.target;
+		setSelectedTimeZone(value);
+		onTimeZoneChange(value);
+	};
+
+	console.log('SELECETED TIME ZONE ', selectedTimeZone);
 
 	return (
 		<div>
-			<Select
-				value={selectedTimeZone}
-				options={formatedOptions}
-				onChange={e => setSelectedTimeZone(e.target.value)}></Select>
+			<Select value={selectedTimeZone} options={timezones} onChange={onChange}></Select>
 			<div>
 				Current Time in {selectedTimeZone}: {currentTime}
 			</div>
