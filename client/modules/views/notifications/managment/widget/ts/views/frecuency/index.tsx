@@ -13,7 +13,6 @@ import { FrencuencySelect } from './frecuency-select';
 import { EndDate } from './end-date';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { useNotificationsManagmentContext } from '../../context';
-import { TimeZoneSelector } from './time-zone-selecter';
 
 export type ISelectedDays = Record<string, string[]>;
 
@@ -45,7 +44,6 @@ export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuen
 					<h3>Frecuency</h3>
 				</CollapsibleHeader>
 				<CollapsibleContent className={contentCls}>
-					<TimeZoneSelector />
 					{!endDate && <Alert type={AlertTypes.Warning}>Please specify an end date</Alert>}
 
 					<EndDate onChangeEndDate={onEndDateChange} />

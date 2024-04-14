@@ -76,8 +76,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	save = async (values: Partial<INotification>) => {
 		try {
 			this.fetching = true;
-			console.log('VALUES => ', values);
-			return;
 			const profiles = [...this.#profiles.selectedItems.keys()];
 			const users = [...this.#users.selectedItems.keys()];
 			const frecuency =
