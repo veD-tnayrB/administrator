@@ -66,17 +66,23 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 				result.frecuency = frecuencies[rule.options.freq - 1];
 			}
 
-			const dayKey = rule.options.dtstart.toDateString();
-			console.log('DAY KEY +> ', dayKey, rule.options.dtstart);
+			// Obtener todas las fechas de la regla de recurrencia
+			const dates = rule.all();
+			console.log('DATES ALL => ', { dates, rule });
 
-			const timeString = rule.options.dtstart.toISOString().split('T')[1].slice(0, 5);
+			dates.forEach(date => {
+				const dayKey = date.toDateString();
+				const timeString = date.toISOString().split('T')[1].slice(0, 5);
+				console.log('DAY => ', { date, dayKey });
 
-			if (result.selectedDays[dayKey]) {
-				result.selectedDays[dayKey].push(timeString);
-			} else {
-				result.selectedDays[dayKey] = [timeString];
-			}
+				if (result.selectedDays[dayKey]) {
+					result.selectedDays[dayKey].push(timeString);
+				} else {
+					result.selectedDays[dayKey] = [timeString];
+				}
+			});
 		});
+
 		this.#selectedFrecuency = result.frecuency as Frecuencies;
 		this.#selectedDays = result.selectedDays;
 		console.log('SELECTED DAYS => ', this.#selectedDays);
@@ -183,7 +189,6 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 
 				const dtstart = new Date(Date.UTC(year, month, day, hour, minute));
 				const until = new Date(this.#endDate + `T23:59:59Z`);
-
 				// Opciones básicas para RRule
 				let rruleOptions: Partial<Options> = {
 					dtstart: dtstart,

@@ -18,6 +18,8 @@ export const Sidebar = () => {
 		setIsLoading(store.fetching);
 	});
 
+	items.sort((a, b) => a.order - b.order);
+
 	const output = items.map(item => <SidebarItem key={item.label} {...item} />);
 	const panel = isLoading ? (
 		<SidebarLoading />

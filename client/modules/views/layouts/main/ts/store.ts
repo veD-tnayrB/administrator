@@ -34,7 +34,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const userModuleIds = session.user.permissions.map(permission => permission.moduleId);
 			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));
-			userModules.sort((a, b) => a.order - b.order);
+
 			this.#sidebarCollection.items = userModules;
 		} catch (error) {
 			console.error('ERROR LOADING SIDEBAR ITEMS ', error);

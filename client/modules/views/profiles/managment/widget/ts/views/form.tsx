@@ -16,7 +16,6 @@ export const Form = () => {
 		active: store.item.active || true,
 		modules: '',
 	});
-	const [selectedModule, setSelectedModule] = React.useState();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
 	useBinder([store], () => setIsLoading(store.fetching));
@@ -39,15 +38,29 @@ export const Form = () => {
 		store.reset();
 		routing.pushState('/profiles');
 	};
+	const activeSwitchLabel = values.active ? 'Active' : 'Inactive';
+	console.log('IS LOADING => ', isLoading);
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
-			<Input label={texts.labels.name} value={values.name} name="name" onChange={onChange} />
-			<Input label={texts.labels.description} value={values.description} name="description" onChange={onChange} />
+			<Input
+				className="fixed-label"
+				label={texts.labels.name}
+				value={values.name}
+				name="name"
+				onChange={onChange}
+			/>
+			<Input
+				className="fixed-label"
+				label={texts.labels.description}
+				value={values.description}
+				name="description"
+				onChange={onChange}
+			/>
 			<div className="pui-input">
-				<label className="pui-input__label">
+				<label className="pui-switch__label">
 					<Switch checked={values.active} name="active" onChange={onChange} />
-					<span className="label-content"> {texts.labels.active}</span>
+					<span className="label-content">{activeSwitchLabel}</span>
 				</label>
 			</div>
 
@@ -57,7 +70,7 @@ export const Form = () => {
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
 					{texts.actions.reset}
 				</Button>
-				<Button type="submit" fetching={isLoading}>
+				<Button type="submit" variant="primary" loading={isLoading}>
 					{texts.actions.save}
 				</Button>
 			</div>
