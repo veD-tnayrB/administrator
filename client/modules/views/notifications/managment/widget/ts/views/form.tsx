@@ -18,7 +18,7 @@ export const Form = () => {
 		setValues({ ...values, [name]: value });
 	};
 
-	const setFrecuency = (frecuency: string[]) => {
+	const setFrecuency = (frecuency: Record<string, string[]>) => {
 		setValues({ ...values, frecuency });
 	};
 

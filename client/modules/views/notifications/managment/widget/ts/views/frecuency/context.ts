@@ -3,7 +3,7 @@ import React from 'react';
 interface IContext {
 	endDate: string;
 	isEndDateValid: boolean;
-	setFrecuency: (frecuency: string[]) => void;
+	setFrecuency: (frecuency: Record<string, string[]>) => void;
 	setIsSectionOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

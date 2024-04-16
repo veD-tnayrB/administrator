@@ -12,8 +12,7 @@ export const Actions = () => {
 	};
 
 	const onSave = () => {
-		const frecuency = store.frecuencyManager.generateRRuleFrecuency();
-		setFrecuency(frecuency);
+		setFrecuency(store.frecuencyManager.selectedDays);
 		setIsSectionOpen(false);
 	};
 

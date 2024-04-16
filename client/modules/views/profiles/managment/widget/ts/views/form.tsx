@@ -39,7 +39,6 @@ export const Form = () => {
 		routing.pushState('/profiles');
 	};
 	const activeSwitchLabel = values.active ? 'Active' : 'Inactive';
-	console.log('IS LOADING => ', isLoading);
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">

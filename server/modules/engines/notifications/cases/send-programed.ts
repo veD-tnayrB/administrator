@@ -33,29 +33,24 @@ export /*bundle*/ class SendProgramed {
 
 	static getDayNotifications = async () => {
 		try {
-			const startOfDay = new Date();
-			startOfDay.setUTCHours(0, 0, 0, 0);
-			const endOfDay = new Date();
-			endOfDay.setUTCHours(23, 59, 59, 999);
+			const today = new Date();
+			const todayString = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1)
+				.toString()
+				.padStart(2, '0')}-${today.getFullYear()}`;
 
 			const notificationsFound = await DB.models.Notifications.findAll();
 			let notificationsToSendToday = [];
 			for (let notification of notificationsFound.map(n => n.dataValues)) {
-				const frequencies = JSON.parse(notification.frecuency || '[]');
+				const frequencies = JSON.parse(notification.frecuency || '{}');
+				console.log('TODAY STRING => ', todayString, frequencies);
 
-				frequencies.forEach(frequencyString => {
-					const rrule = rrulestr(frequencyString);
-
-					const occurrencesToday = rrule.between(startOfDay, endOfDay);
-					console.log('START DATE AND END DATE => ', { startOfDay, endOfDay, now: new Date() });
-
-					occurrencesToday.forEach(occurrence => {
-						notificationsToSendToday.push({
-							...notification,
-							sendAt: occurrence,
-						});
+				// Verificar si hay notificaciones para enviar hoy
+				if (frequencies[todayString]) {
+					notificationsToSendToday.push({
+						...notification,
+						times: frequencies[todayString],
 					});
-				});
+				}
 			}
 
 			return { status: true, data: notificationsToSendToday };
@@ -175,15 +170,23 @@ export /*bundle*/ class SendProgramed {
 
 	static sendNotifications = async notifications => {
 		try {
-			for (let i = 0; i < notifications.length; i++) {
-				const notification = notifications[i];
-				const now = new Date();
-				const delay = notification.sendAt.getTime() - now.getTime();
-				console.log('DELAY => ', { notification, delay, now, sendAt: notification.sendAt.getTime() });
+			const now = new Date().getTime();
 
-				if (delay <= 0) return { status: true };
+			for (let notification of notifications) {
+				for (let time of notification.times) {
+					const [hour, minute] = time.split(':').map(Number);
+					const sendAt = new Date();
+					sendAt.setHours(hour, minute, 0, 0);
 
-				setTimeout(() => SendProgramed.sendNotification(notification), delay);
+					const delay = sendAt.getTime() - now;
+
+					if (delay > 0) {
+						setTimeout(() => SendProgramed.sendNotification(notification), delay);
+					} else {
+						// Si el horario ya pasó, enviar inmediatamente o manejar como se desee
+						SendProgramed.sendNotification(notification);
+					}
+				}
 			}
 			return { status: true };
 		} catch (error) {

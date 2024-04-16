@@ -3,7 +3,6 @@ import { Frequency, Options, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
 import { rrulestr } from 'rrule';
 import * as moment from 'moment-timezone';
-
 export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	#selectedDays: Record<string, string[]> = {};
 	get selectedDays() {
@@ -51,41 +50,9 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		};
 	}
 
-	load = ({ rrules, endDate }: { rrules: string[]; endDate: string }) => {
+	load = ({ frecuencyRules, endDate }: { frecuencyRules: { [key: string]: string[] }; endDate: string }) => {
 		this.#endDate = endDate;
-		let result = {
-			frecuency: '',
-			selectedDays: {},
-		};
-
-		rrules.forEach(ruleStr => {
-			const rule = rrulestr(ruleStr);
-
-			if (!result.frecuency) {
-				const frecuencies = [Frecuencies.MONTHLY, Frecuencies.WEEKLY, Frecuencies.DAILY];
-				result.frecuency = frecuencies[rule.options.freq - 1];
-			}
-
-			// Obtener todas las fechas de la regla de recurrencia
-			const dates = rule.all();
-			console.log('DATES ALL => ', { dates, rule });
-
-			dates.forEach(date => {
-				const dayKey = date.toDateString();
-				const timeString = date.toISOString().split('T')[1].slice(0, 5);
-				console.log('DAY => ', { date, dayKey });
-
-				if (result.selectedDays[dayKey]) {
-					result.selectedDays[dayKey].push(timeString);
-				} else {
-					result.selectedDays[dayKey] = [timeString];
-				}
-			});
-		});
-
-		this.#selectedFrecuency = result.frecuency as Frecuencies;
-		this.#selectedDays = result.selectedDays;
-		console.log('SELECTED DAYS => ', this.#selectedDays);
+		this.#selectedDays = frecuencyRules;
 		this.triggerEvent();
 	};
 
@@ -172,49 +139,6 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		});
 
 		return newSelectedDays;
-	};
-
-	generateRRuleFrecuency = () => {
-		const rrules = [];
-
-		Object.entries(this.#selectedDays).forEach(([dateString, times]) => {
-			const date = new Date(dateString);
-
-			const year = date.getUTCFullYear();
-			const month = date.getUTCMonth();
-			const day = date.getUTCDate();
-
-			times.forEach(time => {
-				const [hour, minute] = time.split(':').map(Number);
-
-				const dtstart = new Date(Date.UTC(year, month, day, hour, minute));
-				const until = new Date(this.#endDate + `T23:59:59Z`);
-				// Opciones básicas para RRule
-				let rruleOptions: Partial<Options> = {
-					dtstart: dtstart,
-					until: until,
-				};
-
-				// Solo agrega la propiedad 'freq' si la frecuencia está definida
-				if (this.#selectedFrecuency) {
-					const freq = {
-						Weekly: RRule.WEEKLY,
-						Monthly: RRule.MONTHLY,
-						Daily: RRule.DAILY,
-					};
-
-					// Asegurarse de que la frecuencia seleccionada es válida antes de agregarla
-					if (freq[this.#selectedFrecuency]) {
-						rruleOptions.freq = freq[this.#selectedFrecuency];
-					}
-				}
-
-				const rrule = new RRule(rruleOptions);
-				rrules.push(rrule.toString());
-			});
-		});
-
-		return rrules;
 	};
 
 	#filterByEndDate = (date: Date) => {

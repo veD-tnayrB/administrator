@@ -29,7 +29,6 @@ export const Times = ({ items, day }: IProps) => {
 		);
 		store.frecuencyManager.selectedDays = store.frecuencyManager.selectedDays;
 	};
-
 	const output = items.map((item, index) => {
 		return <Time key={`${day}--${index}`} item={item} index={index} onChange={onChange} onRemove={onRemove} />;
 	});
