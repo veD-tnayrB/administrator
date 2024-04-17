@@ -3,6 +3,7 @@ import { DB } from '@essential-js/admin-server/db';
 import { rrulestr } from 'rrule';
 import { Op } from 'sequelize';
 import { sender } from '../library/sender';
+import * as moment from 'moment-timezone';
 
 export /*bundle*/ class SendProgramed {
 	static startListener() {
@@ -42,7 +43,6 @@ export /*bundle*/ class SendProgramed {
 			let notificationsToSendToday = [];
 			for (let notification of notificationsFound.map(n => n.dataValues)) {
 				const frequencies = JSON.parse(notification.frecuency || '{}');
-				console.log('TODAY STRING => ', todayString, frequencies);
 
 				// Verificar si hay notificaciones para enviar hoy
 				if (frequencies[todayString]) {
@@ -113,7 +113,7 @@ export /*bundle*/ class SendProgramed {
 											{
 												model: DB.models.AccessTokens,
 												as: 'accessTokens',
-												attributes: ['notificationsToken'],
+												attributes: ['notificationsToken', 'timezone'],
 											},
 										],
 									},
@@ -134,12 +134,14 @@ export /*bundle*/ class SendProgramed {
 
 					return usersProfiles.map(up => {
 						const user = up.dataValues.user.dataValues;
+						console.log('USER => ', user);
 
 						return {
 							userId: user.id,
 							notificationToken: user.accessTokens.map(
 								accessToken => accessToken.dataValues.notificationsToken
 							),
+							timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
 						};
 					});
 				});
@@ -170,27 +172,38 @@ export /*bundle*/ class SendProgramed {
 
 	static sendNotifications = async notifications => {
 		try {
-			const now = new Date().getTime();
+			for (const notification of notifications) {
+				for (const user of notification.users) {
+					// Iterar sobre cada zona horaria del usuario
+					for (const timezone of user.timezones || ['UTC']) {
+						// Asumir UTC si no se especifica
+						console.log('USER.TIMEZONE => ', { user, timezone, notification });
+						const notificationTimes = notification.times.map(time => {
+							// Convertir la hora de notificación a la hora local del usuario según la zona horaria
+							const localTime = moment.tz(`${notification.date} ${time}`, 'DD-MM-YYYY HH:mm', timezone);
+							// Convertir esa hora local a UTC para programar el envío
+							return localTime.tz('UTC').toDate();
+						});
 
-			for (let notification of notifications) {
-				for (let time of notification.times) {
-					const [hour, minute] = time.split(':').map(Number);
-					const sendAt = new Date();
-					sendAt.setHours(hour, minute, 0, 0);
+						for (const time of notificationTimes) {
+							const now = new Date();
+							const delay = time.getTime() - now.getTime();
+							console.log('DELAY => ', { notification, delay, now, sendAt: time });
 
-					const delay = sendAt.getTime() - now;
-
-					if (delay > 0) {
-						setTimeout(() => SendProgramed.sendNotification(notification), delay);
-					} else {
-						// Si el horario ya pasó, enviar inmediatamente o manejar como se desee
-						SendProgramed.sendNotification(notification);
+							if (delay > 0) {
+								// Programar el envío de la notificación solo si el tiempo de envío es futuro
+								setTimeout(() => {
+									this.sendNotification(notification);
+								}, delay);
+							}
+						}
 					}
 				}
 			}
 			return { status: true };
 		} catch (error) {
-			return { status: false, error };
+			console.error('Error scheduling notifications:', error);
+			return { status: false, error: error.message };
 		}
 	};
 

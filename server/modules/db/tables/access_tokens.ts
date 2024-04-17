@@ -9,6 +9,7 @@ export interface AccessTokensAttributes {
 	timeUpdated?: Date;
 	timeCreated?: Date;
 	notificationsToken?: string;
+	timezone?: string;
 }
 
 export type AccessTokensPk = 'id';
@@ -18,7 +19,8 @@ export type AccessTokensOptionalAttributes =
 	| 'accessToken'
 	| 'timeUpdated'
 	| 'timeCreated'
-	| 'notificationsToken';
+	| 'notificationsToken'
+	| 'timezone';
 export type AccessTokensCreationAttributes = Optional<AccessTokensAttributes, AccessTokensOptionalAttributes>;
 
 export class AccessTokens
@@ -31,6 +33,7 @@ export class AccessTokens
 	declare timeUpdated?: Date;
 	declare timeCreated?: Date;
 	declare notificationsToken?: string;
+	declare timezone?: string;
 
 	// AccessTokens belongsTo Users via userId
 	user!: Users;
@@ -74,6 +77,11 @@ export class AccessTokens
 					type: DataTypes.STRING(255),
 					allowNull: true,
 					field: 'notifications_token',
+				},
+				timezone: {
+					type: DataTypes.STRING(45),
+					allowNull: true,
+					defaultValue: 'UTC',
 				},
 			},
 			{

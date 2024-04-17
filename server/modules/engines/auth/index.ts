@@ -7,6 +7,7 @@ export interface ILoginParams {
 	email: string;
 	password?: string;
 	notificationsToken?: string;
+	timezone?: string;
 }
 
 class AuthManager {
@@ -36,6 +37,7 @@ class AuthManager {
 				userId: user.id,
 				accessToken: token,
 				notificationsToken: params.notificationsToken,
+				timezone: params.timezone,
 			});
 
 			let profiles = await this.#usersProfilesModel.findAll({

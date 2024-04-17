@@ -11,7 +11,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	login = async (params: { email: string; password: string }, provider?: Providers) => {
 		try {
 			this.fetching = true;
-			const response = await session.login(params, provider);
+			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			const response = await session.login({ ...params, timezone }, provider);
 			if (!response.status) throw response.error;
 			routing.pushState('/dashboard');
 		} catch (error) {

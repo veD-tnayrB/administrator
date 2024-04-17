@@ -10,6 +10,7 @@ export class AuthRoutes {
 				email: req.body.email,
 				password: req.body.password,
 				notificationsToken: req.body.notificationsToken,
+				timezone: req.body.timezone,
 			});
 			if (!response.status) throw response.error;
 
