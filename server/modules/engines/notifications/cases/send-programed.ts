@@ -172,15 +172,17 @@ export /*bundle*/ class SendProgramed {
 
 	static sendNotifications = async notifications => {
 		try {
+			const todayDate = moment().format('DD-MM-YYYY'); // Obtener la fecha actual en formato 'DD-MM-YYYY'
 			for (const notification of notifications) {
 				for (const user of notification.users) {
 					// Iterar sobre cada zona horaria del usuario
 					for (const timezone of user.timezones || ['UTC']) {
 						// Asumir UTC si no se especifica
 						console.log('USER.TIMEZONE => ', { user, timezone, notification });
+
 						const notificationTimes = notification.times.map(time => {
-							// Convertir la hora de notificación a la hora local del usuario según la zona horaria
-							const localTime = moment.tz(`${notification.date} ${time}`, 'DD-MM-YYYY HH:mm', timezone);
+							const formattedTime = time.replace('-', ':'); // Cambiar 'hh-mm' a 'hh:mm'
+							const localTime = moment.tz(`${todayDate} ${formattedTime}`, 'DD-MM-YYYY HH:mm', timezone);
 							// Convertir esa hora local a UTC para programar el envío
 							return localTime.tz('UTC').toDate();
 						});
@@ -188,7 +190,15 @@ export /*bundle*/ class SendProgramed {
 						for (const time of notificationTimes) {
 							const now = new Date();
 							const delay = time.getTime() - now.getTime();
-							console.log('DELAY => ', { notification, delay, now, sendAt: time });
+
+							console.log('DELAY => ', {
+								notification,
+								delay,
+								nowGetTime: now.getTime(),
+								time,
+								notificationTimes,
+								timeGetTime: time.getTime(),
+							});
 
 							if (delay > 0) {
 								// Programar el envío de la notificación solo si el tiempo de envío es futuro
@@ -206,6 +216,19 @@ export /*bundle*/ class SendProgramed {
 			return { status: false, error: error.message };
 		}
 	};
+
+	sendNotification(notification, user) {
+		// Implementación para enviar la notificación a través del sistema de mensajería
+		const message = {
+			notification: {
+				title: notification.title,
+				body: notification.description,
+			},
+			token: user.notificationToken, // Asumiendo que el token es parte del objeto user
+		};
+		console.log('Sending notification to user:', user.userId, 'with message:', message);
+		// Simular el envío
+	}
 
 	static sendNotification = async notification => {
 		let tokens = notification.users.flatMap(user => user.notificationToken);
