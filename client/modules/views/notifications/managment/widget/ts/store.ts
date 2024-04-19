@@ -78,11 +78,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const profiles = [...this.#profiles.selectedItems.keys()];
 			const users = [...this.#users.selectedItems.keys()];
-			const frecuency =
-				JSON.stringify(values.frecuency) === this.#item.frecuency
-					? this.#item.frecuency
-					: JSON.stringify(values.frecuency);
+			const isFrecuencyModified =
+				JSON.stringify(values.frecuency) === this.#item.frecuency || this.#item.frecuency === values.frecuency;
 
+			const frecuency = isFrecuencyModified ? this.#item.frecuency : JSON.stringify(values.frecuency);
+			console.log('VALUES => ', values);
 			await this.#item.set({ ...values, frecuency, profiles, users });
 			const response = await this.#item.publish();
 

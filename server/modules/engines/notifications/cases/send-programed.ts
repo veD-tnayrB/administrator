@@ -77,7 +77,7 @@ export /*bundle*/ class SendProgramed {
 								{
 									model: DB.models.AccessTokens,
 									as: 'accessTokens',
-									attributes: ['notificationsToken'],
+									attributes: ['notificationsToken', 'timezone'],
 								},
 							],
 						},
@@ -94,8 +94,10 @@ export /*bundle*/ class SendProgramed {
 					return {
 						userId: user.id,
 						notificationToken,
+						timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
 					};
 				});
+				console.log('DIRECT USERS => ', directUsers);
 
 				const profilesNotificationsIncludes = [
 					{
@@ -134,7 +136,6 @@ export /*bundle*/ class SendProgramed {
 
 					return usersProfiles.map(up => {
 						const user = up.dataValues.user.dataValues;
-						console.log('USER => ', user);
 
 						return {
 							userId: user.id,

@@ -7,6 +7,7 @@ interface IProps {
 }
 
 export const Day = ({ day, times }: IProps) => {
+	console.log('ELEMENT => ', { day, times });
 	return (
 		<article className="flex-col gap-4">
 			<h6 className="text-lg">{day}</h6>
