@@ -7,10 +7,10 @@ interface IProps {
 }
 
 export const Day = ({ day, times }: IProps) => {
-	console.log('ELEMENT => ', { day, times });
+	const [date, , year] = day.split('-');
 	return (
-		<article className="flex-col gap-4">
-			<h6 className="text-lg">{day}</h6>
+		<article className="flex-col gap-2">
+			<h6 className="text-lg ">{`${date}  ${year}`}</h6>
 			<Times day={day} items={times} />
 		</article>
 	);

@@ -97,7 +97,6 @@ export /*bundle*/ class SendProgramed {
 						timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
 					};
 				});
-				console.log('DIRECT USERS => ', directUsers);
 
 				const profilesNotificationsIncludes = [
 					{
@@ -179,7 +178,6 @@ export /*bundle*/ class SendProgramed {
 					// Iterar sobre cada zona horaria del usuario
 					for (const timezone of user.timezones || ['UTC']) {
 						// Asumir UTC si no se especifica
-						console.log('USER.TIMEZONE => ', { user, timezone, notification });
 
 						const notificationTimes = notification.times.map(time => {
 							const formattedTime = time.replace('-', ':'); // Cambiar 'hh-mm' a 'hh:mm'
@@ -192,19 +190,9 @@ export /*bundle*/ class SendProgramed {
 							const now = new Date();
 							const delay = time.getTime() - now.getTime();
 
-							console.log('DELAY => ', {
-								notification,
-								delay,
-								nowGetTime: now.getTime(),
-								time,
-								notificationTimes,
-								timeGetTime: time.getTime(),
-							});
-
 							if (delay > 0) {
-								// Programar el envío de la notificación solo si el tiempo de envío es futuro
 								setTimeout(() => {
-									this.sendNotification(notification);
+									SendProgramed.sendNotification(notification);
 								}, delay);
 							}
 						}
@@ -217,19 +205,6 @@ export /*bundle*/ class SendProgramed {
 			return { status: false, error: error.message };
 		}
 	};
-
-	sendNotification(notification, user) {
-		// Implementación para enviar la notificación a través del sistema de mensajería
-		const message = {
-			notification: {
-				title: notification.title,
-				body: notification.description,
-			},
-			token: user.notificationToken, // Asumiendo que el token es parte del objeto user
-		};
-		console.log('Sending notification to user:', user.userId, 'with message:', message);
-		// Simular el envío
-	}
 
 	static sendNotification = async notification => {
 		let tokens = notification.users.flatMap(user => user.notificationToken);

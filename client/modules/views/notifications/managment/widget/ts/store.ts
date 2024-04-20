@@ -82,7 +82,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				JSON.stringify(values.frecuency) === this.#item.frecuency || this.#item.frecuency === values.frecuency;
 
 			const frecuency = isFrecuencyModified ? this.#item.frecuency : JSON.stringify(values.frecuency);
-			console.log('VALUES => ', values);
 			await this.#item.set({ ...values, frecuency, profiles, users });
 			const response = await this.#item.publish();
 

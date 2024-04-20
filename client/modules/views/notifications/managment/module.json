@@ -5,10 +5,7 @@
 		"layout": "main-admin-layout",
 		"route": "/notifications/managment/${id}",
 		"is": "page",
-		"scss": {
-			"path": "/widget/scss",
-			"files": ["*"]
-		},
+
 		"ts": {
 			"path": "/widget/ts",
 			"files": ["*"]
