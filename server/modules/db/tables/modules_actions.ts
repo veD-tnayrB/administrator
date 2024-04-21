@@ -1,45 +1,36 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { ModulesActions, ModulesActionsId } from './modules_actions';
+import type { Modules, ModulesId } from './modules';
 import type { ProfileModulePermissions, ProfileModulePermissionsId } from './profile_module_permissions';
 
-export interface ModulesAttributes {
+export interface ModulesActionsAttributes {
   id: string;
-  label?: string;
-  to?: string;
+  moduleId: string;
+  name: string;
+  description?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
-  order?: number;
-  icon?: string;
 }
 
-export type ModulesPk = "id";
-export type ModulesId = Modules[ModulesPk];
-export type ModulesOptionalAttributes = "label" | "to" | "timeCreated" | "timeUpdated" | "order" | "icon";
-export type ModulesCreationAttributes = Optional<ModulesAttributes, ModulesOptionalAttributes>;
+export type ModulesActionsPk = "id";
+export type ModulesActionsId = ModulesActions[ModulesActionsPk];
+export type ModulesActionsOptionalAttributes = "description" | "timeCreated" | "timeUpdated";
+export type ModulesActionsCreationAttributes = Optional<ModulesActionsAttributes, ModulesActionsOptionalAttributes>;
 
-export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes> implements ModulesAttributes {
+export class ModulesActions extends Model<ModulesActionsAttributes, ModulesActionsCreationAttributes> implements ModulesActionsAttributes {
   id!: string;
-  label?: string;
-  to?: string;
+  moduleId!: string;
+  name!: string;
+  description?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
-  order?: number;
-  icon?: string;
 
-  // Modules hasMany ModulesActions via moduleId
-  modulesActions!: ModulesActions[];
-  getModulesActions!: Sequelize.HasManyGetAssociationsMixin<ModulesActions>;
-  setModulesActions!: Sequelize.HasManySetAssociationsMixin<ModulesActions, ModulesActionsId>;
-  addModulesAction!: Sequelize.HasManyAddAssociationMixin<ModulesActions, ModulesActionsId>;
-  addModulesActions!: Sequelize.HasManyAddAssociationsMixin<ModulesActions, ModulesActionsId>;
-  createModulesAction!: Sequelize.HasManyCreateAssociationMixin<ModulesActions>;
-  removeModulesAction!: Sequelize.HasManyRemoveAssociationMixin<ModulesActions, ModulesActionsId>;
-  removeModulesActions!: Sequelize.HasManyRemoveAssociationsMixin<ModulesActions, ModulesActionsId>;
-  hasModulesAction!: Sequelize.HasManyHasAssociationMixin<ModulesActions, ModulesActionsId>;
-  hasModulesActions!: Sequelize.HasManyHasAssociationsMixin<ModulesActions, ModulesActionsId>;
-  countModulesActions!: Sequelize.HasManyCountAssociationsMixin;
-  // Modules hasMany ProfileModulePermissions via moduleId
+  // ModulesActions belongsTo Modules via moduleId
+  module!: Modules;
+  getModule!: Sequelize.BelongsToGetAssociationMixin<Modules>;
+  setModule!: Sequelize.BelongsToSetAssociationMixin<Modules, ModulesId>;
+  createModule!: Sequelize.BelongsToCreateAssociationMixin<Modules>;
+  // ModulesActions hasMany ProfileModulePermissions via actionId
   profileModulePermissions!: ProfileModulePermissions[];
   getProfileModulePermissions!: Sequelize.HasManyGetAssociationsMixin<ProfileModulePermissions>;
   setProfileModulePermissions!: Sequelize.HasManySetAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
@@ -52,42 +43,45 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
   hasProfileModulePermissions!: Sequelize.HasManyHasAssociationsMixin<ProfileModulePermissions, ProfileModulePermissionsId>;
   countProfileModulePermissions!: Sequelize.HasManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Modules {
-    return Modules.init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof ModulesActions {
+    return ModulesActions.init({
     id: {
       type: DataTypes.CHAR(36),
       allowNull: false,
       primaryKey: true
     },
-    label: {
-      type: DataTypes.STRING(255),
-      allowNull: true
+    moduleId: {
+      type: DataTypes.CHAR(36),
+      allowNull: false,
+      references: {
+        model: 'modules',
+        key: 'id'
+      },
+      field: 'module_id'
     },
-    to: {
+    name: {
       type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     timeCreated: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'time_created'
     },
     timeUpdated: {
       type: DataTypes.DATE,
       allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'time_updated'
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    icon: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'modules',
+    tableName: 'modules_actions',
     timestamps: false,
     indexes: [
       {
@@ -96,6 +90,13 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "fk_module_id",
+        using: "BTREE",
+        fields: [
+          { name: "module_id" },
         ]
       },
     ]

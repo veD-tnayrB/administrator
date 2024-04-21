@@ -64,13 +64,19 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			this.fetching = true;
 
+			console.log('SAVE 0 => ', values);
+			if (!values.profiles) values.profiles = [];
 			const validationResults = this.#validateValues(values);
+			console.log('SAVE 1 => ', values);
+
 			if (validationResults) {
 				this.#error = validationResults;
 				throw new Error(validationResults);
 			}
+			console.log('SAVE 2 => ', values);
 
 			await this.#item.set(values);
+			console.log('SAVE 3 => ', values);
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;
 

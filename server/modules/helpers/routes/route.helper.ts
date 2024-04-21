@@ -2,7 +2,7 @@ import { Application, Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { checkToken } from '../middlewares/jwt';
-import * as path from 'path';
+import { checkPermission } from '../middlewares/permissions';
 
 export /*bundle*/ interface ISuccess {
 	status: boolean;
@@ -40,11 +40,14 @@ export /*bundle*/ class Route {
 	}
 
 	setup(app: Application) {
-		app.get(`/${this.#endpoints.plural}`, checkToken, this.list);
-		app.get(`/${this.#endpoints.singular}/:id`, checkToken, this.get);
-		app.post(`/${this.#endpoints.singular}`, checkToken, this.create);
-		app.put(`/${this.#endpoints.singular}`, checkToken, this.update);
-		app.delete(`/${this.#endpoints.singular}/:id`, checkToken, this.delete);
+		const singular = this.#endpoints.singular;
+		const plural = this.#endpoints.plural;
+
+		app.get(`/${plural}`, checkToken, checkPermission(`${plural}.list`), this.list);
+		app.get(`/${singular}/:id`, checkToken, checkPermission(`${singular}.get`), this.get);
+		app.post(`/${singular}`, checkToken, checkPermission(`${singular}.create`), this.create);
+		app.put(`/${singular}`, checkToken, checkPermission(`${singular}.update`), this.update);
+		app.delete(`/${singular}/:id`, checkToken, checkPermission(`${singular}.delete`), this.delete);
 	}
 
 	list = async (req: Request, res: Response) => {

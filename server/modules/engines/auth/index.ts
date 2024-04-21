@@ -44,22 +44,29 @@ class AuthManager {
 				where: { userId: user.id },
 				include: [{ model: DB.models.Profiles, as: 'profile' }],
 			});
-			profiles = profiles.map(profile => {
-				const { profileId, ...toSend } = profile.get({ plain: true });
-				return { ...toSend.profile };
-			});
-
+			profiles = profiles.map(profile => profile.get({ plain: true }).profile);
 			let permissions = [];
 			for (const profile of profiles) {
 				const profilePermissions = await this.#profileModulePermissionsModel.findAll({
 					where: { profileId: profile.id },
 					include: [
-						{ model: DB.models.Permissions, as: 'permission' },
-						{ model: DB.models.Modules, as: 'module' },
+						{
+							model: DB.models.ModulesActions,
+							as: 'action',
+							include: [{ model: DB.models.Modules, as: 'module' }],
+						},
 					],
 				});
-				const otherPermision = profilePermissions.map(permission => permission.get({ plain: true }));
-				permissions = [...permissions, ...otherPermision];
+				const formattedPermissions = profilePermissions.map(permission => {
+					const action = permission.get({ plain: true }).action;
+					return {
+						moduleId: action.module.id,
+						moduleTo: action.module.to,
+						actionId: action.id,
+						actionName: action.name,
+					};
+				});
+				permissions = [...permissions, ...formattedPermissions];
 			}
 
 			const { password, ...userProperties } = user;
@@ -88,22 +95,28 @@ class AuthManager {
 				where: { userId: userInstance.id },
 				include: [{ model: DB.models.Profiles, as: 'profile' }],
 			});
-			profiles = profiles.map(profile => {
-				const { profileId, ...toSend } = profile.get({ plain: true });
-				return { ...toSend.profile };
-			});
+			profiles = profiles.map(profile => profile.get({ plain: true }).profile);
 
 			let permissions = [];
 			for (const profile of profiles) {
 				const profilePermissions = await this.#profileModulePermissionsModel.findAll({
 					where: { profileId: profile.id },
 					include: [
-						{ model: DB.models.Permissions, as: 'permission' },
+						{ model: DB.models.ModulesActions, as: 'action' },
 						{ model: DB.models.Modules, as: 'module' },
 					],
 				});
-				const otherPermision = profilePermissions.map(permission => permission.get({ plain: true }));
-				permissions = [...permissions, ...otherPermision];
+				const formattedPermissions = profilePermissions.map(permission => {
+					const permissionData = permission.get({ plain: true });
+					return {
+						moduleId: permissionData.module.id,
+						moduleTo: permissionData.module.to,
+						actionId: permissionData.action.id,
+						actionName: permissionData.action.name,
+					};
+				});
+
+				permissions = [...permissions, ...formattedPermissions];
 			}
 
 			const { password, ...userProperties } = userInstance;

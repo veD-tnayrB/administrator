@@ -45,6 +45,12 @@
 				}
 			}
 
+			.pui-button.btn-outline.btn--md {
+				.button-label {
+					color: var(--on-surface);
+				}
+			}
+
 			.or-container {
 				display: flex;
 				align-items: center;

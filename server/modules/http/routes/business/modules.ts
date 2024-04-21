@@ -1,6 +1,6 @@
 import { Modules } from '@essential-js/admin-server/engines/modules';
-import { Route, ISuccess, ResponseType } from '@essential-js/admin-server/helpers';
-import { Request, Response } from 'express';
+import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
+import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
 class ModulesRoutes extends Route {
@@ -28,6 +28,11 @@ class ModulesRoutes extends Route {
 			res.status(500).send(responseError);
 		}
 	};
+
+	setup(app: Application) {
+		app.get(`/module/:id`, checkToken, this.get);
+		app.get(`/modules`, checkToken, this.list);
+	}
 }
 
 export const modules = new ModulesRoutes();

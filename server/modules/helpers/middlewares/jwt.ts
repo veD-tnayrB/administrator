@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { config } from 'dotenv';
 import * as jwt from 'jsonwebtoken';
+import { Auth } from '@essential-js/admin-server/engines/auth';
 config();
 
 export /*bundle*/ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -9,6 +10,9 @@ export /*bundle*/ const checkToken = async (req: Request, res: Response, next: N
 
 	try {
 		jwt.verify(token, process.env.JWT_SECRET);
+		const response = await Auth.getUser({ token });
+		if (!response) throw 'ICORRECT_TOKEN';
+		req.body.session = response.data.user;
 		next();
 	} catch (error) {
 		const message = error.name === 'TokenExpiredError' ? 'TOKEN_EXPIRED' : 'ICORRECT_TOKEN';

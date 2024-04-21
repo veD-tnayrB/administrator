@@ -19,13 +19,7 @@ export const Form = () => {
 		setError(store.error);
 	});
 
-	useBinder(
-		[store],
-		() => {
-			setItem(store.item.getProperties());
-		},
-		'hide'
-	);
+	useBinder([store], () => setItem(store.item.getProperties()), 'hide');
 
 	if (!store.ready) return null;
 
@@ -35,6 +29,7 @@ export const Form = () => {
 		setItem(currentValue => ({ ...currentValue, [name]: value }));
 	};
 	const onSelectChange = params => {
+		console.log('PARAMS => ', params);
 		const values = params.map(item => item.value);
 		setItem(currentValues => ({ ...currentValues, profiles: values }));
 	};

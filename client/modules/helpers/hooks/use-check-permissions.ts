@@ -11,12 +11,12 @@ export /*bundle */ const useCheckPermissions = () => {
 
 	React.useEffect(() => {
 		if (!session.isLogged || !session.user.permissions) return;
-		const userModules = session.user.permissions.map(permission => permission.module.to);
+		const userModules = session.user.permissions.map(permission => permission.moduleTo);
 		const isAllowed = userModules.some(item => currentRoute.includes(item));
 
 		if (!isAllowed) return routing.pushState('/error/403');
 		setHasPermission(isAllowed);
-	}, [currentRoute, session, session.user.permissions, session.user.modules]);
+	}, [currentRoute, session, session.user.permissions]);
 
 	return hasPermission;
 };
