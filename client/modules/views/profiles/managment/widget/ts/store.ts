@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profile, IProfile, Modules, Permissions } from '@essential-js/admin/models';
+import { Profile, IProfile, Modules } from '@essential-js/admin/models';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
@@ -11,14 +11,19 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	get modules() {
 		return this.#modules;
 	}
-	#permissions = new Permissions();
-	get permissions() {
-		return this.#permissions;
-	}
 
 	#modulesPermissions = new Map<string, string[]>();
 	get modulesPermissions() {
 		return this.#modulesPermissions;
+	}
+
+	#selectedModules: Record<string, Record<string, boolean>> = {};
+	get selectedModules() {
+		return this.#selectedModules;
+	}
+	set selectedModules(value) {
+		this.#selectedModules = value;
+		this.triggerEvent();
 	}
 
 	#isCreating: boolean = false;
@@ -27,32 +32,42 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 
 	load = async ({ id }: { id: string }) => {
-		if (id === 'create') {
-			this.#isCreating = true;
-			return this.triggerEvent();
-		}
 		try {
+			if (id === 'create') {
+				this.#isCreating = true;
+				const modulesResponse = await this.#modules.load();
+				if (!modulesResponse.status) throw modulesResponse.error;
+				this.#calculateselectedModules();
+				return this.triggerEvent();
+			}
+
 			this.fetching = true;
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
 			const modulesResponse = await this.#modules.load();
-			if (!modulesResponse.status) throw response.error;
-
-			const permissionsResponse = await this.#permissions.load();
-			if (!permissionsResponse.status) throw response.error;
-
-			this.#modules.items.forEach(module => {
-				this.#modulesPermissions.set(module.id, []);
-			});
-
+			if (!modulesResponse.status) throw modulesResponse.error;
+			this.#calculateselectedModules();
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
 		} finally {
 			this.fetching = false;
+			this.ready = true;
 		}
+	};
+
+	#calculateselectedModules = () => {
+		const selectedModulesInProfile = {};
+		this.#item.modules.forEach(module => {
+			const selectedActions: Record<string, boolean> = {};
+
+			module.actions.forEach(action => (selectedActions[action.id] = true));
+			selectedModulesInProfile[module.id] = selectedActions;
+		});
+
+		this.#selectedModules = selectedModulesInProfile;
 	};
 
 	save = async (values: Partial<IProfile>) => {
@@ -73,6 +88,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	reset = () => {
 		this.#item = new Profile();
+		this.ready = false;
 		this.triggerEvent();
 	};
 }

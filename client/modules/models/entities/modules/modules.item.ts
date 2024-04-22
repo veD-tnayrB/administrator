@@ -2,7 +2,7 @@ import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { ModulesItemProvider } from '../../providers/modules/module.item.provider';
 
-export /*bundle*/ interface IModules {
+export /*bundle*/ interface IModule {
 	id: string;
 	label: string;
 	to: string;
@@ -10,10 +10,11 @@ export /*bundle*/ interface IModules {
 	timeCreated: Date;
 	timeUpdated: Date;
 	order: number;
+	actions: { id: string; name: string; description: string }[];
 }
 
-export /*bundle*/ class Module extends Item<IModules> {
-	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order'];
+export /*bundle*/ class Module extends Item<IModule> {
+	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order', 'actions'];
 
 	constructor(params: { id: string | undefined } = { id: undefined }) {
 		super({

@@ -5,7 +5,6 @@ import { auth } from './business/auth';
 import { profiles } from './business/profiles';
 import { widgets } from './business/widgets';
 import { notifications } from './business/notifications';
-// import { permissions } from './business/permissions';
 
 export /*bundle*/ function routes(app: Application) {
 	app.get('/', (req: Request, res: Response) => {
@@ -18,5 +17,4 @@ export /*bundle*/ function routes(app: Application) {
 	profiles.setup(app);
 	widgets.setup(app);
 	notifications.setup(app);
-	// permissions.setup(app);
 }

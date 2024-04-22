@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { Modules } from './modules';
 
 export const Form = () => {
-	const { store, texts } = useProfilesManagmentContext();
+	const { store } = useProfilesManagmentContext();
 	const [values, setValues] = React.useState<Partial<IUser>>({
 		name: store.item.name || '',
 		description: store.item.description || '',
@@ -28,7 +28,7 @@ export const Form = () => {
 
 	const onSubmit = async () => {
 		await store.save(values);
-		toast.success(store.item.id ? texts.success.updated : texts.success.created);
+		toast.success(store.item.id ? 'Profile updated successfully' : 'Profile created successfully');
 		routing.pushState('/profiles');
 		store.reset();
 	};
@@ -42,16 +42,10 @@ export const Form = () => {
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
+			<Input className="fixed-label" label="Name" value={values.name} name="name" onChange={onChange} />
 			<Input
 				className="fixed-label"
-				label={texts.labels.name}
-				value={values.name}
-				name="name"
-				onChange={onChange}
-			/>
-			<Input
-				className="fixed-label"
-				label={texts.labels.description}
+				label="Description"
 				value={values.description}
 				name="description"
 				onChange={onChange}
@@ -67,10 +61,10 @@ export const Form = () => {
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
-					{texts.actions.reset}
+					Cancel
 				</Button>
 				<Button type="submit" variant="primary" loading={isLoading}>
-					{texts.actions.save}
+					Save
 				</Button>
 			</div>
 		</FormUI>

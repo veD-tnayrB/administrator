@@ -18,13 +18,13 @@ export type AccessTokensOptionalAttributes = "userId" | "accessToken" | "timeUpd
 export type AccessTokensCreationAttributes = Optional<AccessTokensAttributes, AccessTokensOptionalAttributes>;
 
 export class AccessTokens extends Model<AccessTokensAttributes, AccessTokensCreationAttributes> implements AccessTokensAttributes {
-  id!: string;
-  userId?: string;
-  accessToken?: string;
-  timeUpdated?: Date;
-  timeCreated?: Date;
-  notificationsToken?: string;
-  timezone?: string;
+  declare id: string;
+  declare userId?: string;
+  declare accessToken?: string;
+  declare timeUpdated?: Date;
+  declare timeCreated?: Date;
+  declare notificationsToken?: string;
+  declare timezone?: string;
 
   // AccessTokens belongsTo Users via userId
   user!: Users;

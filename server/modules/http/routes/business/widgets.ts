@@ -4,6 +4,8 @@ import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
 class WidgetsRoutes extends Route {
+	declare manager: Widgets;
+	declare list: (req: Request, res: Response) => Promise<Response>;
 	constructor() {
 		super({
 			manager: Widgets,
@@ -28,7 +30,7 @@ class WidgetsRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		super.setup(app);
+		app.get(`/widgets`, checkToken, this.list);
 		app.get('/widgets/get-totals', checkToken, this.getTotals);
 	};
 }

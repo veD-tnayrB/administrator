@@ -1,7 +1,6 @@
 import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
 import { generateReport } from '../excel-handler/cases/generate-report';
-import Sequelize from 'sequelize';
 import { List } from './list';
 
 export /*bundle*/ abstract class Manager {

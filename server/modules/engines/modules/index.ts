@@ -1,51 +1,33 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager } from '@essential-js/admin-server/helpers';
-import { actions } from '@bgroup/data-model/db';
 
 export class ModulesManager extends Manager {
+	declare model: DB.models.Modules;
 	constructor() {
 		super({ model: DB.models.Modules });
 	}
 
-	// list = async params => {
-	// 	const modulesResponse = await this.model.findAll({});
-	// 	const modules = modulesResponse.map(module => module.get({ plain: true }));
+	list = async params => {
+		const modulesResponse = await this.model.findAll({
+			include: [
+				{
+					model: DB.models.ModulesActions,
+					as: 'actions',
+				},
+			],
+		});
+		const modules = modulesResponse.map(module => {
+			const moduleData = module.get({ plain: true });
+			moduleData.actions = moduleData.actions.map(action => ({
+				id: action.id,
+				name: action.name,
+				description: action.description,
+			}));
+			return moduleData;
+		});
 
-	// 	const permissionsResponse = await DB.models.ProfileModulePermissions.findAll({
-	// 		include: [
-	// 			{
-	// 				model: DB.models.Profiles,
-	// 				as: 'profile',
-	// 			},
-	// 			{
-	// 				model: DB.models.Permissions,
-	// 				as: 'permission',
-	// 			},
-	// 		],
-	// 	});
-	// 	const permissions = permissionsResponse.map(permission => permission.get({ plain: true }));
-
-	// 	const modulesPermissions = new Map();
-	// 	permissions.forEach(permission => {
-	// 		const existingPermissions = modulesPermissions.get(permission.moduleId) || [];
-	// 		existingPermissions.push({
-	// 			permissionId: permission.permission.id,
-	// 			permissionName: permission.permission.name,
-	// 			profileId: permission.profileId,
-	// 			profileName: permission.profile.name,
-	// 		});
-	// 		modulesPermissions.set(permission.moduleId, existingPermissions);
-	// 	});
-
-	// 	const result = modules.map(module => {
-	// 		return {
-	// 			...module,
-	// 			permissions: modulesPermissions.get(module.id) || [],
-	// 		};
-	// 	});
-
-	// 	return { status: true, data: result };
-	// };
+		return { status: true, data: { entries: modules } };
+	};
 }
 
 export /*bundle*/ const Modules = new ModulesManager();

@@ -1,5 +1,5 @@
 import { Users } from '@essential-js/admin-server/engines/users';
-import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
+import { Route, ISuccess, ResponseType, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
 import * as formidable from 'formidable';
@@ -80,7 +80,6 @@ class UsersRoutes extends Route {
 			const { type } = req.params;
 			const response: ResponseType = await this.manager.generateReport({ header, params, type });
 			if (!response.status && 'error' in response) throw response.error;
-			const formatedResponse = ResponseAPI.success(response as ISuccess);
 
 			const excelPath = path.join(__dirname, response.data.pathFile);
 			return res.sendFile(excelPath);
@@ -109,9 +108,14 @@ class UsersRoutes extends Route {
 	setup = (app: Application) => {
 		super.setup(app);
 		app.get('/users/get-registered-users-by-month/:year', checkToken, this.getRegisteredUsersByMonth);
-		app.post('/users/import', checkToken, this.bulkImport);
-		app.post(`/users/generate-report/:type`, checkToken, this.generateReport);
-		app.get(`/users/get-template/:type`, checkToken, this.getTemplate);
+		app.post('/users/import', checkToken, checkPermission('users.import'), this.bulkImport);
+		app.get(`/users/get-template/:type`, checkToken, checkPermission('users.get-template'), this.getTemplate);
+		app.post(
+			`/users/generate-report/:type`,
+			checkToken,
+			checkPermission('users.generate-report'),
+			this.generateReport
+		);
 	};
 }
 

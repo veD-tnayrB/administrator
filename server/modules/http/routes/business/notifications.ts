@@ -1,9 +1,11 @@
 import { Notifications } from '@essential-js/admin-server/engines/notifications';
-import { Route, checkToken } from '@essential-js/admin-server/helpers';
+import { Route, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 import { Application, Request, Response } from 'express';
 
 class NotificationsRoutes extends Route {
+	declare manager: Notifications;
+
 	constructor() {
 		super({
 			manager: Notifications,
@@ -44,7 +46,7 @@ class NotificationsRoutes extends Route {
 
 	setup = (app: Application) => {
 		super.setup(app);
-		app.post('/notification/launch', checkToken, this.launch);
+		app.post('/notification/launch', checkToken, checkPermission('notification.launch'), this.launch);
 		app.put('/notification/markAsRead', checkToken, this.markAsRead);
 	};
 }

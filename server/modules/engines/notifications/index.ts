@@ -5,6 +5,7 @@ import { IPublish, Publish } from './cases/publish';
 import { Get, IGet } from './cases/get';
 
 export class NotificationsManager extends Manager {
+	declare model: DB.models.Notifications;
 	constructor() {
 		super({ model: DB.models.Notifications });
 	}

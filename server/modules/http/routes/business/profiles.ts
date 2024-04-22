@@ -2,10 +2,11 @@ import { Profiles } from '@essential-js/admin-server/engines/profiles';
 import { Application, Request, Response } from 'express';
 import * as formidable from 'formidable';
 import * as path from 'path';
-import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
+import { Route, ResponseType, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
 class ProfilesRoutes extends Route {
+	declare manager: Profiles;
 	constructor() {
 		super({
 			manager: Profiles,
@@ -61,7 +62,6 @@ class ProfilesRoutes extends Route {
 			const { type } = req.params;
 			const response: ResponseType = await this.manager.generateReport({ header, params, type });
 			if (!response.status && 'error' in response) throw response.error;
-			const formatedResponse = ResponseAPI.success(response as ISuccess);
 
 			const excelPath = path.join(__dirname, response.data.pathFile);
 			return res.sendFile(excelPath);
@@ -89,9 +89,14 @@ class ProfilesRoutes extends Route {
 
 	setup = (app: Application) => {
 		super.setup(app);
-		app.post('/profiles/import', checkToken, this.bulkImport);
-		app.post(`/profiles/generate-report/:type`, checkToken, this.generateReport);
-		app.get(`/profiles/get-template/:type`, checkToken, this.getTemplate);
+		app.post('/profiles/import', checkToken, checkPermission('profiles.import'), this.bulkImport);
+		app.get(`/profiles/get-template/:type`, checkToken, checkPermission('profiles.get-template'), this.getTemplate);
+		app.post(
+			`/profiles/generate-report/:type`,
+			checkToken,
+			checkPermission('profiles.generate-report'),
+			this.generateReport
+		);
 	};
 }
 

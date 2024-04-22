@@ -1,7 +1,0 @@
-{
-	"name": "engines/permissions",
-	"ts": {
-		"path": "./",
-		"files": ["*"]
-	}
-}
