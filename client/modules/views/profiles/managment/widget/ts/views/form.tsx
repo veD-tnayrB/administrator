@@ -14,7 +14,7 @@ export const Form = () => {
 		name: store.item.name || '',
 		description: store.item.description || '',
 		active: store.item.active || true,
-		modules: '',
+		modules: store.selectedModules,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
@@ -57,7 +57,7 @@ export const Form = () => {
 				</label>
 			</div>
 
-			<Modules />
+			<Modules values={values} />
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
