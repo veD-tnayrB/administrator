@@ -7,7 +7,6 @@ import { Actions } from './actions';
 export const Module = (props: IModule) => {
 	const { store } = useProfilesManagmentContext();
 	const isChecked = !!props.values.modules[props.id];
-	console.log('STORE.SELECTED MODULES => ', store.selectedModules)
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = event.target;

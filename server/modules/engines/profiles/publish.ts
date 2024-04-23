@@ -37,7 +37,6 @@ export class Publish {
 			});
 		});
 
-		console.log('PERMISSINS TO INSERT => ', permissionsToInsert);
 		// Bulk insert new permissions
 		await Publish.modulesModel.bulkCreate(permissionsToInsert, { transaction });
 	}
