@@ -33,7 +33,22 @@ export class AuthRoutes {
 			const formatedResponse = ResponseAPI.success({ data: response.data });
 			return res.json(formatedResponse);
 		} catch (exc) {
-			console.error('LOGIN error:', exc);
+			console.error('GET USER error:', exc);
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
+			return res.status(500).json(errorResponse);
+		}
+	}
+	async logout(req: Request, res: Response) {
+		try {
+			const params = req.query;
+			if (!params.token) throw 'TOKEN_NOT_PROVIDED';
+			const response = await Auth.logout(params);
+			if (!response.status) throw response.error;
+
+			const formatedResponse = ResponseAPI.success({ data: response.data });
+			return res.json(formatedResponse);
+		} catch (exc) {
+			console.error('LOGOUT error:', exc);
 			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
 			return res.status(500).json(errorResponse);
 		}
@@ -42,6 +57,7 @@ export class AuthRoutes {
 	setup(app: Application) {
 		app.post('/login', this.login);
 		app.get('/auth/get-user', checkToken, this.getUser);
+		app.get('/auth/logout', checkToken, this.logout);
 	}
 }
 

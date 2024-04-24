@@ -78,6 +78,19 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
+	logout = async () => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.logout({ token: this.token });
+			if (!response.status) throw response.error;
+			return response;
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	set(data: this): void {
 		this.properties.forEach((property: string | { name: string }) => {
 			if (typeof property === 'object') {

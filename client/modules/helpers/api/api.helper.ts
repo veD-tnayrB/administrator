@@ -4,7 +4,7 @@ import { session } from '@essential-js/admin/auth';
 import { routing } from '@beyond-js/kernel/routing';
 
 export /*bundle*/ class Api extends BaseApi {
-	#tokenErrorMessage: string = 'TOKEN_EXPIRED';
+	#tokenErrorMessage: string[] = ['TOKEN_EXPIRED', 'INCORRECT_TOKEN'];
 	constructor(url?: string) {
 		const toUseUrl = url || config.params.server;
 		super(toUseUrl);
@@ -13,7 +13,7 @@ export /*bundle*/ class Api extends BaseApi {
 	}
 
 	private async handleSpecificError(response: { status: false; error: string }): Promise<void> {
-		if (response.error !== this.#tokenErrorMessage) return;
+		if (this.#tokenErrorMessage.includes(response.error)) return;
 		await session.logout();
 		routing.pushState('/auth/login');
 	}

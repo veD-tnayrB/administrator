@@ -175,6 +175,7 @@ class Session extends ReactiveModel<Session> {
 		localStorage.removeItem('__session');
 		this.#isLogged = false;
 		this.#token = null;
+		await this.#user.logout();
 		this.#user = new User();
 		this.triggerEvent('token-changed');
 		return signOut(auth);

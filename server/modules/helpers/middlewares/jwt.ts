@@ -11,11 +11,12 @@ export /*bundle*/ const checkToken = async (req: Request, res: Response, next: N
 	try {
 		jwt.verify(token, process.env.JWT_SECRET);
 		const response = await Auth.getUser({ token });
-		if (!response) throw 'ICORRECT_TOKEN';
+		if (!response) throw 'INCORRECT_TOKEN';
 		req.body.session = response.data.user;
 		next();
 	} catch (error) {
-		const message = error.name === 'TokenExpiredError' ? 'TOKEN_EXPIRED' : 'ICORRECT_TOKEN';
+		await Auth.logout({ token });
+		const message = error.name === 'TokenExpiredError' ? 'TOKEN_EXPIRED' : 'INCORRECT_TOKEN';
 		return res.status(error.status || 403).json({ status: false, error: message });
 	}
 };

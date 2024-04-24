@@ -12,4 +12,9 @@ export class UserItemProvider {
 		this.#api.bearer(params.token);
 		return this.#api.get('auth/get-user', params);
 	};
+
+	logout = (params: { token: string }) => {
+		this.#api.bearer(params.token);
+		return this.#api.get('auth/logout', params);
+	};
 }
