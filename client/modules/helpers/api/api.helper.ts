@@ -13,7 +13,7 @@ export /*bundle*/ class Api extends BaseApi {
 	}
 
 	private async handleSpecificError(response: { status: false; error: string }): Promise<void> {
-		if (this.#tokenErrorMessage.includes(response.error)) return;
+		if (!this.#tokenErrorMessage.includes(response.error)) return;
 		await session.logout();
 		routing.pushState('/auth/login');
 	}

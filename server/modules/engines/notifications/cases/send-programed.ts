@@ -1,7 +1,5 @@
 import * as cron from 'node-cron';
 import { DB } from '@essential-js/admin-server/db';
-import { rrulestr } from 'rrule';
-import { Op } from 'sequelize';
 import { sender } from '../library/sender';
 import * as moment from 'moment-timezone';
 
