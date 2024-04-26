@@ -32,11 +32,11 @@ class NotificationsRoutes extends Route {
 
 	markAsRead = (req: Request, res: Response) => {
 		try {
-			const params = req.body;
-			const response = this.manager.launch(params);
-			if (!response.status && 'error' in response) throw response.error;
-			const formatedResponse = ResponseAPI.success(response);
-			return res.status(200).json(formatedResponse);
+			// const params = req.body;
+			// const response = this.manager.launch(params);
+			// if (!response.status && 'error' in response) throw response.error;
+			// const formatedResponse = ResponseAPI.success(response);
+			return res.status(200).json({ status: true });
 		} catch (exc) {
 			console.error('Error /launch', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });

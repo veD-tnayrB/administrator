@@ -208,6 +208,7 @@ export /*bundle*/ class SendProgramed {
 		let tokens = notification.users.flatMap(user => user.notificationToken);
 		// Deduplicar tokens por seguridad
 		tokens = [...new Set(tokens)];
+		tokens = tokens.filter(token => token);
 
 		const message = {
 			notification: {

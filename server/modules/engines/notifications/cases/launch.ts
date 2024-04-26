@@ -26,6 +26,7 @@ export class Launch {
 
 	static getNotification = async ({ id }: ILaunch) => {
 		try {
+			if (!id) throw new Error('NOTIFICATION_TO_LAUNCH_NOT_PROVIDED');
 			const notificationRegistry = await DB.models.Notifications.findOne({ where: { id } });
 			if (!notificationRegistry) throw new Error('NOTIFICATION_NOT_FOUND');
 			const notification = notificationRegistry.dataValues;
@@ -38,7 +39,7 @@ export class Launch {
 
 	static getUsers = async notification => {
 		try {
-			let results = [];
+			let result = {};
 
 			const notificationId = notification.id;
 
@@ -129,14 +130,14 @@ export class Launch {
 				return acc;
 			}, []);
 
-			results.push({
+			result = {
 				...notification,
 				users: combinedUsers,
-			});
+			};
 
 			return {
 				status: true,
-				data: results,
+				data: result,
 			};
 		} catch (error) {
 			console.error('Error getting user tokens for notifications:', error);
@@ -148,6 +149,8 @@ export class Launch {
 		try {
 			let tokens = notification.users.flatMap(user => user.notificationToken);
 			tokens = [...new Set(tokens)];
+			tokens = tokens.filter(token => token);
+			if (!tokens.length) return { status: true };
 
 			const message = {
 				notification: {
@@ -159,6 +162,7 @@ export class Launch {
 
 			const response = await sender.sendMultipleCast(message);
 			if (!response.status) throw new Error(response.error);
+			return { status: true };
 		} catch (error) {
 			return { status: false, error };
 		}
