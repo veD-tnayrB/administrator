@@ -14,7 +14,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			const response = await session.login({ ...params, timezone }, provider);
 			if (!response.status) throw response.error;
-			routing.pushState('/dashboard');
+			console.log('RESPONSE => ', session.user);
+			const redirectTo = session.user.permissions[0].moduleTo;
+			routing.pushState(redirectTo);
 		} catch (error) {
 			console.error(error);
 			this.#error = error;

@@ -19,4 +19,8 @@ class Controller extends ReactWidgetController {
 	show() {
 		this.#store.loadSidebarItems();
 	}
+
+	hide() {
+		this.#store.hide();
+	}
 }

@@ -34,6 +34,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const userModuleIds = session.user.permissions.map(permission => permission.moduleId);
 			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));
+			console.log('USER MODULES => ', userModules, userModuleIds);
+			console.log('SESSION => ', session.user);
 
 			this.#sidebarCollection.items = userModules;
 		} catch (error) {
@@ -67,5 +69,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		body.setAttribute('data-beyond-mode', themeStorage);
 		this.#mode = themeStorage;
 		this.triggerEvent('theme-changed');
+	};
+
+	hide = () => {
+		this.#sidebarCollection = new Modules();
 	};
 }
