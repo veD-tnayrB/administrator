@@ -34,7 +34,6 @@ function View({ store }: { store: StoreManager }) {
 				{ label: 'ID', name: 'id' },
 				{ label: 'Titulo', name: 'title' },
 				{ label: 'Description', name: 'description' },
-				{ label: 'Time interval', name: 'timeInterval' },
 				{ label: 'Created at', name: 'timeCreated' },
 				{ label: 'Updated at', name: 'timeUpdated' },
 			],
@@ -42,7 +41,7 @@ function View({ store }: { store: StoreManager }) {
 		list: {
 			default: true,
 			itemsConfig: {
-				properties: ['id', 'title', 'description', 'timeInterval', 'timeCreated', 'timeUpdated'],
+				properties: ['id', 'title', 'description', 'timeCreated', 'timeUpdated'],
 				actions: [{ type: 'edit', to: '/notifications/managment', title: 'Edit' }],
 			},
 			row: Row,

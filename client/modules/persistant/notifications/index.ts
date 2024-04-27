@@ -12,6 +12,11 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		return this.#token;
 	}
 
+	#current = null;
+	get current() {
+		return this.#current;
+	}
+
 	constructor({ session }) {
 		super();
 		this.#provider.onMessageReceived = this.#onMessageReceived;
@@ -34,6 +39,9 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 	};
 
 	#onMessageReceived = async params => {
-		const response = await this.#api.put('notification/markAsRead', { id: '', userId: '' });
+		console.log('PARAMS ON MESSAGE RECEIVED > ', params);
+		this.#current = params.notification;
+		this.triggerEvent();
+		// const res	ponse = await this.#api.put('notification/markAsRead', { id: '', userId: '' });
 	};
 }

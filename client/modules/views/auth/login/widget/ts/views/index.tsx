@@ -20,7 +20,7 @@ function View({ store }: { store: StoreManager }) {
 		<LoginContext.Provider value={contextValue}>
 			<div className="login-view auth-view">
 				<LeftSection />
-				<RightSection />
+				{/* <RightSection /> */}
 			</div>
 		</LoginContext.Provider>
 	);
