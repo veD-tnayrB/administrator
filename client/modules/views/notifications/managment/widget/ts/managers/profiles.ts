@@ -3,18 +3,21 @@ import { Profiles, Profile } from '@essential-js/admin/models';
 
 export class ProfilesManager extends StoreListView {
 	declare collection: Profiles;
-	declare propertiesToSearch: { label: string; name: string }[];
+	declare specificFilters: { label: string; name: string }[];
 	declare selectedItems: Map<string, Profile>;
 	declare load: (params?: Record<string, any>) => Promise<void>;
+	declare generalFilters: string[];
+	declare propertiesDisplaying: string[];
+	declare triggerEvent: (event?: string) => void;
 
 	constructor() {
 		super({ collection: new Profiles() });
-		this.propertiesToSearch = [
+		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Name', name: 'name' },
 			{ label: 'Description', name: 'description' },
-			{ label: 'Email', name: 'email' },
 		];
+		this.generalFilters = ['id', 'name'];
 		this.propertiesDisplaying = ['id', 'name', 'description'];
 	}
 

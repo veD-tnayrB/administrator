@@ -37,7 +37,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return this.#limit;
 	}
 
-	propertiesToSearch: IFilter[] = [];
+	specificFilters: IFilter[] = [];
+	generalFilters: string[] = [];
 	#propertiesDisplaying: string[] = [];
 	get propertiesDisplaying() {
 		return this.#propertiesDisplaying;
@@ -62,6 +63,10 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		order: 'timeUpdated',
 		des: 'DES',
 	};
+
+	get params() {
+		return this.#params;
+	}
 
 	set params(params: Record<string, any>) {
 		this.#params = params;
@@ -102,19 +107,19 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	search = async (search: { [key: string]: unknown } | string) => {
 		try {
 			this.fetching = true;
-			const properties = this.propertiesToSearch.map(item => item.name);
 			const query = {};
-			properties.forEach(item => {
+			this.generalFilters.forEach(item => {
 				const value = typeof search === 'string' ? search : search[item];
 				if (!value) return;
+
 				query[item] = value;
 			});
 
 			const { start, ...propsToSend } = this.#params;
 
 			const params = {
-				where: query,
 				...propsToSend,
+				where: query,
 				start: 0,
 			};
 			const response = await this.#collection.load(params);

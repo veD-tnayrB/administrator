@@ -287,10 +287,10 @@
   dependencies:
     "@beyond-js/kernel" "~0.1.9"
 
-"@bgroup/helpers@^1.0.3":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@bgroup/helpers/-/helpers-1.0.6.tgz"
-  integrity sha512-XVG4I8Pza63VeotR0P2LIm/+nATuGAtm/ARxDU8F/HjpTnXyO69VRG4Lz19hqc4E1AS9lPyiSelU63r6PYtiMg==
+"@bgroup/helpers@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@bgroup/helpers/-/helpers-1.0.7.tgz#1c206436153ed7379ff4687945dcb7bc7beac950"
+  integrity sha512-4/Is4/xz2QVcRhWzq2F+VbRuf7aff20KQyIuXcX5SuUqk/y9n3I3QVaAAzXvnhXxQ5a8bDMl6ArIw0YvyWPDhg==
   dependencies:
     "@babel/preset-typescript" "^7.23.2"
     "@beyond-js/backend" "~0.1.8"

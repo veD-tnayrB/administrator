@@ -6,7 +6,7 @@ import { ListView } from '@essential-js/admin/components/list-view';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
-	const [update, setUpdate] = React.useState({});
+	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));
 
 	const contextValue: IContext = {

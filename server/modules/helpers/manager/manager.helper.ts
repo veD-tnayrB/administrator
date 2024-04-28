@@ -21,9 +21,7 @@ export /*bundle*/ abstract class Manager {
 	}
 
 	list = (params: { where: { ids?: string; [key: string]: unknown }; [key: string]: unknown }) => {
-		const ids = params?.where?.ids ? params?.where?.ids.split(',') : [];
-
-		return List.execute(this.#model, { ...params, ids }, `/list/${this.#managerName}`);
+		return List.execute(this.#model, params, `/list/${this.#managerName}`);
 	};
 
 	create = (params: Partial<{ [key: string]: any }>) => {

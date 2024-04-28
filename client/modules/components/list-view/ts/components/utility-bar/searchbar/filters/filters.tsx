@@ -36,13 +36,13 @@ export const FiltersSearch = (props: IFilters) => {
 
 	const reset = () => {
 		const defaultValues = {};
-		store.propertiesToSearch.forEach(item => (defaultValues[item.name] = ''));
+		store.specificFilters.forEach(item => (defaultValues[item.name] = ''));
 		setValues(defaultValues);
 		store.clearSearch();
 		setIsOpen(false);
 	};
 
-	const output = store.propertiesToSearch.map(item => (
+	const output = store.specificFilters.map(item => (
 		<div key={item.name} className="pui-input">
 			<input {...item} placeholder={item.label} value={values[item.name] || ''} onChange={onChange} />
 		</div>

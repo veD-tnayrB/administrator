@@ -51,8 +51,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
-			await this.#profiles.load({ order: 'id', ids: response.data.profiles });
-			await this.#users.load({ active: 1, order: 'id', ids: response.data.users });
+			await this.#profiles.load({ order: 'id', where: { ids: response.data.profiles } });
+			await this.#users.load({ active: 1, order: 'id', where: { ids: response.data.users } });
 
 			this.setItemsSelected({ users: response.data.users, profiles: response.data.profiles });
 			this.#frecuencyManager.load({ frecuencyRules: this.#item.formatedFrecuency, endDate: this.#item.endDate });

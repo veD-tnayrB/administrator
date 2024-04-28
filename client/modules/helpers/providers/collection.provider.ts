@@ -23,7 +23,8 @@ export /*bundle*/ abstract class CollectionProvider {
 
 	list = async (params: IListParams) => {
 		const { where, ...propertiesToUse } = params;
-		const rawQuery = { ...propertiesToUse, ...where };
+		const rawQuery = propertiesToUse;
+		if (where) rawQuery.where = where;
 		const query = Utils.convertObjectToQuery(rawQuery);
 
 		return this.#api.get(`${this.#endpoints.list}${query}`);

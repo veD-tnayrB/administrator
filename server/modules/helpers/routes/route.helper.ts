@@ -52,15 +52,15 @@ export /*bundle*/ class Route {
 
 	list = async (req: Request, res: Response) => {
 		try {
-			let { start, limit, order, des, asc, ...query } = req.query;
-
+			let { start, limit, order, des, asc, where: query } = req.query;
+			const where = query ? JSON.parse(query as string) : {};
 			const response: ResponseType = await this.#manager.list({
 				start: Number(start),
 				limit: Number(limit),
 				order,
 				des,
 				asc,
-				where: query,
+				where,
 			});
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);

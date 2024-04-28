@@ -51,7 +51,7 @@
 		"@beyond-js/kernel": "~0.1.9",
 		"@beyond-js/react-18-widgets": "~1.0.1",
 		"@beyond-js/reactive": "1.1.9",
-		"@bgroup/helpers": "^1.0.3",
+		"@bgroup/helpers": "^1.0.7",
 		"@bgroup/http-suite": "^1.0.2",
 		"@firebase/app": "^0.9.23",
 		"chart.js": "^4.4.1",

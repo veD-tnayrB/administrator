@@ -2,14 +2,17 @@ import { StoreListView } from '@essential-js/admin/components/list-view';
 import { Notification, Notifications } from '@essential-js/admin/models';
 
 export class StoreManager extends StoreListView {
+	declare specificFilters: { label: string; name: string }[];
+	declare fetching: boolean;
+	declare generalFilters: string[];
 	constructor() {
 		super({ collection: new Notifications() });
-		this.propertiesToSearch = [
+		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Title', name: 'title' },
 			{ label: 'Description', name: 'description' },
-			{ label: 'Time interval', name: 'timeInterval' },
 		];
+		this.generalFilters = ['id', 'title', 'description'];
 	}
 
 	launchNotification = async (id: string) => {

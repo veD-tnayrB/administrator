@@ -39,7 +39,6 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 	};
 
 	#onMessageReceived = async params => {
-		console.log('PARAMS ON MESSAGE RECEIVED > ', params);
 		this.#current = params.notification;
 		this.triggerEvent();
 		// const res	ponse = await this.#api.put('notification/markAsRead', { id: '', userId: '' });

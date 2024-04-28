@@ -12,10 +12,11 @@ export class List {
 		let order = [[params?.order ?? List.#default.order, params?.asc ?? 'DESC']];
 
 		// If specific ordering by ids is requested
-		const orderById = params.order === 'id' && params.ids && params.ids.length;
+		const orderById = params.order === 'id' && params.where.ids && params.where.ids.length;
 		if (orderById) {
-			const idsOrder = Sequelize.literal(`FIELD(id, ${params.ids.map(id => `'${id}'`).join(',')})`);
+			const idsOrder = Sequelize.literal(`FIELD(id, ${params.where.ids.map(id => `'${id}'`).join(',')})`);
 			order = [[idsOrder, 'DESC']];
+			delete params.where.ids;
 		}
 
 		// Clean up params before passing to the query
@@ -24,7 +25,9 @@ export class List {
 		delete params?.asc;
 
 		try {
-			const filters = params?.filter ?? actions.processFilters(model, params?.where);
+			const where = Object.entries(params?.where ?? {}).map(([key, value]) => ({ [key]: value }));
+			const query = Object.entries(params?.where || {}).length > 1 ? { or: where } : params.where || {};
+			const filters = params?.filter ?? actions.processFilters(model, query);
 			const attributes = params?.attributes ?? Object.keys(model.rawAttributes);
 			const specs: any = {
 				attributes,

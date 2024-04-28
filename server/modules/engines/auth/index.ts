@@ -131,7 +131,6 @@ class AuthManager {
 	logout = async (params: { token: string }) => {
 		try {
 			const response = await this.#accessTokensModel.destroy({ where: { accessToken: params.token } });
-			console.log('RESPONSE', response);
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };

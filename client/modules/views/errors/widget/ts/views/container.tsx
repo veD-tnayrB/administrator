@@ -12,7 +12,6 @@ interface IProps {
 
 export const Container = ({ title, description, goBack }: IProps) => {
 	const backHome = () => {
-		console.log('SESSION.USER=> ', session.user);
 		const redirectTo = session.user.permissions ? session.user.permissions[0].moduleTo : '/auth/login';
 		routing.pushState(redirectTo);
 	};

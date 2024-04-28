@@ -9,7 +9,7 @@ export interface ISearchbar extends React.HtmlHTMLAttributes<HTMLInputElement> {
 
 export const Searchbar = (props: ISearchbar) => {
 	const { store } = useListViewContext();
-	const displayFilters = !!store.propertiesToSearch && !!store.propertiesToSearch.length;
+	const displayFilters = !!store.specificFilters && !!store.specificFilters.length;
 
 	return (
 		<section className="search-section">
