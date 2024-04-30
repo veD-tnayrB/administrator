@@ -9,6 +9,8 @@ export class UsersManager extends StoreListView {
 	declare generalFilters: string[];
 	declare propertiesDisplaying: string[];
 	declare triggerEvent: (event?: string) => void;
+	declare params: Record<string, any>;
+	declare limit: number;
 
 	constructor() {
 		super({ collection: new Users() });
@@ -17,6 +19,13 @@ export class UsersManager extends StoreListView {
 			{ label: 'Name', name: 'name' },
 			{ label: 'Email', name: 'email' },
 		];
+		this.params = {
+			limit: this.limit,
+			start: 0,
+			order: 'timeUpdated',
+			des: 'DES',
+			where: { active: 1 },
+		};
 		this.generalFilters = ['id', 'name', 'email'];
 
 		this.propertiesDisplaying = ['id', 'names', 'lastNames', 'email'];

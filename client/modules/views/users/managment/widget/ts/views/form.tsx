@@ -29,8 +29,8 @@ export const Form = () => {
 		setItem(currentValue => ({ ...currentValue, [name]: value }));
 	};
 	const onSelectChange = params => {
-		const values = params.map(item => item.value);
-		setItem(currentValues => ({ ...currentValues, profiles: values }));
+		console.log('PARAMS= > ', params);
+		setItem(currentValues => ({ ...currentValues, profiles: params.target.value }));
 	};
 
 	const onSubmit = (event: React.FormEvent) => {
@@ -42,6 +42,7 @@ export const Form = () => {
 	};
 
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
+	console.log('ITEM => ', { IP: item.profiles, formatedOptions });
 
 	return (
 		<form onSubmit={onSubmit} className="managment-form">
@@ -65,6 +66,7 @@ export const Form = () => {
 					onChange={onChange}
 				/>
 			</div>
+
 			<Input
 				placeholder="johnDoe@gmail.com"
 				className="fixed-label"
@@ -74,13 +76,7 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Select
-				onChange={onSelectChange}
-				options={formatedOptions}
-				isMulti
-				label="Profiles"
-				value={item.profiles || []}
-			/>
+			<Select onChange={onSelectChange} options={formatedOptions} label="Profiles" value={item.profiles || []} />
 
 			<div className="pui-input">
 				<label className="pui-switch__label">

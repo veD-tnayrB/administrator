@@ -1,7 +1,5 @@
 import React from 'react';
-import { Day } from './day';
 import { Month } from './month';
-import { v4 as uuid } from 'uuid';
 
 interface IProps {
 	selectedDays: Record<string, string[]>;

@@ -1,9 +1,9 @@
 import React from 'react';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
 import { Form } from './form';
 import { StoreManager } from '../store';
 import { IContext, NotificationsManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { SpinnerPage } from '@essential-js/admin/components/spinner';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {

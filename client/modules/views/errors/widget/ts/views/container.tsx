@@ -11,8 +11,10 @@ interface IProps {
 }
 
 export const Container = ({ title, description, goBack }: IProps) => {
-	const backHome = () => {
-		const redirectTo = session.user.permissions ? session.user.permissions[0].moduleTo : '/auth/login';
+	const backHome = async () => {
+		const permissions = session.user.permissions;
+		if (!permissions.length) await session.logout();
+		const redirectTo = permissions.length ? permissions[0].moduleTo : '/auth/login';
 		routing.pushState(redirectTo);
 	};
 

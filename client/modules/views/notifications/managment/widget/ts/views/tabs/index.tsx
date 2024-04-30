@@ -16,6 +16,10 @@ export const Tabs = () => {
 
 	useBinder([store], () => setActive(store.currentTab), ['tabs.changed']);
 
+	React.useEffect(() => {
+		store.loadAssociations();
+	}, []);
+
 	const onTabsSelected = (event, index: number) => {
 		store.setTab(index);
 	};

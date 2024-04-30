@@ -12,8 +12,8 @@ export const FrencuencySelect = () => {
 	const { store } = useNotificationsManagmentContext();
 	const { endDate } = useFrecuencyManagmentContext();
 
-	const onChangeFrecuency = (selected: { value: Frecuencies; label: Frecuencies }) => {
-		store.frecuencyManager.selectedFrecuency = selected.value;
+	const onChangeFrecuency = (selected: { target: { value: Frecuencies } }) => {
+		store.frecuencyManager.selectedFrecuency = selected.target.value;
 	};
 
 	const frencuenciesOpts = Object.values(Frecuencies).map(frencuency => ({ value: frencuency, label: frencuency }));
