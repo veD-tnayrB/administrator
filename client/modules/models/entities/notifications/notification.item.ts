@@ -1,7 +1,7 @@
 import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { NotificationItemProvider } from '../../providers/notifications/notification.item.provider';
-import type { IUser } from '../users/user.item';
+import { IUser } from '../users/user.item';
 import { IProfile } from '../profiles/profile.item';
 
 export /*bundle*/ interface INotification {

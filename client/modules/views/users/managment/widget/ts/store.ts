@@ -1,6 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profiles } from '@essential-js/admin/models';
-import { User, IUser } from '@essential-js/admin/auth';
+import { User, IUser, Profiles } from '@essential-js/admin/models';
 import { toast } from 'react-toastify';
 import { routing } from '@beyond-js/kernel/routing';
 

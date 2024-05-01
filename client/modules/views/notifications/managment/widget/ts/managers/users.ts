@@ -1,5 +1,5 @@
 import { StoreListView } from '@essential-js/admin/components/list-view';
-import { Users, User } from '@essential-js/admin/auth';
+import { Users, User } from '@essential-js/admin/models';
 
 export class UsersManager extends StoreListView {
 	declare collection: Users;
