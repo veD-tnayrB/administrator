@@ -1,8 +1,8 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@essential-js/admin/serverless-provider';
-import { User } from './user.item';
 import { NotificationsHandler } from '@essential-js/admin/notifications';
+import { User } from './users/models/user.item';
 /**
  * Interface for login parameters.
  * @typedef {Object} ILoginParams

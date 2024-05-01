@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form as FormUI, Input } from 'pragmate-ui/form';
-import { IUser } from '@essential-js/admin/models';
+import { IUser } from '@essential-js/admin/auth';
 import { useNotificationsManagmentContext } from '../context';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';

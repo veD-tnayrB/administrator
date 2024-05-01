@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Users } from '@essential-js/admin/models';
+import { Users } from '@essential-js/admin/auth';
 
 export interface IOnlineUsers {
 	label: string;

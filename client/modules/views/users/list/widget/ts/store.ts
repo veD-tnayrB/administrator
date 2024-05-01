@@ -1,5 +1,5 @@
 import { StoreListView } from '@essential-js/admin/components/list-view';
-import { Users } from '@essential-js/admin/models';
+import { Users } from '@essential-js/admin/auth';
 
 export class StoreManager extends StoreListView {
 	declare params: Record<string, unknown>;

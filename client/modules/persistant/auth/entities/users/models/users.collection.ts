@@ -1,7 +1,7 @@
 import { Collection } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
-import { UsersCollectionProvider } from '../../providers/users/users.collection.provider';
 import { User } from './user.item';
+import { UsersCollectionProvider } from '../providers/users.collection.provider';
 
 export /*bundle*/ class Users extends Collection {
 	constructor() {

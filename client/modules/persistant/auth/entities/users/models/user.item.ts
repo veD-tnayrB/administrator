@@ -1,31 +1,20 @@
-import { ReactiveModel } from '@beyond-js/reactive/model';
-import { UserItemProvider } from './user.item.provider';
+import { Item } from '@beyond-js/reactive/entities';
+import config from '@essential-js/admin/config';
+import { UserItemProvider } from '../providers/user.item.provider';
 
-interface IUser {
+export /*bundle*/ interface IUser {
 	id: string;
 	active: boolean;
 	email: string;
 	lastNames: string;
+	profiles: string[];
 	names: string;
 	timeCreated: Date;
-	profiles: { id: string; name: string }[];
-	permissions: { id: string; name: string }[];
 	timeUpdated: Date;
 }
 
-export /*bundle*/ class User extends ReactiveModel<IUser> {
-	private provider: UserItemProvider = new UserItemProvider();
-	protected properties = [
-		'id',
-		'names',
-		'lastNames',
-		'email',
-		'active',
-		'timeCreated',
-		'timeUpdated',
-		'permissions',
-		'profiles',
-	];
+export /*bundle*/ class User extends Item<IUser> {
+	protected properties = ['id', 'active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated', 'profiles'];
 
 	get fullName() {
 		let namesArray = this.names.split(' ');
@@ -34,20 +23,13 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
 	}
 
-	constructor() {
-		super();
-		this.reactiveProps([
-			'id',
-			'names',
-			'lastNames',
-			'email',
-			'active',
-			'timeCreated',
-			'timeUpdated',
-			'permissions',
-			'profiles',
-			'loaded',
-		]);
+	constructor(params: { id: string | undefined } = { id: undefined }) {
+		super({
+			provider: UserItemProvider,
+			storeName: 'users',
+			db: config.params.application.localDB,
+			...params,
+		});
 	}
 
 	login = async (params: { email: string; password?: string; notificationsToken: string }) => {
@@ -90,17 +72,4 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 			this.fetching = false;
 		}
 	};
-
-	set(data: this): void {
-		this.properties.forEach((property: string | { name: string }) => {
-			if (typeof property === 'object') {
-				if (data.hasOwnProperty(property.name)) {
-				}
-				return;
-			}
-			if (data.hasOwnProperty(property)) this[property] = data[property];
-		});
-
-		this.triggerEvent();
-	}
 }
