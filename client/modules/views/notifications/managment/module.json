@@ -1,6 +1,6 @@
 {
 	"name": "views/notifications/managment",
-
+	"platforms": ["web", "android", "ios"],
 	"widget": {
 		"layout": "main-admin-layout",
 		"route": "/notifications/managment/${id}",

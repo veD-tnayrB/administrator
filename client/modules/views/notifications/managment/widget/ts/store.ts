@@ -64,7 +64,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	loadAssociations = async () => {
 		await this.#profiles.load({ order: 'id', where: { ids: this.#item.profiles } });
 		await this.#users.load({ order: 'id', where: { active: 1, ids: this.#item.users } });
-		console.log('SET ITEMS PARAMS > ', { users: this.#item.users, profiles: this.#item.profiles, i: this.#item });
 		this.setItemsSelected({ users: this.#item.users, profiles: this.#item.profiles });
 	};
 

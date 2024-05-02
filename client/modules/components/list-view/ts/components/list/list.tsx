@@ -8,7 +8,7 @@ export /*bundle*/ enum ItemActionType {
 	DELETE = 'delete',
 }
 
-export interface IItemAction extends React.HTMLAttributes<HTMLButtonElement> {
+export /*bundle*/ interface IItemAction extends React.HTMLAttributes<HTMLButtonElement> {
 	modal?: any;
 	to?: string;
 	type: ItemActionType;
@@ -32,7 +32,7 @@ export const List = (props: IList) => {
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
-	const propertiesToDisplay = itemsProperties.filter(item => store.propertiesDisplaying.includes(item));
+	const propertiesToDisplay = itemsProperties.filter((item) => store.propertiesDisplaying.includes(item));
 
 	const output = store.items.map((item: Record<string, any>, index: number) => {
 		if (!Row) return null;

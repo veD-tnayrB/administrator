@@ -2,6 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { User, IUser, Profiles } from '@essential-js/admin/models';
 import { toast } from 'react-toastify';
 import { routing } from '@beyond-js/kernel/routing';
+import { session } from '@essential-js/admin/auth';
 
 const EMAIL_REGEX =
 	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -33,6 +34,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 	#id: string = 'create';
 
+	#refreshUser: boolean = false;
+
 	load = async ({ id }: { id: string }) => {
 		try {
 			if (id === 'create') {
@@ -45,6 +48,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			this.fetching = true;
 			this.#id = id;
+			this.#refreshUser = this.#id === session.user.id;
+
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
@@ -75,6 +80,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			await this.#item.set(values);
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;
+
+			if (this.#refreshUser) await session.load();
 
 			this.#error = '';
 			const message = this.isCreating ? 'User created successfully' : 'User updated successfully';

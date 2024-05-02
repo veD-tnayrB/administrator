@@ -1,5 +1,6 @@
 {
 	"name": "views/profiles/list",
+	"platforms": ["web", "android", "ios"],
 	"widget": {
 		"route": "/profiles",
 		"layout": "main-admin-layout",

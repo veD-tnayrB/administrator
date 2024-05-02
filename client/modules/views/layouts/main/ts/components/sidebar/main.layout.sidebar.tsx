@@ -5,6 +5,7 @@ import { SidebarItem } from './item';
 import { useLayoutContext } from '../../context';
 import { SidebarLoading } from './loading';
 import { SidebarFooter } from './footer';
+import { session } from '@essential-js/admin/auth';
 
 export const Sidebar = () => {
 	const { store } = useLayoutContext();
@@ -20,7 +21,7 @@ export const Sidebar = () => {
 
 	items.sort((a, b) => a.order - b.order);
 
-	const output = items.map(item => <SidebarItem key={item.label} {...item} />);
+	const output = items.map((item) => <SidebarItem key={item.label} {...item} />);
 	const panel = isLoading ? (
 		<SidebarLoading />
 	) : (

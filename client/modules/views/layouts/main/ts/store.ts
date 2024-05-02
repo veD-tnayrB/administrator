@@ -16,18 +16,14 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	constructor() {
 		super();
 		this.#loadTheme();
-		session.on('user-changed', () => {
-			this.loadSidebarItems();
-		});
+		session.on('user-changed', this.loadSidebarItems);
 	}
 
 	loadSidebarItems = async () => {
 		try {
 			this.fetching = true;
 			const isSessionLoaded = session.isLogged;
-			const alreadyLoaded = !!this.#sidebarCollection.items.length;
-
-			if (!isSessionLoaded || alreadyLoaded) return;
+			if (!isSessionLoaded)  return;
 
 			const response = await this.#sidebarCollection.load();
 			if (!response.status) throw response.error;

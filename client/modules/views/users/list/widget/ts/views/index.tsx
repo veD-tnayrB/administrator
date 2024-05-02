@@ -3,14 +3,18 @@ import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
+import { getPermissions } from '@essential-js/admin/helpers';
+import { Row } from './item';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
+	const permissions = getPermissions();
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));
 
 	const contextValue: IContext = {
 		store,
+		permissions,
 	};
 
 	const listProperties = {
@@ -42,6 +46,7 @@ function View({ store }: { store: StoreManager }) {
 			},
 		},
 		list: {
+			row: Row,
 			default: true,
 			isSelecteable: true,
 			itemsConfig: {
@@ -66,10 +71,7 @@ function View({ store }: { store: StoreManager }) {
 			},
 		},
 		actions: {
-			create: {
-				to: '/users/managment/create',
-				label: 'Create',
-			},
+			create: null,
 			removeAll: true,
 			columnsSelector: {
 				title: 'Select the columns you want to appear',
@@ -90,6 +92,14 @@ function View({ store }: { store: StoreManager }) {
 			import: true,
 		},
 	};
+
+	if (permissions.has('users.create')) {
+		listProperties.actions.create = {
+			to: '/users/managment/create',
+			label: 'Create',
+		};
+	}
+
 	return (
 		<UsersListContext.Provider value={contextValue}>
 			<div className="page-container  list-page-container">

@@ -11,7 +11,7 @@ export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [error, setError] = React.useState('');
-	const formatedOptions = store.profiles.items.map(item => ({ label: item.name, value: item.id }));
+	const formatedOptions = store.profiles.items.map((item) => ({ label: item.name, value: item.id }));
 	const [item, setItem] = React.useState(store.item.getProperties());
 
 	useBinder([store], () => {
@@ -26,11 +26,10 @@ export const Form = () => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-		setItem(currentValue => ({ ...currentValue, [name]: value }));
+		setItem((currentValue) => ({ ...currentValue, [name]: value }));
 	};
-	const onSelectChange = params => {
-		console.log('PARAMS= > ', params);
-		setItem(currentValues => ({ ...currentValues, profiles: params.target.value }));
+	const onSelectChange = (params) => {
+		setItem((currentValues) => ({ ...currentValues, profiles: params.target.value }));
 	};
 
 	const onSubmit = (event: React.FormEvent) => {
@@ -42,7 +41,6 @@ export const Form = () => {
 	};
 
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
-	console.log('ITEM => ', { IP: item.profiles, formatedOptions });
 
 	return (
 		<form onSubmit={onSubmit} className="managment-form">

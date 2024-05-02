@@ -1,5 +1,6 @@
 {
 	"name": "views/errors",
+	"platforms": ["web", "android", "ios"],
 	"txt": {
 		"path": "/widget/txt",
 		"files": "*"

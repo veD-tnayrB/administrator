@@ -1,6 +1,6 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Profile, IProfile, Modules } from '@essential-js/admin/models';
-
+import { session } from '@essential-js/admin/auth';
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
 	get item() {
@@ -31,6 +31,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#isCreating;
 	}
 
+	#refrestUser: boolean = false;
+
 	load = async ({ id }: { id: string }) => {
 		try {
 			if (id === 'create') {
@@ -46,6 +48,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
+			this.#refrestUser = session.user.profiles.some((profile) => profile.name === this.#item.name);
 			const modulesResponse = await this.#modules.load();
 			if (!modulesResponse.status) throw modulesResponse.error;
 			this.#calculateselectedModules();
@@ -60,10 +63,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#calculateselectedModules = () => {
 		const selectedModulesInProfile = {};
-		this.#item.modules.forEach(module => {
+		this.#item.modules.forEach((module) => {
 			const selectedActions: Record<string, boolean> = {};
 
-			module.actions.forEach(action => (selectedActions[action.id] = true));
+			module.actions.forEach((action) => (selectedActions[action.id] = true));
 			selectedModulesInProfile[module.id] = selectedActions;
 		});
 
@@ -74,9 +77,12 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			this.fetching = true;
 			await this.#item.set({ ...values, modules: this.#selectedModules });
-			const response = await this.#item.publish();
 
+			const response = await this.#item.publish();
 			if (!response.status) throw response.error;
+
+			if (this.#refrestUser) await session.load();
+
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };
@@ -87,6 +93,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	reset = () => {
 		this.#item = new Profile();
+		this.#refrestUser = false;
+		this.#modules = new Modules();
 		this.ready = false;
 		this.triggerEvent();
 	};

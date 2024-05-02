@@ -6,6 +6,7 @@ export class StoreManager extends StoreListView {
 	declare limit: number;
 	declare specificFilters: { label: string; name: string }[];
 	declare generalFilters: string[];
+	declare remove: ({ id }: { id: string }) => void;
 
 	constructor() {
 		super({ collection: new Users() });

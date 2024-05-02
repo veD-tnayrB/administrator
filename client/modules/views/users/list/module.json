@@ -1,5 +1,6 @@
 {
 	"name": "views/users/list",
+	"platforms": ["web", "android", "ios"],
 	"widget": {
 		"layout": "main-admin-layout",
 		"route": "/users",

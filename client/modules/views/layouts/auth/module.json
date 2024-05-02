@@ -1,5 +1,6 @@
 {
 	"name": "auth-layout",
+	"platforms": ["web", "android", "ios"],
 	"widget": {
 		"is": "layout",
 		"ts": {

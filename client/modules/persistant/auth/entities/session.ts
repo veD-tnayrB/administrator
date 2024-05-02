@@ -134,7 +134,7 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Private method to log in with email and password.
-	 * @async
+	o * @async
 	 * @param {ILoginParams} params - Login parameters.
 	 * @returns {Promise<{status: boolean, error?: any}>} Promise object representing the login status.
 	 */
