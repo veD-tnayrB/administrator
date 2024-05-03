@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { IList } from './components/list/list';
 import { IContext, ListViewContext } from './context';
@@ -10,8 +10,9 @@ import { IActions } from './components/utility-bar/actions/actions';
 import { ListContainer } from './components/list/wrapper';
 import { Utilitybar } from './components/utility-bar/utility-bar';
 import { IViewHeader, ViewHeader } from './components/view-header';
+import { useInitialize } from './initialize-hook';
 
-interface IProps extends React.HTMLAttributes<HTMLElement> {
+export interface IProps extends React.HTMLAttributes<HTMLElement> {
 	store: StoreListView;
 	viewHeader: IViewHeader;
 	searchbar: ISearchbar;
@@ -19,10 +20,13 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	header?: IHeader;
 	paginator?: IPaginator;
 	actions: IActions;
+	plugins: string[] | undefined;
 }
 
 export /*bundle*/ const ListView = (props: IProps) => {
 	const [, setUpdate] = React.useState({});
+	console.log('LIST VIEW PROPS => ', props);
+	useInitialize(props);
 	useBinder([props.store], () => setUpdate({}));
 
 	const contextValue: IContext = {

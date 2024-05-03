@@ -15,4 +15,4 @@ export interface IContext {
 }
 
 export const ListViewContext = React.createContext<IContext>({} as IContext);
-export const useListViewContext = () => React.useContext(ListViewContext);
+export /*bundle*/ const useListViewContext = () => React.useContext(ListViewContext);

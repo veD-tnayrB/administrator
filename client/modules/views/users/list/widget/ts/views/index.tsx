@@ -16,9 +16,11 @@ function View({ store }: { store: StoreManager }) {
 		store,
 		permissions,
 	};
+	console.log('STORE= . ', store);
 
 	const listProperties = {
 		store,
+		plugins: ['reports'],
 		viewHeader: {
 			title: 'Users',
 		},

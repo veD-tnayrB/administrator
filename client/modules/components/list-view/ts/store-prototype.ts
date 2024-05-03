@@ -2,6 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
 import config from '@essential-js/admin/config';
+import { Reports } from './plugins/reports';
 
 const DEFAULT_LIMIT = 5;
 
@@ -26,8 +27,12 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		return this.#selectedItems;
 	}
 
+	set selectedItems(value: Map<string, Record<string, any>>) {
+		this.#selectedItems = value;
+	}
+
 	get isAllPageSelected() {
-		const selectedItems = this.#items.filter(item => this.#selectedItems.has(item.id));
+		const selectedItems = this.#items.filter((item) => this.#selectedItems.has(item.id));
 		return selectedItems.length === this.#items.length;
 	}
 
@@ -73,6 +78,21 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.#updateUrl();
 	}
 
+	#avaiablesPlugins = {
+		reports: Reports,
+	};
+	#plugins: string[] = [];
+	get plugins() {
+		return this.#plugins;
+	}
+
+	set plugins(value: string[]) {
+		this.#plugins = value;
+		this.#getPlugins();
+	}
+
+	#initalizedPlugins = new Map();
+
 	constructor({ collection, id }: { collection: Collection; id: string }) {
 		super();
 
@@ -91,6 +111,21 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		if (!!Object.entries(urlParams).length) this.#params = urlParams;
 	}
 
+	#getPlugins = () => {
+		this.#plugins.forEach((plugin) => {
+			if (!this.#avaiablesPlugins[plugin] || this.#initalizedPlugins.has(plugin)) return;
+
+			const object = this.#avaiablesPlugins[plugin];
+			const instance = new this.#avaiablesPlugins[plugin](this);
+			this.#initalizedPlugins.set(plugin, instance);
+
+			const methods = instance.toExpose;
+
+			console.log('METHODS => ', methods, object);
+			methods.forEach((method) => (this[method] = instance[method]));
+		});
+	};
+
 	load = async (params: Record<string, any> = {}) => {
 		try {
 			this.#params = { ...this.#params, ...params };
@@ -108,7 +143,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		try {
 			this.fetching = true;
 			const query = {};
-			this.generalFilters.forEach(item => {
+			this.generalFilters.forEach((item) => {
 				const value = typeof search === 'string' ? search : search[item];
 				if (!value) return;
 
@@ -218,29 +253,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		}
 	};
 
-	bulkRemove = async () => {
-		try {
-			this.fetching = true;
-
-			this.#selectedItems.forEach(async item => {
-				const response = await item.delete();
-				if (!response) throw 'RECORD_COULDNT_BE_REMOVED';
-			});
-
-			await this.load();
-			this.#selectedItems = new Map();
-			await this.clearSearch();
-			return { status: true };
-		} catch (error) {
-			console.error(error);
-			return { status: false, error };
-		} finally {
-			this.fetching = false;
-		}
-	};
-
 	selectItem = ({ id }: { id: string }) => {
-		const item = this.#items.find(item => item.id === id);
+		const item = this.#items.find((item) => item.id === id);
 
 		if (this.#selectedItems.has(id)) {
 			this.#selectedItems.delete(id);
@@ -258,67 +272,8 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			return;
 		}
 
-		this.#items.forEach(item => this.#selectedItems.set(item.id, item));
+		this.#items.forEach((item) => this.#selectedItems.set(item.id, item));
 		this.triggerEvent();
-	};
-
-	generateReport = async ({ header, type }: { header: { label: string; name: string }[]; type: 'xlsx' | 'csv' }) => {
-		try {
-			this.fetching = true;
-			const response = await this.#collection.generateReport({ header, params: this.#params, type });
-
-			const date = new Date();
-			const formattedDate = date.toLocaleDateString('en-GB').replace(/\//g, '-');
-
-			const a = document.createElement('a');
-			a.href = response.data;
-			a.download = `Report-${formattedDate}.${type}`;
-			document.body.appendChild(a);
-			a.click();
-			a.remove();
-			window.URL.revokeObjectURL(response.data);
-		} catch (error) {
-			console.error(error);
-			return error;
-		} finally {
-			this.fetching = false;
-		}
-	};
-
-	import = async (file: File) => {
-		try {
-			this.fetching = true;
-			const response = await this.#collection.import({ file });
-			if (!response.status) throw response.error;
-			await this.load();
-			return response;
-		} catch (error) {
-			console.error(error);
-			return error;
-		} finally {
-			this.fetching = false;
-		}
-	};
-
-	getTemplate = async ({ type }: { type: 'xlsx' | 'csv' }) => {
-		try {
-			this.fetching = true;
-			const response = await this.#collection.getTemplate({ type });
-
-			const a = document.createElement('a');
-			a.href = response.data;
-			const nameType = type === 'xlsx' ? 'Excel' : 'CSV';
-			a.download = `%${nameType}-Template.${type}`;
-			document.body.appendChild(a);
-			a.click();
-			a.remove();
-			window.URL.revokeObjectURL(response.data);
-		} catch (error) {
-			console.error(error);
-			return error;
-		} finally {
-			this.fetching = false;
-		}
 	};
 
 	#updateUrl = () => {

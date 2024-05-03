@@ -1,12 +1,14 @@
 import React from 'react';
-import { IRow } from '@essential-js/admin/components/list-view';
+import { IRow, useListViewContext } from '@essential-js/admin/components/list-view';
 import { v4 as uuid } from 'uuid';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { DeleteModal } from './delete-modal';
 import { useUsersListContext } from '../context';
+import { Checkbox } from 'pragmate-ui/form';
 
-export const Row = ({ propertiesToDisplay, item }: IRow) => {
+export const Row = ({ propertiesToDisplay, item, selectedItems }: IRow) => {
+	const { list, store } = useListViewContext();
 	const { permissions } = useUsersListContext();
 	const [displayDeleteModal, setDisplayModal] = React.useState(false);
 
@@ -33,13 +35,22 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 		setDisplayModal(false);
 	};
 
+	const onSelect = () => {
+		if (list.isSelecteable) store.selectItem({ id: item.id });
+	};
+
 	const onEdit = () => routing.pushState(`/users/managment/${item.id}`);
 
 	const displayEdit = permissions.has('user.update');
 	const displayRemove = permissions.has('users');
+	const isItemSelected = selectedItems?.has(item.id);
 
 	return (
 		<li className="row">
+			<span className="check-item field">
+				<Checkbox checked={isItemSelected} onChange={onSelect} id={item.id} />
+			</span>
+
 			{output}
 			<span className="actions actions-container field">
 				<div className="row-actions">
