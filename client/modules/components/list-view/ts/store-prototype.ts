@@ -2,7 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
 import config from '@essential-js/admin/config';
-import { Reports } from './plugins/reports';
+import { Reports } from './plugins/reports/manager';
 
 const DEFAULT_LIMIT = 5;
 

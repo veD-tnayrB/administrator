@@ -1,4 +1,4 @@
-import type { StoreListView } from '../store-prototype';
+import type { StoreListView } from '../../store-prototype';
 
 export class Reports {
 	#parent: StoreListView;

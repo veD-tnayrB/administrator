@@ -1,10 +1,10 @@
 import React from 'react';
-import { IActions } from '../../actions';
 import { v4 as uuid } from 'uuid';
-import { GenerateCSV } from './generate-csv';
-import { Import } from '../import/import';
-import { GenerateReports } from './generate-reports';
-import { GenerateExcel } from './generate-excel';
+import { GenerateCSV } from './generate/generate-csv';
+import { Import } from './import/import';
+import { GenerateReports } from './generate/generate-reports';
+import { GenerateExcel } from './generate/generate-excel';
+import { IActions } from '../../../../components/utility-bar/actions/actions';
 
 export const ReportsContainer = (props: IActions) => {
 	if (!props.generateReport) return;
@@ -18,7 +18,7 @@ export const ReportsContainer = (props: IActions) => {
 		actions.push(<GenerateCSV {...props.generateReport.excel} />);
 	if (props.import) actions.push(<Import {...props.import} />);
 
-	const output = actions?.map(action => <div key={uuid()}>{action}</div>);
+	const output = actions?.map((action) => <div key={uuid()}>{action}</div>);
 
 	return <div className="reports-file-container">{output}</div>;
 };

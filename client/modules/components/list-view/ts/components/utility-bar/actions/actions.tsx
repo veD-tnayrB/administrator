@@ -2,11 +2,10 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { CreateAction, ICreateAction } from './pre-done/create';
 import { ColumnsSelector, IColumnSelector } from './pre-done/column-selector/column-selector';
-import { IGenerateReport } from './pre-done/generate-csv';
-import { ReportsContainer } from './pre-done/reports/reports-container';
-import { IImport } from './pre-done/import/import';
-import { TemplatesContainer } from './pre-done/download-template/templates-container';
-import { ITemplate } from './pre-done/download-template/template-csv';
+import { ReportsComponents } from '../../../plugins/reports/components/reports';
+import type { IGenerateReport } from '../../../plugins/reports/components/reports/generate/generate-csv';
+import type { IImport } from '../../../plugins/reports/components/reports/import/import';
+import type { ITemplate } from '../../../plugins/reports/components/reports/download-template/template-csv';
 
 export type IActionsItems = React.ReactNode[];
 
@@ -30,14 +29,12 @@ export const ActionsContainer = (props: IActions) => {
 	if (props.columnsSelector) actions.push(<ColumnsSelector {...props.columnsSelector} />);
 	if (props.create) actions.unshift(<CreateAction {...props.create} />);
 
-	const output = actions?.map(action => <div key={uuid()}>{action}</div>);
+	const output = actions?.map((action) => <div key={uuid()}>{action}</div>);
 	return (
 		<div className="actions-container">
 			{output}
-			<div className="reports-container">
-				<ReportsContainer {...props} />
-				<TemplatesContainer {...props} />
-			</div>
+
+			<ReportsComponents {...props} />
 		</div>
 	);
 };
