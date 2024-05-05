@@ -6,15 +6,16 @@ import { DownloadTemplate } from './download-template/download-templates';
 import { IActions } from '../../../../components/utility-bar/actions/actions';
 
 export const TemplatesContainer = (props: IActions) => {
-	if (!props.downloadTemplate) return;
+	if (!props.reports.downloadTemplate) return;
+	const action = props.reports;
 	const actions = [];
 
-	const generateAllTemplates = props.downloadTemplate?.excel && props.downloadTemplate?.csv;
-	if (props.downloadTemplate?.excel && !props.downloadTemplate?.csv)
-		actions.push(<TemplateExcel {...props.downloadTemplate.excel} />);
+	const generateAllTemplates = action.downloadTemplate?.excel && action.downloadTemplate?.csv;
+	if (action.downloadTemplate?.excel && !action.downloadTemplate?.csv)
+		actions.push(<TemplateExcel {...action.downloadTemplate.excel} />);
 
 	if (generateAllTemplates) actions.push(<DownloadTemplate />);
-	if (props.downloadTemplate?.csv && !props.downloadTemplate?.excel) actions.push(<TemplateCSV />);
+	if (action.downloadTemplate?.csv && !action.downloadTemplate?.excel) actions.push(<TemplateCSV />);
 
 	const output = actions?.map((action) => <div key={uuid()}>{action}</div>);
 

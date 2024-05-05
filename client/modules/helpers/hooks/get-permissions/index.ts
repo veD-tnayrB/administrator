@@ -5,7 +5,7 @@ import { mapPermissions } from './map-permissions';
 
 type Permissions = Map<string, Record<string, string>>;
 
-export /*bundle*/ function getPermissions() {
+export /*bundle*/ function usePermissions() {
 	const [permissions, setPermissions] = React.useState<Permissions>(mapPermissions(session.user.permissions));
 	useBinder([session], () => setPermissions(mapPermissions(session.user.permissions)));
 

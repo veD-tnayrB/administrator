@@ -3,20 +3,18 @@ import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { getPermissions } from '@essential-js/admin/helpers';
+import { usePermissions } from '@essential-js/admin/helpers';
 import { Row } from './item';
 
 export /*bundle*/
-function View({ store }: { store: StoreManager }) {
-	const permissions = getPermissions();
+	function View({ store }: { store: StoreManager }) {
+	const permissions = usePermissions();
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));
-
 	const contextValue: IContext = {
 		store,
 		permissions,
 	};
-	console.log('STORE= . ', store);
 
 	const listProperties = {
 		store,
@@ -54,26 +52,16 @@ function View({ store }: { store: StoreManager }) {
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
 				actions: [
-					{ type: 'edit', to: '/users/managment', title: 'Edit' },
-					{
-						type: 'delete',
-						title: 'Remove',
-						modal: {
-							title: 'Remove',
-							description: 'Are you sure you want to remove this user?',
-							close: {
-								label: 'Cancel',
-							},
-							confirm: {
-								label: 'Remove',
-							},
-						},
-					},
+					{ type: 'edit' },
+					{ type: 'delete' },
 				],
 			},
 		},
 		actions: {
-			create: null,
+			create: {
+				to: '/users/managment/create',
+				label: 'Create',
+			},
 			removeAll: true,
 			columnsSelector: {
 				title: 'Select the columns you want to appear',
@@ -83,24 +71,24 @@ function View({ store }: { store: StoreManager }) {
 					number: 2,
 				},
 			},
-			generateReport: {
-				excel: true,
-				csv: true,
+			reports: {
+				generateReport: {
+					excel: true,
+					csv: true,
+				},
+				downloadTemplate: {
+					excel: true,
+					csv: true,
+				},
+				import: true,
 			},
-			downloadTemplate: {
-				excel: true,
-				csv: true,
-			},
-			import: true,
 		},
 	};
 
-	if (permissions.has('users.create')) {
-		listProperties.actions.create = {
-			to: '/users/managment/create',
-			label: 'Create',
-		};
-	}
+	if (!permissions.has('user.create')) listProperties.actions.create = null;
+	if (!permissions.has('users.get-template')) listProperties.actions.reports.downloadTemplate = null;
+	if (!permissions.has('users.generate-report')) listProperties.actions.reports.generateReport = null;
+	if (!permissions.has('users.import')) listProperties.actions.reports.import = null;
 
 	return (
 		<UsersListContext.Provider value={contextValue}>

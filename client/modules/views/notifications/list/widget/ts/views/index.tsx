@@ -3,16 +3,14 @@ import { StoreManager } from '../store';
 import { IContext, NotificationsListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { Row } from './row';
-
+import { Row } from './item';
+import { usePermissions } from '@essential-js/admin/helpers';
 export /*bundle*/
-function View({ store }: { store: StoreManager }) {
+	function View({ store }: { store: StoreManager }) {
 	const [update, setUpdate] = React.useState({});
-	useBinder([store], () => setUpdate({}));
+	const permissions = usePermissions();
 
-	const contextValue: IContext = {
-		store,
-	};
+	useBinder([store], () => setUpdate({}));
 
 	const listProperties = {
 		store,
@@ -60,6 +58,14 @@ function View({ store }: { store: StoreManager }) {
 			},
 		},
 	};
+	const contextValue: IContext = {
+		store,
+		permissions
+	};
+
+
+	if (!permissions.has('notification.create')) listProperties.actions.create = null
+
 	return (
 		<NotificationsListContext.Provider value={contextValue}>
 			<div className="page-container list-page-container">

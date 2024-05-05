@@ -92,6 +92,9 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	}
 
 	#initalizedPlugins = new Map();
+	get initalizedPlugins() {
+		return this.#initalizedPlugins;
+	}
 
 	constructor({ collection, id }: { collection: Collection; id: string }) {
 		super();
@@ -115,13 +118,11 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.#plugins.forEach((plugin) => {
 			if (!this.#avaiablesPlugins[plugin] || this.#initalizedPlugins.has(plugin)) return;
 
-			const object = this.#avaiablesPlugins[plugin];
 			const instance = new this.#avaiablesPlugins[plugin](this);
 			this.#initalizedPlugins.set(plugin, instance);
 
 			const methods = instance.toExpose;
 
-			console.log('METHODS => ', methods, object);
 			methods.forEach((method) => (this[method] = instance[method]));
 		});
 	};

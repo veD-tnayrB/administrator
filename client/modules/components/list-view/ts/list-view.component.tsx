@@ -25,7 +25,6 @@ export interface IProps extends React.HTMLAttributes<HTMLElement> {
 
 export /*bundle*/ const ListView = (props: IProps) => {
 	const [, setUpdate] = React.useState({});
-	console.log('LIST VIEW PROPS => ', props);
 	useInitialize(props);
 	useBinder([props.store], () => setUpdate({}));
 

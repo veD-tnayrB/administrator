@@ -2,11 +2,7 @@ import React from 'react';
 import { ReactSelect } from 'pragmate-ui/form/react-select';
 
 export /*bundle*/ const Select = props => {
-	const multiValue =
-		props.isMulti && props.value
-			? props.value.map(value => props.options.find(option => option.value === value))
-			: [];
-	const value = props.isMulti ? multiValue : props.options.find(option => option.value === props.value);
+	;
 	return (
 		<div className="pui-input pui-select__container fixed-label">
 			<label className="pui-input__label">
@@ -16,7 +12,7 @@ export /*bundle*/ const Select = props => {
 				</span>
 			</label>
 
-			<ReactSelect {...props} value={value} isDisabled={props?.disabled} />
+			<ReactSelect {...props} isDisabled={props?.disabled} />
 		</div>
 	);
 };

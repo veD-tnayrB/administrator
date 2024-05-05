@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profile, IProfile, Modules } from '@essential-js/admin/models';
+import { Profile, IProfile, Modules, IModule } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
@@ -48,7 +48,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
-			this.#refrestUser = session.user.profiles.some((profile) => profile.name === this.#item.name);
+			this.#refrestUser = session.user.profiles.some((profile: IProfile) => profile.name === this.#item.name);
 			const modulesResponse = await this.#modules.load();
 			if (!modulesResponse.status) throw modulesResponse.error;
 			this.#calculateselectedModules();
@@ -63,10 +63,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#calculateselectedModules = () => {
 		const selectedModulesInProfile = {};
-		this.#item.modules.forEach((module) => {
+		this.#item.modules.forEach((module: IModule) => {
 			const selectedActions: Record<string, boolean> = {};
 
-			module.actions.forEach((action) => (selectedActions[action.id] = true));
+			module.actions.forEach((action: IModule.actions) => (selectedActions[action.id] = true));
 			selectedModulesInProfile[module.id] = selectedActions;
 		});
 

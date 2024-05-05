@@ -40,6 +40,7 @@ export const Form = () => {
 		routing.pushState('/users');
 	};
 
+	const profilesValue = formatedOptions.find(option => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
 	return (
@@ -74,7 +75,7 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Select onChange={onSelectChange} options={formatedOptions} label="Profiles" value={item.profiles || []} />
+			<Select isMulti onChange={onSelectChange} options={formatedOptions} label="Profiles" value={profilesValue || []} />
 
 			<div className="pui-input">
 				<label className="pui-switch__label">

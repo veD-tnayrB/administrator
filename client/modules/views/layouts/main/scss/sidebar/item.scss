@@ -16,7 +16,7 @@
 						.sidebar-item-link,
 						.sidebar-item-button {
 							.icon svg {
-								fill: var(--on-primary);
+								stroke: var(--on-primary);
 							}
 							span {
 								color: var(--on-primary);
@@ -31,7 +31,8 @@
 						.sidebar-item-link,
 						.sidebar-item-button {
 							.icon svg {
-								fill: var(--on-primary);
+								stroke: var(--on-primary);
+								
 							}
 							span {
 								color: var(--on-primary);
@@ -56,8 +57,9 @@
 							svg {
 								width: 100%;
 								height: 100%;
-								fill: var(--on-surface);
-
+								fill: transparent;
+								stroke: var(--on-surface);
+								stroke-width: 1.5px;
 								aspect-ratio: 1/1;
 							}
 						}
