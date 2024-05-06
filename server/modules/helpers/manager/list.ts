@@ -1,7 +1,7 @@
 import { actions } from '@bgroup/data-model/db';
 import { Sequelize } from 'sequelize';
 
-export class List {
+export /*bundle*/ class List {
 	static #default = { order: 'timeUpdated', limit: 30, start: 0 };
 
 	static execute = async (model, params, target: string) => {

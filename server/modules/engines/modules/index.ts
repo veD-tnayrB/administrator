@@ -1,6 +1,5 @@
 import { DB } from '@essential-js/admin-server/db';
-import { Manager } from '@essential-js/admin-server/helpers';
-
+import { Manager, List } from '@essential-js/admin-server/helpers';
 export class ModulesManager extends Manager {
 	declare model: DB.models.Modules;
 	constructor() {
@@ -8,25 +7,32 @@ export class ModulesManager extends Manager {
 	}
 
 	list = async params => {
-		const modulesResponse = await this.model.findAll({
-			include: [
+		try {
+			const include = [
 				{
 					model: DB.models.ModulesActions,
 					as: 'actions',
 				},
-			],
-		});
-		const modules = modulesResponse.map(module => {
-			const moduleData = module.get({ plain: true });
-			moduleData.actions = moduleData.actions.map(action => ({
-				id: action.id,
-				name: action.name,
-				description: action.description,
-			}));
-			return moduleData;
-		});
+			]
+			params.include = include
+			const response = await List.execute(this.model, params, 'modules/list')
+			if (!response.status) throw response.error;
 
-		return { status: true, data: { entries: modules } };
+			const modules = response.data.entries.map(module => {
+				module.actions = module.actions.map(action => ({
+					id: action.id,
+					name: action.name,
+					description: action.description,
+				}));
+				return module;
+			});
+
+
+			return { status: true, data: { entries: modules } };
+		} catch (error) {
+			console.error("ERROR GETTING MODULE LIST: ", error)
+			return { status: false, error }
+		}
 	};
 }
 

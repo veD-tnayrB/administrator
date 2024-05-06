@@ -2,6 +2,13 @@ import { Item } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { ModulesItemProvider } from '../../providers/modules/module.item.provider';
 
+export /*bundle*/ interface IAction {
+	id: string;
+	name: string;
+	description: string
+}
+
+
 export /*bundle*/ interface IModule {
 	id: string;
 	label: string;
@@ -10,7 +17,7 @@ export /*bundle*/ interface IModule {
 	timeCreated: Date;
 	timeUpdated: Date;
 	order: number;
-	actions: { id: string; name: string; description: string }[];
+	actions: IAction[];
 }
 
 export /*bundle*/ class Module extends Item<IModule> {

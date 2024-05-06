@@ -22,7 +22,6 @@ export const SidebarFooter = () => {
 
 	const firstItemName = store.mode === 'dark' ? texts.lightMode : texts.darkMode;
 
-	console.log("THEME: ", store.mode)
 	return (
 		<footer className="sidebar-footer">
 			<ul>
