@@ -20,6 +20,7 @@ export /*bundle*/ abstract class ItemProvider {
 	}
 
 	publish = (params: {
+		id: string,
 		isNew: boolean;
 		instanceId: number;
 		userId: number;
@@ -28,7 +29,8 @@ export /*bundle*/ abstract class ItemProvider {
 		timeUpdated: string;
 	}) => {
 		const method = params.isNew ? 'post' : 'put';
-		return this.#api[method](this.#endpoints.publish, params);
+		const id = params.isNew ? '' : params.id;
+		return this.#api[method](`${this.#endpoints.publish}/${id}`, params);
 	};
 
 	data = async params => {

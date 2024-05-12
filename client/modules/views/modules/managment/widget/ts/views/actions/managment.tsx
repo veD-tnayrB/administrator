@@ -45,13 +45,13 @@ export const ActionManagment = () => {
 	}
 
 	const isInputNameDisabled = !store.selectedAction?.isCreating
-
+	const actionLabel = store.selectedAction?.isCreating ? 'Add' : 'Edit'
 	return (
 
 		<section className="flex flex-col gap-4">
 			<Input placeholder="profiles.create" name="name" onChange={onChange} disabled={isInputNameDisabled} value={selectedAction.name} />
 			<Textarea placeholder="Allow the user go to the profiles creatin module" onChange={onChange} value={selectedAction.description} name="description" />
-			<Button onClick={add} variant="primary">Add</Button>
+			<Button onClick={add} variant="primary">{actionLabel}</Button>
 		</section>
 
 

@@ -26,8 +26,8 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 	const onLaunch = () => store.launchNotification(item.id);
 	const onEdit = () => routing.pushState(`/notifications/managment/${item.id}`);
 
-	const displayEdit = permissions.has('notification.update');
-	const displayLaunch = permissions.has('notification.launch');
+	const displayEdit = permissions.has('notifications.update');
+	const displayLaunch = permissions.has('notifications.launch');
 
 	return (
 		<li className="row">

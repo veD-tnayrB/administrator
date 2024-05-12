@@ -41,8 +41,7 @@ export const Row = ({ propertiesToDisplay, item, selectedItems }: IRow) => {
 
 	const onEdit = () => routing.pushState(`/users/managment/${item.id}`);
 
-	const displayEdit = permissions.has('user.update');
-	const displayRemove = permissions.has('users');
+	const displayEdit = permissions.has('users.update');
 	const isItemSelected = selectedItems?.has(item.id);
 
 	return (

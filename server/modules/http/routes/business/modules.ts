@@ -1,9 +1,11 @@
 import { Modules } from '@essential-js/admin-server/engines/modules';
-import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
+import { Route, ISuccess, ResponseType, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
 
+
 class ModulesRoutes extends Route {
+	declare manager: Modules;
 	constructor() {
 		super({
 			manager: Modules,
@@ -32,7 +34,11 @@ class ModulesRoutes extends Route {
 	setup(app: Application) {
 		app.get(`/module/:id`, checkToken, this.get);
 		app.get(`/modules`, checkToken, this.list);
+		app.post(`/module`, checkToken, checkPermission('modules.create'), this.create);
+		app.put(`/module/:id`, checkToken, checkPermission('modules.update'), this.update);
+
 	}
+
 }
 
 export const modules = new ModulesRoutes();

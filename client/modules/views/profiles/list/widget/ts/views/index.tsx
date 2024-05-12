@@ -77,7 +77,7 @@ export /*bundle*/
 		},
 	};
 
-	if (!permissions.has('profile.create')) listProperties.actions.create = null;
+	if (!permissions.has('profiles.create')) listProperties.actions.create = null;
 	if (!permissions.has('profiles.get-template')) listProperties.actions.reports.downloadTemplate = null;
 	if (!permissions.has('profiles.generate-report')) listProperties.actions.reports.generateReport = null;
 	if (!permissions.has('profiles.import')) listProperties.actions.reports.import = null;

@@ -106,7 +106,6 @@ class UsersRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		super.setup(app);
 		app.get('/users/get-registered-users-by-month/:year', checkToken, this.getRegisteredUsersByMonth);
 		app.post('/users/import', checkToken, checkPermission('users.import'), this.bulkImport);
 		app.get(`/users/get-template/:type`, checkToken, checkPermission('users.get-template'), this.getTemplate);
@@ -116,6 +115,10 @@ class UsersRoutes extends Route {
 			checkPermission('users.generate-report'),
 			this.generateReport
 		);
+		app.get(`/user/:id`, checkToken, checkPermission('users.get'), this.get);
+		app.put(`/user/:id`, checkToken, checkPermission('users.update'), this.update);
+		app.post(`/user`, checkToken, checkPermission('users.create'), this.create);
+		app.get(`/users`, checkToken, checkPermission('users.list'), this.list);
 	};
 }
 

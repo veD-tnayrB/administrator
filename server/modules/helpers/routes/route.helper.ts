@@ -1,8 +1,6 @@
-import { Application, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
-import { checkToken } from '../middlewares/jwt';
-import { checkPermission } from '../middlewares/permissions';
 
 export /*bundle*/ interface ISuccess {
 	status: boolean;
@@ -22,33 +20,18 @@ interface IError {
 }
 
 export /*bundle*/ type ResponseType = ISuccess | IError;
-interface IEndpoints {
-	plural: string;
-	singular: string;
-}
+
 
 export /*bundle*/ class Route {
 	#manager: Manager;
 	get manager() {
 		return this.#manager;
 	}
-	#endpoints: IEndpoints;
 
-	constructor({ manager, endpoints }: { endpoints?: IEndpoints; manager: Manager }) {
+	constructor({ manager }: { manager: Manager }) {
 		this.#manager = manager;
-		this.#endpoints = endpoints;
 	}
 
-	setup(app: Application) {
-		const singular = this.#endpoints.singular;
-		const plural = this.#endpoints.plural;
-
-		app.get(`/${plural}`, checkToken, checkPermission(`${plural}.list`), this.list);
-		app.get(`/${singular}/:id`, checkToken, checkPermission(`${singular}.get`), this.get);
-		app.post(`/${singular}`, checkToken, checkPermission(`${singular}.create`), this.create);
-		app.put(`/${singular}`, checkToken, checkPermission(`${singular}.update`), this.update);
-		app.delete(`/${singular}/:id`, checkToken, checkPermission(`${singular}.delete`), this.delete);
-	}
 
 	list = async (req: Request, res: Response) => {
 		try {
@@ -126,7 +109,7 @@ export /*bundle*/ class Route {
 			const formatedResponse = ResponseAPI.success(response as ISuccess);
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
-			console.error('Error /get', exc);
+			console.error('Error /delete', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });
 			res.status(500).send(responseError);
 		}

@@ -24,8 +24,7 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 
 
 	const onEdit = () => routing.pushState(`/profiles/managment/${item.id}`);
-
-	const displayEdit = permissions.has('profile.update');
+	const displayEdit = permissions.has('profiles.update');
 
 	return (
 		<li className="row">

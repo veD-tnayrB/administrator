@@ -67,7 +67,7 @@ export /*bundle*/
 		permissions
 	}
 
-	if (!permissions.has('module.create')) listProperties.actions.create = null
+	if (!permissions.has('modules.create')) listProperties.actions.create = null
 
 	return <ModulesListContext.Provider value={contextValue}>
 		<div className="page-container  list-page-container">

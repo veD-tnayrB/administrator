@@ -88,7 +88,6 @@ class ProfilesRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		super.setup(app);
 		app.post('/profiles/import', checkToken, checkPermission('profiles.import'), this.bulkImport);
 		app.get(`/profiles/get-template/:type`, checkToken, checkPermission('profiles.get-template'), this.getTemplate);
 		app.post(
@@ -97,6 +96,10 @@ class ProfilesRoutes extends Route {
 			checkPermission('profiles.generate-report'),
 			this.generateReport
 		);
+		app.post(`/profile`, checkToken, checkPermission('profiles.create'), this.create);
+		app.put(`/profile/:id`, checkToken, checkPermission('profiles.update'), this.update);
+		app.get(`/profiles`, checkToken, checkPermission('profiles.list'), this.list);
+		app.get(`/profile/:id`, checkToken, checkPermission('profiles.get'), this.get)
 	};
 }
 

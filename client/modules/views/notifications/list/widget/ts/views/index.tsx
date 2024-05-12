@@ -64,7 +64,7 @@ export /*bundle*/
 	};
 
 
-	if (!permissions.has('notification.create')) listProperties.actions.create = null
+	if (!permissions.has('notifications.create')) listProperties.actions.create = null
 
 	return (
 		<NotificationsListContext.Provider value={contextValue}>

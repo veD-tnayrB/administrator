@@ -1,5 +1,6 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager, List } from '@essential-js/admin-server/helpers';
+import { IPublish, Publish } from './cases/publish';
 export class ModulesManager extends Manager {
 	declare model: DB.models.Modules;
 	constructor() {
@@ -34,6 +35,15 @@ export class ModulesManager extends Manager {
 			return { status: false, error }
 		}
 	};
+
+	create = (params: IPublish) => {
+		return Publish.create(params, '/modules/create');
+	}
+
+	update = (params: IPublish) => {
+		return Publish.update(params, '/modules/update');
+	}
+
 }
 
 export /*bundle*/ const Modules = new ModulesManager();

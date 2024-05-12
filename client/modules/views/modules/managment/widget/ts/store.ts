@@ -47,7 +47,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			this.fetching = true;
 			this.#id = id;
-			this.#refreshUser = this.#id === session.user.id;
+			const userPermissions = session.user.permissions
+			this.#refreshUser = userPermissions.some(permission => permission.moduleId === this.#id)
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
@@ -65,7 +66,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			this.fetching = true;
 			console.log("SAVE VALUES => ", values)
-			return { status: true }
 			await this.#item.set(values);
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;

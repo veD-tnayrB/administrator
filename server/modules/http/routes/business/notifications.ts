@@ -45,9 +45,11 @@ class NotificationsRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		super.setup(app);
-		app.post('/notification/launch', checkToken, checkPermission('notification.launch'), this.launch);
+		app.post('/notification/launch', checkToken, checkPermission('notifications.launch'), this.launch);
 		app.put('/notification/markAsRead', checkToken, this.markAsRead);
+		app.post(`/notification`, checkToken, checkPermission('notifications.create'), this.create);
+		app.put(`/notification`, checkToken, checkPermission('notifications.update'), this.update);
+		app.get(`/notifications`, checkToken, checkPermission('notifications.list'), this.list)
 	};
 }
 
