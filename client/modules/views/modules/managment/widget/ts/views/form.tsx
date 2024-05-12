@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Input, Switch } from 'pragmate-ui/form';
+import { Input, Switch, Textarea } from 'pragmate-ui/form';
 import { useModulesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
@@ -8,6 +8,8 @@ import { routing } from '@beyond-js/kernel/routing';
 import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
 import { Actions } from './actions';
 import { IModule } from '@essential-js/admin/models';
+import DOMPurify from 'dompurify'
+
 
 export const Form = () => {
 	const { store, item, setItem } = useModulesManagmentContext();
@@ -23,7 +25,7 @@ export const Form = () => {
 
 	if (!store.ready) return null;
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
 		setItem((currentValue: IModule) => ({ ...currentValue, [name]: value }));
@@ -36,6 +38,8 @@ export const Form = () => {
 	const onCancel = () => {
 		routing.pushState('/modules');
 	};
+
+	const cleanIcon = { __html: DOMPurify.sanitize(item.icon) };
 
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
@@ -60,6 +64,11 @@ export const Form = () => {
 					name="to"
 					onChange={onChange}
 				/>
+			</div>
+
+			<div className="flex">
+				<Textarea className="w-full" value={item.icon} onChange={onChange} name="icon" label="Icon" />
+				<div className="flex items-center justify-center w-16" dangerouslySetInnerHTML={cleanIcon} />
 			</div>
 
 			<Actions />

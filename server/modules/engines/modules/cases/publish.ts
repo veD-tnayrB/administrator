@@ -10,12 +10,12 @@ export interface IPublish {
 }
 
 export class Publish {
-	static model: DB.models.Notifications = DB.models.Notifications;
+	static model: DB.models.Modules = DB.models.Modules;
 	static modulesActions: DB.models.ModulesActions = DB.models.ModulesActions;
 
 	static handleRelations = async (moduleId: string, actions: Record<string, string>[], transaction) => {
 		try {
-
+			console.log("actions: ", actions)
 			const include = [
 				{
 					model: DB.models.ModulesActions,
@@ -38,11 +38,12 @@ export class Publish {
 				savedActionsMap.set(action.id, toSave)
 			});
 
-			console.log("ACTIONS => ", actions)
+
 			const toCreateActions = [];
 			const toEditActions = [];
 
-			for (let action in actions) {
+			for (let action of actions) {
+
 				if (savedActionsMap.has(action.id)) {
 					toEditActions.push(action)
 					continue
@@ -53,7 +54,7 @@ export class Publish {
 
 
 			if (toCreateActions.length) await Publish.modulesActions.bulkCreate(toCreateActions, { transaction });
-			if (toEditActions.length) await Publish.modulesActions.bulkUpdate(toEditActions, { where: { moduleId } });
+			if (toEditActions.length) await Publish.modulesActions.update(toEditActions, { where: { moduleId } });
 		} catch (error) {
 			throw error;
 		}
