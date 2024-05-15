@@ -27,22 +27,21 @@ const DESKTOP_KEY = 'Desktop';
  */
 export class Desktop {
 	/** @private */
-	#parent: Notifier;
+	#parent: Notifier | undefined;
 	/** @private */
-	#messaging: Messaging;
+	#messaging: Messaging | undefined;
 	/** @private */
 	#token: string = '';
 
 	/**
 	 * Getter for token.
-	 * @returns {string} - The token.
 	 */
 	get token() {
 		return this.#token;
 	}
 
 	/** @private */
-	#credentials: IDesktopCredentials;
+	#credentials: IDesktopCredentials | undefined;
 
 	/**
 	 * Initializes Desktop Notifications.
@@ -72,6 +71,8 @@ export class Desktop {
 	 * @private
 	 */
 	#register = async () => {
+		if (!this.#messaging || !this.#credentials || !this.#parent) return;
+
 		const token = await getToken(this.#messaging, { vapidKey: this.#credentials.VAPID_KEY });
 		if (this.#token) return;
 		this.#token = token;
@@ -83,6 +84,7 @@ export class Desktop {
 	};
 
 	renewToken = async () => {
+		if (!this.#parent) return;
 		const currentUser = getAuth().currentUser;
 		if (!currentUser) return;
 		this.#token = await currentUser.getIdToken(true);

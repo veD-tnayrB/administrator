@@ -34,13 +34,14 @@ export const Form = () => {
 
 	const onSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
+		console.log("EVENT: ", event)
 		store.save(item);
 	};
 	const onCancel = () => {
 		routing.pushState('/users');
 	};
 
-	const profilesValue = formatedOptions.find(option => item.profiles.includes(option.value));
+	const profilesValue = formatedOptions.filter(option => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
 	return (
@@ -54,7 +55,6 @@ export const Form = () => {
 					name="names"
 					placeholder="John"
 					onChange={onChange}
-					required
 				/>
 				<Input
 					className="fixed-label w-full"

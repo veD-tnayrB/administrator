@@ -12,7 +12,7 @@ export class NotificationItemProvider extends ItemProvider {
 	}
 
 	launch = async ({ id }: { id: string }) => {
-		return this.api.post('notification/launch', { id: id });
+		return this.api.get(`notification/launch/${id}`);
 	};
 
 	markAsRead = async ({ id, userId }: { id: string; userId: string }) => {

@@ -1,5 +1,6 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { UserItemProvider } from './user.item.provider';
+import { ILogin } from './types';
 
 interface IUser {
 	id: string;
@@ -50,7 +51,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		]);
 	}
 
-	login = async (params: { email: string; password?: string; notificationsToken: string }) => {
+	login = async (params: ILogin) => {
 		try {
 			this.fetching = true;
 			const response = await this.provider.login(params);

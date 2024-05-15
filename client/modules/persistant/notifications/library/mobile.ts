@@ -1,7 +1,6 @@
 /**
  * Class representing a Mobile device for handling notifications.
  */
-
 export class Mobile {
 	/** Device token for push notifications. */
 	tokenDevice: string = '';
@@ -20,7 +19,7 @@ export class Mobile {
 	 * @param {any} params - The parameters for initialization.
 	 */
 	init = (parent: any, params?: any) => {
-		if (!globalThis?.FirebasePlugin) return;
+		if (!globalThis.hasOwnProperty('FirebasePlugin')) return;
 		this.specs = Object.assign({}, { userId: params.userId, appKey: params.appKey });
 
 		const userAgent = navigator.userAgent;
@@ -30,24 +29,24 @@ export class Mobile {
 		if (/iPad Simulator|iPhone Simulator|iPod Simulator|iPad|iPhone|iPod/i.test(userAgent)) {
 			this.device = 'iOS';
 		}
-		globalThis.FirebasePlugin.onTokenRefresh(
-			(token: string) => this.register(parent, token),
-			error => this.processError('onTokenRefresh error: ', error)
-		);
+		//globalThis.FirebasePlugin.onTokenRefresh(
+		//	(token: string) => this.register(parent, token),
+		//	(error: string) => this.processError('onTokenRefresh error: ', error)
+		//);
 
-		globalThis.FirebasePlugin.registerAuthStateChangeListener(userSignedIn =>
-			console.log('Auth state changed: User signed ' + (userSignedIn ? 'in' : 'out'))
-		);
+		//globalThis.FirebasePlugin.registerAuthStateChangeListener(userSignedIn =>
+		//	console.log('Auth state changed: User signed ' + (userSignedIn ? 'in' : 'out'))
+		//);
 
-		if ((this.device = 'Android' && globalThis?.cordova?.plugin?.customfcmreceiver)) {
-			// Custom FCM receiver plugin
-			globalThis.cordova.plugin.customfcmreceiver.registerReceiver(message =>
-				console.log('Received custom message: ', message)
-			);
-		}
+		//if ((this.device = 'Android' && globalThis?.cordova?.plugin?.customfcmreceiver)) {
+		// Custom FCM receiver plugin
+		//	globalThis.cordova.plugin.customfcmreceiver.registerReceiver(message =>
+		//		console.log('Received custom message: ', message)
+		//	);
+		//}
 
 		//Register handlers
-		globalThis.FirebasePlugin.onMessageReceived(parent.onMessagePreHandler, parent.onMessageError);
+		//globalThis.FirebasePlugin.onMessageReceived(parent.onMessagePreHandler, parent.onMessageError);
 
 		this.checkNotificationPermission(false);
 		this.isAutoEnabled();
@@ -57,10 +56,8 @@ export class Mobile {
 
 	/**
 	 * Logs errors to the console.
-	 * @param {string} target - The target of the error.
-	 * @param {Error} error - The error object.
 	 */
-	processError(target, error) {
+	processError(target: string, error: string) {
 		console.error(target, error);
 	}
 
@@ -70,8 +67,6 @@ export class Mobile {
 
 	/**
 	 * Registers the device with the parent object.
-	 * @param {any} parent - The parent object.
-	 * @param {string} token - The device token.
 	 */
 	register(parent, token) {
 		if (this.tokenDevice && token === this.tokenDevice) return;

@@ -18,7 +18,7 @@ class NotificationsRoutes extends Route {
 
 	launch = (req: Request, res: Response) => {
 		try {
-			const params = req.body;
+			const params = req.params;
 			const response = this.manager.launch(params);
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response);
@@ -45,11 +45,12 @@ class NotificationsRoutes extends Route {
 	};
 
 	setup = (app: Application) => {
-		app.post('/notification/launch', checkToken, checkPermission('notifications.launch'), this.launch);
+		app.get('/notification/launch/:id', checkToken, checkPermission('notifications.launch'), this.launch);
 		app.put('/notification/markAsRead', checkToken, this.markAsRead);
 		app.post(`/notification`, checkToken, checkPermission('notifications.create'), this.create);
 		app.put(`/notification`, checkToken, checkPermission('notifications.update'), this.update);
-		app.get(`/notifications`, checkToken, checkPermission('notifications.list'), this.list)
+		app.get(`/notifications`, checkToken, checkPermission('notifications.list'), this.list);
+		app.get(`/notification/:id`, checkToken, checkPermission('notifications.get'), this.get)
 	};
 }
 

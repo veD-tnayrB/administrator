@@ -3,11 +3,9 @@ import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOu
 import { auth } from '@essential-js/admin/serverless-provider';
 import { User } from './user.item';
 import { NotificationsHandler } from '@essential-js/admin/notifications';
+import { ILogin } from './types';
 /**
  * Interface for login parameters.
- * @typedef {Object} ILoginParams
- * @property {string} email - User's email address.
- * @property {string} password - User's password.
  */
 interface ILoginParams {
 	email: string;
@@ -49,11 +47,17 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Getter to check if the user is logged in.
-	 * @returns {boolean} True if the user is logged in, false otherwise.
+	 * @returns True if the user is logged in, false otherwise.
 	 */
 	get isLogged() {
 		return this.#isLogged || !!localStorage.getItem('__session');
 	}
+
+	#isLoaded: boolean = false;
+	get isLoaded() {
+		return this.#isLoaded
+	}
+
 
 	#token: string | null = JSON.parse(localStorage.getItem('__session'))?.token;
 	get token() {
@@ -91,8 +95,8 @@ class Session extends ReactiveModel<Session> {
 			else response = await this.#loginWithEmailAndPassword(params);
 
 			// Define the params to use
-			const loadParams = provider
-				? { email: response?.email }
+			const loadParams: ILogin = provider
+				? { email: response.email, notificationsToken: this.#notificationsHandler.token }
 				: { ...params, notificationsToken: this.#notificationsHandler.token };
 
 			// Load the user in a item to be saved in this object
@@ -106,8 +110,10 @@ class Session extends ReactiveModel<Session> {
 			this.#token = loadResponse.data.token;
 			this.#user.set({ ...loadResponse.data.user, loaded: true });
 			this.#isLogged = true;
+			this.#isLoaded = true;
 			this.triggerEvent('user-changed');
 			this.triggerEvent('token-changed');
+
 			return { status: true };
 		} catch (error) {
 			await this.#removeSessionFromRemote();
@@ -156,6 +162,7 @@ class Session extends ReactiveModel<Session> {
 
 			this.#isLogged = true;
 			this.#user.set({ ...response.data.user, loaded: true });
+			this.#isLoaded = true;
 			this.triggerEvent('user-changed');
 			return { status: true };
 		} catch (error) {
@@ -177,6 +184,7 @@ class Session extends ReactiveModel<Session> {
 		await this.#user.logout();
 		this.#token = null;
 		this.#user = new User();
+		this.#isLoaded = false;
 		this.triggerEvent('token-changed');
 		return signOut(auth);
 	};

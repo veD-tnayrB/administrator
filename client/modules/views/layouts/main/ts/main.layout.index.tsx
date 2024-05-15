@@ -23,13 +23,17 @@ declare global {
 export function Layout({ store }: { store: StoreManager }) {
 	const hasPermissions = useCheckPermissions();
 	const [ready, texts] = useTexts(module.specifier);
+	const [isDOMReady, setIsDOMReady] = React.useState(session.isLoaded);
 	useBinder([session.notificationsHandler], () => {
 		const { title, body } = session.notificationsHandler.current;
 		toast(<Notification title={title} body={body} />);
 	});
 
+	useBinder([session], () => setIsDOMReady(session.isLoaded));
+
+
 	if (!hasPermissions) return null;
-	if (!ready) return <SpinnerPage />;
+	if (!ready || !isDOMReady) return <SpinnerPage displayBrand />;
 
 	const contextValue: IContext = {
 		store,

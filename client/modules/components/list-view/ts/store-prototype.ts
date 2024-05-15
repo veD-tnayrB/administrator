@@ -129,6 +129,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	load = async (params: Record<string, any> = {}) => {
 		try {
+			this.fetching = true;
 			this.#params = { ...this.#params, ...params };
 			const response = await this.#collection.load(this.#params);
 			if (!response.status) throw response.error;
@@ -136,6 +137,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		} catch (error) {
 			console.error(error);
 		} finally {
+			this.fetching = false;
 			this.ready = true;
 		}
 	};

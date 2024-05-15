@@ -1,4 +1,3 @@
-import { IListParams } from '../actions/types/collection.types';
 import { Utils } from '@bgroup/helpers/utils';
 import { Api } from '../api/api.helper';
 
@@ -21,7 +20,7 @@ export /*bundle*/ abstract class CollectionProvider {
 		this.#endpoints = params.endpoints;
 	}
 
-	list = async (params: IListParams) => {
+	list = async (params) => {
 		const { where, ...propertiesToUse } = params;
 		const rawQuery = propertiesToUse;
 		if (where) rawQuery.where = where;

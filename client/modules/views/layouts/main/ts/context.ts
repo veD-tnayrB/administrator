@@ -8,4 +8,4 @@ export interface IContext {
 }
 
 export const LayoutContext = React.createContext({} as IContext);
-export const useLayoutContext = () => React.useContext(LayoutContext);
+export /*bundle*/ const useLayoutContext = () => React.useContext(LayoutContext);

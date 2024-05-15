@@ -1,12 +1,14 @@
 {
-  "compilerOptions": {
-    "module": "es2020",
-    "target": "es2018",
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
-    "types": [
-      "node"
-    ]
-  }
+	"compilerOptions": {
+		"strict": true,
+		"noImplicitUseStrict": true,
+		"alwaysStrict": false,
+		"skipLibCheck": true,
+		"module": "es2020",
+		"target": "es2018",
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "Node",
+		"types": ["node"]
+	}
 }

@@ -3,7 +3,7 @@ import { StoreManager } from './store';
 import { View } from './views';
 
 export /*bundle*/
-class Controller extends PageReactWidgetController {
+	class Controller extends PageReactWidgetController {
 	#store: StoreManager;
 	createStore() {
 		this.#store = new StoreManager();
@@ -17,11 +17,14 @@ class Controller extends PageReactWidgetController {
 	 * this method is executed when the widget is showd
 	 */
 	show() {
+		console.log("DISPLAY")
 		this.#store.load();
 	}
 
 	/**
 	 * this method is executed when the widget is hidden
 	 */
-	hide() {}
+	hide() {
+		this.#store.resetAll();
+	}
 }

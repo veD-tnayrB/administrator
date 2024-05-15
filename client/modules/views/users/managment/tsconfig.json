@@ -1,10 +1,14 @@
 {
-  "compilerOptions": {
-    "module": "es2020",
-    "target": "es2018",
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
-    "jsx": "react"
-  }
+	"compilerOptions": {
+		"module": "es2020",
+		"strict": true,
+		"noImplicitUseStrict": true,
+		"alwaysStrict": false,
+		"skipLibCheck": true,
+		"target": "es2018",
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "Node",
+		"jsx": "react"
+	}
 }

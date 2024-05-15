@@ -2,14 +2,17 @@
 	nav.main-layout-sidebar {
 		background: var(--surface);
 		height: 100%;
-		width: 225px;
 		min-height: 100vh;
-		overflow: hidden;
 		padding: 10px 0.5rem;
 		position: sticky;
 		top: 0;
 		left: 0;
 		box-shadow: var(--primary-shadow);
+		transition: all .1s ease-in-out;
+
+		&:not(.collapsed) {
+			width: 225px;
+		}
 
 		.sidebar-content {
 			height: 97vh;

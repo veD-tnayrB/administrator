@@ -5,18 +5,19 @@ import { SidebarItem } from './item';
 import { useLayoutContext } from '../../context';
 import { SidebarLoading } from './loading';
 import { SidebarFooter } from './footer';
-import { session } from '@essential-js/admin/auth';
 
 export const Sidebar = () => {
 	const { store } = useLayoutContext();
 	const [items, setItems] = React.useState(store.sidebarCollection.items);
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [theme, setTheme] = React.useState(store.mode);
+	const [isCollapsed, setIsCollapsed] = React.useState(store.isSidebarCollapsed);
 	useBinder([store], () => setTheme(store.mode), ['theme-changed']);
 
 	useBinder([store], () => {
 		setItems(store.sidebarCollection.items);
 		setIsLoading(store.fetching);
+		setIsCollapsed(store.isSidebarCollapsed);
 	});
 
 	items.sort((a, b) => a.order - b.order);
@@ -30,8 +31,10 @@ export const Sidebar = () => {
 			<SidebarFooter />
 		</div>
 	);
+
+	const collapsedCls = isCollapsed ? 'collapsed' : '';
 	return (
-		<nav className="main-layout-sidebar">
+		<nav className={`main-layout-sidebar ${collapsedCls}`}>
 			<div className="sidebar-content">
 				<SidebarHeader theme={theme} />
 				{panel}

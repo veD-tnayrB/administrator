@@ -13,6 +13,22 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#sidebarCollection;
 	}
 
+	#collapsedKey: string = 'is-sidebar-collapsed';
+	get collapsedKey() {
+		return this.#collapsedKey;
+	}
+
+	#isSidebarCollapsed: boolean = JSON.parse(localStorage.getItem(this.#collapsedKey) || 'false');
+	get isSidebarCollapsed() {
+		return this.#isSidebarCollapsed;
+	}
+
+	set isSidebarCollapsed(value: boolean) {
+		this.#isSidebarCollapsed = value;
+		localStorage.setItem(this.#collapsedKey, JSON.stringify(value));
+		this.triggerEvent();
+	}
+
 	constructor() {
 		super();
 		this.#loadTheme();
@@ -23,7 +39,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			this.fetching = true;
 			const isSessionLoaded = session.isLogged;
-			if (!isSessionLoaded)  return;
+			if (!isSessionLoaded) return;
 
 			const response = await this.#sidebarCollection.load();
 			if (!response.status) throw response.error;

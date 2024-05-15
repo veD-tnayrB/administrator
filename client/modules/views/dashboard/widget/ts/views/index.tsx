@@ -22,7 +22,7 @@ widgetStore.defineWidgets([
 ]);
 
 export /*bundle*/
-function View({ store }: { store: StoreManager }) {
+	function View({ store }: { store: StoreManager }) {
 	const [ready, texts] = useTexts(module.specifier);
 	const [data, setData] = React.useState(store.collection.items);
 

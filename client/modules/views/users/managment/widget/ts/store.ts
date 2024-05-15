@@ -40,6 +40,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			if (id === 'create') {
 				this.#isCreating = true;
+				this.#item.profiles = [];
 				const profilesResponse = await this.#profiles.load();
 				if (!profilesResponse.status) throw profilesResponse.error;
 				this.ready = true;
@@ -100,7 +101,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		if (!values.lastNames) return 'The last names are required.';
 		if (!values.email) return 'The email is required.';
 		if (!EMAIL_REGEX.test(values.email)) return 'The email is not valid, please check it and try again.';
-		// if (!values.profiles.length) return 'At least one profile is required.';
+		if (!values.profiles.length) return 'At least one profile is required.';
 		return '';
 	};
 

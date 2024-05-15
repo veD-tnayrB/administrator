@@ -4,6 +4,7 @@
 			ul {
 				.sidebar-item {
 					border-radius: 5px;
+					overflow: hidden;
 					cursor: pointer;
 					transition: all 0.1s ease-in-out;
 					color: var(--outline);
@@ -50,6 +51,7 @@
 
 						.icon {
 							width: 22px;
+							height: 22px;
 							aspect-ratio: 1/1;
 							display: flex;
 							align-items: center;

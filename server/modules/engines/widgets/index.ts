@@ -8,10 +8,11 @@ export class WidgetsManager extends Manager {
 
 	getTotals = async () => {
 		try {
-			const response = await DB.models.Totals.findAll({});
-			const totals = response.map(t => t.get({ plain: true }))[0];
+			const users = await DB.models.Users.findAll({});
+			const notifications = await DB.models.Notifications.findAll({});
+			const profiles = await DB.models.Profiles.findAll({});
 
-			return { status: true, data: totals };
+			return { status: true, data: { users: users.length, notifications: notifications.length, profiles: profiles.length } };
 		} catch (error) {
 			return { status: false, error };
 		}

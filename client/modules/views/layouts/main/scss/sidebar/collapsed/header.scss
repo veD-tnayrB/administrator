@@ -1,0 +1,19 @@
+
+.main-layout {
+	nav.main-layout-sidebar.collapsed {
+		header {
+			.identifier {
+				h1 {
+					display: none;
+				}
+			}
+
+				.collapsible-container {
+				.collapse-btn {
+					transition: all .2s ease-in-out;
+					transform: none;
+				}
+			}
+		}
+	}
+}

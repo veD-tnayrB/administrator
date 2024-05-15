@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'pragmate-ui/link';
 import { routing } from '@beyond-js/kernel/routing';
 import { Module } from '@essential-js/admin/models';
+import Tippy from '@tippyjs/react';
 import { useLayoutContext } from '../../context';
 
 interface IProps extends Module {
@@ -16,10 +17,11 @@ export const SidebarItem: React.FC<IProps> = params => {
 	const [isSelected, setIsSelected] = React.useState(
 		routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to
 	);
+
 	React.useEffect(() => {
-		routing.on('change', () => {
-			setIsSelected(routing.uri.pathname.includes(params.to));
-		});
+		const onChange = () => setIsSelected(routing.uri.pathname.includes(params.to));
+		routing.on('change', onChange);
+		return () => { routing.off('change', onChange) };
 	}, []);
 
 	const Container = params.to ? Link : 'button';
@@ -29,12 +31,19 @@ export const SidebarItem: React.FC<IProps> = params => {
 
 	const cls = isSelected ? 'selected' : '';
 
+	const Tooltip = !store.isSidebarCollapsed ? React.Fragment : Tippy
+	const props = !store.isSidebarCollapsed ? {} : { content: params.label, placement: 'right' };
 	return (
-		<li className={`sidebar-item ${cls}`}>
-			<Container className="sidebar-item-link" onClick={params.onClick} {...properties}>
-				<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
-				<span>{params.label}</span>
-			</Container>
-		</li>
+
+		<Tooltip {...props} >
+			<li className={`sidebar-item ${cls}`}>
+				<Container data-placement="right" className="sidebar-item-link tippy-box" onClick={params.onClick} {...properties}>
+					<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
+					<span>{params.label}</span>
+
+				</Container>
+			</li>
+
+		</Tooltip>
 	);
 };
