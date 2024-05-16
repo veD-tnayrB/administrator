@@ -63,8 +63,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		const body = document.querySelector('body');
 
 		const theme = wasDark ? 'light' : 'dark';
-		body.setAttribute('data-beyond-mode', theme);
-		container.setAttribute('data-beyond-mode', theme);
+		body?.setAttribute('data-beyond-mode', theme);
+		container?.setAttribute('data-beyond-mode', theme);
 		localStorage.setItem('theme', theme);
 		this.triggerEvent('theme-changed');
 	};
@@ -75,8 +75,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		if (!themeStorage) return;
 		const container = document.querySelector('html');
 		const body = document.querySelector('body');
-		container.setAttribute('data-beyond-mode', themeStorage);
-		body.setAttribute('data-beyond-mode', themeStorage);
+		container?.setAttribute('data-beyond-mode', themeStorage);
+		body?.setAttribute('data-beyond-mode', themeStorage);
 		this.#mode = themeStorage;
 		this.triggerEvent('theme-changed');
 	};

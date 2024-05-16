@@ -1,6 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Desktop, IDesktopCredentials } from './desktop';
-import { Mobile } from './mobile';
 
 /** Enumeration for Device types. */
 enum Device {
@@ -15,19 +14,18 @@ enum Device {
  */
 export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/** @private */
-	#device: Desktop | Mobile = new Desktop();
+	#device: Desktop = new Desktop();
 	/** Callback for message received event. */
-	onMessageReceived: (params: { notification: any; metadata: any }) => void;
+	onMessageReceived: (params: { notification: any; metadata: any }) => void = () => { };;
 	/** Callback for message error event. */
-	onMessageError: (error: string) => void;
+	onMessageError: (error: string) => void = () => { };
 	/** Callback for handle the device registration. */
-	onRegisterDevice: (params: { tokenDevice: string; device: string }) => void | Promise<any> = () => {};
+	onRegisterDevice: (params: { tokenDevice: string; device: string }) => void | Promise<any> = () => { };
 	/** @private */
 	#deviceToken: string = '';
 	#lastMessageId: string = '';
 
 	/** Getter for device token.
-	 * @returns {string} - The device token.
 	 */
 	get deviceToken() {
 		return this.#deviceToken;
@@ -36,18 +34,14 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/** Constructor for FirebaseNotifications. */
 	constructor() {
 		super();
-		const device = this.#getDevice();
-		if (device === Device.Mobile) {
-			this.#device = new Mobile();
-			return;
-		}
+		//const device = this.#getDevice();
 
 		setInterval(() => {
 			this.renewDeviceToken();
 		}, 50 * 60 * 1000);
 	}
 
-	onMessagePreHandler = payload => {
+	onMessagePreHandler = (payload: Record<string, any>) => {
 		if (this.#getDevice() === Device.Web) {
 			const { notification, ...metadata } = payload;
 			if (this.#lastMessageId === metadata.messageId) return;
@@ -64,10 +58,9 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/**
 	 * Method to get the device type.
 	 * @private
-	 * @returns {Device} - The device type.
 	 */
 	#getDevice = () => {
-		const userAgent = navigator.userAgent || navigator.vendor;
+		const userAgent = navigator.userAgent
 
 		const isMobile =
 			/windows phone/i.test(userAgent) ||
@@ -87,10 +80,8 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	 * @param {string} params.opts.userId - The user ID.
 	 */
 	init = async (params: { credentials: IDesktopCredentials; opts?: any }) => {
-		const useOnMessageError = this.#device instanceof Mobile;
-
-		if (!this.onMessageReceived || (useOnMessageError && !this.onMessageError)) {
-			const extraMessage = useOnMessageError ? 'or onMessageError arent defined' : 'is not defined.';
+		if (!this.onMessageReceived || (!this.onMessageError)) {
+			const extraMessage = 'or onMessageError arent defined';
 			console.error(`onMessageReceived ${extraMessage}`);
 			return;
 		}
@@ -103,7 +94,6 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/**
 	 * Renueva el token del dispositivo si es necesario.
 	 * @async
-	 * @returns {Promise<void>}
 	 */
 	renewDeviceToken = async () => {
 		return await this.#device.renewToken();

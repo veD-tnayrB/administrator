@@ -21,6 +21,7 @@
 					display: table-cell;
 					vertical-align: middle;
 					padding: 0.5rem 0;
+					max-width: 15rem;
 
 					&:first-child {
 						border-left: 2px solid var(--outline);

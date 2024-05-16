@@ -1,4 +1,5 @@
 import { DB } from '@essential-js/admin-server/db';
+import { MD5 } from '@bgroup/helpers/md5';
 
 export class Publish {
 	static model: DB.models.Users = DB.models.Users;
@@ -17,6 +18,7 @@ export class Publish {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, ...userParams } = params;
+			userParams.password = MD5(process.env.USER_DEFAULT_PASSWORD);
 			const user = await Publish.model.create(userParams, { transaction });
 			await this.handleProfiles(user.id, profiles || [], transaction);
 

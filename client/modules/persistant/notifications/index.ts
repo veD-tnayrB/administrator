@@ -17,13 +17,12 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		return this.#current;
 	}
 
-	constructor({ session }) {
+	constructor({ session }: { session: any }) {
 		super();
 		this.#provider.onMessageReceived = this.#onMessageReceived;
 		this.init();
 		session.on('change', () => this.#api.bearer(session.token));
 		this.#api.bearer(session.token);
-		globalThis.n = this;
 	}
 
 	init = async () => {
@@ -38,7 +37,7 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		}
 	};
 
-	#onMessageReceived = async params => {
+	#onMessageReceived = async (params: Record<string, any>) => {
 		this.#current = params.notification;
 		this.triggerEvent();
 		// const res	ponse = await this.#api.put('notification/markAsRead', { id: '', userId: '' });

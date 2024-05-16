@@ -21,3 +21,17 @@
 		min-height: 100vh;
 	}
 }
+
+@media (max-width: 1024px) {
+	.login-view.auth-view {
+		display: flex;
+		flex-direction: column-reverse;
+
+		.right-section {
+			display: none;
+			img {
+				display: none;
+			}
+		}
+	}
+}

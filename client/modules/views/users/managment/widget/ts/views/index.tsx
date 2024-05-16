@@ -1,9 +1,16 @@
 import * as React from 'react';
 import { Form } from './form';
 import { IContext, UsersManagementContext } from '../context';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { StoreManager } from '../store';
 
 export /*bundle*/
-function View({ store }) {
+	function View({ store }: { store: StoreManager }) {
+	const [isReady, setIsReady] = React.useState(store.ready);
+	useBinder([store], () => setIsReady(store.ready));
+
+	if (!isReady) return null;
+
 	const contextValue: IContext = {
 		store,
 	};

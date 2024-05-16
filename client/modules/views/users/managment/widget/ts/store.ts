@@ -41,6 +41,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			if (id === 'create') {
 				this.#isCreating = true;
 				this.#item.profiles = [];
+				this.#item.active = 1;
 				const profilesResponse = await this.#profiles.load();
 				if (!profilesResponse.status) throw profilesResponse.error;
 				this.ready = true;

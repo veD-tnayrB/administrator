@@ -34,7 +34,6 @@ export const Form = () => {
 
 	const onSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("EVENT: ", event)
 		store.save(item);
 	};
 	const onCancel = () => {
