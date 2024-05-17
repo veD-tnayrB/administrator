@@ -12,13 +12,13 @@ const DEFAULT_VALUE = {
 
 export const LeftSectionForm = () => {
 	const [values, setValues] = React.useState(DEFAULT_VALUE);
-	const [error, setError] = React.useState('');
+	const [error, setError] = React.useState<string | null>(null);
 	const isButtonDisabled = values.email === '' || values.password === '';
-	const { store, texts } = useLoginContext();
+	const { store } = useLoginContext();
 
 	useBinder([store], () => setError(store.error));
 
-	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const onSubmit = () => {
 		if (isButtonDisabled) return;
 		store.login(values);
 	};
@@ -35,45 +35,39 @@ export const LeftSectionForm = () => {
 		});
 	};
 
-	const ERRORS = {
-		'Item not found': texts.errors.notFound,
-	};
-	const message = error && (ERRORS[error] || texts.errors.somethingWentWrong);
 
 	return (
 		<article>
 			<div>
-				<span>{texts.preTitle}</span>
-				<h1>{texts.title}</h1>
+				<span>Welcome back!!</span>
+				<h1>Login</h1>
 			</div>
 			<Form onSubmit={onSubmit}>
 				<Input
-					error={message}
 					name="email"
 					type="email"
 					value={values.email}
-					label={texts.fields.email}
+					label="Email"
 					onChange={onChange}
 				/>
 				<Input
-					error={message}
 					name="password"
 					type="password"
 					value={values.password}
-					label={texts.fields.password}
+					label="Password"
 					onChange={onChange}
 				/>
 
-				<Button variant="primary" type="submit">{texts.submit}</Button>
+				<Button variant="primary" type="submit">Go</Button>
 			</Form>
 
 			<div className="or-container">
 				<div />
-				<span>{texts.or}</span>
+				<span>or</span>
 				<div />
 			</div>
 			<Button variant="outline" onClick={loginWithGoogle}>
-				{texts.loginWithGoogle}
+				Login with Google
 			</Button>
 		</article>
 	);

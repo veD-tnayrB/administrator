@@ -4,7 +4,7 @@ import { Image } from 'pragmate-ui/image';
 import config from '@essential-js/admin/config';
 
 interface IProps {
-	displayBrand: boolean
+	displayBrand?: boolean
 }
 
 export /*bundle*/ const SpinnerPage = ({ displayBrand }: IProps) => {

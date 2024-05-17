@@ -6,7 +6,7 @@ interface IItemEndpoints {
 	delete: string;
 }
 
-export /*bundle*/ abstract class ItemProvider {
+export /*bundle*/ abstract class ItemProvider<T extends { isNew: boolean, id: string }> {
 	#api: Api = new Api();
 	get api() {
 		return this.#api;
@@ -19,21 +19,13 @@ export /*bundle*/ abstract class ItemProvider {
 		this.#endpoints = params.endpoints;
 	}
 
-	publish = (params: {
-		id: string,
-		isNew: boolean;
-		instanceId: number;
-		userId: number;
-		comment: string;
-		timeCreated: string;
-		timeUpdated: string;
-	}) => {
+	publish = (params: Partial<T>) => {
 		const method = params.isNew ? 'post' : 'put';
 		const id = params.isNew ? '' : params.id;
 		return this.#api[method](`${this.#endpoints.publish}/${id}`, params);
 	};
 
-	data = async params => {
+	data = async (params: { id: string }) => {
 		return this.#api.get(this.#endpoints.get + `/${params.id}`);
 	};
 

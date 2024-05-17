@@ -8,6 +8,13 @@ export /*bundle*/ interface IAction {
 	description: string
 }
 
+export /*bundle*/ interface IPermission {
+	actionId: string
+	actionName: string
+	moduleId: string
+	moduleTo: string
+
+}
 
 export /*bundle*/ interface IModule {
 	id: string;

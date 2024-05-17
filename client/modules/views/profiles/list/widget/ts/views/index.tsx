@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { StoreManager } from '../store';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { usePermissions } from '@essential-js/admin/helpers';
+import { usePermissions } from '@essential-js/admin/hooks';
 import { ProfilesListContext } from '../context';
 import { Row } from './item';
 

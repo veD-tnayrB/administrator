@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StoreManager } from '../store';
-import { usePermissions } from '@essential-js/admin/helpers';
+import { usePermissions } from '@essential-js/admin/hooks';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks'
 import { ListView } from '@essential-js/admin/components/list-view';
 import { ModulesListContext } from '../context';

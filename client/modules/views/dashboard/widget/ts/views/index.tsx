@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StoreManager } from '../store';
 import { DashboardContext, IContext } from '../context';
 import { module } from 'beyond_context';
-import { useTexts } from '@essential-js/admin/helpers';
+import { useTexts } from '@essential-js/admin/hooks';
 import { WidgetManager } from '../manager/dashboard.widget-manager';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { widgetStore } from '../manager/dashboard.widget-manager.handler';

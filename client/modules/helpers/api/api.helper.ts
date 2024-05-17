@@ -38,7 +38,7 @@ export /*bundle*/ class Api extends BaseApi {
 
 	async post(url: string, data?: object): Promise<any> {
 		try {
-			const response = await super.post(url, data);
+			const response = await super.post(url, data || {});
 			this.handleResponse(response);
 			return response;
 		} catch (error) {
@@ -49,7 +49,7 @@ export /*bundle*/ class Api extends BaseApi {
 
 	async put(url: string, data?: object): Promise<any> {
 		try {
-			const response = await super.put(url, data);
+			const response = await super.put(url, data || {});
 			this.handleResponse(response);
 			return response;
 		} catch (error) {

@@ -3,7 +3,7 @@ import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
-import { usePermissions } from '@essential-js/admin/helpers';
+import { usePermissions } from '@essential-js/admin/hooks';
 import { Row } from './item';
 
 export /*bundle*/

@@ -12,6 +12,7 @@ interface ILoginParams {
 	password: string;
 }
 
+type ILoginMethodResponse = Promise<{ email: string; status: true } | { status: false, error: unknown }>;
 /**
  * Enum for supported authentication providers.
  * @readonly
@@ -47,7 +48,6 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Getter to check if the user is logged in.
-	 * @returns True if the user is logged in, false otherwise.
 	 */
 	get isLogged() {
 		return this.#isLogged || !!localStorage.getItem('__session');
@@ -59,10 +59,10 @@ class Session extends ReactiveModel<Session> {
 	}
 
 
-	#token: string | null = JSON.parse(localStorage.getItem('__session'))?.token;
+	#token: string | null = JSON.parse(localStorage.getItem('__session') || '{}')?.token
 	get token() {
-		const values = JSON.parse(localStorage.getItem('__session'));
-		return this.#token || values?.token || null;
+		const values = JSON.parse(localStorage.getItem('__session') || '{}');
+		return this.#token || values?.token;
 	}
 
 	/**
@@ -71,28 +71,25 @@ class Session extends ReactiveModel<Session> {
 	constructor() {
 		super();
 		this.#listenForSessionChanges();
-		globalThis.s = this;
 		this.#notificationsHandler = new NotificationsHandler({ session: this });
 		if (this.#isLogged) this.load();
 	}
 
 	/**
 	 * Method to log in a user.
-	 * @async
-	 * @param {ILoginParams} [params] - Login parameters (for email/password login).
-	 * @param {'Google'} [provider] - Authentication provider to use (currently only Google).
-	 * @returns {Promise<{status: boolean, error?: any}>} Promise object representing the login status.
 	 */
-	login = async (params?: ILoginParams, provider?: 'Google') => {
+	login = async (params: ILoginParams, provider?: 'Google') => {
 		try {
 			const theresNoParameters = params && !provider && (!params.email || !params.password);
 			if (theresNoParameters) throw 'Email and password are required.';
 			this.fetching = true;
 
 			// Login using firebase
-			let response: { status: boolean; email?: string };
+			let response: { status: true; email: string } | { status: false, error: unknown };
 			if (provider) response = await this.#loginWithGoogle();
 			else response = await this.#loginWithEmailAndPassword(params);
+
+			if (!response.status) throw response.error;
 
 			// Define the params to use
 			const loadParams: ILogin = provider
@@ -126,12 +123,12 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Private method to log in with Google.
-	 * @async
-	 * @returns {Promise<{status: boolean, email?: string, error?: any}>} Promise object representing the login status.
 	 */
-	#loginWithGoogle = async () => {
+	#loginWithGoogle = async (): ILoginMethodResponse => {
 		try {
 			const response = await signInWithPopup(auth, providers[Providers.Google]);
+			if (!response.user.email) throw 'User email not found';
+
 			return { status: true, email: response.user.email };
 		} catch (error) {
 			return { status: false, error };
@@ -140,14 +137,11 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Private method to log in with email and password.
-	o * @async
-	 * @param {ILoginParams} params - Login parameters.
-	 * @returns {Promise<{status: boolean, error?: any}>} Promise object representing the login status.
 	 */
-	#loginWithEmailAndPassword = async (params: ILoginParams) => {
+	#loginWithEmailAndPassword = async (params: ILoginParams): ILoginMethodResponse => {
 		try {
 			await signInWithEmailAndPassword(auth, params.email, params.password);
-			return { status: true };
+			return { status: true, email: params.email };
 		} catch (error) {
 			return { status: false, error };
 		}
@@ -156,7 +150,7 @@ class Session extends ReactiveModel<Session> {
 	load = async () => {
 		try {
 			this.fetching = true;
-			if (!this.#isLogged) return;
+			if (!this.#isLogged || !this.#token) return;
 			const response = await this.#user.load({ token: this.#token });
 			if (!response.status) throw response.error;
 
@@ -175,8 +169,6 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Method to log out the current user.
-	 * @async
-	 * @returns {Promise<void>} Promise object that resolves when the user is logged out.
 	 */
 	logout = async () => {
 		localStorage.removeItem('__session');
@@ -191,7 +183,6 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Private method to remove the current session from the remote server.
-	 * @returns {Promise<void>|void} Promise that resolves when the session is removed, or void if there is no current user.
 	 */
 	#removeSessionFromRemote = () => {
 		if (!auth.currentUser) return;
@@ -200,17 +191,15 @@ class Session extends ReactiveModel<Session> {
 
 	/**
 	 * Private method to listen for changes in the authentication state.
-	 * @async
-	 * @returns {Promise<void>} Promise that resolves when the authentication state changes are handled.
 	 */
 	#listenForSessionChanges = async () => {
-		auth.onAuthStateChanged(async user => {
+		auth.onAuthStateChanged(async () => {
 			if (!this.#user && this.#isLogged) {
 				return this.logout();
 			}
 
 			// Si hay un usuario, continuar con la carga del usuario.
-			if (!this.#isLogged) return;
+			if (!this.#isLogged || !this.#token) return;
 			const loadResponse = await this.#user.load({ token: this.#token });
 			if (!loadResponse.status) throw loadResponse.error.message;
 			this.#isLogged = true;

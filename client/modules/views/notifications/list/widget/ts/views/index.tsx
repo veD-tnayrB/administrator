@@ -4,7 +4,7 @@ import { IContext, NotificationsListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { ListView } from '@essential-js/admin/components/list-view';
 import { Row } from './item';
-import { usePermissions } from '@essential-js/admin/helpers';
+import { usePermissions } from '@essential-js/admin/hooks';
 export /*bundle*/
 	function View({ store }: { store: StoreManager }) {
 	const [update, setUpdate] = React.useState({});
