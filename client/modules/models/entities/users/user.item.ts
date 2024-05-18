@@ -4,6 +4,7 @@ import config from '@essential-js/admin/config';
 
 export /*bundle*/ interface IUser {
 	id: string;
+	isNew: boolean;
 	active: boolean;
 	email: string;
 	lastNames: string;
@@ -23,7 +24,7 @@ export /*bundle*/ class User extends Item<IUser> {
 		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
 	}
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
+	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({
 			provider: UserItemProvider,
 			storeName: 'users',

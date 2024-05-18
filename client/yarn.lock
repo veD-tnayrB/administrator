@@ -211,7 +211,7 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@beyond-js/backend@^0.1.9", "@beyond-js/backend@~0.1.3", "@beyond-js/backend@~0.1.8", "@beyond-js/backend@~0.1.9":
+"@beyond-js/backend@^0.1.9", "@beyond-js/backend@~0.1.3", "@beyond-js/backend@~0.1.8":
   version "0.1.9"
   resolved "https://registry.npmjs.org/@beyond-js/backend/-/backend-0.1.9.tgz"
   integrity sha512-AqFW0yN4KUIM8oaRuBJdSxt1H+qikcL7Hrd6evYLZGdu96Q7JxOO2i5YdpvduU9AuYJZfyNHVzxJ47rtsV6eHw==
@@ -227,10 +227,10 @@
   dependencies:
     node-fetch "^2.6.7"
 
-"@beyond-js/events@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@beyond-js/events/-/events-0.0.6.tgz"
-  integrity sha512-LZMoCFOmPIFdrBZRAJUZX7sHoEmTUa0kQ+m7RB07HvrWgaEDVYDP1yky2200rVuUQQZ7TWn1yaITIkkki6SijQ==
+"@beyond-js/events@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@beyond-js/events/-/events-0.0.7.tgz"
+  integrity sha512-JL8x0o24+3SLApGr+Q3b+GjpnqWaslPT/yagrXKxVw5l8hbEbS7bwiYPNgExX2lnxOY3v2d6F45yD8JgsrPbZA==
 
 "@beyond-js/kernel@~0.1.8", "@beyond-js/kernel@~0.1.9":
   version "0.1.9"
@@ -246,16 +246,6 @@
     "@beyond-js/kernel" "~0.1.8"
     socket.io-client "^4.5.4"
 
-"@beyond-js/react-18-widgets@~0.0.5":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@beyond-js/react-18-widgets/-/react-18-widgets-0.0.6.tgz"
-  integrity sha512-l03U8ahg7iifCuLc02raJg/ouMe0fy4xCk4m4JqZUMd2c9nlss1y9deLgl033XcG4w0FXL6T7rOrgPYYbWVbWA==
-  dependencies:
-    "@beyond-js/kernel" "~0.1.8"
-    "@beyond-js/widgets" "~0.1.3"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-
 "@beyond-js/react-18-widgets@~1.0.1":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@beyond-js/react-18-widgets/-/react-18-widgets-1.0.4.tgz"
@@ -266,21 +256,17 @@
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"@beyond-js/reactive@1.1.9", "@beyond-js/reactive@^1.1.6":
-  version "1.1.9"
-  resolved "https://registry.npmjs.org/@beyond-js/reactive/-/reactive-1.1.9.tgz"
-  integrity sha512-6Dg8cr1omT/+hRmWf0LFeN/PYy1JpbIGRKeMvnMs+4Uhj2PMFdRJDC/aQA+0GSBwjmhfsXX41Kogix6mcoQY4Q==
+"@beyond-js/reactive@^1.1.12", "@beyond-js/reactive@^1.1.6":
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/@beyond-js/reactive/-/reactive-1.1.12.tgz"
+  integrity sha512-GW7m0zuuhY4nrkzaE6bBeQwozVr6S3CFeYwUBy1WEZtB8lIO9XFYVodmkiRILBS2o33lC8kMsLXhiN+Spvzc4A==
   dependencies:
-    "@beyond-js/backend" "~0.1.9"
-    "@beyond-js/events" "^0.0.6"
+    "@beyond-js/events" "^0.0.7"
     "@beyond-js/kernel" "~0.1.9"
-    "@beyond-js/local" "~0.1.3"
-    "@beyond-js/react-18-widgets" "~0.0.5"
     dexie "^3.2.3"
-    socket.io-client "^4.5.4"
     uuid "^9.0.0"
 
-"@beyond-js/widgets@~0.1.3", "@beyond-js/widgets@~0.1.5":
+"@beyond-js/widgets@~0.1.5":
   version "0.1.6"
   resolved "https://registry.npmjs.org/@beyond-js/widgets/-/widgets-0.1.6.tgz"
   integrity sha512-NnJLCwpEPTqTqsrBNIAm04YVQv8hRPpA5ULSI0wjl7yrR5au+4K5uVf0YSLmxTrAI0ExEvjojya9xlVJPyNWNw==
@@ -289,7 +275,7 @@
 
 "@bgroup/helpers@^1.0.7":
   version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@bgroup/helpers/-/helpers-1.0.7.tgz#1c206436153ed7379ff4687945dcb7bc7beac950"
+  resolved "https://registry.npmjs.org/@bgroup/helpers/-/helpers-1.0.7.tgz"
   integrity sha512-4/Is4/xz2QVcRhWzq2F+VbRuf7aff20KQyIuXcX5SuUqk/y9n3I3QVaAAzXvnhXxQ5a8bDMl6ArIw0YvyWPDhg==
   dependencies:
     "@babel/preset-typescript" "^7.23.2"
@@ -899,7 +885,7 @@
 
 "@tippyjs/react@^4.2.6":
   version "4.2.6"
-  resolved "https://registry.yarnpkg.com/@tippyjs/react/-/react-4.2.6.tgz#971677a599bf663f20bb1c60a62b9555b749cc71"
+  resolved "https://registry.npmjs.org/@tippyjs/react/-/react-4.2.6.tgz"
   integrity sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==
   dependencies:
     tippy.js "^6.3.1"
@@ -960,6 +946,11 @@
   version "0.16.8"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.8.tgz"
   integrity sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==
+
+"@types/uuid@^9.0.8":
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.8.tgz#7545ba4fc3c003d6c756f651f3bf163d8f0f29ba"
+  integrity sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==
 
 accepts@~1.3.4, accepts@~1.3.8:
   version "1.3.8"
@@ -1166,7 +1157,7 @@ csstype@^3.0.2:
 
 date-fns@^3.6.0:
   version "3.6.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.6.0.tgz#f20ca4fe94f8b754951b24240676e8618c0206bf"
+  resolved "https://registry.npmjs.org/date-fns/-/date-fns-3.6.0.tgz"
   integrity sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==
 
 debug@2.6.9:
@@ -1217,7 +1208,7 @@ dom-helpers@^5.0.1:
 
 dompurify@^3.1.3:
   version "3.1.3"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.1.3.tgz#cfe3ce4232c216d923832f68f2aa18b2fb9bd223"
+  resolved "https://registry.npmjs.org/dompurify/-/dompurify-3.1.3.tgz"
   integrity sha512-5sOWYSNPaxz6o2MUPvtyxTTqR4D3L77pr5rUQoWgD5ROQtVIZQgJkXbo1DLlK3vj11YGw5+LnF4SYti4gZmwng==
 
 dotenv@^16.3.1:
@@ -1711,14 +1702,14 @@ mime@1.6.0:
 
 moment-timezone@^0.5.45:
   version "0.5.45"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.45.tgz#cb685acd56bac10e69d93c536366eb65aa6bcf5c"
+  resolved "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.45.tgz"
   integrity sha512-HIWmqA86KcmCAhnMAN0wuDOARV/525R2+lOLotuGFzn4HO+FH+/645z2wx0Dt3iDv6/p61SIvKnDstISainhLQ==
   dependencies:
     moment "^2.29.4"
 
 moment@^2.29.4:
   version "2.30.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
 
 ms@2.0.0:
@@ -2145,7 +2136,7 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 tippy.js@^6.3.1, tippy.js@^6.3.7:
   version "6.3.7"
-  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+  resolved "https://registry.npmjs.org/tippy.js/-/tippy.js-6.3.7.tgz"
   integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
   dependencies:
     "@popperjs/core" "^2.9.0"

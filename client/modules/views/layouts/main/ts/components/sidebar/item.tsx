@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'pragmate-ui/link';
 import { routing } from '@beyond-js/kernel/routing';
-import { Module } from '@essential-js/admin/models';
+import type { IModule } from '@essential-js/admin/models';
 import Tippy from '@tippyjs/react';
+import { Placement } from 'tippy.js';
 import { useLayoutContext } from '../../context';
 
-interface IProps extends Module {
+interface IProps extends Partial<IModule> {
 	to?: string;
 	onClick: () => void;
 	icon: string;
@@ -14,12 +15,12 @@ interface IProps extends Module {
 
 export const SidebarItem: React.FC<IProps> = params => {
 	const { store } = useLayoutContext();
-	const [isSelected, setIsSelected] = React.useState(
-		routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to
-	);
+	const isDefaultSelected =
+		params.to ? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to : false
+	const [isSelected, setIsSelected] = React.useState(isDefaultSelected);
 
 	React.useEffect(() => {
-		const onChange = () => setIsSelected(routing.uri.pathname.includes(params.to));
+		const onChange = () => setIsSelected(routing.uri.pathname.includes(params.to || ''));
 		routing.on('change', onChange);
 		return () => { routing.off('change', onChange) };
 	}, []);
@@ -32,12 +33,12 @@ export const SidebarItem: React.FC<IProps> = params => {
 	const cls = isSelected ? 'selected' : '';
 
 	const Tooltip = !store.isSidebarCollapsed ? React.Fragment : Tippy
-	const props = !store.isSidebarCollapsed ? {} : { content: params.label, placement: 'right' };
+	const props = !store.isSidebarCollapsed ? {} : { content: params.label, placement: 'right' as Placement };
 	return (
 
 		<Tooltip {...props} >
 			<li className={`sidebar-item ${cls}`}>
-				<Container data-placement="right" className="sidebar-item-link tippy-box" onClick={params.onClick} {...properties}>
+				<Container data-placement="right" onClick={params.onClick} {...properties} className={`sidebar-item-link ${properties.className}`}>
 					<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
 					<span>{params.label}</span>
 

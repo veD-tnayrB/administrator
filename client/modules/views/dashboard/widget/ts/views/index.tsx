@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { StoreManager } from '../store';
 import { DashboardContext, IContext } from '../context';
-import { module } from 'beyond_context';
-import { useTexts } from '@essential-js/admin/hooks';
 import { WidgetManager } from '../manager/dashboard.widget-manager';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { widgetStore } from '../manager/dashboard.widget-manager.handler';
@@ -23,15 +21,17 @@ widgetStore.defineWidgets([
 
 export /*bundle*/
 	function View({ store }: { store: StoreManager }) {
-	const [ready, texts] = useTexts(module.specifier);
 	const [data, setData] = React.useState(store.collection.items);
+	const [ready, setReady] = React.useState(store.ready);
+	useBinder([store], () => {
+		setData(store.collection.items);
+		setReady(store.ready)
+	});
 
-	useBinder([store], () => setData(store.collection.items));
 
 	if (!ready) return <SpinnerPage />;
 	const contextValue: IContext = {
 		store,
-		texts,
 	};
 	return (
 		<DashboardContext.Provider value={contextValue}>

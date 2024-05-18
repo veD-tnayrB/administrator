@@ -13,20 +13,20 @@ const ICONS = {
 };
 
 export const SidebarFooter = () => {
-	const { texts, store } = useLayoutContext();
+	const { store } = useLayoutContext();
 
 	const onLogout = () => {
 		session.logout();
 		routing.pushState('/auth/login');
 	};
 
-	const firstItemName = store.mode === 'dark' ? texts.lightMode : texts.darkMode;
+	const firstItemName = store.mode === 'dark' ? "Light mode" : "Dark mode";
 
 	return (
 		<footer className="sidebar-footer">
 			<ul>
 				<SidebarItem label={firstItemName} icon={ICONS.theme[store.mode]} onClick={store.changeMode} />
-				<SidebarItem label={texts.logout} icon={ICONS.logout} onClick={onLogout} />
+				<SidebarItem label="Logout" icon={ICONS.logout} onClick={onLogout} />
 			</ul>
 		</footer>
 	);

@@ -15,7 +15,6 @@ export class Publish {
 
 	static handleRelations = async (moduleId: string, actions: Record<string, string>[], transaction) => {
 		try {
-			console.log("actions: ", actions)
 			const include = [
 				{
 					model: DB.models.ModulesActions,

@@ -1,6 +1,7 @@
 import { ReactWidgetController } from '@beyond-js/react-18-widgets/base';
 import { Layout } from './main.layout.index';
 import { StoreManager } from './store';
+import { IWidgetStore } from '@beyond-js/widgets/controller';
 
 export /*bundle*/
 	class Controller extends ReactWidgetController {
@@ -8,11 +9,11 @@ export /*bundle*/
 		return Layout;
 	}
 
-	#store: StoreManager;
+	#store: StoreManager = new StoreManager();
 
 	createStore() {
 		this.#store = new StoreManager();
-		return this.#store;
+		return this.#store as IWidgetStore;
 	}
 
 	show() {

@@ -12,7 +12,7 @@ const DEFAULT_VALUE = {
 
 export const LeftSectionForm = () => {
 	const [values, setValues] = React.useState(DEFAULT_VALUE);
-	const [error, setError] = React.useState<string | null>(null);
+	const [error, setError] = React.useState<string | null | unknown>(null);
 	const isButtonDisabled = values.email === '' || values.password === '';
 	const { store } = useLoginContext();
 

@@ -17,7 +17,6 @@ export /*bundle*/
 	 * this method is executed when the widget is showd
 	 */
 	show() {
-		console.log("DISPLAY")
 		this.#store.load();
 	}
 

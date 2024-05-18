@@ -65,7 +65,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	save = async (values: Partial<IModule>) => {
 		try {
 			this.fetching = true;
-			console.log("SAVE VALUES => ", values)
 			await this.#item.set(values);
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;

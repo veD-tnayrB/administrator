@@ -16,17 +16,6 @@ interface IUser {
 
 export /*bundle*/ class User extends ReactiveModel<IUser> {
 	private provider: UserItemProvider = new UserItemProvider();
-	protected properties = [
-		'id',
-		'names',
-		'lastNames',
-		'email',
-		'active',
-		'timeCreated',
-		'timeUpdated',
-		'permissions',
-		'profiles',
-	];
 
 	get fullName() {
 		let namesArray = this.names.split(' ');
@@ -36,7 +25,19 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 	}
 
 	constructor() {
-		super();
+		super({
+			properties: [
+				'id',
+				'names',
+				'lastNames',
+				'email',
+				'active',
+				'timeCreated',
+				'timeUpdated',
+				'permissions',
+				'profiles',
+			]
+		});
 		this.reactiveProps([
 			'id',
 			'names',
@@ -92,16 +93,20 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
-	set(data: this): void {
-		this.properties.forEach((property: string | { name: string }) => {
-			if (typeof property === 'object') {
-				if (data.hasOwnProperty(property.name)) {
-				}
-				return;
-			}
-			if (data.hasOwnProperty(property)) this[property] = data[property];
-		});
 
+	set(data: Partial<IUser>): void {
+		this.properties.forEach((property: string | { name: string }) => {
+			let key: keyof IUser | undefined;
+			if (typeof property === 'object') {
+				key = property.name as keyof IUser;
+			} else {
+				key = property as keyof IUser;
+			}
+			if (key && data.hasOwnProperty(key)) {
+				this[key] = data[key];
+			}
+		});
 		this.triggerEvent();
 	}
+
 }

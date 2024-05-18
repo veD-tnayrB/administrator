@@ -18,6 +18,7 @@ export /*bundle*/ interface IPermission {
 
 export /*bundle*/ interface IModule {
 	id: string;
+	isNew: boolean;
 	label: string;
 	to: string;
 	icon: string;
@@ -30,7 +31,7 @@ export /*bundle*/ interface IModule {
 export /*bundle*/ class Module extends Item<IModule> {
 	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order', 'actions'];
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
+	constructor(params: { id?: string } = { id: undefined }) {
 		super({
 			provider: ModulesItemProvider,
 			storeName: 'modules',

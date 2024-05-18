@@ -10,6 +10,7 @@ import { ILogin } from './types';
 interface ILoginParams {
 	email: string;
 	password: string;
+	timezone: string
 }
 
 type ILoginMethodResponse = Promise<{ email: string; status: true } | { status: false, error: unknown }>;
@@ -153,10 +154,9 @@ class Session extends ReactiveModel<Session> {
 			if (!this.#isLogged || !this.#token) return;
 			const response = await this.#user.load({ token: this.#token });
 			if (!response.status) throw response.error;
-
-			this.#isLogged = true;
 			this.#user.set({ ...response.data.user, loaded: true });
 			this.#isLoaded = true;
+			this.#isLogged = true;
 			this.triggerEvent('user-changed');
 			return { status: true };
 		} catch (error) {

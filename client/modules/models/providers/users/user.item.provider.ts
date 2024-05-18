@@ -1,6 +1,7 @@
 import { ItemProvider } from '@essential-js/admin/helpers';
+import { IUser } from '../../entities/users/user.item';
 
-export class UserItemProvider extends ItemProvider {
+export class UserItemProvider extends ItemProvider<IUser> {
 	constructor() {
 		super({
 			endpoints: {

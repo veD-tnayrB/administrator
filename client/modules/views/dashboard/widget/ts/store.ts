@@ -17,6 +17,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			console.error(error);
 			return error;
 		} finally {
+			this.ready = true
 			this.fetching = false;
 		}
 	};

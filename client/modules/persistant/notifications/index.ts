@@ -12,7 +12,7 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		return this.#token;
 	}
 
-	#current = null;
+	#current: Record<string, any> | null = null;
 	get current() {
 		return this.#current;
 	}

@@ -20,7 +20,6 @@ export const SidebarHeader = ({ theme }: IProps) => {
 	const iconUrl = theme === 'dark' ? '/assets/sidebar/logo-dark.svg' : '/assets/sidebar/logo-light.svg';
 
 	const toggleCollapse = () => {
-		console.log("sidebar", store.isSidebarCollapsed)
 		store.isSidebarCollapsed = !store.isSidebarCollapsed;
 	}
 

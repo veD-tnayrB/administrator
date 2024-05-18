@@ -4,6 +4,7 @@ import config from '@essential-js/admin/config';
 
 export /*bundle*/ interface IWidget {
 	id: string;
+	isNew: boolean;
 	active: boolean;
 	identifier: string;
 	metadata: string;
@@ -15,7 +16,7 @@ export /*bundle*/ interface IWidget {
 export /*bundle*/ class Widget extends Item<IWidget> {
 	protected properties = ['id', 'active', 'identifier', 'metadata', 'order', 'timeUpdated', 'timeCreated'];
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
+	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({
 			provider: WidgetItemProvider,
 			storeName: 'widgets',

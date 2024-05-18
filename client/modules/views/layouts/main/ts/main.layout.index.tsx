@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Sidebar } from './components/sidebar/main.layout.sidebar';
 import { IContext, LayoutContext } from './context';
 import { StoreManager } from './store';
-import { module } from 'beyond_context';
 import { ToastContainer } from 'react-toastify';
-import { useCheckPermissions, useTexts } from '@essential-js/admin/hooks';
+import { useCheckPermissions } from '@essential-js/admin/hooks';
 import { SpinnerPage } from '@essential-js/admin/components/spinner';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { session } from '@essential-js/admin/auth';
@@ -21,10 +20,11 @@ declare global {
 
 export function Layout({ store }: { store: StoreManager }) {
 	const hasPermissions = useCheckPermissions();
-	const [ready, texts] = useTexts(module.specifier);
 	const [isDOMReady, setIsDOMReady] = React.useState(session.isLoaded);
 	useBinder([session.notificationsHandler], () => {
-		const { title, body } = session.notificationsHandler.current;
+		const current = session.notificationsHandler.current;
+		if (!current) return;
+		const { title, body } = current;
 		toast(<Notification title={title} body={body} />);
 	});
 
@@ -32,11 +32,10 @@ export function Layout({ store }: { store: StoreManager }) {
 
 
 	if (!hasPermissions) return null;
-	if (!ready || !isDOMReady) return <SpinnerPage displayBrand />;
+	if (!isDOMReady) return <SpinnerPage displayBrand />;
 
 	const contextValue: IContext = {
 		store,
-		texts,
 	};
 	return (
 		<LayoutContext.Provider value={contextValue}>

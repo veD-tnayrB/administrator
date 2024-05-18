@@ -8,6 +8,8 @@ interface IListParams {
 }
 
 export /*bundle*/ abstract class CollectionProvider {
+	[key: string]: any;
+
 	#api: Api = new Api();
 	get api() {
 		return this.#api;

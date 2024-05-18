@@ -1,9 +1,10 @@
 import { session, Providers } from '@essential-js/admin/auth';
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { routing } from '@beyond-js/kernel/routing';
+import type { IPermission } from '@essential-js/admin/models';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
-	#error: string | null = null;
+	#error: string | null | unknown = null;
 	get error() {
 		return this.#error;
 	}
@@ -15,7 +16,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await session.login({ ...params, timezone }, provider);
 			if (!response.status) throw response.error;
 
-			session.user.permissions.sort((a, b) => a.moduleTo - b.moduleTo);
+			session.user.permissions.sort((a: IPermission, b: IPermission) => a.moduleTo.localeCompare(b.moduleTo));
 			const redirectTo = session.user.permissions.length ? session.user.permissions[0].moduleTo : '/error/403';
 			routing.pushState(redirectTo);
 		} catch (error) {

@@ -5,6 +5,7 @@ import { IModule } from '../modules/modules.item';
 
 export /*bundle*/ interface IProfile {
 	id: string;
+	isNew: boolean;
 	name: string;
 	description: string;
 	timeCreated: Date;
@@ -15,7 +16,7 @@ export /*bundle*/ interface IProfile {
 export /*bundle*/ class Profile extends Item<IProfile> {
 	protected properties = ['id', 'name', 'description', 'timeCreated', 'timeUpdated', 'modules'];
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
+	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({
 			provider: ProfileItemProvider,
 			storeName: 'profiles',

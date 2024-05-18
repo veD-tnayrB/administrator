@@ -6,6 +6,7 @@ import { IProfile } from '../profiles/profile.item';
 
 export /*bundle*/ interface INotification {
 	id: string;
+	isNew: boolean;
 	title: string;
 	description: string;
 	icon: string;
@@ -38,7 +39,7 @@ export /*bundle*/ class Notification extends Item<INotification> {
 		return JSON.parse(this.frecuency);
 	}
 
-	constructor(params: { id: string | undefined } = { id: undefined }) {
+	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({
 			provider: NotificationItemProvider,
 			storeName: 'notifications',

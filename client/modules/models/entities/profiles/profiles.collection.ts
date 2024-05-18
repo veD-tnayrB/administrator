@@ -21,6 +21,7 @@ export /*bundle*/ class Profiles extends Collection {
 	}) => {
 		try {
 			this.fetching = true;
+			if (!this.provider.generateReport) return;
 			const response = await this.provider.generateReport(params);
 			const downloadExcelUrl = URL.createObjectURL(response);
 			return { status: true, data: downloadExcelUrl };
@@ -35,6 +36,7 @@ export /*bundle*/ class Profiles extends Collection {
 	getTemplate = async (params: { type: 'xlsx' | 'csv' }) => {
 		try {
 			this.fetching = true;
+			if (!this.provider.getTemplate) return;
 			const response = await this.provider.getTemplate(params);
 			const downloadExcelUrl = URL.createObjectURL(response);
 			return { status: true, data: downloadExcelUrl };
@@ -46,10 +48,11 @@ export /*bundle*/ class Profiles extends Collection {
 		}
 	};
 
-	import = async params => {
+	import = async (params: { file: File }) => {
 		try {
 			this.fetching = true;
-			const response = await this.provider.import(params);
+			if (!this.provider.import) return;
+			await this.provider.import(params);
 			return { status: true };
 		} catch (error) {
 			console.error(error);

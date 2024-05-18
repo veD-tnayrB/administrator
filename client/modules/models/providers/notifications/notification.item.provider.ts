@@ -1,6 +1,7 @@
 import { ItemProvider } from '@essential-js/admin/helpers';
+import { INotification } from "../../entities/notifications/notification.item";
 
-export class NotificationItemProvider extends ItemProvider {
+export class NotificationItemProvider extends ItemProvider<INotification> {
 	constructor() {
 		super({
 			endpoints: {

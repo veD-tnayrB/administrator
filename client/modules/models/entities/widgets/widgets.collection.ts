@@ -14,5 +14,8 @@ export /*bundle*/ class Widgets extends Collection {
 		});
 	}
 
-	getTotals = this.provider.getTotals;
+	getTotals = () => {
+		if (!this.provider.getTotals) return;
+		return this.provider.getTotals();
+	}
 }

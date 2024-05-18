@@ -22,7 +22,7 @@ export const TotalItem = ({ title, amount, icon, to }: ITotalItem) => {
 	to = to || '/dashboard';
 	return (
 		<motion.article {...animation} className="total">
-			<Link to={to} className={` ${linkCls}`}>
+			<Link href={to} className={` ${linkCls}`}>
 				<div className="icon" dangerouslySetInnerHTML={{ __html: icon }} />
 
 				<div className="content">
