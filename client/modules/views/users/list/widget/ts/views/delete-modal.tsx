@@ -1,9 +1,9 @@
 import React from 'react';
-import { ConfirmModal, IAction as IModalAction } from '@essential-js/admin/components/modal';
+import { ConfirmModal } from '@essential-js/admin/components/modal';
 import { useUsersListContext } from '../context';
 
 interface IProps {
-	onClose: (event) => void;
+	onClose: (event: React.MouseEvent) => void;
 	id: string;
 }
 

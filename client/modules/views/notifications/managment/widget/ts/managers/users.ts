@@ -1,19 +1,13 @@
 import { StoreListView } from '@essential-js/admin/components/list-view';
-import { Users, User } from '@essential-js/admin/models';
+import { Users } from '@essential-js/admin/models';
 
 export class UsersManager extends StoreListView {
-	declare collection: Users;
 	declare specificFilters: { label: string; name: string }[];
-	declare selectedItems: Map<string, User>;
 	declare load: (params?: Record<string, any>) => Promise<void>;
 	declare generalFilters: string[];
-	declare propertiesDisplaying: string[];
-	declare triggerEvent: (event?: string) => void;
-	declare params: Record<string, any>;
-	declare limit: number;
 
 	constructor() {
-		super({ collection: new Users() });
+		super({ collection: new Users(), id: "notifications-users" });
 		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Name', name: 'name' },
@@ -31,8 +25,10 @@ export class UsersManager extends StoreListView {
 		this.propertiesDisplaying = ['id', 'names', 'lastNames', 'email'];
 	}
 
-	setSelectedsItems = (ids: string[]) => {
-		ids.forEach(id => this.selectedItems.set(id));
+	setSelectedsItems = (ids: string[] | undefined) => {
+		console.trace("user ids: ", ids)
+		if (!ids) return;
+		ids.forEach(id => this.selectedItems.set(id, {}));
 		this.triggerEvent();
 	};
 }

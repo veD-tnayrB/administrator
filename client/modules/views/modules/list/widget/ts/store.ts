@@ -5,7 +5,7 @@ export class StoreManager extends StoreListView {
 	declare specificFilters: { label: string; name: string }[];
 	declare generalFilters: string[];
 	constructor() {
-		super({ collection: new Modules() });
+		super({ collection: new Modules(), id: 'modules' });
 		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Label', name: 'label' },

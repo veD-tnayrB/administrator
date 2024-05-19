@@ -2,17 +2,17 @@ import * as React from 'react';
 import { StoreManager } from '../store';
 import { usePermissions } from '@essential-js/admin/hooks';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks'
-import { ListView } from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps } from '@essential-js/admin/components/list-view';
 import { ModulesListContext } from '../context';
 import { Row } from './item';
 
 export /*bundle*/
 	function View({ store }: { store: StoreManager }) {
-	const [update, setUpdate] = React.useState({});
+	const [, setUpdate] = React.useState({});
 	const permissions = usePermissions();
 	useBinder([store], () => setUpdate({}));
 
-	const listProperties = {
+	const listProperties: IListViewProps = {
 		store,
 		viewHeader: {
 			title: 'Modules',
@@ -35,16 +35,13 @@ export /*bundle*/
 				{ label: 'Created at', name: 'timeCreated' },
 				{ label: 'Updated at', name: 'timeUpdated' },
 			],
-			actions: [
-				{ type: 'edit' },
-			]
+
 		},
 		list: {
 			row: Row,
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'label', 'to', 'timeCreated', 'timeUpdated'],
-				actions: [{ type: 'edit' }]
 			},
 
 		},
@@ -63,11 +60,11 @@ export /*bundle*/
 		},
 	};
 
+	if (!permissions.has('modules.create')) listProperties.actions!.create = undefined
+
 	const contextValue = {
 		permissions
 	}
-
-	if (!permissions.has('modules.create')) listProperties.actions.create = null
 
 	return <ModulesListContext.Provider value={contextValue}>
 		<div className="page-container  list-page-container">

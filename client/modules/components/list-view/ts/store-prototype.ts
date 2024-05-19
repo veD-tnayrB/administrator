@@ -1,7 +1,6 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
-import config from '@essential-js/admin/config';
 import { Reports } from './plugins/reports/manager';
 
 const DEFAULT_LIMIT = 5;
@@ -78,7 +77,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 		this.#updateUrl();
 	}
 
-	#avaiablesPlugins = {
+	#avaiablesPlugins: Record<string, any> = {
 		reports: Reports,
 	};
 	#plugins: string[] = [];
@@ -115,15 +114,16 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	}
 
 	#getPlugins = () => {
-		this.#plugins.forEach((plugin) => {
-			if (!this.#avaiablesPlugins[plugin] || this.#initalizedPlugins.has(plugin)) return;
+		this.#plugins.forEach((plugin: string) => {
+			const isAValidPlugin = this.#avaiablesPlugins[plugin];
+			const isAlreadyInitalized = this.#initalizedPlugins.has(plugin);
+			if (!isAValidPlugin || isAlreadyInitalized) return;
 
 			const instance = new this.#avaiablesPlugins[plugin](this);
 			this.#initalizedPlugins.set(plugin, instance);
-
 			const methods = instance.toExpose;
 
-			methods.forEach((method) => (this[method] = instance[method]));
+			methods.forEach((method: string) => (this[method] = instance[method]));
 		});
 	};
 
@@ -145,7 +145,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	search = async (search: { [key: string]: unknown } | string) => {
 		try {
 			this.fetching = true;
-			const query = {};
+			const query: Record<string, unknown> = {};
 			this.generalFilters.forEach((item) => {
 				const value = typeof search === 'string' ? search : search[item];
 				if (!value) return;
@@ -290,7 +290,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 	#getUrlParams = () => {
 		const urlParams = new URLSearchParams(window.location.search);
-		const params = {};
+		const params: Record<string, string> = {};
 		for (const [key, value] of urlParams) {
 			params[key] = value;
 		}

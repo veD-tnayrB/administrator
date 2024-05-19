@@ -1,13 +1,10 @@
-.pui-select__container {
-	display: flex;
-	flex-direction: column;
-
-	.pui-input__label {
-		order: 0;
-	}
-
 	.pui-select {
 		cursor: pointer;
+
+		label {
+			font-size: 0.85rem;
+		}
+
 		.css-b62m3t-container {
 			border-radius: var(--border-tertiary);
 
@@ -48,4 +45,3 @@
 			}
 		}
 	}
-}

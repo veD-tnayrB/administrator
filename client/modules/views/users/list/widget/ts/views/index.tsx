@@ -2,7 +2,7 @@ import React from 'react';
 import { StoreManager } from '../store';
 import { IContext, UsersListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { ListView } from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps } from '@essential-js/admin/components/list-view';
 import { usePermissions } from '@essential-js/admin/hooks';
 import { Row } from './item';
 
@@ -16,7 +16,7 @@ export /*bundle*/
 		permissions,
 	};
 
-	const listProperties = {
+	const listProperties: IListViewProps = {
 		store,
 		plugins: ['reports'],
 		viewHeader: {
@@ -51,10 +51,6 @@ export /*bundle*/
 			isSelecteable: true,
 			itemsConfig: {
 				properties: ['id', 'names', 'lastNames', 'email', 'timeCreated', 'timeUpdated'],
-				actions: [
-					{ type: 'edit' },
-					{ type: 'delete' },
-				],
 			},
 		},
 		actions: {
@@ -62,7 +58,6 @@ export /*bundle*/
 				to: '/users/managment/create',
 				label: 'Create',
 			},
-			removeAll: true,
 			columnsSelector: {
 				title: 'Select the columns you want to appear',
 				label: '',
@@ -73,22 +68,23 @@ export /*bundle*/
 			},
 			reports: {
 				generateReport: {
-					excel: true,
-					csv: true,
+					excel: {},
+					csv: {},
 				},
 				downloadTemplate: {
-					excel: true,
-					csv: true,
+					excel: {},
+					csv: {},
 				},
-				import: true,
+				import: {},
+
 			},
 		},
 	};
 
-	if (!permissions.has('users.create')) listProperties.actions.create = null;
-	if (!permissions.has('users.get-template')) listProperties.actions.reports.downloadTemplate = null;
-	if (!permissions.has('users.generate-report')) listProperties.actions.reports.generateReport = null;
-	if (!permissions.has('users.import')) listProperties.actions.reports.import = null;
+	if (!permissions.has('users.create')) listProperties.actions!.create = undefined
+	if (!permissions.has('users.get-template')) listProperties.actions!.reports!.downloadTemplate = undefined;
+	if (!permissions.has('users.generate-report')) listProperties.actions!.reports!.generateReport = undefined;
+	if (!permissions.has('users.import')) listProperties.actions!.reports!.import = undefined;
 
 	return (
 		<UsersListContext.Provider value={contextValue}>

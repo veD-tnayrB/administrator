@@ -25,7 +25,7 @@ export const Row = ({ propertiesToDisplay, item, selectedItems }: IRow) => {
 		);
 	});
 
-	const onCloseDelete = (event) => {
+	const onCloseDelete = (event: React.MouseEvent) => {
 		event.stopPropagation();
 		setDisplayModal(false);
 	};

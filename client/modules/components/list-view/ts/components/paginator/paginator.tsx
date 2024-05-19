@@ -3,7 +3,7 @@ import { ILengthHandler } from './length-handler';
 import { PaginatorContent } from './content';
 
 export interface IPaginator {
-	texts: {
+	texts?: {
 		of: string;
 	};
 	lengthHandler?: ILengthHandler;

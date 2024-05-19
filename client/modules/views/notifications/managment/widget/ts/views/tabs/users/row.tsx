@@ -2,8 +2,10 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Checkbox } from 'pragmate-ui/form';
 import { useNotificationsManagmentContext } from '../../../context';
+import { IRow } from '@essential-js/admin/components/list-view';
 
-export const UsersRow = ({ propertiesToDisplay, item, ...props }) => {
+
+export const UsersRow = ({ propertiesToDisplay, item }: IRow) => {
 	const { store } = useNotificationsManagmentContext();
 	const output = propertiesToDisplay.map((property: string) => {
 		let value = item[property];

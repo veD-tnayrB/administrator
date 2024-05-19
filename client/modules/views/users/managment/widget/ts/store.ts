@@ -36,9 +36,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#refreshUser: boolean = false;
 
-	load = async ({ id }: { id: string }) => {
+	load = async ({ id }: { id: string | undefined }) => {
 		try {
-			if (id === 'create') {
+			if (!id || id === 'create') {
 				this.#isCreating = true;
 				this.#item.profiles = [];
 				this.#item.active = 1;
@@ -102,7 +102,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		if (!values.lastNames) return 'The last names are required.';
 		if (!values.email) return 'The email is required.';
 		if (!EMAIL_REGEX.test(values.email)) return 'The email is not valid, please check it and try again.';
-		if (!values.profiles.length) return 'At least one profile is required.';
+		if (!values.profiles || !values.profiles.length) return 'At least one profile is required.';
 		return '';
 	};
 

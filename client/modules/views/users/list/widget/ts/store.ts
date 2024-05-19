@@ -2,14 +2,9 @@ import { StoreListView } from '@essential-js/admin/components/list-view';
 import { Users } from '@essential-js/admin/models';
 
 export class StoreManager extends StoreListView {
-	declare params: Record<string, unknown>;
-	declare limit: number;
-	declare specificFilters: { label: string; name: string }[];
-	declare generalFilters: string[];
-	declare remove: ({ id }: { id: string }) => void;
 
 	constructor() {
-		super({ collection: new Users() });
+		super({ collection: new Users(), id: "users" });
 		this.params = {
 			limit: this.limit,
 			start: 0,

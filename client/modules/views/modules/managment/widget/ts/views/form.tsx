@@ -10,7 +10,6 @@ import { Actions } from './actions';
 import { IModule } from '@essential-js/admin/models';
 import DOMPurify from 'dompurify'
 
-
 export const Form = () => {
 	const { store, item, setItem } = useModulesManagmentContext();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
@@ -27,7 +26,7 @@ export const Form = () => {
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value: rawValue, type } = event.target;
-		const value = type === 'checkbox' ? event.target.checked : rawValue;
+		const value = type === 'checkbox' ? (event.target as HTMLInputElement).checked : rawValue;
 		setItem((currentValue: IModule) => ({ ...currentValue, [name]: value }));
 	};
 

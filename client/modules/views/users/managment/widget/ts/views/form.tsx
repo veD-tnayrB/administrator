@@ -4,14 +4,14 @@ import { useUsersManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
-import { Select } from '@essential-js/admin/components/select';
+import { ReactSelect as Select } from 'pragmate-ui/form/react-select';
 import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
+import { IUser } from '@essential-js/admin/models';
 
 export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [error, setError] = React.useState('');
-	const formatedOptions = store.profiles.items.map((item) => ({ label: item.name, value: item.id }));
 	const [item, setItem] = React.useState(store.item.getProperties());
 
 	useBinder([store], () => {
@@ -26,10 +26,10 @@ export const Form = () => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-		setItem((currentValue) => ({ ...currentValue, [name]: value }));
+		setItem((currentValue: Partial<IUser>) => ({ ...currentValue, [name]: value }));
 	};
-	const onSelectChange = (params) => {
-		setItem((currentValues) => ({ ...currentValues, profiles: params.target.value }));
+	const onSelectChange = (params: { target: { value: string; name: string } }) => {
+		setItem((currentValues: Partial<IUser>) => ({ ...currentValues, profiles: params.target.value }));
 	};
 
 	const onSubmit = (event: React.FormEvent) => {
@@ -40,6 +40,7 @@ export const Form = () => {
 		routing.pushState('/users');
 	};
 
+	const formatedOptions = store.profiles.items.map((item) => ({ label: item.name, value: item.id }));
 	const profilesValue = formatedOptions.filter(option => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 

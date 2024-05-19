@@ -7,10 +7,12 @@ export const GenerateReports = () => {
 	const { store, header } = useListViewContext();
 
 	const onExcel = () => {
+		if (!header || !header.items) return console.error('Header items not found');
 		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
 		store.generateReport({ header: selectedItems, type: 'xlsx' });
 	};
 	const onCSV = () => {
+		if (!header || !header.items) return console.error('Header items not found');
 		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
 		store.generateReport({ header: selectedItems, type: 'csv' });
 	};
@@ -40,7 +42,7 @@ export const GenerateReports = () => {
 	};
 
 	return (
-		<Dialog variant="secondary" {...options}>
+		<Dialog  {...options}>
 			<ul>
 				<li>
 					<Button onClick={onExcel} className="generate-report-option">

@@ -20,9 +20,14 @@ export const Tabs = () => {
 		store.loadAssociations();
 	}, []);
 
-	const onTabsSelected = (event, index: number) => {
+	const onTabsSelected = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
 		store.setTab(index);
-	};
+	}
+
+	const panes = [
+		{ tab: 'profiles', content: '' },
+		{ tab: 'users', content: '' },
+	];
 
 	return (
 		<CollapsibleContainer>
@@ -30,12 +35,12 @@ export const Tabs = () => {
 				<h3>Associations</h3>
 			</CollapsibleHeader>
 			<CollapsibleContent>
-				<TabsContainer onChange={onTabsSelected} active={active}>
-					<PuiTabs>
+				<TabsContainer onChange={onTabsSelected} panes={panes} active={active}>
+					<PuiTabs className="tabs">
 						<Tab>Associated profiles</Tab>
 						<Tab>Associated individual users</Tab>
 					</PuiTabs>
-					<Panes>
+					<Panes className="panes">
 						<Profiles />
 						<Users />
 					</Panes>

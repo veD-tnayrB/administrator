@@ -34,7 +34,7 @@ export const DownloadTemplate = () => {
 	};
 
 	return (
-		<Dialog variant="secondary" {...options}>
+		<Dialog {...options}>
 			<ul>
 				<li>
 					<Button onClick={onExcel} className="generate-report-option">

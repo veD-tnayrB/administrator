@@ -1,15 +1,21 @@
 import React from 'react';
 import { Form as FormUI, Input } from 'pragmate-ui/form';
-import { IUser } from '@essential-js/admin/models';
 import { useNotificationsManagmentContext } from '../context';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { Tabs } from './tabs';
 import { Frecuency } from './frecuency';
 
+export interface IValues {
+	title: string;
+	description: string;
+	frecuency: Record<string, string[]>;
+	endDate: string;
+}
+
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
-	const [values, setValues] = React.useState<Partial<IUser>>(store.item.getProperties());
+	const [values, setValues] = React.useState<IValues>(store.item.getProperties());
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { ProfilesManager } from './managers/profiles';
 import { UsersManager } from './managers/users';
 import { FrecuencyManager } from './managers/frecuency';
+import { IValues } from './views/form';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#frecuencyManager: FrecuencyManager = new FrecuencyManager();
@@ -37,8 +38,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#isCreating;
 	}
 
-	load = async ({ id }: { id: string }) => {
-		if (id === 'create') {
+	load = async ({ id }: { id: string | undefined }) => {
+		if (!id || id === 'create') {
 			await this.#profiles.load();
 			await this.#users.load({ where: { active: 1 } });
 			this.#isCreating = true;
@@ -72,7 +73,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.#profiles.setSelectedsItems(profiles);
 	};
 
-	save = async (values: Partial<INotification>) => {
+	save = async (values: Partial<IValues>) => {
 		try {
 			this.fetching = true;
 			const profiles = [...this.#profiles.selectedItems.keys()];

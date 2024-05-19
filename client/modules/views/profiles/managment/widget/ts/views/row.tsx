@@ -1,4 +1,0 @@
-const Row = () => {
-
-	Rowp
-}

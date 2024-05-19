@@ -11,6 +11,7 @@ export const GenerateExcel = (props: IGenerateReport) => {
 	const { store, header } = useListViewContext();
 
 	const onClick = () => {
+		if (!header || !header.items) return console.error('Header items not found');
 		const selectedItems = header.items.filter(item => store.propertiesDisplaying.includes(item.name));
 		store.generateReport({ header: selectedItems, type: 'xlsx' });
 	};

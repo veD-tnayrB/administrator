@@ -9,9 +9,9 @@ export interface IContext {
 	store: StoreListView;
 	itemsProperties: string[];
 	list: IList;
-	header: IHeader;
-	searchbar: ISearchbar;
-	actions: IActions;
+	header?: IHeader;
+	searchbar?: ISearchbar;
+	actions?: IActions;
 }
 
 export const ListViewContext = React.createContext<IContext>({} as IContext);

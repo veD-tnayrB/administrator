@@ -8,7 +8,7 @@ export const Utilitybar = () => {
 	return (
 		<header className="utilities-bar">
 			<Searchbar {...searchbar} />
-			<ActionsContainer {...actions} />
+			{actions && <ActionsContainer {...actions} />}
 		</header>
 	);
 };

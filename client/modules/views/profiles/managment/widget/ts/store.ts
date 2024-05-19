@@ -1,6 +1,8 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profile, IProfile, Modules, IModule } from '@essential-js/admin/models';
+import { Profile, IProfile, Modules, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
+import { IValues } from './views/form';
+
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
 	get item() {
@@ -33,9 +35,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#refrestUser: boolean = false;
 
-	load = async ({ id }: { id: string }) => {
+	load = async ({ id }: { id: string | undefined }) => {
 		try {
-			if (id === 'create') {
+			if (!id || id === 'create') {
 				this.#isCreating = true;
 				const modulesResponse = await this.#modules.load();
 				if (!modulesResponse.status) throw modulesResponse.error;
@@ -62,18 +64,18 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	#calculateselectedModules = () => {
-		const selectedModulesInProfile = {};
+		const selectedModulesInProfile: Record<string, Record<string, boolean>> = {};
 		this.#item.modules.forEach((module: IModule) => {
 			const selectedActions: Record<string, boolean> = {};
 
-			module.actions.forEach((action: IModule.actions) => (selectedActions[action.id] = true));
+			module.actions.forEach((action: IAction) => (selectedActions[action.id] = true));
 			selectedModulesInProfile[module.id] = selectedActions;
 		});
 
 		this.#selectedModules = selectedModulesInProfile;
 	};
 
-	save = async (values: Partial<IProfile>) => {
+	save = async (values: IValues) => {
 		try {
 			this.fetching = true;
 			await this.#item.set({ ...values, modules: this.#selectedModules });

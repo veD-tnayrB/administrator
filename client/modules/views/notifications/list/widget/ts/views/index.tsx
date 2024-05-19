@@ -2,9 +2,10 @@ import React from 'react';
 import { StoreManager } from '../store';
 import { IContext, NotificationsListContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { ListView } from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps } from '@essential-js/admin/components/list-view';
 import { Row } from './item';
 import { usePermissions } from '@essential-js/admin/hooks';
+
 export /*bundle*/
 	function View({ store }: { store: StoreManager }) {
 	const [update, setUpdate] = React.useState({});
@@ -12,7 +13,7 @@ export /*bundle*/
 
 	useBinder([store], () => setUpdate({}));
 
-	const listProperties = {
+	const listProperties: IListViewProps = {
 		store,
 		viewHeader: {
 			title: 'Notifications',
@@ -40,7 +41,6 @@ export /*bundle*/
 			default: true,
 			itemsConfig: {
 				properties: ['id', 'title', 'description', 'timeCreated', 'timeUpdated'],
-				actions: [{ type: 'edit', to: '/notifications/managment', title: 'Edit' }],
 			},
 			row: Row,
 		},
@@ -64,7 +64,7 @@ export /*bundle*/
 	};
 
 
-	if (!permissions.has('notifications.create')) listProperties.actions.create = null
+	if (!permissions.has('notifications.create')) listProperties.actions!.create = undefined
 
 	return (
 		<NotificationsListContext.Provider value={contextValue}>

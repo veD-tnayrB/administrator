@@ -13,7 +13,7 @@ export const Times = ({ items, day }: IProps) => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		const itemIndex = event.target.getAttribute('data-index');
-
+		if (!itemIndex) return;
 		store.frecuencyManager.selectedDays[day] = store.frecuencyManager.selectedDays[day].map((item, index) => {
 			if (index === parseInt(itemIndex)) return value;
 			return item;
@@ -24,6 +24,7 @@ export const Times = ({ items, day }: IProps) => {
 
 	const onRemove = (event: React.MouseEvent) => {
 		const itemIndex = event.currentTarget.getAttribute('data-index');
+		if (!itemIndex) return;
 		store.frecuencyManager.selectedDays[day] = store.frecuencyManager.selectedDays[day].filter(
 			(item, index) => index !== parseInt(itemIndex)
 		);

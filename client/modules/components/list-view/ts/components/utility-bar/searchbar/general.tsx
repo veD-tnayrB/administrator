@@ -27,7 +27,7 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 
 	const onFocus = () => inputRef?.current?.focus();
 
-	const onKeyDown = event => {
+	const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			onSearch();
 		}

@@ -2,6 +2,7 @@ import React from 'react';
 import { useListViewContext } from '../../context';
 import { DefaultRow, IRow } from './row';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import { IAction as IModalAction } from '@essential-js/admin/components/modal';
 
 export /*bundle*/ enum ItemActionType {
 	EDIT = 'edit',
@@ -9,20 +10,25 @@ export /*bundle*/ enum ItemActionType {
 }
 
 export /*bundle*/ interface IItemAction extends React.HTMLAttributes<HTMLButtonElement> {
-	modal?: any;
+	modal?: {
+		title?: string;
+		description?: string;
+		close: IModalAction;
+		confirm: IModalAction;
+	};
 	to?: string;
 	type: ItemActionType;
 }
 
-interface itemConfig {
+interface IItemConfig {
 	properties: string[];
-	actions: IItemAction[];
+	actions?: IItemAction[];
 }
 
 export interface IList {
 	row?: React.ComponentType<IRow>;
 	default?: boolean;
-	itemsConfig: itemConfig;
+	itemsConfig: IItemConfig;
 	isSelecteable?: boolean;
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { ListView } from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps } from '@essential-js/admin/components/list-view';
 import { useNotificationsManagmentContext } from '../../context';
 
 export const Profiles = () => {
 	const { store } = useNotificationsManagmentContext();
 
-	const listProperties = {
+	const listProperties: IListViewProps = {
 		store: store.profiles,
 		searchbar: {
 			placeholder: 'Search...',
@@ -16,9 +16,6 @@ export const Profiles = () => {
 				{ label: 'Name', name: 'name' },
 				{ label: 'Description', name: 'description' },
 			],
-			bulkActions: {
-				remove: false,
-			},
 		},
 		list: {
 			default: true,

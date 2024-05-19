@@ -1,5 +1,5 @@
 import React from 'react';
-import type { IModule, IAction } from '@essential-js/admin/models';
+import type { IAction } from '@essential-js/admin/models';
 import {
 	CollapsibleContainer,
 	CollapsibleHeader,
@@ -13,7 +13,7 @@ import { v4 as uuid } from 'uuid';
 
 export const Actions = () => {
 	const { store, item } = useModulesManagmentContext();
-	const actions: IAction = item.actions
+	const actions: IAction[] = item.actions
 
 
 	const onAdd = () => {

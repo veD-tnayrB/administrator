@@ -10,14 +10,14 @@ import { ImportContainer } from './import-container';
 
 export interface IReports {
 	generateReport: {
-		excel: IGenerateReport;
-		csv: IGenerateReport;
-	};
-	import: IImport;
+		excel?: IGenerateReport;
+		csv?: IGenerateReport;
+	} | undefined;
+	import: IImport | undefined;
 	downloadTemplate: {
-		excel: ITemplate;
-		csv: ITemplate;
-	};
+		excel?: ITemplate;
+		csv?: ITemplate;
+	} | undefined;
 }
 
 export const ReportsComponents = (props: IActions) => {

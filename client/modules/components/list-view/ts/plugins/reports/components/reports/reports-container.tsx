@@ -6,9 +6,9 @@ import { GenerateExcel } from './generate/generate-excel';
 import { IActions } from '../../../../components/utility-bar/actions/actions';
 
 export const ReportsContainer = (props: IActions) => {
-	const action = props.reports;
-	if (!props.reports.generateReport) return null;
+	if (!props.reports || !props.reports.generateReport) return null;
 	const actions = [];
+	const action = props.reports;
 
 	const generateAllReports = action.generateReport?.excel && action.generateReport?.csv;
 	if (action.generateReport?.excel && !action.generateReport?.csv)

@@ -6,7 +6,7 @@ import { DownloadTemplate } from './download-template/download-templates';
 import { IActions } from '../../../../components/utility-bar/actions/actions';
 
 export const TemplatesContainer = (props: IActions) => {
-	if (!props.reports.downloadTemplate) return;
+	if (!props.reports || !props.reports.downloadTemplate) return null;
 	const action = props.reports;
 	const actions = [];
 

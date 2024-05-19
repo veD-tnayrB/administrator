@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '@essential-js/admin/components/select';
+import { ReactSelect as Select } from 'pragmate-ui/form/react-select';
 import { useFrecuencyManagmentContext } from './context';
 import { useNotificationsManagmentContext } from '../../context';
 

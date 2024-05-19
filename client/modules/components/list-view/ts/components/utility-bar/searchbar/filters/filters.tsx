@@ -7,13 +7,13 @@ import { useListViewContext } from '../../../../context';
 
 export interface IFilter extends React.HTMLAttributes<HTMLInputElement> {
 	label: string;
-	name?: string;
+	name: string;
 }
 
 export interface IFilters {
 	title?: string;
-	label: string;
-	actions: {
+	label?: string;
+	actions?: {
 		apply: { label: string };
 		reset: { label: string };
 	};
@@ -21,8 +21,8 @@ export interface IFilters {
 
 export const FiltersSearch = (props: IFilters) => {
 	const { store } = useListViewContext();
-	const [isOpen, setIsOpen] = React.useState(false);
-	const [values, setValues] = React.useState({});
+	const [isOpen, setIsOpen] = React.useState<boolean | null>(false);
+	const [values, setValues] = React.useState<Record<string, string>>({});
 
 	if (!props?.actions) return null;
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +35,12 @@ export const FiltersSearch = (props: IFilters) => {
 	};
 
 	const reset = () => {
-		const defaultValues = {};
-		store.specificFilters.forEach(item => (defaultValues[item.name] = ''));
+		const defaultValues: Record<string, string> = {};
+		store.specificFilters.forEach(item => {
+			const key = item.name;
+			defaultValues[key] = '';
+		});
+
 		setValues(defaultValues);
 		store.clearSearch();
 		setIsOpen(false);

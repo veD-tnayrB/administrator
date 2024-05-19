@@ -66,6 +66,7 @@
 		"@bgroup/http-suite": "^1.0.2",
 		"@firebase/app": "^0.9.23",
 		"@tippyjs/react": "^4.2.6",
+		"@types/dompurify": "^3.0.5",
 		"@types/uuid": "^9.0.8",
 		"chart.js": "^4.4.1",
 		"date-fns": "^3.6.0",

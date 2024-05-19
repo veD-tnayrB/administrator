@@ -1,8 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Frequency, Options, RRule, RRuleSet } from 'rrule';
+import { Frequency, RRule, RRuleSet } from 'rrule';
 import { Frecuencies } from '../views/frecuency/frecuency-select';
-import { rrulestr } from 'rrule';
-import * as moment from 'moment-timezone';
+
 export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	#selectedDays: Record<string, string[]> = {};
 	get selectedDays() {
@@ -24,7 +23,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		this.displayFrecuencyPattern();
 	}
 
-	#endDate = null;
+	#endDate: string = ''
 	get endDate() {
 		return this.#endDate;
 	}
@@ -99,7 +98,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		ruleInstance.rrule(new RRule({ freq: Frequency.WEEKLY, dtstart: start, until, byweekday: selectedDaysOfWeek }));
 		const dates = ruleInstance.all();
 
-		const weeklySchedules = {};
+		const weeklySchedules: Record<number, string[]> = {};
 		Object.entries(this.#selectedDays).forEach(([date, times]) => {
 			const unformatedWeekDay = new Date(date).getDay();
 			const weekDay = unformatedWeekDay === 0 ? SUNDAY : unformatedWeekDay - 1;
@@ -123,7 +122,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		ruleInstance.rrule(new RRule({ freq: Frequency.MONTHLY, dtstart: start, until, bymonthday: daysOfTheMonth }));
 
 		const dates = ruleInstance.all();
-		const dailySchedules = {};
+		const dailySchedules: Record<number, string[]> = {};
 		Object.entries(this.#selectedDays).forEach(([date, times]) => {
 			const dayDate = new Date(date);
 			const day = dayDate.getDate();
@@ -141,9 +140,9 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 		return newSelectedDays;
 	};
 
-	#filterByEndDate = (date: Date) => {
+	#filterByEndDate = (date: string) => {
 		const endDate = new Date(date);
-		const fixedSelectedDays = {};
+		const fixedSelectedDays: Record<string, string[]> = {};
 		Object.entries(this.#selectedDays).forEach(([date, times]) => {
 			const day = new Date(date);
 			if (day <= endDate) {
@@ -155,7 +154,7 @@ export class FrecuencyManager extends ReactiveModel<FrecuencyManager> {
 	};
 
 	reset = () => {
-		this.#selectedFrecuency = null;
+		this.#selectedFrecuency = Frecuencies.DAILY;
 		this.#selectedDays = {};
 		this.triggerEvent();
 	};

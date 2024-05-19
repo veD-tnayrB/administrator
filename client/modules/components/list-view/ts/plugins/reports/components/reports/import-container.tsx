@@ -4,7 +4,7 @@ import { IActions } from '../../../../components/utility-bar/actions/actions';
 import { Import } from './import/import';
 
 export const ImportContainer = (props: IActions) => {
-	if (!props.reports.import) return null;
+	if (!props.reports || !props.reports.import) return null;
 	const action = props.reports;
 	const actions = [];
 	if (action.import) actions.push(<Import {...action.import} />);

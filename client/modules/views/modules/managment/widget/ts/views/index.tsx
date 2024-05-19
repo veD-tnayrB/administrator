@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Form } from './form';
 import { IContext, ModulesManagmentContext } from '../context';
+import { StoreManager } from '../store';
 
 export /*bundle*/
-	function View({ store }) {
+	function View({ store }: { store: StoreManager }) {
 	const [item, setItem] = React.useState(store.item.getProperties());
-
 
 	const contextValue: IContext = {
 		store,

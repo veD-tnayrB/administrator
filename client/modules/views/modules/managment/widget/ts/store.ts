@@ -1,11 +1,15 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Module, IModule, IAction } from '@essential-js/admin/models';
+import { Module, IPermission, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 
+export interface ISelectedAction extends IAction {
+	isCreating?: boolean
+}
+
 export class StoreManager extends ReactiveModel<StoreManager> {
-	#item: IModule = new Module();
+	#item: Module = new Module();
 	get item() {
 		return this.#item;
 	}
@@ -27,19 +31,19 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	#id: string = 'create';
 	#refreshUser: boolean = false;
 
-	#selectedAction: IAction | null = null;
+	#selectedAction: ISelectedAction | null = null;
 	get selectedAction() {
 		return this.#selectedAction;
 	}
 
-	set selectedAction(value: IAction | null) {
+	set selectedAction(value: ISelectedAction | null) {
 		this.#selectedAction = value;
 		this.triggerEvent();
 	}
 
-	load = async ({ id }: { id: string }) => {
+	load = async ({ id }: { id: string | undefined }) => {
 		try {
-			if (id === 'create') {
+			if (!id || id === 'create') {
 				this.#isCreating = true;
 				this.ready = true;
 				return;
@@ -48,7 +52,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			this.#id = id;
 			const userPermissions = session.user.permissions
-			this.#refreshUser = userPermissions.some(permission => permission.moduleId === this.#id)
+			this.#refreshUser = userPermissions.some((permission: IPermission) => permission.moduleId === this.#id)
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;

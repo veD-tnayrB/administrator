@@ -2,8 +2,9 @@ import React from 'react';
 import { Button } from 'pragmate-ui/components';
 import { BaseModal } from './base';
 
-export /*bundle*/ interface IAction extends React.HTMLAttributes<HTMLButtonElement> {
+export /*bundle*/ interface IAction {
 	label: string;
+	onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 interface IProps {
@@ -14,24 +15,24 @@ interface IProps {
 }
 
 export /*bundle*/
-const ConfirmModal = ({ title, description, close, confirm }: IProps) => {
-	return (
-		<BaseModal onClose={close.onClick}>
-			<header>
-				<h1>{title}</h1>
-			</header>
-			<p>{description}</p>
+	const ConfirmModal = ({ title, description, close, confirm }: IProps) => {
+		return (
+			<BaseModal onClose={close.onClick}>
+				<header>
+					<h1>{title}</h1>
+				</header>
+				<p>{description}</p>
 
-			<footer>
-				<div className="actions">
-					<Button variant="primary" {...confirm}>
-						{confirm.label}
-					</Button>
-					<Button variant="secondary" {...close}>
-						{close.label}
-					</Button>
-				</div>
-			</footer>
-		</BaseModal>
-	);
-};
+				<footer>
+					<div className="actions">
+						<Button variant="primary" {...confirm}>
+							{confirm.label}
+						</Button>
+						<Button variant="secondary" {...close}>
+							{close.label}
+						</Button>
+					</div>
+				</footer>
+			</BaseModal>
+		);
+	};

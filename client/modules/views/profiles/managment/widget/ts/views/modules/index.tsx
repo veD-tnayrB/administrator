@@ -2,9 +2,13 @@ import React from 'react';
 import { useProfilesManagmentContext } from '../../context';
 import { Module } from './module';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import type { IModule } from '@essential-js/admin/models';
+import { IValues } from '../form';
 
-export const Modules = ({ values }: IModule) => {
+interface IProps {
+	values: IValues;
+}
+
+export const Modules = ({ values }: IProps) => {
 	const { store } = useProfilesManagmentContext();
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));

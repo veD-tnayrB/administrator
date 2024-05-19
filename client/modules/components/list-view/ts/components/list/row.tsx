@@ -7,8 +7,18 @@ import { DeleteModal } from './pre-done-actions/delete';
 import { routing } from '@beyond-js/kernel/routing';
 import { Checkbox } from 'pragmate-ui/form';
 
-const getValue = (obj: Object, prop: string) => {
-	return prop.split('.').reduce((o, p) => (o || {})[p], obj);
+const getValue = (obj: Record<string, string | number>, prop: string): string | number => {
+	let currentObj: Record<string, string | number> | undefined | null = obj;
+	const props = prop.split('.');
+
+	for (const p of props) {
+		if (currentObj === null || typeof currentObj !== 'object') {
+			return '';
+		}
+		currentObj = currentObj[p] as unknown as Record<string, string | number> | undefined;
+	}
+
+	return currentObj as unknown as string | number;
 };
 
 export /*bundle*/ interface IRow {
@@ -37,11 +47,11 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 		);
 	});
 
-	const onClickDelete = event => {
+	const onClickDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
 		setDisplayModal(true);
 	};
-	const onCloseDelete = event => {
+	const onCloseDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.stopPropagation();
 		setDisplayModal(false);
 	};
@@ -50,7 +60,7 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 	const includesDelete = list.itemsConfig?.actions?.find(item => item.type === 'delete');
 	const displayActions = includesEdit || includesDelete;
 
-	const onClickEdit = () => routing.pushState(`${includesEdit.to}/${item.id}`);
+	const onClickEdit = () => routing.pushState(`${includesEdit?.to}/${item.id}`);
 	const onSelect = () => {
 		if (list.isSelecteable) store.selectItem({ id: item.id });
 	};
@@ -114,7 +124,7 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 				</span>
 			)}
 
-			{displayDeleteModal && <DeleteModal onClose={onCloseDelete} config={includesDelete} id={item.id} />}
+			{displayDeleteModal && includesDelete && <DeleteModal onClose={onCloseDelete} config={includesDelete} id={item.id} />}
 		</li>
 	);
 };

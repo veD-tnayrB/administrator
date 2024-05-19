@@ -8,29 +8,22 @@ export interface IImport {
 
 export const Import = (props: IImport) => {
 	const { store } = useListViewContext();
-	const fileInputRef = useRef(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	const handleFileChange = event => {
+	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (!event.target.files) return;
 		const file = event.target.files[0];
 		if (!file) {
 			console.log('No file selected.');
 			return;
 		}
 
-		// Suponiendo que store.import es una función que maneja la carga del archivo
-		store
-			.import(file)
-			.then(() => {
-				console.log('File imported successfully.');
-				// Realiza cualquier otra acción necesaria después de la importación
-			})
-			.catch(error => {
-				console.error('Error importing file:', error);
-			});
+		store.import(file);
+
 	};
 
 	const handleClick = () => {
-		// Simula un clic en el input de tipo archivo
+		if (!fileInputRef.current) return;
 		fileInputRef.current.click();
 	};
 
@@ -41,7 +34,7 @@ export const Import = (props: IImport) => {
 				type="file"
 				ref={fileInputRef}
 				onChange={handleFileChange}
-				style={{ display: 'none' }} // Oculta el input de archivo
+				style={{ display: 'none' }}
 			/>
 			<Button title={title} onClick={handleClick} variant="secondary" className="import">
 				<svg

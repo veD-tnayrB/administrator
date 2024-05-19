@@ -6,10 +6,10 @@ import { Checkbox } from 'pragmate-ui/form';
 import { IHeaderActionButton, RemoveAction } from './remove-actions';
 
 export interface IHeader {
-	items?: IHeaderItem;
-	actions: {
-		edit: IHeaderActionButton;
-		remove: IHeaderActionButton;
+	items: IHeaderItem;
+	actions?: {
+		edit?: IHeaderActionButton;
+		remove?: IHeaderActionButton;
 	};
 }
 
@@ -21,8 +21,8 @@ interface IDefaultHeaderItem {
 export type IHeaderItem = IDefaultHeaderItem[];
 
 interface IProps {
-	items?: IHeaderItem;
-	bulkActions: {
+	items: IHeaderItem;
+	bulkActions?: {
 		remove: boolean;
 	};
 }

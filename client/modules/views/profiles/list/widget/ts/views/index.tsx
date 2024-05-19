@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { StoreManager } from '../store';
-import { ListView } from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps, ItemActionType } from '@essential-js/admin/components/list-view';
 import { usePermissions } from '@essential-js/admin/hooks';
 import { ProfilesListContext } from '../context';
 import { Row } from './item';
 
 export /*bundle*/
 	function View({ store }: { store: StoreManager }) {
-	const [update, setUpdate] = React.useState({});
+	const [, setUpdate] = React.useState({});
 	const permissions = usePermissions();
 	useBinder([store], () => {
 		setUpdate({});
 	});
 
-	const listProperties = {
+	const listProperties: IListViewProps = {
 		store,
 		plugins: ['reports'],
 		viewHeader: {
@@ -38,16 +38,13 @@ export /*bundle*/
 				{ label: 'Created at', name: 'timeCreated' },
 				{ label: 'Updated at', name: 'timeUpdated' },
 			],
-			actions: [
-				{ type: 'edit' },
-			]
 		},
 		list: {
 			row: Row,
 			default: true,
 			itemsConfig: {
 				properties: ['', 'id', 'name', 'description', 'timeCreated', 'timeUpdated'],
-				actions: [{ type: 'edit' }]
+				actions: [{ type: ItemActionType.EDIT }],
 			},
 
 		},
@@ -56,31 +53,25 @@ export /*bundle*/
 				to: '/profiles/managment/create',
 				label: 'Create',
 			},
-			columnsSelector: {
-				title: 'Select the columns you want to appear',
-				min: {
-					label: "You can't select less than {{number}} columns",
-					number: 2,
-				},
-			},
+			columnsSelector: {},
 			reports: {
 				generateReport: {
-					excel: true,
-					csv: true,
+					excel: {},
+					csv: {},
 				},
 				downloadTemplate: {
-					excel: true,
-					csv: true,
+					excel: {},
+					csv: {},
 				},
-				import: true,
+				import: {},
 			},
 		},
 	};
 
-	if (!permissions.has('profiles.create')) listProperties.actions.create = null;
-	if (!permissions.has('profiles.get-template')) listProperties.actions.reports.downloadTemplate = null;
-	if (!permissions.has('profiles.generate-report')) listProperties.actions.reports.generateReport = null;
-	if (!permissions.has('profiles.import')) listProperties.actions.reports.import = null;
+	if (!permissions.has('profiles.create')) listProperties.actions!.create = undefined;
+	if (!permissions.has('profiles.get-template')) listProperties.actions!.reports!.downloadTemplate = undefined;
+	if (!permissions.has('profiles.generate-report')) listProperties.actions!.reports!.generateReport = undefined;
+	if (!permissions.has('profiles.import')) listProperties.actions!.reports!.import = undefined
 
 	const contextValue = {
 		permissions

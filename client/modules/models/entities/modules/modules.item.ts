@@ -24,6 +24,7 @@ export /*bundle*/ interface IModule {
 	icon: string;
 	timeCreated: Date;
 	timeUpdated: Date;
+	active: boolean;
 	order: number;
 	actions: IAction[];
 }

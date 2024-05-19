@@ -11,10 +11,11 @@ export /*bundle*/ interface IProfile {
 	timeCreated: Date;
 	timeUpdated: Date;
 	modules: IModule[];
+	active: boolean
 }
 
 export /*bundle*/ class Profile extends Item<IProfile> {
-	protected properties = ['id', 'name', 'description', 'timeCreated', 'timeUpdated', 'modules'];
+	protected properties = ['id', 'name', 'description', 'timeCreated', 'timeUpdated', 'modules', 'active'];
 
 	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({

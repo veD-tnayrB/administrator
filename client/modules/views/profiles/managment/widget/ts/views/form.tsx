@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
-import { IUser } from '@essential-js/admin/models';
+import { IModule } from '@essential-js/admin/models';
 import { useProfilesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
@@ -8,9 +8,16 @@ import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 import { Modules } from './modules';
 
+export interface IValues {
+	name: string;
+	description: string;
+	active: boolean;
+	modules: Record<string, Record<string, boolean>>;
+}
+
 export const Form = () => {
 	const { store } = useProfilesManagmentContext();
-	const [values, setValues] = React.useState<Partial<IUser>>({
+	const [values, setValues] = React.useState<IValues>({
 		name: store.item.name || '',
 		description: store.item.description || '',
 		active: store.item.active || true,
@@ -34,7 +41,6 @@ export const Form = () => {
 	};
 
 	const onCancel = () => {
-		setValues({});
 		store.reset();
 		routing.pushState('/profiles');
 	};

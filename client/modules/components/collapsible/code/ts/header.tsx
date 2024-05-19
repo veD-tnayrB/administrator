@@ -12,10 +12,10 @@ export /*bundle */ function CollapsibleHeader({
 	className,
 	toggleTitle = true,
 }: ICollapsibleProps): JSX.Element {
-	const { setOpen, onToggle, open } = useCollapsibleContext();
+	const { setOpen, onChange, open } = useCollapsibleContext();
 
 	const onClick = async () => {
-		if (onToggle) await onToggle(!open);
+		if (onChange) onChange(!open);
 		setOpen(!open);
 	};
 	const cls = `collapsible__header ${className ? ` ${className}` : ''} ${open ? 'open' : ''}`;

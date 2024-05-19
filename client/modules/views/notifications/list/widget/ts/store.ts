@@ -6,7 +6,7 @@ export class StoreManager extends StoreListView {
 	declare fetching: boolean;
 	declare generalFilters: string[];
 	constructor() {
-		super({ collection: new Notifications() });
+		super({ collection: new Notifications(), id: 'notifications' });
 		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Title', name: 'title' },
@@ -32,16 +32,4 @@ export class StoreManager extends StoreListView {
 		}
 	};
 
-	startJob = async (id: string) => {
-		try {
-			this.fetching = true;
-			const notification = new Notification();
-			const response = await notification.load({ id });
-		} catch (error) {
-			console.error(error);
-			return { status: false, error };
-		} finally {
-			this.fetching = false;
-		}
-	};
 }

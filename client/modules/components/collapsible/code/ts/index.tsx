@@ -1,6 +1,5 @@
 import React from 'react';
-import { CollapsibleHeader } from './header';
-import { CollapsibleContext } from './context';
+import { CollapsibleContext, IContext } from './context';
 
 interface IContainerProps {
 	children: React.ReactNode;
@@ -19,7 +18,7 @@ export /*bundle */ function CollapsibleContainer({
 	const [opened, setOpen] = React.useState(open);
 	React.useEffect(() => setOpen(open), [open]);
 
-	const value = { open: opened, setOpen, onToggle };
+	const value: IContext = { open: opened, setOpen, onChange: onToggle };
 	const cls = `collapsible__container ${className ? ` ${className}` : ''} `;
 
 	return (
