@@ -15,7 +15,9 @@ export interface IValues {
 
 export const Form = () => {
 	const { store } = useNotificationsManagmentContext();
-	const [values, setValues] = React.useState<IValues>(store.item.getProperties());
+	const [values, setValues] = React.useState<IValues>(
+		store.item.getProperties(),
+	);
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
@@ -72,7 +74,12 @@ export const Form = () => {
 			<Tabs />
 
 			<div className="actions">
-				<Button type="reset" variant="secondary" onClick={onCancel} disabled={store.fetching}>
+				<Button
+					type="reset"
+					variant="secondary"
+					onClick={onCancel}
+					disabled={store.fetching}
+				>
 					Cancel
 				</Button>
 				<Button variant="primary" type="submit" disabled={store.fetching}>

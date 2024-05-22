@@ -10,30 +10,31 @@ export interface ILoginParams {
 	timezone?: string;
 }
 export class Login {
-	static #model: DB.models.Users = DB.models.Users;
-	static #accessTokensModel: DB.models.AccessTokens = DB.models.AccessTokens;
-	static #usersProfilesModel: DB.models.UsersProfiles = DB.models.UsersProfiles;
-	static #profileModulePermissionsModel: DB.models.ProfileModulePermissions = DB.models.ProfileModulePermissions;
+	static #model: typeof DB.models.Users = DB.models.Users;
+	static #accessTokensModel: typeof DB.models.AccessTokens = DB.models.AccessTokens;
+	static #usersProfilesModel: typeof DB.models.UsersProfiles = DB.models.UsersProfiles;
+	static #profileModulePermissionsModel: typeof DB.models.ProfileModulePermissions =
+		DB.models.ProfileModulePermissions;
 
 	static async execute(params: ILoginParams) {
 		try {
 			let where: ILoginParams = { email: params.email };
 			where = params.password ? { ...where, password: MD5(params.password) } : where;
-
 			const userInstance = await this.#model.findOne({
 				where,
 				plain: true,
 			});
 
 			if (!userInstance) throw 'USER_DOESNT_EXISTS';
+
+			const user = userInstance.get({ plain: true });
 			const token = await Login.#generateAccessToken({
-				userEmail: userInstance.email,
-				userId: userInstance.id,
+				userEmail: user.email,
+				userId: user.id,
 				timezone: params.timezone,
 				notificationsToken: params.notificationsToken,
 			});
 
-			const user = userInstance.get({ plain: true });
 			const { profiles, permissions } = await Login.#getPermissions({ userId: user.id });
 
 			const { password, ...userProperties } = user;
@@ -70,7 +71,7 @@ export class Login {
 			where: { userId: params.userId },
 			include: [{ model: DB.models.Profiles, as: 'profile' }],
 		});
-		profiles = profiles.map(profile => profile.get({ plain: true }).profile);
+		profiles = profiles.map((profile) => profile.get({ plain: true }).profile);
 		let permissions = [];
 		for (const profile of profiles) {
 			const profilePermissions = await this.#profileModulePermissionsModel.findAll({
@@ -83,7 +84,7 @@ export class Login {
 					},
 				],
 			});
-			const formattedPermissions = profilePermissions.map(permission => {
+			const formattedPermissions = profilePermissions.map((permission) => {
 				const action = permission.get({ plain: true }).action;
 				return {
 					moduleId: action.module.id,

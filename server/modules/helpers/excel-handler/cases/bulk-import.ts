@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { DB } from '@essential-js/admin-server/db';
 import { Excel } from '@bggroup/excel/excel';
-import { Model } from 'sequelize';
+import { Model } from 'sequelize-typescript';
 
 type TDataType = 'string' | 'number' | 'boolean' | 'date';
 
@@ -43,12 +43,12 @@ export /*bundle*/ interface IBulkImport {
 	fileType: string;
 }
 
-interface IParams extends IBulkImport {
+interface IParams<T> extends IBulkImport {
 	model: Model;
 	templateConfig: Record<string, string>;
 }
 
-export const bulkImport = async ({ filepath, model, templateConfig, fileType }: IParams) => {
+export const bulkImport = async <T>({ filepath, model, templateConfig, fileType }: IParams<T>) => {
 	const transaction = await DB.sequelize.transaction();
 	let formattedFileType: 'csv' | 'xlsx' = fileType.split('.')[1] as 'csv' | 'xlsx';
 	formattedFileType = formattedFileType.toLowerCase() as 'csv' | 'xlsx';
@@ -64,7 +64,7 @@ export const bulkImport = async ({ filepath, model, templateConfig, fileType }: 
 		if (!response.status) throw 'EXCEL_READ_ERROR';
 
 		const firstPage = formattedFileType === 'csv' ? (response.data as []) : (Object.values(response.data)[0] as []);
-		const mappings: Record<string, any>[] = firstPage.map(row => {
+		const mappings: Record<string, any>[] = firstPage.map((row) => {
 			return Object.keys(row).reduce((acc, current) => {
 				const propertyName = templateConfig[current];
 				if (propertyName) {
@@ -74,12 +74,11 @@ export const bulkImport = async ({ filepath, model, templateConfig, fileType }: 
 			}, {});
 		});
 
-
 		const results = [];
 
 		for (const record of mappings) {
 			try {
-				let operationResult;
+				let operationResult: { status: string; id: string };
 
 				if (record.id) {
 					// Verifica si el registro ya existe

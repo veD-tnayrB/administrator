@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
-import { IModule } from '@essential-js/admin/models';
 import { useProfilesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';

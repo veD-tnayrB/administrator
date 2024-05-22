@@ -11,7 +11,7 @@ Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend);
 
 const manager = new RegisteredUsersWidgetManager();
 
-export const RegisteredUsersWidget = () => {
+export /*bundle*/ const RegisteredUsersWidget = React.forwardRef(() => {
 	const [data, setData] = React.useState(manager.data);
 	useBinder([manager], () => setData(manager.data));
 
@@ -25,8 +25,8 @@ export const RegisteredUsersWidget = () => {
 	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--error');
 	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--success');
 
-	const values = data.map(item => item.value);
-	const labels = data.map(item => item.label);
+	const values = data.map((item) => item.value);
+	const labels = data.map((item) => item.label);
 
 	const chart = {
 		labels,
@@ -52,8 +52,11 @@ export const RegisteredUsersWidget = () => {
 		animate: { opacity: 1 },
 	};
 
-	const content = values.every(val => val === 0) ? <RegisteredUsersEmpty /> : <Bar data={chart} options={options} />;
-
+	const content = values.every((val) => val === 0) ? (
+		<RegisteredUsersEmpty />
+	) : (
+		<Bar data={chart} options={options} />
+	);
 
 	return (
 		<div className="registered-users-widget">
@@ -64,4 +67,4 @@ export const RegisteredUsersWidget = () => {
 			</motion.section>
 		</div>
 	);
-};
+});

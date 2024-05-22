@@ -36,7 +36,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 				'timeUpdated',
 				'permissions',
 				'profiles',
-			]
+			],
 		});
 		this.reactiveProps([
 			'id',
@@ -93,7 +93,6 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
-
 	set(data: Partial<IUser>): void {
 		this.properties.forEach((property: string | { name: string }) => {
 			let key: keyof IUser | undefined;
@@ -108,5 +107,4 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		});
 		this.triggerEvent();
 	}
-
 }

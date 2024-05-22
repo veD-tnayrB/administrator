@@ -16,6 +16,20 @@ class WidgetsRoutes extends Route {
 		});
 	}
 
+	getDashboard = async (req: Request, res: Response) => {
+		try {
+			const userId = req.params.userId;
+			const response: ResponseType = await this.manager.getDashboard({ userId });
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response as ISuccess);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /get-dashboard', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
+
 	getTotals = async (req: Request, res: Response) => {
 		try {
 			const response: ResponseType = await this.manager.getTotals();
@@ -32,6 +46,7 @@ class WidgetsRoutes extends Route {
 	setup = (app: Application) => {
 		app.get(`/widgets`, checkToken, this.list);
 		app.get('/widgets/get-totals', checkToken, this.getTotals);
+		app.get('/widgets/get-dashboard/:userId', checkToken, this.getDashboard);
 	};
 }
 

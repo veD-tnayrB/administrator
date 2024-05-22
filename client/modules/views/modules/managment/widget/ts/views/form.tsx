@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Input, Switch, Textarea } from 'pragmate-ui/form';
 import { useModulesManagmentContext } from '../context';
@@ -8,7 +7,7 @@ import { routing } from '@beyond-js/kernel/routing';
 import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
 import { Actions } from './actions';
 import { IModule } from '@essential-js/admin/models';
-import DOMPurify from 'dompurify'
+import DOMPurify from 'dompurify';
 
 export const Form = () => {
 	const { store, item, setItem } = useModulesManagmentContext();
@@ -24,9 +23,14 @@ export const Form = () => {
 
 	if (!store.ready) return null;
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const onChange = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { name, value: rawValue, type } = event.target;
-		const value = type === 'checkbox' ? (event.target as HTMLInputElement).checked : rawValue;
+		const value =
+			type === 'checkbox'
+				? (event.target as HTMLInputElement).checked
+				: rawValue;
 		setItem((currentValue: IModule) => ({ ...currentValue, [name]: value }));
 	};
 
@@ -66,8 +70,17 @@ export const Form = () => {
 			</div>
 
 			<div className="flex">
-				<Textarea className="w-full" value={item.icon} onChange={onChange} name="icon" label="Icon" />
-				<div className="flex items-center justify-center w-16" dangerouslySetInnerHTML={cleanIcon} />
+				<Textarea
+					className="w-full"
+					value={item.icon}
+					onChange={onChange}
+					name="icon"
+					label="Icon"
+				/>
+				<div
+					className="flex items-center justify-center w-16"
+					dangerouslySetInnerHTML={cleanIcon}
+				/>
 			</div>
 
 			<Actions />
@@ -80,7 +93,12 @@ export const Form = () => {
 			</div>
 
 			<div className="actions">
-				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
+				<Button
+					type="reset"
+					variant="secondary"
+					onClick={onCancel}
+					disabled={isLoading}
+				>
 					Cancel
 				</Button>
 				<Button type="submit" variant="primary" loading={isLoading}>

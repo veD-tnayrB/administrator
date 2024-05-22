@@ -1,0 +1,14 @@
+{
+	"name": "views/settings",
+	"widget": {
+		"route": "/settings",
+		"is": "page",
+		"ts": {
+			"path": "/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "settings-view"
+		}
+	}
+}

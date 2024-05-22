@@ -9,7 +9,7 @@ Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend, A
 
 const manager = new OnlineUsersWidgetManager();
 
-export const OnlineUsersWidget = () => {
+export /*bundle*/ const OnlineUsersWidget = React.forwardRef(() => {
 	const [data, setData] = React.useState(manager.data);
 	useBinder([manager], () => setData(manager.data));
 
@@ -20,8 +20,8 @@ export const OnlineUsersWidget = () => {
 	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
 	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--tertiary');
 
-	const values = data.map(item => item.value);
-	const labels = data.map(item => item.label);
+	const values = data.map((item) => item.value);
+	const labels = data.map((item) => item.label);
 
 	const chart = {
 		labels,
@@ -54,4 +54,4 @@ export const OnlineUsersWidget = () => {
 			</motion.section>
 		</div>
 	);
-};
+});

@@ -5,7 +5,8 @@ import { useNotificationsManagmentContext } from '../../context';
 
 export const Actions = () => {
 	const { store } = useNotificationsManagmentContext();
-	const { isEndDateValid, endDate, setFrecuency, setIsSectionOpen } = useFrecuencyManagmentContext();
+	const { isEndDateValid, endDate, setFrecuency, setIsSectionOpen } =
+		useFrecuencyManagmentContext();
 
 	const onReset = () => {
 		store.frecuencyManager.reset();
@@ -16,9 +17,16 @@ export const Actions = () => {
 		setIsSectionOpen(false);
 	};
 
-	const selectedDays: Record<string, string[]> = store.frecuencyManager.selectedDays;
-	const theresAScheduleEmpty = Object.values(selectedDays).some(times => times.some(time => !time));
-	const disabled = Object.keys(selectedDays).length === 0 || theresAScheduleEmpty || !endDate || !isEndDateValid;
+	const selectedDays: Record<string, string[]> =
+		store.frecuencyManager.selectedDays;
+	const theresAScheduleEmpty = Object.values(selectedDays).some((times) =>
+		times.some((time) => !time),
+	);
+	const disabled =
+		Object.keys(selectedDays).length === 0 ||
+		theresAScheduleEmpty ||
+		!endDate ||
+		!isEndDateValid;
 
 	return (
 		<div className="flex justify-end gap-4">

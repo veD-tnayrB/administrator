@@ -14,8 +14,13 @@ export /*bundle*/ class Widgets extends Collection {
 		});
 	}
 
+	getDashboard = (params: { userId: string }) => {
+		if (!this.provider.getDashboard) return;
+		return this.provider.getDashboard(params);
+	};
+
 	getTotals = () => {
 		if (!this.provider.getTotals) return;
 		return this.provider.getTotals();
-	}
+	};
 }

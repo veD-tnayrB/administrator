@@ -9,7 +9,6 @@ import {
 import { Alert, ITypes as AlertTypes } from 'pragmate-ui/alert';
 import { CalendarDays } from './calendar-days';
 import { Actions } from './actions';
-// import { FrencuencySelect } from './frecuency-select';
 import { EndDate } from './end-date';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { useNotificationsManagmentContext } from '../../context';
@@ -23,7 +22,12 @@ interface IProps {
 	setFrecuency: (frecuency: Record<string, string[]>) => void;
 }
 
-export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuency }: IProps) => {
+export const Frecuency = ({
+	endDate,
+	onEndDateChange,
+	isEndDateValid,
+	setFrecuency,
+}: IProps) => {
 	const { store } = useNotificationsManagmentContext();
 	const [isSectionOpen, setIsSectionOpen] = React.useState(false);
 	const [, setUpdate] = React.useState({});
@@ -44,7 +48,9 @@ export const Frecuency = ({ endDate, onEndDateChange, isEndDateValid, setFrecuen
 					<h3>Frecuency</h3>
 				</CollapsibleHeader>
 				<CollapsibleContent className={contentCls}>
-					{!endDate && <Alert type={AlertTypes.Warning}>Please specify an end date</Alert>}
+					{!endDate && (
+						<Alert type={AlertTypes.Warning}>Please specify an end date</Alert>
+					)}
 
 					<EndDate onChangeEndDate={onEndDateChange} />
 					<CalendarDays />

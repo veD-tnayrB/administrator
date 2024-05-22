@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { LegacyRef } from 'react';
 import { WelcomeIllustration } from './welcome-illustration';
 import { motion } from 'framer-motion';
 import { session } from '@essential-js/admin/auth';
@@ -30,7 +30,7 @@ function getMoment(): string {
 	}
 }
 
-export const WelcomeWidget = () => {
+export /*bundle*/ const WelcomeWidget = React.forwardRef((props, ref: LegacyRef<HTMLDivElement>) => {
 	const [names, setNames] = React.useState(session.user.names);
 	useBinder([session], () => setNames(session.user.names));
 
@@ -40,12 +40,14 @@ export const WelcomeWidget = () => {
 	};
 
 	return (
-		<motion.header {...animation} className="welcome-widget">
-			<WelcomeIllustration />
-			<h2>
-				{getGreetings()}, <span>{names}!</span>
-			</h2>
-			<p>Have a great {getMoment()}!</p>
-		</motion.header>
+		<div ref={ref}>
+			<motion.header {...animation} className="welcome-widget">
+				<WelcomeIllustration />
+				<h2>
+					{getGreetings()}, <span>{names}!</span>
+				</h2>
+				<p>Have a great {getMoment()}!</p>
+			</motion.header>
+		</div>
 	);
-};
+});

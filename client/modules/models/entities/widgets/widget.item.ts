@@ -9,12 +9,26 @@ export /*bundle*/ interface IWidget {
 	identifier: string;
 	metadata: string;
 	order: number;
+	width: number;
+	columnPosition: number;
+	rowPosition: number;
+	height: number;
 	timeUpdated: Date;
 	timeCreated: Date;
 }
 
 export /*bundle*/ class Widget extends Item<IWidget> {
-	protected properties = ['id', 'active', 'identifier', 'metadata', 'order', 'timeUpdated', 'timeCreated'];
+	protected properties = [
+		'id',
+		'active',
+		'identifier',
+		'metadata',
+		'order',
+		'width',
+		'height',
+		'timeUpdated',
+		'timeCreated',
+	];
 
 	constructor(params: { id?: string | undefined } = { id: undefined }) {
 		super({

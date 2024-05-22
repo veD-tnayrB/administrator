@@ -1,0 +1,13 @@
+{
+	"name": "widgets",
+	"code": {
+		"scss": {
+			"path": "/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/ts",
+			"files": ["*"]
+		}
+	}
+}

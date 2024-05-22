@@ -25,6 +25,19 @@
 					"http": 6572,
 					"inspect": 6573
 				}
+			},
+			{
+				"name": "node-tsc",
+				"environment": "development",
+				"platform": "node",
+				"ports": {
+					"bundles": 6575,
+					"http": 6576,
+					"inspect": 6578
+				},
+				"ts": {
+					"compiler": "tsc"
+				}
 			}
 		]
 	},
@@ -40,6 +53,7 @@
 		"moment-timezone": "^0.5.45",
 		"node-cron": "^3.0.3",
 		"rrule": "^2.8.1",
+		"sequelize-typescript": "^2.1.6",
 		"socket.io-client": "^4.5.4",
 		"uuid": "^9.0.1"
 	},

@@ -27,21 +27,24 @@ interface IParams extends IGenerateReport {
 	managerName: string;
 }
 
-export const generateReport = async ({ header, params, type, model, managerName }: IParams) => {
+export const generateReport = async <T>({ header, params, type, model, managerName }: IParams) => {
 	try {
 		if (!params) return { status: true };
 		const response = await actions.list(model, { ...params }, `/list/${managerName}`);
-		if (!response.status) throw 'FILTER_COULDNT_BE_APPLIED';
+		if (!response) throw new Error("FILTER_COULDN'T_BE_APPLIED");
 
-		const formatedItems = response.data.entries.map(item => {
-			let newItem = {};
-			header.forEach(h => {
-				newItem[h.name] = item[h.name];
+		let formatedItems: Array<T> = [];
+
+		if ('data' in response) {
+			formatedItems = response.data.entries.map((item: T) => {
+				let newItem = {};
+				header.forEach((h) => {
+					newItem[h.name] = item[h.name];
+				});
+				return newItem;
 			});
-			return newItem;
-		});
-
-		const formatedHeader = header.map(item => ({ header: item.label, key: item.name }));
+		}
+		const formatedHeader = header.map((item) => ({ header: item.label, key: item.name }));
 
 		const excel = new Excel();
 
@@ -56,7 +59,7 @@ export const generateReport = async ({ header, params, type, model, managerName 
 			sheetData: [
 				{
 					sheetName: 'Sheet1',
-					data: formatedItems,
+					data: formatedItems as Object[],
 					columnsHeader: formatedHeader,
 				},
 			],
@@ -64,7 +67,7 @@ export const generateReport = async ({ header, params, type, model, managerName 
 		};
 
 		const excelResponse = await excel.create(specs);
-		if (!excelResponse.status) throw response.error;
+		if (!excelResponse.status) throw response;
 
 		return { status: true, data: excelResponse.data };
 	} catch (error) {

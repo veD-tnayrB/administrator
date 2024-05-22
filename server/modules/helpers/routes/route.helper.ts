@@ -21,17 +21,15 @@ interface IError {
 
 export /*bundle*/ type ResponseType = ISuccess | IError;
 
-
-export /*bundle*/ class Route {
-	#manager: Manager;
+export /*bundle*/ class Route<T> {
+	#manager: Manager<T>;
 	get manager() {
 		return this.#manager;
 	}
 
-	constructor({ manager }: { manager: Manager }) {
+	constructor({ manager }: { manager: Manager<T> }) {
 		this.#manager = manager;
 	}
-
 
 	list = async (req: Request, res: Response) => {
 		try {
@@ -105,7 +103,7 @@ export /*bundle*/ class Route {
 			const response = await this.#manager.delete({
 				id: id as string,
 			});
-			if (!response.status && 'error' in response) throw response.error;
+			if (!response.status) throw response;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {

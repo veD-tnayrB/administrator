@@ -3,6 +3,17 @@ import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } fro
 import { IGetRegisteredUsersByMonth, getRegisteredUsersByMonth } from './cases/get-registered-users-by-month';
 import { Publish } from './cases/publish';
 
+export /*bundle*/ interface IUser {
+	id: string;
+	active: boolean;
+	email: string;
+	lastNames: string;
+	profiles: string[];
+	names: string;
+	timeCreated: Date;
+	timeUpdated: Date;
+}
+
 export class UsersManager extends Manager {
 	declare model: typeof DB.models.Users;
 	declare managerName: string;
@@ -41,11 +52,11 @@ export class UsersManager extends Manager {
 		return this.#excelHandler.getTemplate(params);
 	};
 
-	create = params => {
+	create = (params) => {
 		return Publish.create(params, `/create/${this.managerName}`);
 	};
 
-	update = params => {
+	update = (params) => {
 		return Publish.update(params, `/update/${this.managerName}`);
 	};
 
@@ -57,12 +68,17 @@ export class UsersManager extends Manager {
 
 			const data = dataModel.get({ plain: true });
 
-			const profiles = await DB.models.UsersProfiles.findAll({ where: { userId: params.id } });
-			data.profiles = profiles.map(profile => profile.dataValues.profileId);
+			const profiles = await DB.models.UsersProfiles.findAll({
+				where: { userId: params.id },
+			});
+			data.profiles = profiles.map((profile) => profile.dataValues.profileId);
 
 			return { status: true, data };
 		} catch (exc) {
-			return { status: false, error: { message: exc, target: `/get/${this.managerName}` } };
+			return {
+				status: false,
+				error: { message: exc, target: `/get/${this.managerName}` },
+			};
 		}
 	};
 }

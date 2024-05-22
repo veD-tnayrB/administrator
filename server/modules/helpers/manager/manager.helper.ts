@@ -1,9 +1,9 @@
 import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
-import { generateReport } from '../excel-handler/cases/generate-report';
+import { IGenerateReport, generateReport } from '../excel-handler/cases/generate-report';
 import { List } from './list';
 
-export /*bundle*/ abstract class Manager {
+export /*bundle*/ abstract class Manager<T> {
 	#model: Model;
 	get model() {
 		return this.#model;
@@ -24,11 +24,11 @@ export /*bundle*/ abstract class Manager {
 		return List.execute(this.#model, params, `/list/${this.#managerName}`);
 	};
 
-	create = (params: Partial<{ [key: string]: any }>) => {
+	create = (params: Partial<T>) => {
 		return actions.publish(this.#model, { ...params }, `/create/${this.#managerName}`);
 	};
 
-	update = (params: Partial<{ [key: string]: any }>) => {
+	update = (params: Partial<T>) => {
 		return actions.publish(this.#model, { ...params }, `/update/${this.#managerName}`);
 	};
 
@@ -41,6 +41,6 @@ export /*bundle*/ abstract class Manager {
 	};
 
 	generateReport = async ({ header, params, type }: IGenerateReport) => {
-		return generateReport({ header, params, type, model: this.#model, managerName: this.#managerName });
+		return generateReport<T>({ header, params, type, model: this.#model, managerName: this.#managerName });
 	};
 }

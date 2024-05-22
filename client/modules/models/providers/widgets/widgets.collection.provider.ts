@@ -9,6 +9,10 @@ export class WidgetsCollectionProvider extends CollectionProvider {
 		});
 	}
 
+	getDashboard = (params: { userId: string }) => {
+		return this.api.get(`widgets/get-dashboard/${params.userId}`);
+	};
+
 	getTotals = () => {
 		return this.api.get('widgets/get-totals');
 	};

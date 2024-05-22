@@ -20,7 +20,7 @@ export const SidebarItem: React.FC<IProps> = params => {
 	const [isSelected, setIsSelected] = React.useState(isDefaultSelected);
 
 	React.useEffect(() => {
-		const onChange = () => setIsSelected(routing.uri.pathname.includes(params.to || ''));
+		const onChange = () => setIsSelected(params.to ? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to : false);
 		routing.on('change', onChange);
 		return () => { routing.off('change', onChange) };
 	}, []);

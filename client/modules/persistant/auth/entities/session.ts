@@ -10,10 +10,10 @@ import { ILogin } from './types';
 interface ILoginParams {
 	email: string;
 	password: string;
-	timezone: string
+	timezone: string;
 }
 
-type ILoginMethodResponse = Promise<{ email: string; status: true } | { status: false, error: unknown }>;
+type ILoginMethodResponse = Promise<{ email: string; status: true } | { status: false; error: unknown }>;
 /**
  * Enum for supported authentication providers.
  * @readonly
@@ -56,11 +56,10 @@ class Session extends ReactiveModel<Session> {
 
 	#isLoaded: boolean = false;
 	get isLoaded() {
-		return this.#isLoaded
+		return this.#isLoaded;
 	}
 
-
-	#token: string | null = JSON.parse(localStorage.getItem('__session') || '{}')?.token
+	#token: string | null = JSON.parse(localStorage.getItem('__session') || '{}')?.token;
 	get token() {
 		const values = JSON.parse(localStorage.getItem('__session') || '{}');
 		return this.#token || values?.token;
@@ -86,10 +85,11 @@ class Session extends ReactiveModel<Session> {
 			this.fetching = true;
 
 			// Login using firebase
-			let response: { status: true; email: string } | { status: false, error: unknown };
-			if (provider) response = await this.#loginWithGoogle();
-			else response = await this.#loginWithEmailAndPassword(params);
-
+			let response: { status: true; email: string } | { status: false; error: unknown } = {
+				status: true,
+				email: '',
+			};
+			if (provider && provider === 'Google') response = await this.#loginWithGoogle();
 			if (!response.status) throw response.error;
 
 			// Define the params to use
@@ -130,7 +130,7 @@ class Session extends ReactiveModel<Session> {
 			const response = await signInWithPopup(auth, providers[Providers.Google]);
 			if (!response.user.email) throw 'User email not found';
 
-			return { status: true, email: response.user.email };
+			return { status: true, email: response.user.email as string };
 		} catch (error) {
 			return { status: false, error };
 		}
