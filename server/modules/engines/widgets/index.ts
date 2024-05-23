@@ -8,7 +8,6 @@ export class WidgetsManager extends Manager {
 
 	getDashboard = async (params: { userId: string }) => {
 		try {
-			console.log('PARAMS.getdashboard', params);
 			// Obtener los widgets directamente asociados al usuario
 			const directWidgets = await DB.models.UsersWidgets.findAll({
 				include: [
@@ -56,7 +55,6 @@ export class WidgetsManager extends Manager {
 
 			const allWidgetInstances = [...directWidgets, ...profileWidgets];
 			const widgetMap = new Map();
-			console.log('ALLWIDGETS', allWidgetInstances);
 			allWidgetInstances.forEach((wi) => {
 				const widgetRecord = wi.get({ plain: true });
 				const widgetData = widgetRecord.widget;
@@ -70,7 +68,7 @@ export class WidgetsManager extends Manager {
 			const userSpecificWidgets = Array.from(widgetMap.values());
 
 			const generalWidgetData = generalWidgets.map((widget) => widget.get({ plain: true }));
-
+			console.log('General widgets: ', generalWidgetData);
 			return { status: true, data: { entries: userSpecificWidgets, allWidgets: generalWidgetData } };
 		} catch (error) {
 			console.error('Error getting dashboard widgets:', error);

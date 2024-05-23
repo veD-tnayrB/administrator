@@ -4,14 +4,14 @@
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 1.25rem;
-	min-height: 112px;
+	min-height: 150px;
 
 	.total {
 		box-shadow: var(--primary-shadow);
 		background: var(--surface);
 		border-radius: var(--border-primary);
 		display: flex;
-		height: 7rem;
+		height: 8rem;
 		flex: 1;
 
 		a {

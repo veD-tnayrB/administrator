@@ -10,9 +10,10 @@ export /*bundle*/ interface IWidget {
 	metadata: string;
 	order: number;
 	width: number;
-	columnPosition: number;
-	rowPosition: number;
+	columnPosition?: number;
+	rowPosition?: number;
 	height: number;
+	name: string;
 	timeUpdated: Date;
 	timeCreated: Date;
 }
@@ -26,6 +27,7 @@ export /*bundle*/ class Widget extends Item<IWidget> {
 		'order',
 		'width',
 		'height',
+		'name',
 		'timeUpdated',
 		'timeCreated',
 	];

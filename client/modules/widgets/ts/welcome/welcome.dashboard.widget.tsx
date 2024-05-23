@@ -40,14 +40,12 @@ export /*bundle*/ const WelcomeWidget = React.forwardRef((props, ref: LegacyRef<
 	};
 
 	return (
-		<div ref={ref}>
-			<motion.header {...animation} className="welcome-widget">
-				<WelcomeIllustration />
-				<h2>
-					{getGreetings()}, <span>{names}!</span>
-				</h2>
-				<p>Have a great {getMoment()}!</p>
-			</motion.header>
-		</div>
+		<motion.header {...animation} className="welcome-widget">
+			<WelcomeIllustration />
+			<h2>
+				{getGreetings()}, <span>{names}!</span>
+			</h2>
+			<p>Have a great {getMoment()}!</p>
+		</motion.header>
 	);
 });

@@ -11,6 +11,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#selectedWidgets;
 	}
 
+	set selectedWidgets(value: IWidget[]) {
+		this.#selectedWidgets = value;
+		this.triggerEvent();
+	}
+
 	load = async () => {
 		try {
 			this.fetching = true;

@@ -13,11 +13,12 @@ export interface WidgetsAttributes {
   timeCreated?: Date;
   width: number;
   height: number;
+  name?: string;
 }
 
 export type WidgetsPk = "id";
 export type WidgetsId = Widgets[WidgetsPk];
-export type WidgetsOptionalAttributes = "active" | "identifier" | "metadata" | "order" | "timeUpdated" | "timeCreated" | "width" | "height";
+export type WidgetsOptionalAttributes = "active" | "identifier" | "metadata" | "order" | "timeUpdated" | "timeCreated" | "width" | "height" | "name";
 export type WidgetsCreationAttributes = Optional<WidgetsAttributes, WidgetsOptionalAttributes>;
 
 export class Widgets extends Model<WidgetsAttributes, WidgetsCreationAttributes> implements WidgetsAttributes {
@@ -30,6 +31,7 @@ export class Widgets extends Model<WidgetsAttributes, WidgetsCreationAttributes>
   timeCreated?: Date;
   width!: number;
   height!: number;
+  name?: string;
 
   // Widgets hasMany UsersWidgets via widgetId
   usersWidgets!: UsersWidgets[];
@@ -98,6 +100,11 @@ export class Widgets extends Model<WidgetsAttributes, WidgetsCreationAttributes>
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1
+    },
+    name: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: "Widget-n"
     }
   }, {
     sequelize,

@@ -1,0 +1,21 @@
+.settings-sidebar {
+	.sidebar-item {
+		background: var(--background);
+		border-top-right-radius: 15px;
+		border-bottom-right-radius: 15px;
+		transition: background 0.2s ease-in-out;
+		cursor: pointer;
+
+		.selected {
+			background: var(--primary);
+		}
+
+		&:hover {
+			background: var(--gray-variant);
+
+			span {
+				color: var(--on-primary);
+			}
+		}
+	}
+}
