@@ -28,6 +28,8 @@ export /*bundle*/ class Widget extends Item<IWidget> {
 		'width',
 		'height',
 		'name',
+		'columnPosition',
+		'rowPosition',
 		'timeUpdated',
 		'timeCreated',
 	];

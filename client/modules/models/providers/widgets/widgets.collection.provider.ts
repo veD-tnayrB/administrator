@@ -1,4 +1,5 @@
 import { CollectionProvider } from '@essential-js/admin/helpers';
+import { IWidget } from '../../entities/widgets/widget.item';
 
 export class WidgetsCollectionProvider extends CollectionProvider {
 	constructor() {
@@ -11,6 +12,10 @@ export class WidgetsCollectionProvider extends CollectionProvider {
 
 	getDashboard = (params: { userId: string }) => {
 		return this.api.get(`widgets/get-dashboard/${params.userId}`);
+	};
+
+	saveDashboard = (params: IWidget[]) => {
+		return this.api.post('widgets/save-dashboard', { data: params });
 	};
 
 	getTotals = () => {

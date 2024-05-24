@@ -32,4 +32,19 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = false;
 		}
 	};
+
+	save = async () => {
+		try {
+			this.fetching = true;
+			const response = await this.#collection.saveDashboard(this.#selectedWidgets);
+			if (!response.status) throw response.error;
+
+			return { status: true };
+		} catch (error) {
+			console.error(error);
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
 }

@@ -30,6 +30,23 @@ class WidgetsRoutes extends Route {
 		}
 	};
 
+	saveDashboard = async (req: Request, res: Response) => {
+		try {
+			const userId = req.body.session.id;
+			const data = req.body.data;
+			if (!data) throw new Error('DATA_PROPERY_NOT_PROVIDED');
+			console.log(this.manager);
+			const response: ResponseType = await this.manager.saveDashboard({ data, userId });
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response as ISuccess);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /save-dashboard', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
+
 	getTotals = async (req: Request, res: Response) => {
 		try {
 			const response: ResponseType = await this.manager.getTotals();
@@ -47,6 +64,7 @@ class WidgetsRoutes extends Route {
 		app.get(`/widgets`, checkToken, this.list);
 		app.get('/widgets/get-totals', checkToken, this.getTotals);
 		app.get('/widgets/get-dashboard/:userId', checkToken, this.getDashboard);
+		app.post('/widgets/save-dashboard', checkToken, this.saveDashboard);
 	};
 }
 
