@@ -35,7 +35,6 @@ class WidgetsRoutes extends Route {
 			const userId = req.body.session.id;
 			const data = req.body.data;
 			if (!data) throw new Error('DATA_PROPERY_NOT_PROVIDED');
-			console.log(this.manager);
 			const response: ResponseType = await this.manager.saveDashboard({ data, userId });
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);

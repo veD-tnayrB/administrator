@@ -35,7 +35,7 @@ export const generateReport = async <T>({ header, params, type, model, managerNa
 
 		let formatedItems: Array<T> = [];
 		const cleanedHeader = header.filter((item) => item.name);
-		console.log('EXCEL RESPONSE: ', response);
+		console.log('FORMATED ITEMS : ', response);
 		if ('data' in response) {
 			formatedItems = response.data.entries.map((item: T) => {
 				let newItem = {};

@@ -23,7 +23,7 @@ export class GetDashboard {
 				attributes: ['profileId'],
 				where: { userId: params.userId },
 			});
-			const profileIds = userProfiles.map((up) => up.profileId);
+			const profileIds = userProfiles.map(up => up.profileId);
 
 			// Obtener los widgets asociados a través de los perfiles del usuario
 			const profileWidgets = await DB.models.WidgetsProfiles.findAll({
@@ -54,7 +54,7 @@ export class GetDashboard {
 
 			const allWidgetInstances = [...directWidgets, ...profileWidgets];
 			const widgetMap = new Map();
-			allWidgetInstances.forEach((wi) => {
+			allWidgetInstances.forEach(wi => {
 				const widgetRecord = wi.get({ plain: true });
 				const widgetData = widgetRecord.widget;
 				widgetMap.set(widgetData.id, {
@@ -66,8 +66,7 @@ export class GetDashboard {
 
 			const userSpecificWidgets = Array.from(widgetMap.values());
 
-			const generalWidgetData = generalWidgets.map((widget) => widget.get({ plain: true }));
-			console.log('General widgets: ', generalWidgetData);
+			const generalWidgetData = generalWidgets.map(widget => widget.get({ plain: true }));
 			return { status: true, data: { entries: userSpecificWidgets, allWidgets: generalWidgetData } };
 		} catch (error) {
 			console.error('Error getting dashboard widgets:', error);

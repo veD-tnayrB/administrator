@@ -16,7 +16,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#collection.getDashboard({ userId: session.user.id });
 			if (!response.status) throw new Error(response.error);
-			console.log('RESPONSE: ', response);
 			this.selectedWidgets = response.data.entries;
 		} catch (error) {
 			console.error(error);
