@@ -23,11 +23,10 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 
 	const onEdit = () => routing.pushState(`/modules/managment/${item.id}`);
 
-	const displayEdit = true//permissions.has('module.update');
+	const displayEdit = true; //permissions.has('module.update');
 
 	return (
 		<li className="row">
-
 			{output}
 			<span className="actions actions-container field">
 				<div className="row-actions">

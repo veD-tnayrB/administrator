@@ -7,7 +7,7 @@ import { usePermissions } from '@essential-js/admin/hooks';
 import { Row } from './item';
 
 export /*bundle*/
-	function View({ store }: { store: StoreManager }) {
+function View({ store }: { store: StoreManager }) {
 	const permissions = usePermissions();
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}));
@@ -40,6 +40,7 @@ export /*bundle*/
 				{ label: 'Email', name: 'email' },
 				{ label: 'Created at', name: 'timeCreated' },
 				{ label: 'Updated at', name: 'timeUpdated' },
+				{ label: '', name: '' },
 			],
 			actions: {
 				edit: { to: '/users/managment' },
@@ -76,12 +77,11 @@ export /*bundle*/
 					csv: {},
 				},
 				import: {},
-
 			},
 		},
 	};
 
-	if (!permissions.has('users.create')) listProperties.actions!.create = undefined
+	if (!permissions.has('users.create')) listProperties.actions!.create = undefined;
 	if (!permissions.has('users.get-template')) listProperties.actions!.reports!.downloadTemplate = undefined;
 	if (!permissions.has('users.generate-report')) listProperties.actions!.reports!.generateReport = undefined;
 	if (!permissions.has('users.import')) listProperties.actions!.reports!.import = undefined;

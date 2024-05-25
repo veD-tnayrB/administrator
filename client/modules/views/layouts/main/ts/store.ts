@@ -28,6 +28,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.#isSidebarCollapsed = value;
 		localStorage.setItem(this.#collapsedKey, JSON.stringify(value));
 		this.triggerEvent();
+		this.triggerEvent('resize');
 	}
 
 	constructor() {
@@ -85,3 +86,5 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.#sidebarCollection = new Modules();
 	};
 }
+
+export /*bundle*/ const layoutStore = new StoreManager();

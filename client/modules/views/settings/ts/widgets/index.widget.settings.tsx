@@ -62,6 +62,7 @@ export const WidgetSettings = () => {
 	});
 	return (
 		<div className="min-h-screen flex min-w-screen">
+			<WidgetList />
 			<div className="panel min-h-screen w-full" ref={ref}>
 				<GridLayout
 					onLayoutChange={onLayoutChange}
@@ -76,7 +77,6 @@ export const WidgetSettings = () => {
 					{output}
 				</GridLayout>
 			</div>
-			<WidgetList />
 		</div>
 	);
 };

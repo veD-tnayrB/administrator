@@ -14,14 +14,13 @@ export const SidebarHeader = ({ theme }: IProps) => {
 	const [isColappsed, setIsCollapsed] = React.useState(store.isSidebarCollapsed);
 	const name = config.params.application.company.name;
 
-	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed))
-
+	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed));
 
 	const iconUrl = theme === 'dark' ? '/assets/sidebar/logo-dark.svg' : '/assets/sidebar/logo-light.svg';
 
 	const toggleCollapse = () => {
 		store.isSidebarCollapsed = !store.isSidebarCollapsed;
-	}
+	};
 
 	const collapsedCls = isColappsed ? 'collapsed' : '';
 
@@ -36,11 +35,21 @@ export const SidebarHeader = ({ theme }: IProps) => {
 
 			<div className="collapsible-container">
 				<Button onClick={toggleCollapse} className={`collapse-btn ${collapsedCls}`}>
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
-
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						className="lucide lucide-chevron-right"
+					>
+						<path d="m9 18 6-6-6-6" />
+					</svg>
 				</Button>
 			</div>
-
 		</header>
 	);
 };

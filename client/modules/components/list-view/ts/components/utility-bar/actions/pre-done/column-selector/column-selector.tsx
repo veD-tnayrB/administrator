@@ -28,14 +28,14 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 	if (!header || !header.items) {
 		console.error("Column selector can't work without header items");
 		return null;
-	};
+	}
 
 	const max = props.max || { number: header.items.length, label: "You can't select more than {{number}} columns" };
 	const min = props.min || { number: 2, label: "You can't select less than {{number}} columns" };
 
 	React.useMemo(() => {
 		if (store.propertiesDisplaying.length || !header.items) return;
-		store.propertiesDisplaying = header.items?.map(item => item.name);
+		store.propertiesDisplaying = header.items?.map((item) => item.name);
 	}, []);
 
 	const options = {
@@ -60,14 +60,17 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 		}
 
 		if (!checked) {
-			store.propertiesDisplaying = store.propertiesDisplaying.filter(property => property !== name);
+			store.propertiesDisplaying = store.propertiesDisplaying.filter((property) => property !== name);
 		} else {
 			store.propertiesDisplaying = [...store.propertiesDisplaying, name];
 		}
 
 		localStorage.setItem(store.id, JSON.stringify(store.propertiesDisplaying));
 	};
-	const output = header.items.map(property => {
+
+	const cleanedItems = header.items.filter((property) => property.name);
+
+	const output = cleanedItems.map((property) => {
 		const isTheFirstTime = !!store.propertiesDisplaying.length;
 		const isChecked = isTheFirstTime ? store.propertiesDisplaying.includes(property.name) : true;
 		return (
@@ -83,11 +86,11 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 	const cls = isOpen ? 'open' : '';
 
 	return (
-		<div className={`column-selector ${cls}`} >
+		<div className={`column-selector ${cls}`}>
 			<Dialog {...options}>
 				<h4>{props?.title || 'Select the columns you want to appear'}</h4>
 				<Form>{output}</Form>
 			</Dialog>
-		</div >
+		</div>
 	);
 };

@@ -10,7 +10,11 @@ export class WidgetsCollectionProvider extends CollectionProvider {
 		});
 	}
 
-	getDashboard = (params: { userId: string }) => {
+	getDashboard = (params: {
+		userId: string;
+	}): Promise<
+		{ status: true; data: { entries: IWidget[]; allWidgets: IWidget[] } } | { status: false; error: string }
+	> => {
 		return this.api.get(`widgets/get-dashboard/${params.userId}`);
 	};
 

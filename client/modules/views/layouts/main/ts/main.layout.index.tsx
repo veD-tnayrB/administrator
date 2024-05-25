@@ -30,7 +30,6 @@ export function Layout({ store }: { store: StoreManager }) {
 
 	useBinder([session], () => setIsDOMReady(session.isLoaded));
 
-
 	if (!hasPermissions) return null;
 	if (!isDOMReady) return <SpinnerPage displayBrand />;
 
@@ -53,7 +52,7 @@ export function Layout({ store }: { store: StoreManager }) {
 						pauseOnFocusLoss
 						draggable
 						pauseOnHover
-						theme="light"
+						theme={store.mode}
 					/>
 				</div>
 			</main>

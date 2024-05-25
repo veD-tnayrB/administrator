@@ -32,9 +32,8 @@ export const Header = (props: IProps) => {
 	const [, setUpdate] = React.useState({});
 	useBinder([store], () => setUpdate({}), 'displaying-change');
 
-	const selectedItems = props.items.filter(item => store.propertiesDisplaying.includes(item.name));
-
-	const output = selectedItems?.map(Item => {
+	const selectedItems = props.items.filter((item) => store.propertiesDisplaying.includes(item.name));
+	const output = selectedItems?.map((Item) => {
 		return (
 			<li key={uuid()}>
 				<div className="label">{Item.label as React.ReactNode}</div>
@@ -43,8 +42,8 @@ export const Header = (props: IProps) => {
 	});
 
 	const includeBuilkRemove = props?.bulkActions?.remove;
-	const includesEdit = list.itemsConfig?.actions?.find(item => item.type === 'edit');
-	const includesDelete = list.itemsConfig?.actions?.find(item => item.type === 'delete');
+	const includesEdit = list.itemsConfig?.actions?.find((item) => item.type === 'edit');
+	const includesDelete = list.itemsConfig?.actions?.find((item) => item.type === 'delete');
 
 	const includeSelectAll = list.isSelecteable;
 	const cls = store.fetching ? ` loading` : ``;

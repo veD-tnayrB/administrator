@@ -2,10 +2,7 @@ import * as React from 'react';
 import { StoreManager } from '../store';
 import { usePermissions } from '@essential-js/admin/hooks';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import {
-	ListView,
-	IListViewProps,
-} from '@essential-js/admin/components/list-view';
+import { ListView, IListViewProps, ItemActionType } from '@essential-js/admin/components/list-view';
 import { ModulesListContext } from '../context';
 import { Row } from './item';
 
@@ -36,6 +33,7 @@ export /*bundle*/ function View({ store }: { store: StoreManager }) {
 				{ label: 'Url', name: 'to' },
 				{ label: 'Created at', name: 'timeCreated' },
 				{ label: 'Updated at', name: 'timeUpdated' },
+				{ label: '', name: '' },
 			],
 		},
 		list: {
@@ -50,18 +48,11 @@ export /*bundle*/ function View({ store }: { store: StoreManager }) {
 				to: '/modules/managment/create',
 				label: 'Create',
 			},
-			columnsSelector: {
-				title: 'Select the columns you want to appear',
-				min: {
-					label: "You can't select less than {{number}} columns",
-					number: 2,
-				},
-			},
+			columnsSelector: {},
 		},
 	};
 
-	if (!permissions.has('modules.create'))
-		listProperties.actions!.create = undefined;
+	if (!permissions.has('modules.create')) listProperties.actions!.create = undefined;
 
 	const contextValue = {
 		permissions,
@@ -69,10 +60,9 @@ export /*bundle*/ function View({ store }: { store: StoreManager }) {
 
 	return (
 		<ModulesListContext.Provider value={contextValue}>
-			<div className="page-container  list-page-container">
+			<div className="page-container list-page-container">
 				<ListView {...listProperties} />
 			</div>
-			;
 		</ModulesListContext.Provider>
 	);
 }

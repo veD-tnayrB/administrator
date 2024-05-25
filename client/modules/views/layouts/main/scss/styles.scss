@@ -9,13 +9,12 @@
 		width: calc(100% - 250px);
 		padding: 1.25rem;
 	}
-	
+
 	&:has(.main-layout-sidebar.collapsed) {
 		.content {
 			width: calc(100% - 50px);
 		}
-	}	
-	
+	}
 
 	&:empty {
 		background: blue;
