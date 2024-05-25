@@ -161,6 +161,7 @@ export class Launch {
 			};
 
 			const response = await sender.sendMultipleCast(message);
+			console.log('RESPONSE: ', response);
 			if (!response.status) throw new Error(response.error);
 			return { status: true };
 		} catch (error) {

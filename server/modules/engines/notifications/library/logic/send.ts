@@ -27,6 +27,7 @@ export class Send {
 		try {
 			// Send the message using Firebase Admin SDK
 			const response = await getMessaging().sendEachForMulticast(message);
+			if (response.failureCount > 0) throw response;
 			return { status: true, data: response };
 		} catch (error) {
 			// Log and return the error if unsuccessful

@@ -7,7 +7,7 @@ export class UsersManager extends StoreListView {
 	declare generalFilters: string[];
 
 	constructor() {
-		super({ collection: new Users(), id: "notifications-users" });
+		super({ collection: new Users(), id: 'notifications-users' });
 		this.specificFilters = [
 			{ label: 'ID', name: 'id' },
 			{ label: 'Name', name: 'name' },
@@ -26,7 +26,6 @@ export class UsersManager extends StoreListView {
 	}
 
 	setSelectedsItems = (ids: string[] | undefined) => {
-		console.trace("user ids: ", ids)
 		if (!ids) return;
 		ids.forEach(id => this.selectedItems.set(id, {}));
 		this.triggerEvent();
