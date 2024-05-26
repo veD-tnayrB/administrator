@@ -11,11 +11,12 @@ export interface ModulesAttributes {
   timeUpdated?: Date;
   order?: number;
   icon?: string;
+  active: number;
 }
 
 export type ModulesPk = "id";
 export type ModulesId = Modules[ModulesPk];
-export type ModulesOptionalAttributes = "label" | "to" | "timeCreated" | "timeUpdated" | "order" | "icon";
+export type ModulesOptionalAttributes = "label" | "to" | "timeCreated" | "timeUpdated" | "order" | "icon" | "active";
 export type ModulesCreationAttributes = Optional<ModulesAttributes, ModulesOptionalAttributes>;
 
 export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes> implements ModulesAttributes {
@@ -26,6 +27,7 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
   timeUpdated?: Date;
   order?: number;
   icon?: string;
+  active!: number;
 
   // Modules hasMany ModulesActions via moduleId
   modulesActions!: ModulesActions[];
@@ -84,6 +86,11 @@ export class Modules extends Model<ModulesAttributes, ModulesCreationAttributes>
     icon: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    active: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,

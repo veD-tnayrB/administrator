@@ -23,14 +23,9 @@ export const Form = () => {
 
 	if (!store.ready) return null;
 
-	const onChange = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-	) => {
+	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value: rawValue, type } = event.target;
-		const value =
-			type === 'checkbox'
-				? (event.target as HTMLInputElement).checked
-				: rawValue;
+		const value = type === 'checkbox' ? (event.target as HTMLInputElement).checked : rawValue;
 		setItem((currentValue: IModule) => ({ ...currentValue, [name]: value }));
 	};
 
@@ -38,6 +33,7 @@ export const Form = () => {
 		event.preventDefault();
 		store.save(item);
 	};
+
 	const onCancel = () => {
 		routing.pushState('/modules');
 	};
@@ -70,17 +66,8 @@ export const Form = () => {
 			</div>
 
 			<div className="flex">
-				<Textarea
-					className="w-full"
-					value={item.icon}
-					onChange={onChange}
-					name="icon"
-					label="Icon"
-				/>
-				<div
-					className="flex items-center justify-center w-16"
-					dangerouslySetInnerHTML={cleanIcon}
-				/>
+				<Textarea className="w-full" value={item.icon} onChange={onChange} name="icon" label="Icon" />
+				<div className="flex items-center justify-center w-16" dangerouslySetInnerHTML={cleanIcon} />
 			</div>
 
 			<Actions />
@@ -93,12 +80,7 @@ export const Form = () => {
 			</div>
 
 			<div className="actions">
-				<Button
-					type="reset"
-					variant="secondary"
-					onClick={onCancel}
-					disabled={isLoading}
-				>
+				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>
 					Cancel
 				</Button>
 				<Button type="submit" variant="primary" loading={isLoading}>

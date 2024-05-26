@@ -37,7 +37,7 @@ export class Launch {
 		}
 	};
 
-	static getUsers = async notification => {
+	static getUsers = async (notification) => {
 		try {
 			let result = {};
 
@@ -60,17 +60,17 @@ export class Launch {
 				],
 			});
 
-			let directUsers = directUsersNotifications.map(notificationInstance => {
+			let directUsers = directUsersNotifications.map((notificationInstance) => {
 				const { dataValues: notification } = notificationInstance;
 				const user = notification.user.dataValues;
 
 				const notificationToken = user.accessTokens.map(
-					accessToken => accessToken.dataValues.notificationsToken
+					(accessToken) => accessToken.dataValues.notificationsToken,
 				);
 				return {
 					userId: user.id,
 					notificationToken,
-					timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
+					timezones: user.accessTokens.map((accessToken) => accessToken.dataValues.timezone),
 				};
 			});
 
@@ -106,25 +106,25 @@ export class Launch {
 				include: profilesNotificationsIncludes,
 			});
 
-			let profileUsers = profilesNotifications.flatMap(profileNotificationInstance => {
+			let profileUsers = profilesNotifications.flatMap((profileNotificationInstance) => {
 				const usersProfiles = profileNotificationInstance.dataValues.profile.dataValues.usersProfiles;
 
-				return usersProfiles.map(up => {
+				return usersProfiles.map((up) => {
 					const user = up.dataValues.user.dataValues;
 
 					return {
 						userId: user.id,
 						notificationToken: user.accessTokens.map(
-							accessToken => accessToken.dataValues.notificationsToken
+							(accessToken) => accessToken.dataValues.notificationsToken,
 						),
-						timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
+						timezones: user.accessTokens.map((accessToken) => accessToken.dataValues.timezone),
 					};
 				});
 			});
 
 			// Combinar Usuarios directos y Usuarios de Perfiles, eliminando duplicados
 			let combinedUsers = [...directUsers, ...profileUsers].reduce((acc, curr) => {
-				if (!acc.some(user => user.userId === curr.userId)) {
+				if (!acc.some((user) => user.userId === curr.userId)) {
 					acc.push(curr);
 				}
 				return acc;
@@ -145,11 +145,11 @@ export class Launch {
 		}
 	};
 
-	static sendNotifications = async notification => {
+	static sendNotifications = async (notification) => {
 		try {
-			let tokens = notification.users.flatMap(user => user.notificationToken);
+			let tokens = notification.users.flatMap((user) => user.notificationToken);
 			tokens = [...new Set(tokens)];
-			tokens = tokens.filter(token => token);
+			tokens = tokens.filter((token) => token);
 			if (!tokens.length) return { status: true };
 
 			const message = {
@@ -161,7 +161,6 @@ export class Launch {
 			};
 
 			const response = await sender.sendMultipleCast(message);
-			console.log('RESPONSE: ', response);
 			if (!response.status) throw new Error(response.error);
 			return { status: true };
 		} catch (error) {

@@ -19,7 +19,7 @@ export const Form = () => {
 	const [values, setValues] = React.useState<IValues>({
 		name: store.item.name || '',
 		description: store.item.description || '',
-		active: store.item.active || true,
+		active: store.item.active,
 		modules: store.selectedModules,
 	});
 	const [isLoading, setIsLoading] = React.useState(store.fetching);

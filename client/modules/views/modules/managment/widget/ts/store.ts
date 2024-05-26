@@ -5,7 +5,7 @@ import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 
 export interface ISelectedAction extends IAction {
-	isCreating?: boolean
+	isCreating?: boolean;
 }
 
 export class StoreManager extends ReactiveModel<StoreManager> {
@@ -29,7 +29,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#isCreating;
 	}
 	#id: string = 'create';
-	#refreshUser: boolean = false;
 
 	#selectedAction: ISelectedAction | null = null;
 	get selectedAction() {
@@ -51,8 +50,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			this.fetching = true;
 			this.#id = id;
-			const userPermissions = session.user.permissions
-			this.#refreshUser = userPermissions.some((permission: IPermission) => permission.moduleId === this.#id)
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
@@ -73,12 +70,12 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.publish();
 			if (!response.status) throw response.error;
 
-			if (this.#refreshUser) await session.load();
+			await session.load();
 
 			this.#error = '';
 			const message = this.isCreating ? 'Module created successfully' : 'Module updated successfully';
 			toast.success(message);
-			routing.pushState('/users');
+			routing.pushState('/modules');
 			return { status: true };
 		} catch (error) {
 			return { status: false, error };

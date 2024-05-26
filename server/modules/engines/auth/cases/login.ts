@@ -77,22 +77,21 @@ export class Login {
 			const profilePermissions = await this.#profileModulePermissionsModel.findAll({
 				where: { profileId: profile.id },
 				include: [
-					{
-						model: DB.models.ModulesActions,
-						as: 'action',
-						include: [{ model: DB.models.Modules, as: 'module' }],
-					},
+					{ model: DB.models.ModulesActions, as: 'action' },
+					{ model: DB.models.Modules, as: 'module', where: { active: 1 } },
 				],
 			});
 			const formattedPermissions = profilePermissions.map((permission) => {
-				const action = permission.get({ plain: true }).action;
+				const permissionData = permission.get({ plain: true });
 				return {
-					moduleId: action.module.id,
-					moduleTo: action.module.to,
-					actionId: action.id,
-					actionName: action.name,
+					moduleId: permissionData.module.id,
+					moduleTo: permissionData.module.to,
+					moduleState: permissionData.module.active,
+					actionId: permissionData.action.id,
+					actionName: permissionData.action.name,
 				};
 			});
+
 			permissions = [...permissions, ...formattedPermissions];
 		}
 		return { profiles, permissions };

@@ -96,13 +96,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	#validateValues = () => {
 		if (!this.#item.name) return 'The profile must have a name.';
 		if (Object.entries(this.#selectedModules).length) return 'The profile must have at least one module selected';
-
-	}
+	};
 
 	reset = () => {
 		this.#item = new Profile();
 		this.#refrestUser = false;
 		this.#modules = new Modules();
+		this.#modulesPermissions = new Map();
 		this.ready = false;
 		this.triggerEvent();
 	};

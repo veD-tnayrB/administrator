@@ -21,13 +21,12 @@ export class UsersManager extends StoreListView {
 			where: { active: 1 },
 		};
 		this.generalFilters = ['id', 'name', 'email'];
-
 		this.propertiesDisplaying = ['id', 'names', 'lastNames', 'email'];
 	}
 
 	setSelectedsItems = (ids: string[] | undefined) => {
 		if (!ids) return;
-		ids.forEach(id => this.selectedItems.set(id, {}));
+		ids.forEach((id) => this.selectedItems.set(id, {}));
 		this.triggerEvent();
 	};
 }

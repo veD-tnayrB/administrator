@@ -20,7 +20,6 @@ export class StoreManager extends StoreListView {
 			this.fetching = true;
 			const notification = new Notification();
 			await notification.load({ id });
-
 			const response = await notification.launch();
 			if (!response.status) throw response.error;
 			return { status: true };
@@ -31,5 +30,4 @@ export class StoreManager extends StoreListView {
 			this.fetching = false;
 		}
 	};
-
 }

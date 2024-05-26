@@ -12,11 +12,12 @@ export interface ProfilesAttributes {
   description?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
+  active: number;
 }
 
 export type ProfilesPk = "id";
 export type ProfilesId = Profiles[ProfilesPk];
-export type ProfilesOptionalAttributes = "name" | "description" | "timeCreated" | "timeUpdated";
+export type ProfilesOptionalAttributes = "name" | "description" | "timeCreated" | "timeUpdated" | "active";
 export type ProfilesCreationAttributes = Optional<ProfilesAttributes, ProfilesOptionalAttributes>;
 
 export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttributes> implements ProfilesAttributes {
@@ -25,6 +26,7 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
   description?: string;
   timeCreated?: Date;
   timeUpdated?: Date;
+  active!: number;
 
   // Profiles hasMany ProfileModulePermissions via profileId
   profileModulePermissions!: ProfileModulePermissions[];
@@ -111,6 +113,11 @@ export class Profiles extends Model<ProfilesAttributes, ProfilesCreationAttribut
       type: DataTypes.DATE,
       allowNull: true,
       field: 'time_updated'
+    },
+    active: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,

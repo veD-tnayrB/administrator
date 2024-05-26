@@ -86,6 +86,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			if (this.#refreshUser) await session.load();
 
 			this.#error = '';
+			this.fetching = false;
 			const message = this.isCreating ? 'User created successfully' : 'User updated successfully';
 			toast.success(message);
 			routing.pushState('/users');
@@ -107,6 +108,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	reset = () => {
+		this.#profiles = new Profiles();
+		this.ready = false;
 		this.triggerEvent('hide');
 	};
 }

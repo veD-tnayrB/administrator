@@ -43,7 +43,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const isSessionLoaded = session.isLogged;
 			if (!isSessionLoaded) return;
 
-			const response = await this.#sidebarCollection.load();
+			const response = await this.#sidebarCollection.load({ where: { active: true } });
 			if (!response.status) throw response.error;
 			const userModuleIds = session.user.permissions.map((permission: IPermission) => permission.moduleId);
 			const userModules = response.data.filter((module: Module) => userModuleIds.includes(module.id));

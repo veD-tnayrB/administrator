@@ -7,13 +7,14 @@ export async function SessionHandler(route: string) {
 }
 
 function validate(route: string) {
-	const isANoSessionRoute: boolean = noSession.some(path => route.startsWith(path));
+	const isANoSessionRoute: boolean = noSession.some((path) => route.startsWith(path));
 	const isSessionActive: boolean = session.isLogged;
-
 	if (route.includes('/error')) return { pathname: route };
 	if (!isSessionActive && !isANoSessionRoute) return { pathname: '/auth/login' };
-	if (isSessionActive && isANoSessionRoute) return { pathname: '/dashboard' };
-	if (route === '/') return { pathname: '/dashboard' };
+
+	const firstModuleAvaiable = Array.isArray(session.user.permissions) && session.user.permissions[0].moduleTo;
+	if (isSessionActive && isANoSessionRoute) return { pathname: firstModuleAvaiable };
+	if (route === '/') return { pathname: firstModuleAvaiable };
 
 	return { pathname: route };
 }

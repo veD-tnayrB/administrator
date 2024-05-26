@@ -10,8 +10,8 @@ export interface IPublish {
 }
 
 export class Publish {
-	static model: DB.models.Profiles = DB.models.Profiles;
-	static modulesModel: DB.models.ProfileModulePermissions = DB.models.ProfileModulePermissions;
+	static model: typeof DB.models.Profiles = DB.models.Profiles;
+	static modulesModel: typeof DB.models.ProfileModulePermissions = DB.models.ProfileModulePermissions;
 
 	static async handleModules(profileId: string, modules: Record<string, Record<string, boolean>>, transaction) {
 		const profile = await Publish.model.findByPk(profileId, { transaction });
@@ -46,9 +46,9 @@ export class Publish {
 		try {
 			const { modules, ...profileData } = params;
 			const profile = await Publish.model.create(profileData, { transaction });
-			await this.handleModules(profile.id, modules, transaction);
+			await this.handleModules(profileData.id, modules, transaction);
 			await transaction.commit();
-			return { status: true, data: { id: profile.id } };
+			return { status: true, data: { id: profileData.id } };
 		} catch (error) {
 			await transaction.rollback();
 			return { status: false, error: { message: 'Failed to create profile', error, target: 'profile/update' } };

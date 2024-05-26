@@ -5,15 +5,14 @@ import { ModulesItemProvider } from '../../providers/modules/module.item.provide
 export /*bundle*/ interface IAction {
 	id: string;
 	name: string;
-	description: string
+	description: string;
 }
 
 export /*bundle*/ interface IPermission {
-	actionId: string
-	actionName: string
-	moduleId: string
-	moduleTo: string
-
+	actionId: string;
+	actionName: string;
+	moduleId: string;
+	moduleTo: string;
 }
 
 export /*bundle*/ interface IModule {
@@ -30,7 +29,7 @@ export /*bundle*/ interface IModule {
 }
 
 export /*bundle*/ class Module extends Item<IModule> {
-	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order', 'actions'];
+	protected properties = ['id', 'label', 'icon', 'to', 'timeCreated', 'timeUpdated', 'order', 'active', 'actions'];
 
 	constructor(params: { id?: string } = { id: undefined }) {
 		super({

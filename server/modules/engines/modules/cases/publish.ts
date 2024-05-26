@@ -10,54 +10,52 @@ export interface IPublish {
 }
 
 export class Publish {
-	static model: DB.models.Modules = DB.models.Modules;
-	static modulesActions: DB.models.ModulesActions = DB.models.ModulesActions;
+	static model: typeof DB.models.Modules = DB.models.Modules;
+	static modulesActions: typeof DB.models.ModulesActions = DB.models.ModulesActions;
 
 	static handleRelations = async (moduleId: string, actions: Record<string, string>[], transaction) => {
 		try {
 			const include = [
 				{
 					model: DB.models.ModulesActions,
-					as: 'actions',
+					as: 'modulesActions',
 				},
-			]
+			];
 			const moduleInstance = await Publish.model.findOne({ where: { id: moduleId }, include, transaction });
 			if (!moduleInstance) throw 'MODULE_WASNT_CREATED_CORRECTLY';
 			const module = moduleInstance.get({ plain: true });
-
+			module.actions = module.modulesActions;
 			const savedActionsMap = new Map();
 
-			module.actions.forEach(action => {
+			module.actions.forEach((action) => {
 				const toSave = {
 					id: action.id,
 					name: action.name,
 					description: action.description,
-				}
+					moduleId,
+				};
 
-				savedActionsMap.set(action.id, toSave)
+				savedActionsMap.set(action.id, toSave);
 			});
-
 
 			const toCreateActions = [];
 			const toEditActions = [];
 
 			for (let action of actions) {
-
 				if (savedActionsMap.has(action.id)) {
-					toEditActions.push(action)
-					continue
+					toEditActions.push({ ...action, moduleId });
+					continue;
 				}
 
-				toCreateActions.push(action);
+				toCreateActions.push({ ...action, moduleId });
 			}
-
 
 			if (toCreateActions.length) await Publish.modulesActions.bulkCreate(toCreateActions, { transaction });
 			if (toEditActions.length) await Publish.modulesActions.update(toEditActions, { where: { moduleId } });
 		} catch (error) {
 			throw error;
 		}
-	}
+	};
 
 	static create = async (params: IPublish, target: string) => {
 		const transaction = await DB.sequelize.transaction();
@@ -88,5 +86,4 @@ export class Publish {
 			return { status: false, error: { error, target } };
 		}
 	};
-
 }

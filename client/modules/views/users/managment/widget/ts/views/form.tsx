@@ -21,8 +21,6 @@ export const Form = () => {
 
 	useBinder([store], () => setItem(store.item.getProperties()), 'hide');
 
-	if (!store.ready) return null;
-
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
@@ -41,7 +39,7 @@ export const Form = () => {
 	};
 
 	const formatedOptions = store.profiles.items.map((item) => ({ label: item.name, value: item.id }));
-	const profilesValue = formatedOptions.filter(option => item.profiles.includes(option.value));
+	const profilesValue = formatedOptions.filter((option) => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
 	return (
@@ -75,7 +73,13 @@ export const Form = () => {
 				onChange={onChange}
 			/>
 
-			<Select isMulti onChange={onSelectChange} options={formatedOptions} label="Profiles" value={profilesValue || []} />
+			<Select
+				isMulti
+				onChange={onSelectChange}
+				options={formatedOptions}
+				label="Profiles"
+				value={profilesValue || []}
+			/>
 
 			<div className="pui-input">
 				<label className="pui-switch__label">

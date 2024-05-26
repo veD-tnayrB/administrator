@@ -40,7 +40,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	load = async ({ id }: { id: string | undefined }) => {
 		if (!id || id === 'create') {
-			await this.#profiles.load();
+			await this.#profiles.load({ where: { active: 1 } });
 			await this.#users.load({ where: { active: 1 } });
 			this.#isCreating = true;
 			this.ready = true;
@@ -51,8 +51,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
-			this.#frecuencyManager.load({ frecuencyRules: this.#item.formatedFrecuency, endDate: this.#item.endDate });
 			this.ready = true;
+			this.#frecuencyManager.load({ frecuencyRules: this.#item.formatedFrecuency, endDate: this.#item.endDate });
 			return { status: true };
 		} catch (error) {
 			console.error('ERROR LOADING NOTIFICATION ', error);
@@ -63,7 +63,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	};
 
 	loadAssociations = async () => {
-		await this.#profiles.load({ order: 'id', where: { ids: this.#item.profiles } });
+		await this.#profiles.load({ order: 'id', where: { active: 1, ids: this.#item.profiles } });
 		await this.#users.load({ order: 'id', where: { active: 1, ids: this.#item.users } });
 		this.setItemsSelected({ users: this.#item.users, profiles: this.#item.profiles });
 	};

@@ -11,7 +11,7 @@ export class Send {
 	 * @param {Object} message - The message object to be sent.
 	 * @returns {Promise<Object>} - A promise that resolves to an object containing either a data property (with the response) or an error property.
 	 */
-	static execute = async message => {
+	static execute = async (message) => {
 		try {
 			// Send the message using Firebase Admin SDK
 			const response = await getMessaging().send(message);
@@ -23,7 +23,7 @@ export class Send {
 		}
 	};
 
-	static sendMultipleCast = async message => {
+	static sendMultipleCast = async (message) => {
 		try {
 			// Send the message using Firebase Admin SDK
 			const response = await getMessaging().sendEachForMulticast(message);

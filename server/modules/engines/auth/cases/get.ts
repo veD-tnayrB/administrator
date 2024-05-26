@@ -1,5 +1,4 @@
 import { DB } from '@essential-js/admin-server/db';
-import type { IProfile } from '@essential-js/admin-server/types';
 
 export interface IGet {
 	token: string;
@@ -13,7 +12,6 @@ export class Get {
 
 	static execute = async (params: { token: string }) => {
 		try {
-			// Buscar el token de acceso para obtener el usuario
 			const accessTokenInstance = await this.#accessTokensModel.findOne({
 				where: { accessToken: params.token },
 				include: [{ model: DB.models.Users, as: 'user' }],
@@ -21,7 +19,6 @@ export class Get {
 
 			if (!accessTokenInstance) throw 'ACCESS_TOKEN_NOT_FOUND';
 			const userInstance = accessTokenInstance.get({ plain: true }).user;
-			// Cargar perfiles del usuario
 			const { profiles, permissions } = await Get.#getPermissions({
 				userId: userInstance.id,
 			});
@@ -47,7 +44,7 @@ export class Get {
 				where: { profileId: profile.id },
 				include: [
 					{ model: DB.models.ModulesActions, as: 'action' },
-					{ model: DB.models.Modules, as: 'module' },
+					{ model: DB.models.Modules, as: 'module', where: { active: 1 } },
 				],
 			});
 			const formattedPermissions = profilePermissions.map((permission) => {
@@ -55,6 +52,7 @@ export class Get {
 				return {
 					moduleId: permissionData.module.id,
 					moduleTo: permissionData.module.to,
+					moduleState: permissionData.module.active,
 					actionId: permissionData.action.id,
 					actionName: permissionData.action.name,
 				};
