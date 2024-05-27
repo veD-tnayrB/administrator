@@ -1,12 +1,12 @@
 @mixin properties() {
 	--text-color: #fff;
 
-	--primary: #0d47a1;
+	--primary: #1d7a90;
 	--primary-container: var(--primary-30);
 	--on-primary: #fff;
 	--on-primary-container: var(--primary-90);
 	--inverse-primary: var(--primary-40);
-	--secondary: var(--secondary-80);
+	--secondary: #67727e;
 	--secondary-container: var(--secondary-30);
 	--on-secondary: #fff;
 	--on-secondary-container: var(--secondary-90);
@@ -45,5 +45,6 @@
 	--box-shadow: 0px 3px 8px #00000066;
 
 	--primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--secondary-shadow: -5px 12px 2px 3px #58585833;
 	--modal-background-color: rgba(0, 0, 0, 0.5);
 }

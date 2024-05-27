@@ -2,7 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { UserItemProvider } from './user.item.provider';
 import { ILogin } from './types';
 
-interface IUser {
+export /*bundle*/ interface IUser {
 	id: string;
 	active: boolean;
 	email: string;
@@ -10,8 +10,10 @@ interface IUser {
 	names: string;
 	timeCreated: Date;
 	profiles: { id: string; name: string }[];
+	profileImg: string;
 	permissions: { id: string; name: string }[];
 	timeUpdated: Date;
+	token: string;
 }
 
 export /*bundle*/ class User extends ReactiveModel<IUser> {
@@ -21,7 +23,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		let namesArray = this.names.split(' ');
 		let lastNamesArray = this.lastNames.split(' ');
 
-		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
+		return this.lastNames ? `${namesArray[0]} ${lastNamesArray[0]}` : this.names;
 	}
 
 	constructor() {
@@ -36,6 +38,8 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 				'timeUpdated',
 				'permissions',
 				'profiles',
+				'profileImg',
+				'token',
 			],
 		});
 		this.reactiveProps([
@@ -49,6 +53,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 			'permissions',
 			'profiles',
 			'loaded',
+			'token',
 		]);
 	}
 
@@ -56,7 +61,8 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		try {
 			this.fetching = true;
 			const response = await this.provider.login(params);
-			if (!response.status) throw response.error;
+			if (!response.status) throw response.message;
+			this.token = response.data.token;
 			return response;
 		} catch (error) {
 			console.error(error);
@@ -71,6 +77,7 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 			this.fetching = true;
 			const response = await this.provider.data(params);
 			if (!response.status) throw response.error;
+			this.token = response.data.token;
 			return response;
 		} catch (error) {
 			console.error(error);
@@ -84,6 +91,19 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		try {
 			this.fetching = true;
 			const response = await this.provider.logout({ token: this.token });
+			if (!response.status) throw response.error;
+			return response;
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
+	publish = async () => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.publish({ ...this.getProperties() });
 			if (!response.status) throw response.error;
 			return response;
 		} catch (error) {

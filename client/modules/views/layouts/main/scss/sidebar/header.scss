@@ -7,8 +7,8 @@
 				gap: 0.5rem;
 
 				.logo-container {
-					width: 38px;
-					height: 38px;
+					width: 32px;
+					height: 32px;
 
 					overflow: hidden;
 					aspect-ratio: 1/1;
@@ -25,9 +25,15 @@
 
 				h1 {
 					color: var(--on-surface);
-					font-size: 1.3rem;
+					font-size: 0.92rem;
 					font-weight: 750;
 					font-family: var(--brand-font);
+
+					.sub-name {
+						font-weight: normal;
+						font-size: 0.8rem;
+						font-family: var(--brand-font);
+					}
 				}
 			}
 

@@ -54,10 +54,25 @@ export class AuthRoutes {
 		}
 	}
 
+	async update(req: Request, res: Response) {
+		try {
+			const params = req.body;
+			const response = await Auth.update(params);
+			if (!response.status) throw response.error;
+
+			const formatedResponse = ResponseAPI.success({ data: response.data });
+			return res.json(formatedResponse);
+		} catch (exc) {
+			console.error('GET USER error:', exc);
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
+			return res.status(500).json(errorResponse);
+		}
+	}
 	setup(app: Application) {
 		app.post('/login', this.login);
 		app.get('/auth/get-user', checkToken, this.getUser);
 		app.get('/auth/logout', checkToken, this.logout);
+		app.put('/auth/update/user/:userId', checkToken, this.update);
 	}
 }
 

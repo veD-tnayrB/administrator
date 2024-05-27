@@ -4,19 +4,16 @@ import { Button } from 'pragmate-ui/components';
 import { useLoginContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Providers } from '@essential-js/admin/auth';
-
-const DEFAULT_VALUE = {
-	email: 'brayanmc.contacto@gmail.com',
-	password: 'Admin02*',
-};
+import { Alert } from 'pragmate-ui/alert';
 
 export const LeftSectionForm = () => {
-	const [values, setValues] = React.useState(DEFAULT_VALUE);
-	const [error, setError] = React.useState<string | null | unknown>(null);
-	const isButtonDisabled = values.email === '' || values.password === '';
 	const { store } = useLoginContext();
+	const [values, setValues] = React.useState(store.values);
+	const [error, setError] = React.useState<string | null>(null);
+	const isButtonDisabled = values.email === '' || values.password === '';
 
 	useBinder([store], () => setError(store.error));
+	useBinder([store], () => setValues(store.values), 'reset');
 
 	const onSubmit = () => {
 		if (isButtonDisabled) return;
@@ -34,31 +31,25 @@ export const LeftSectionForm = () => {
 			[name]: value,
 		});
 	};
-
+	const errors: Record<string, string> = {
+		USER_DOESNT_EXISTS: 'Invalid credentials, please check if you have entered the data correctly and try again.',
+	};
 
 	return (
 		<article>
 			<div>
 				<span>Welcome back!!</span>
 				<h1>Login</h1>
+
+				<Alert type="error" message={errors[error as string] as string} />
 			</div>
 			<Form onSubmit={onSubmit}>
-				<Input
-					name="email"
-					type="email"
-					value={values.email}
-					label="Email"
-					onChange={onChange}
-				/>
-				<Input
-					name="password"
-					type="password"
-					value={values.password}
-					label="Password"
-					onChange={onChange}
-				/>
+				<Input name="email" type="email" value={values.email} label="Email" onChange={onChange} />
+				<Input name="password" type="password" value={values.password} label="Password" onChange={onChange} />
 
-				<Button variant="primary" type="submit">Go</Button>
+				<Button variant="primary" type="submit">
+					Go
+				</Button>
 			</Form>
 
 			<div className="or-container">

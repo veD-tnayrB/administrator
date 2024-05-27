@@ -15,11 +15,12 @@ export interface UsersAttributes {
   timeCreated?: Date;
   timeUpdated?: Date;
   password?: string;
+  profileImg?: string;
 }
 
 export type UsersPk = "id";
 export type UsersId = Users[UsersPk];
-export type UsersOptionalAttributes = "active" | "email" | "lastNames" | "names" | "timeCreated" | "timeUpdated" | "password";
+export type UsersOptionalAttributes = "active" | "email" | "lastNames" | "names" | "timeCreated" | "timeUpdated" | "password" | "profileImg";
 export type UsersCreationAttributes = Optional<UsersAttributes, UsersOptionalAttributes>;
 
 export class Users extends Model<UsersAttributes, UsersCreationAttributes> implements UsersAttributes {
@@ -31,6 +32,7 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
   timeCreated?: Date;
   timeUpdated?: Date;
   password?: string;
+  profileImg?: string;
 
   // Users hasMany AccessTokens via userId
   accessTokens!: AccessTokens[];
@@ -132,6 +134,11 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
     password: {
       type: DataTypes.STRING(32),
       allowNull: true
+    },
+    profileImg: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      field: 'profile_img'
     }
   }, {
     sequelize,

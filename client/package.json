@@ -19,8 +19,16 @@
 			"localDB": "essential-dashboard",
 			"localDBVersion": 1,
 			"company": {
-				"name": "Essential"
-			}
+				"name": "Baleares",
+				"subName": "Group"
+			},
+			"permissionLessRoutes": [
+				"/user/profile"
+			],
+			"noSessionRoutes": [
+				"/auth/login",
+				"/auth/forgot-password"
+			]
 		},
 		"server": "http://localhost:5001/"
 	},

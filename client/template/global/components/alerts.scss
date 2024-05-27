@@ -6,22 +6,30 @@ div.alert {
 	}
 
 	&.alert--success {
-		color: var(--on-success) !important;
 		background: var(--success) !important;
+		span {
+			color: var(--on-success) !important;
+		}
 	}
 
 	&.alert--error {
-		color: var(--on-error) !important;
 		background: var(--error) !important;
+		span {
+			color: var(--on-error) !important;
+		}
 	}
 
 	&.alert--info {
-		color: var(--on-info) !important;
 		background: var(--info) !important;
+		span {
+			color: var(--on-info) !important;
+		}
 	}
 
 	&.alert--warning {
-		color: var(--on-warning) !important;
 		background: var(--warning) !important;
+		span {
+			color: var(--on-warning) !important;
+		}
 	}
 }

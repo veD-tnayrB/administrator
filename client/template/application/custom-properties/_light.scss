@@ -1,6 +1,6 @@
 @mixin properties() {
 	--text-color: hsl(0, 0%, 10%);
-	--primary: #0d47a1;
+	--primary: #1d7a90;
 	--primary-container: #bbdefb;
 	--on-primary: #fff;
 	--on-primary-container: #bdbdbd;
@@ -38,6 +38,7 @@
 	--box-shadow: 0px 2px 8px #58585833;
 
 	--primary-shadow: 0px 2px 8px #58585833;
+	--secondary-shadow: -5px 12px 2px 3px #58585833;
 	--modal-background-color: rgba(0, 0, 0, 0.5);
 
 	// primaries

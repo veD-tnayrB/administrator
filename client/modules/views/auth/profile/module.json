@@ -1,0 +1,24 @@
+{
+	"name": "views/profile",
+	"platforms": ["web", "android", "ios"],
+	"txt": {
+		"path": "/widget/txt",
+		"files": "*"
+	},
+	"widget": {
+		"layout": "main-admin-layout",
+		"route": "/user/profile",
+		"is": "page",
+		"scss": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"element": {
+			"name": "user-profile-widget"
+		}
+	}
+}

@@ -10,6 +10,7 @@ export /*bundle*/ class Api extends BaseApi {
 		super(toUseUrl);
 
 		this.bearer(session.token);
+		session.on('token-changed', () => this.bearer(session.token));
 	}
 
 	private async handleSpecificError(response: { status: false; error: string }): Promise<void> {

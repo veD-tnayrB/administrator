@@ -1,0 +1,15 @@
+.main-layout-header {
+	background: var(--surface);
+	height: 3.5rem;
+	box-shadow: var(--primary-shadow);
+	position: relative;
+	margin: 0 0 0 1.25rem;
+	width: calc(100% - 1.25rem);
+	padding: 1rem 1.25rem;
+	border-bottom-left-radius: 10px;
+
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 1rem;
+}

@@ -4,10 +4,15 @@ import { routing } from '@beyond-js/kernel/routing';
 import type { IPermission } from '@essential-js/admin/models';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
-	#error: string | null | unknown = null;
+	#error: string | null = null;
 	get error() {
 		return this.#error;
 	}
+
+	values = {
+		email: '',
+		password: '',
+	};
 
 	login = async (params: { email: string; password: string }, provider?: Providers) => {
 		try {
@@ -21,9 +26,14 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			routing.pushState(redirectTo);
 		} catch (error) {
 			console.error(error);
-			this.#error = error;
+			this.#error = error as string;
 		} finally {
 			this.fetching = false;
 		}
+	};
+
+	reset = () => {
+		this.#error = null;
+		this.triggerEvent('reset');
 	};
 }

@@ -10,18 +10,29 @@ export /*bundle*/ interface IUser {
 	lastNames: string;
 	profiles: string[];
 	names: string;
+	profileImg: string;
 	timeCreated: Date;
 	timeUpdated: Date;
 }
 
 export /*bundle*/ class User extends Item<IUser> {
-	protected properties = ['id', 'active', 'email', 'lastNames', 'names', 'timeCreated', 'timeUpdated', 'profiles'];
+	protected properties = [
+		'id',
+		'active',
+		'email',
+		'lastNames',
+		'names',
+		'timeCreated',
+		'timeUpdated',
+		'profileImg',
+		'profiles',
+	];
 
 	get fullName() {
 		let namesArray = this.names.split(' ');
 		let lastNamesArray = this.lastNames.split(' ');
 
-		return this.lastNames ? this.names : `${namesArray[0]} ${lastNamesArray[0]}`;
+		return this.lastNames ? `${namesArray[0]} ${lastNamesArray[0]}` : this.names;
 	}
 
 	constructor(params: { id?: string | undefined } = { id: undefined }) {

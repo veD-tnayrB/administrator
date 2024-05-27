@@ -13,6 +13,7 @@ export const SidebarHeader = ({ theme }: IProps) => {
 	const { store } = useLayoutContext();
 	const [isColappsed, setIsCollapsed] = React.useState(store.isSidebarCollapsed);
 	const name = config.params.application.company.name;
+	const subName = config.params.application.company.subName;
 
 	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed));
 
@@ -30,7 +31,9 @@ export const SidebarHeader = ({ theme }: IProps) => {
 				<div className="logo-container">
 					<Image src={iconUrl} className="logo" />
 				</div>
-				<h1>{name}</h1>
+				<h1>
+					{name} <span className="sub-name">{subName}</span>
+				</h1>
 			</div>
 
 			<div className="collapsible-container">

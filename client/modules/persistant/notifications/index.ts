@@ -1,28 +1,29 @@
 import { FIREBASE_CREDENTIALS } from '@essential-js/admin/serverless-provider';
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Notifier } from './library/notifier.index';
-import { Api } from '@bgroup/http-suite/api';
-import config from '@essential-js/admin/config';
+import { INotification } from './types';
 
-export /*bundle*/ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
-	#api: Api = new Api(config.params.server);
+class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	#provider: Notifier = new Notifier();
 	#token: string = this.#provider.deviceToken;
 	get token() {
 		return this.#token;
 	}
 
-	#current: Record<string, any> | null = null;
+	#items: INotification[] = [];
+	get items() {
+		return this.#items;
+	}
+
+	#current: INotification | null = null;
 	get current() {
 		return this.#current;
 	}
 
-	constructor({ session }: { session: any }) {
+	constructor() {
 		super();
 		this.#provider.onMessageReceived = this.#onMessageReceived;
 		this.init();
-		session.on('change', () => this.#api.bearer(session.token));
-		this.#api.bearer(session.token);
 	}
 
 	init = async () => {
@@ -37,9 +38,12 @@ export /*bundle*/ class NotificationsHandler extends ReactiveModel<Notifications
 		}
 	};
 
-	#onMessageReceived = async (params: Record<string, any>) => {
+	#onMessageReceived = async (params: { notification: INotification }) => {
 		this.#current = params.notification;
+		console.log('CURRENT NOTIFICATION: ', params);
+		this.#items = [this.#current, ...this.#items];
 		this.triggerEvent();
-		// const res	ponse = await this.#api.put('notification/markAsRead', { id: '', userId: '' });
 	};
 }
+
+export /*bundle*/ const notificationsHandler = new NotificationsHandler();

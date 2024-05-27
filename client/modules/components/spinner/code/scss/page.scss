@@ -5,7 +5,11 @@
 	justify-content: center;
 
 	.brand-name {
-	
-					font-family: var(--brand-font);
+		font-family: var(--brand-font);
+
+		.sub-name {
+			font-family: var(--brand-font);
+			font-weight: normal;
+		}
 	}
 }

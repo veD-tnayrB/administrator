@@ -9,6 +9,7 @@ import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { session } from '@essential-js/admin/auth';
 import { toast } from 'react-toastify';
 import { Notification } from './components/notification';
+import { Header } from './components/header/main.layout.header';
 
 declare global {
 	namespace JSX {
@@ -40,20 +41,23 @@ export function Layout({ store }: { store: StoreManager }) {
 		<LayoutContext.Provider value={contextValue}>
 			<main className="main-layout">
 				<Sidebar />
-				<div className="content">
-					<beyond-layout-children />
-					<ToastContainer
-						position="bottom-right"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-						theme={store.mode}
-					/>
+				<div className="w-full">
+					<Header />
+					<div className="content">
+						<beyond-layout-children />
+						<ToastContainer
+							position="bottom-right"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+							theme={store.mode}
+						/>
+					</div>
 				</div>
 			</main>
 		</LayoutContext.Provider>

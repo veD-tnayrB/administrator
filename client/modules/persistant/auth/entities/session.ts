@@ -2,7 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@essential-js/admin/serverless-provider';
 import { User } from './user.item';
-import { NotificationsHandler } from '@essential-js/admin/notifications';
+import { notificationsHandler } from '@essential-js/admin/notifications';
 import { ILogin } from './types';
 /**
  * Interface for login parameters.
@@ -40,7 +40,7 @@ class Session extends ReactiveModel<Session> {
 		return this.#user;
 	}
 
-	#notificationsHandler: NotificationsHandler;
+	#notificationsHandler: typeof notificationsHandler;
 	get notificationsHandler() {
 		return this.#notificationsHandler;
 	}
@@ -70,8 +70,8 @@ class Session extends ReactiveModel<Session> {
 	 */
 	constructor() {
 		super();
+		this.#notificationsHandler = notificationsHandler;
 		this.#listenForSessionChanges();
-		this.#notificationsHandler = new NotificationsHandler({ session: this });
 		if (this.#isLogged) this.load();
 	}
 
@@ -99,7 +99,7 @@ class Session extends ReactiveModel<Session> {
 
 			// Load the user in a item to be saved in this object
 			const loadResponse = await this.#user.login(loadParams);
-			if (!loadResponse.status) throw loadResponse.error.message;
+			if (!loadResponse.status) throw loadResponse.error;
 
 			const toSave = {
 				token: loadResponse.data.token,
@@ -132,6 +132,7 @@ class Session extends ReactiveModel<Session> {
 
 			return { status: true, email: response.user.email as string };
 		} catch (error) {
+			console.log(error);
 			return { status: false, error };
 		}
 	};
@@ -178,6 +179,7 @@ class Session extends ReactiveModel<Session> {
 		this.#user = new User();
 		this.#isLoaded = false;
 		this.triggerEvent('token-changed');
+		this.triggerEvent('user-changed');
 		return signOut(auth);
 	};
 
