@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner } from './spinner.index';
 import { Image } from 'pragmate-ui/image';
 import config from '@essential-js/admin/config';
+import { RoundedSpinner } from './spinner.rounded';
 
 interface IProps {
 	displayBrand?: boolean;
@@ -21,6 +22,8 @@ export /*bundle*/ const SpinnerPage = ({ displayBrand }: IProps) => {
 						<h1 className="brand-name">
 							{name} <span className="sub-name">{subName}</span>
 						</h1>
+
+						<RoundedSpinner />
 					</div>
 				)}
 				{!displayBrand && <Spinner />}

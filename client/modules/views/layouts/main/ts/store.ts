@@ -27,7 +27,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	set isSidebarCollapsed(value: boolean) {
 		this.#isSidebarCollapsed = value;
 		localStorage.setItem(this.#collapsedKey, JSON.stringify(value));
-		this.triggerEvent();
 		this.triggerEvent('resize');
 	}
 

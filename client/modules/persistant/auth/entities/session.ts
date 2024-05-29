@@ -201,11 +201,11 @@ class Session extends ReactiveModel<Session> {
 			}
 
 			// Si hay un usuario, continuar con la carga del usuario.
-			if (!this.#isLogged || !this.#token) return;
-			const loadResponse = await this.#user.load({ token: this.#token });
-			if (!loadResponse.status) throw loadResponse.error.message;
-			this.#isLogged = true;
-			this.triggerEvent('user-changed');
+			// if (!this.#isLogged || !this.#token) return;
+			// const loadResponse = await this.#user.load({ token: this.#token });
+			// if (!loadResponse.status) throw loadResponse.error.message;
+			// this.#isLogged = true;
+			// this.triggerEvent('user-changed');
 		});
 	};
 }

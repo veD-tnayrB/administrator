@@ -15,7 +15,7 @@ export const SidebarHeader = ({ theme }: IProps) => {
 	const name = config.params.application.company.name;
 	const subName = config.params.application.company.subName;
 
-	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed));
+	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed), 'resize');
 
 	const iconUrl = theme === 'dark' ? '/assets/sidebar/logo-dark.svg' : '/assets/sidebar/logo-light.svg';
 

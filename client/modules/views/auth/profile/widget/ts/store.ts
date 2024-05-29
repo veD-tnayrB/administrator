@@ -45,17 +45,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 
 			const validationResults = this.#validateValues(values);
-			console.log('VALIDATION: ', validationResults);
 			if (validationResults) {
 				this.#error = validationResults;
 				throw new Error(validationResults);
 			}
 
-			console.log('values: ', values);
 			this.#item.set(values);
-			console.log('this.#item', this.#item);
 			const response = await this.#item.publish();
-			console.log('RESPONSE: ', response);
 			if (!response.status) throw response.error;
 
 			await session.load();

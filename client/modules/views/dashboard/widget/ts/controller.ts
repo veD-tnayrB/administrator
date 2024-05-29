@@ -4,8 +4,8 @@ import { View } from './views';
 import { IWidgetStore } from '@beyond-js/widgets/controller';
 
 export /*bundle*/
-	class Controller extends PageReactWidgetController {
-	#store: StoreManager = new StoreManager();;
+class Controller extends PageReactWidgetController {
+	#store: StoreManager = new StoreManager();
 	createStore() {
 		this.#store = new StoreManager();
 		return this.#store as IWidgetStore;
@@ -24,5 +24,7 @@ export /*bundle*/
 	/**
 	 * this method is executed when the widget is hidden
 	 */
-	hide() { }
+	hide() {
+		this.#store.destroy();
+	}
 }

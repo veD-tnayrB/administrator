@@ -32,3 +32,4 @@ temp
 output
 !client/modules/node_modules
 !server/modules/node_modules
+.vercel

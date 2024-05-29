@@ -13,16 +13,24 @@ interface IProps extends Partial<IModule> {
 	label: string;
 }
 
-export const SidebarItem: React.FC<IProps> = params => {
+export const SidebarItem: React.FC<IProps> = (params) => {
 	const { store } = useLayoutContext();
-	const isDefaultSelected =
-		params.to ? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to : false
+	const isDefaultSelected = params.to
+		? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to
+		: false;
 	const [isSelected, setIsSelected] = React.useState(isDefaultSelected);
 
 	React.useEffect(() => {
-		const onChange = () => setIsSelected(params.to ? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to : false);
+		const onChange = () => {
+			const value = params.to
+				? routing.uri.pathname.includes(params.to) || routing.uri.pathname === params.to
+				: false;
+			setIsSelected(value);
+		};
 		routing.on('change', onChange);
-		return () => { routing.off('change', onChange) };
+		return () => {
+			routing.off('change', onChange);
+		};
 	}, []);
 
 	const Container = params.to ? Link : 'button';
@@ -32,19 +40,21 @@ export const SidebarItem: React.FC<IProps> = params => {
 
 	const cls = isSelected ? 'selected' : '';
 
-	const Tooltip = !store.isSidebarCollapsed ? React.Fragment : Tippy
+	const Tooltip = !store.isSidebarCollapsed ? React.Fragment : Tippy;
 	const props = !store.isSidebarCollapsed ? {} : { content: params.label, placement: 'right' as Placement };
 	return (
-
-		<Tooltip {...props} >
+		<Tooltip {...props}>
 			<li className={`sidebar-item ${cls}`}>
-				<Container data-placement="right" onClick={params.onClick} {...properties} className={`sidebar-item-link ${properties.className}`}>
+				<Container
+					data-placement="right"
+					onClick={params.onClick}
+					{...properties}
+					className={`sidebar-item-link ${properties.className}`}
+				>
 					<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
 					<span>{params.label}</span>
-
 				</Container>
 			</li>
-
 		</Tooltip>
 	);
 };

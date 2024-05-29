@@ -5,7 +5,6 @@ import { SpinnerPage } from '@essential-js/admin/components/spinner';
 import GridLayout, { Layout } from 'react-grid-layout';
 import { widgetStore } from '@essential-js/admin/widgets';
 import { IWidget } from '@essential-js/admin/models';
-import { layoutStore } from '@essential-js/admin/layout/main.widget';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
@@ -14,22 +13,16 @@ function View({ store }: { store: StoreManager }) {
 	const ref = React.useRef<HTMLDivElement>(null);
 	useBinder([store], () => setUpdate({}));
 
-	React.useEffect(() => {
-		const onChange = () => {
-			requestAnimationFrame(() => {
-				if (!ref.current) return;
-				setWidth(ref.current.offsetWidth);
-			});
-		};
+	const onWidth = () => {
+		requestAnimationFrame(() => {
+			if (!ref.current) return;
+			setWidth(ref.current.offsetWidth);
+		});
+	};
 
-		onChange();
-		layoutStore.on('resize', onChange);
-		window.addEventListener('resize', onChange);
-		return () => {
-			layoutStore.off('resize', onChange);
-			window.removeEventListener('resize', onChange);
-		};
-	}, []);
+	useBinder([store], onWidth, 'resize');
+
+	if (!store.ready) return <SpinnerPage />;
 
 	const widgets = store.selectedWidgets.map((widget: IWidget, index: number) => {
 		const x = !widget.columnPosition && widget.columnPosition !== 0 ? 0 : widget.columnPosition;

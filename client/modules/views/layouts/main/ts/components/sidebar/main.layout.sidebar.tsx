@@ -17,8 +17,9 @@ export const Sidebar = () => {
 	useBinder([store], () => {
 		setItems(store.sidebarCollection.items);
 		setIsLoading(store.fetching);
-		setIsCollapsed(store.isSidebarCollapsed);
 	});
+
+	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed), 'resize');
 
 	items.sort((a, b) => a.order - b.order);
 

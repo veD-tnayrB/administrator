@@ -10,9 +10,13 @@ export const LeftSectionForm = () => {
 	const { store } = useLoginContext();
 	const [values, setValues] = React.useState(store.values);
 	const [error, setError] = React.useState<string | null>(null);
+	const [loading, setLoading] = React.useState(false);
 	const isButtonDisabled = values.email === '' || values.password === '';
 
-	useBinder([store], () => setError(store.error));
+	useBinder([store], () => {
+		setError(store.error);
+		setLoading(store.fetching);
+	});
 	useBinder([store], () => setValues(store.values), 'reset');
 
 	const onSubmit = () => {
@@ -47,7 +51,7 @@ export const LeftSectionForm = () => {
 				<Input name="email" type="email" value={values.email} label="Email" onChange={onChange} />
 				<Input name="password" type="password" value={values.password} label="Password" onChange={onChange} />
 
-				<Button variant="primary" type="submit">
+				<Button loading={loading} variant="primary" type="submit">
 					Go
 				</Button>
 			</Form>
@@ -57,7 +61,7 @@ export const LeftSectionForm = () => {
 				<span>or</span>
 				<div />
 			</div>
-			<Button variant="outline" onClick={loginWithGoogle}>
+			<Button loading={loading} variant="outline" onClick={loginWithGoogle}>
 				Login with Google
 			</Button>
 		</article>

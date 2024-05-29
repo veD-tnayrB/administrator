@@ -1,11 +1,17 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Widgets, IWidget } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
+import { layoutStore } from '@essential-js/admin/layout/main.widget';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#collection: Widgets = new Widgets();
 	get collection() {
 		return this.#collection;
+	}
+
+	#width: number = 0;
+	get width() {
+		return this.#width;
 	}
 
 	selectedWidgets: IWidget[] = [];
@@ -17,6 +23,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#collection.getDashboard({ userId: session.user.id });
 			if (!response.status) throw new Error(response.error);
 			this.selectedWidgets = response.data.entries;
+
+			this.#listenResizes();
 		} catch (error) {
 			console.error(error);
 			return error;
@@ -24,5 +32,18 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.ready = true;
 			this.fetching = false;
 		}
+	};
+
+	onWidthChange = () => this.triggerEvent('resize');
+
+	#listenResizes = () => {
+		this.onWidthChange();
+		layoutStore.on('resize', this.onWidthChange);
+		window.addEventListener('resize', this.onWidthChange);
+	};
+
+	destroy = () => {
+		layoutStore.off('resize', this.onWidthChange);
+		window.removeEventListener('resize', this.onWidthChange);
 	};
 }
