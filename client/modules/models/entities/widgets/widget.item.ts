@@ -14,6 +14,7 @@ export /*bundle*/ interface IWidget {
 	rowPosition?: number;
 	height: number;
 	name: string;
+	description: string;
 	timeUpdated: Date;
 	timeCreated: Date;
 }
@@ -24,6 +25,7 @@ export /*bundle*/ class Widget extends Item<IWidget> {
 		'active',
 		'identifier',
 		'metadata',
+		'description',
 		'order',
 		'width',
 		'height',

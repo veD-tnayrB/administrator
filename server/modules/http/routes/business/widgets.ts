@@ -19,7 +19,8 @@ class WidgetsRoutes extends Route {
 	getDashboard = async (req: Request, res: Response) => {
 		try {
 			const userId = req.params.userId;
-			const response: ResponseType = await this.manager.getDashboard({ userId });
+			const profiles = req.body.session.profiles;
+			const response: ResponseType = await this.manager.getDashboard({ userId, profiles });
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response as ISuccess);
 			return res.status(200).json(formatedResponse);

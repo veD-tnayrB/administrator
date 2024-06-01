@@ -9,6 +9,7 @@ export /*bundle*/ interface IWidget {
 	rowPosition?: number;
 	height: number;
 	name: string;
+	description: string;
 	timeUpdated: Date;
 	timeCreated: Date;
 }

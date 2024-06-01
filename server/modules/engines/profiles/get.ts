@@ -28,13 +28,23 @@ export class Get {
 						},
 					],
 				},
+				{
+					model: DB.models.WidgetsProfiles,
+					as: 'widgetsProfiles',
+					include: [
+						{
+							model: DB.models.Widgets,
+							as: 'widget',
+						},
+					],
+				},
 			];
 			const response = await actions.data(this.model, params, `/get/profile`);
 			if (!response.status) throw response.error;
 
 			const profile = response.data;
 			const moduleMap = {};
-			profile.profileModulePermissions.forEach(permission => {
+			profile.profileModulePermissions.forEach((permission) => {
 				const moduleId = permission.action.module.id;
 				if (!moduleMap[moduleId]) {
 					moduleMap[moduleId] = {
@@ -56,6 +66,16 @@ export class Get {
 
 			const modulesArray = Object.values(moduleMap);
 
+			const widgetsProfiles = profile.widgetsProfiles.map((wp) => ({
+				id: wp.widget.id,
+				identifier: wp.widget.identifier,
+				columnPosition: wp.columnPosition,
+				rowPosition: wp.rowPosition,
+				width: wp.widget.width,
+				height: wp.widget.height,
+				order: wp.widget.order,
+			}));
+
 			const result = {
 				id: profile.id,
 				name: profile.name,
@@ -63,6 +83,7 @@ export class Get {
 				timeCreated: profile.timeCreated,
 				timeUpdated: profile.timeUpdated,
 				modules: modulesArray,
+				widgets: widgetsProfiles,
 			};
 
 			return { status: true, data: result };

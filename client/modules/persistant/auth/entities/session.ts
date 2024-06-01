@@ -132,7 +132,7 @@ class Session extends ReactiveModel<Session> {
 
 			return { status: true, email: response.user.email as string };
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			return { status: false, error };
 		}
 	};

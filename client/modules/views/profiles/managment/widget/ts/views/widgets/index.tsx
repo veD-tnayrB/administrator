@@ -1,28 +1,25 @@
 import React from 'react';
-import { useProfilesManagmentContext } from '../../context';
-import { Module } from './module';
-import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { IValues } from '../form';
 import {
 	CollapsibleContainer,
 	CollapsibleHeader,
 	CollapsibleContent,
 } from '@essential-js/admin/components/collapsible';
+import { useProfilesManagmentContext } from '../../context';
+import { Widget } from './item';
+
 interface IProps {
 	values: IValues;
 }
 
-export const Modules = ({ values }: IProps) => {
+export const Widgets = ({ values }: IProps) => {
 	const { store } = useProfilesManagmentContext();
-	const [, setUpdate] = React.useState({});
-	useBinder([store], () => setUpdate({}));
-
-	const output = store.modules.items.map((item) => <Module key={item.id} values={values} {...item} />);
+	const output = store.widgets.items.map((item) => <Widget key={item.id} values={values} {...item} />);
 
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Associated modules</h3>
+				<h3>Associated widgets</h3>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<ul className="flex flex-col gap-4">{output}</ul>

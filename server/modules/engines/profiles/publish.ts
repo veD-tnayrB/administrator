@@ -1,4 +1,5 @@
 import { DB } from '@essential-js/admin-server/db';
+import { v4 as uuid } from 'uuid';
 
 export interface IPublish {
 	id: string;
@@ -6,12 +7,14 @@ export interface IPublish {
 	name: string;
 	description: string;
 	timeCreated: Date;
+	widgets: string[];
 	timeUpdated: Date;
 }
 
 export class Publish {
 	static model: typeof DB.models.Profiles = DB.models.Profiles;
 	static modulesModel: typeof DB.models.ProfileModulePermissions = DB.models.ProfileModulePermissions;
+	static widgetsModel: typeof DB.models.WidgetsProfiles = DB.models.WidgetsProfiles;
 
 	static async handleModules(profileId: string, modules: Record<string, Record<string, boolean>>, transaction) {
 		const profile = await Publish.model.findByPk(profileId, { transaction });
@@ -41,12 +44,19 @@ export class Publish {
 		await Publish.modulesModel.bulkCreate(permissionsToInsert, { transaction });
 	}
 
+	static async handleWidgets(profileId: string, widgets: string[], transaction) {
+		await Publish.widgetsModel.destroy({ where: { profileId }, transaction });
+		const records = widgets.map((widgetId) => ({ id: uuid(), profileId, widgetId }));
+		await Publish.widgetsModel.bulkCreate(records, { transaction });
+	}
+
 	static async create(params: IPublish) {
 		const transaction = await DB.sequelize.transaction();
 		try {
-			const { modules, ...profileData } = params;
+			const { modules, widgets, ...profileData } = params;
 			const profile = await Publish.model.create(profileData, { transaction });
 			await this.handleModules(profileData.id, modules, transaction);
+			await this.handleWidgets(profileData.id, widgets || [], transaction);
 			await transaction.commit();
 			return { status: true, data: { id: profileData.id } };
 		} catch (error) {
@@ -58,9 +68,10 @@ export class Publish {
 	static async update(params: IPublish) {
 		const transaction = await DB.sequelize.transaction();
 		try {
-			const { id, modules, ...profileData } = params;
+			const { id, modules, widgets, ...profileData } = params;
 			await Publish.model.update(profileData, { where: { id }, transaction });
 			await this.handleModules(id, modules, transaction);
+			await this.handleWidgets(id, widgets || [], transaction);
 			await transaction.commit();
 			return { status: true, data: { id } };
 		} catch (error) {

@@ -1,7 +1,9 @@
 import { DB } from '@essential-js/admin-server/db';
+import { IProfile } from '@essential-js/admin-server/types';
 
 interface IParams {
 	userId: string;
+	profiles: IProfile[];
 }
 
 export class GetDashboard {
@@ -18,56 +20,40 @@ export class GetDashboard {
 				where: { userId: params.userId },
 			});
 
-			// Obtener los IDs de los perfiles del usuario
-			const userProfiles = await DB.models.UsersProfiles.findAll({
-				attributes: ['profileId'],
-				where: { userId: params.userId },
-			});
-			const profileIds = userProfiles.map(up => up.profileId);
+			const profilesIds = params.profiles.map((profile) => profile.id);
 
 			// Obtener los widgets asociados a través de los perfiles del usuario
-			const profileWidgets = await DB.models.WidgetsProfiles.findAll({
-				include: [
-					{
-						model: DB.models.Widgets,
-						as: 'widget',
-					},
-				],
-				where: {
-					profileId: profileIds,
-				},
-			});
-
-			// Obtener la lista general de widgets para todos los perfiles
-			const generalWidgets = await DB.models.Widgets.findAll({
+			const profileWidgets = await DB.models.Widgets.findAll({
 				include: [
 					{
 						model: DB.models.WidgetsProfiles,
 						as: 'widgetsProfiles',
 						where: {
-							profileId: profileIds,
+							profileId: profilesIds,
 						},
-						required: false,
+						required: true,
 					},
 				],
 			});
 
-			const allWidgetInstances = [...directWidgets, ...profileWidgets];
+			// Combinar y deduplicar los widgets directos y de perfil
+			const allWidgets = [...directWidgets];
 			const widgetMap = new Map();
-			allWidgetInstances.forEach(wi => {
+			allWidgets.forEach((wi) => {
 				const widgetRecord = wi.get({ plain: true });
 				const widgetData = widgetRecord.widget;
-				widgetMap.set(widgetData.id, {
-					...widgetData,
-					columnPosition: widgetRecord.columnPosition,
-					rowPosition: widgetRecord.rowPosition,
-				});
+				if (!widgetMap.has(widgetData.id)) {
+					widgetMap.set(widgetData.id, {
+						...widgetData,
+						columnPosition: widgetRecord.columnPosition,
+						rowPosition: widgetRecord.rowPosition,
+					});
+				}
 			});
 
 			const userSpecificWidgets = Array.from(widgetMap.values());
 
-			const generalWidgetData = generalWidgets.map(widget => widget.get({ plain: true }));
-			return { status: true, data: { entries: userSpecificWidgets, allWidgets: generalWidgetData } };
+			return { status: true, data: { entries: userSpecificWidgets, allWidgets: profileWidgets } };
 		} catch (error) {
 			console.error('Error getting dashboard widgets:', error);
 			return { status: false, error: error.toString() };

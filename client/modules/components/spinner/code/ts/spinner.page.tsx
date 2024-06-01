@@ -18,7 +18,7 @@ export /*bundle*/ const SpinnerPage = ({ displayBrand }: IProps) => {
 			<div className="flex flex-col items-center justify-center">
 				{displayBrand && (
 					<div className="flex flex-col items-center justify-center">
-						<Image src={icon} className="brand w-16" />
+						<Image src={icon} className="brand min-w-16 min-h-16 w-16" />
 						<h1 className="brand-name">
 							{name} <span className="sub-name">{subName}</span>
 						</h1>

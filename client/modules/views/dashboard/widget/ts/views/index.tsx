@@ -13,6 +13,10 @@ function View({ store }: { store: StoreManager }) {
 	const ref = React.useRef<HTMLDivElement>(null);
 	useBinder([store], () => setUpdate({}));
 
+	React.useEffect(() => {
+		store.onWidthChange();
+	}, []);
+
 	const onWidth = () => {
 		requestAnimationFrame(() => {
 			if (!ref.current) return;

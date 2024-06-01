@@ -40,7 +40,6 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 
 	#onMessageReceived = async (params: { notification: INotification }) => {
 		this.#current = params.notification;
-		console.log('CURRENT NOTIFICATION: ', params);
 		this.#items = [this.#current, ...this.#items];
 		this.triggerEvent();
 	};

@@ -6,6 +6,7 @@ import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';
 import { Modules } from './modules';
+import { Widgets } from './widgets';
 
 export interface IValues {
 	name: string;
@@ -63,6 +64,7 @@ export const Form = () => {
 			</div>
 
 			<Modules values={values} />
+			<Widgets values={values} />
 
 			<div className="actions">
 				<Button type="reset" variant="secondary" onClick={onCancel} disabled={isLoading}>

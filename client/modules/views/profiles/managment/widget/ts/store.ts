@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profile, IProfile, Modules, IModule, IAction } from '@essential-js/admin/models';
+import { IWidget, Widgets, Profile, IProfile, Modules, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { IValues } from './views/form';
 
@@ -19,12 +19,26 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#modulesPermissions;
 	}
 
+	#widgets: Widgets = new Widgets();
+	get widgets() {
+		return this.#widgets;
+	}
+
 	#selectedModules: Record<string, Record<string, boolean>> = {};
 	get selectedModules() {
 		return this.#selectedModules;
 	}
 	set selectedModules(value) {
 		this.#selectedModules = value;
+		this.triggerEvent();
+	}
+
+	#selectedWidgets: Record<string, true> = {};
+	get selectedWidgets() {
+		return this.#selectedWidgets;
+	}
+	set selectedWidgets(value) {
+		this.#selectedWidgets = value;
 		this.triggerEvent();
 	}
 
@@ -41,6 +55,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				this.#isCreating = true;
 				const modulesResponse = await this.#modules.load();
 				if (!modulesResponse.status) throw modulesResponse.error;
+
+				const widgets = await this.#widgets.load();
+				if (!widgets.status) throw widgets.error;
 				this.#calculateselectedModules();
 				return this.triggerEvent();
 			}
@@ -49,6 +66,14 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
+			const selected: Record<string, true> = {};
+			response.data.widgets.forEach((widget: IWidget) => {
+				selected[widget.id] = true;
+			});
+			this.#selectedWidgets = selected;
+
+			const widgets = await this.#widgets.load();
+			if (!widgets.status) throw widgets.error;
 
 			this.#refrestUser = session.user.profiles.some((profile: IProfile) => profile.name === this.#item.name);
 			const modulesResponse = await this.#modules.load();
@@ -78,9 +103,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	save = async (values: IValues) => {
 		try {
 			this.fetching = true;
-			await this.#item.set({ ...values, modules: this.#selectedModules });
+			const widgets = Object.keys(this.#selectedWidgets);
+			const toSendValues = { ...values, modules: this.#selectedModules, widgets };
+			await this.#item.set(toSendValues);
 
-			const response = await this.#item.publish();
+			const response = await this.#item.publish(toSendValues);
 			if (!response.status) throw response.error;
 
 			if (this.#refrestUser) await session.load();
@@ -102,6 +129,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.#item = new Profile();
 		this.#refrestUser = false;
 		this.#modules = new Modules();
+		this.#widgets = new Widgets();
 		this.#modulesPermissions = new Map();
 		this.ready = false;
 		this.triggerEvent();
