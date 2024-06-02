@@ -1,12 +1,14 @@
 import React from 'react';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { useSettingsContext } from '../context';
 import GridLayout, { Layout } from 'react-grid-layout';
 import { widgetStore } from '@essential-js/admin/widgets';
 import { WidgetList } from './widget-list';
+import { useLayoutContext } from '../../context';
 
 export const WidgetSettings = () => {
-	const { store } = useSettingsContext();
+	const {
+		store: { settingsManager: store },
+	} = useLayoutContext();
 	const [, setUpdate] = React.useState({});
 	const [width, setWidth] = React.useState(0);
 	const ref = React.useRef<HTMLDivElement>(null);
@@ -61,9 +63,9 @@ export const WidgetSettings = () => {
 		);
 	});
 	return (
-		<div className="min-h-screen flex min-w-screen">
+		<div className="flex h-full">
 			<WidgetList />
-			<div className="panel min-h-screen w-full" ref={ref}>
+			<div className="panel w-full" ref={ref}>
 				<GridLayout
 					onLayoutChange={onLayoutChange}
 					autoSize

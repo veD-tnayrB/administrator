@@ -16,6 +16,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	selectedWidgets: IWidget[] = [];
 
+	constructor() {
+		super();
+		layoutStore.settingsManager.on('dashboard-changed', this.load);
+	}
+
 	load = async () => {
 		try {
 			this.fetching = true;

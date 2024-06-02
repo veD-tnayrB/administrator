@@ -2,8 +2,9 @@ button,
 button.pui-button {
 	cursor: pointer;
 	background: transparent;
-	border-radius: 0;
 	border: 0;
+	width: inherit;
+	border-radius: 5px;
 
 	&.btn--loading {
 		.button-label {
@@ -23,7 +24,6 @@ button.pui-button.btn-primary,
 .btn.btn-primary {
 	background: var(--primary);
 	font-weight: normal;
-	border-radius: 5px;
 
 	.button-label {
 		font-weight: normal;

@@ -10,6 +10,7 @@ import { session } from '@essential-js/admin/auth';
 import { toast } from 'react-toastify';
 import { Notification } from './components/notification';
 import { Header } from './components/header/main.layout.header';
+import { SettingsModal } from './settings';
 
 declare global {
 	namespace JSX {
@@ -45,6 +46,7 @@ export function Layout({ store }: { store: StoreManager }) {
 					<Header />
 					<div className="content">
 						<beyond-layout-children />
+						<SettingsModal />
 						<ToastContainer
 							position="bottom-right"
 							autoClose={5000}

@@ -23,7 +23,8 @@
 				"subName": "Group"
 			},
 			"permissionLessRoutes": [
-				"/user/profile"
+				"/user/profile",
+				"/dashboard"
 			],
 			"noSessionRoutes": [
 				"/auth/login",

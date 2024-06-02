@@ -9,6 +9,8 @@ export const Module = (props: IModule) => {
 	const isChecked = !!store.selectedModules[props.id];
 	const ref = React.useRef<HTMLInputElement>(null);
 
+	if (!props.actions.length) return null;
+
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = event.target;
 
