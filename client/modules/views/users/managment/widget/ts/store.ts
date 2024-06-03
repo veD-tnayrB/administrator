@@ -42,7 +42,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				this.#isCreating = true;
 				this.#item.profiles = [];
 				this.#item.active = 1;
-				const profilesResponse = await this.#profiles.load();
+				const profilesResponse = await this.#profiles.load({ where: { active: 1 } });
 				if (!profilesResponse.status) throw profilesResponse.error;
 				this.ready = true;
 				return;
@@ -55,7 +55,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const response = await this.#item.load({ id });
 			if (!response.status) throw response.error;
 
-			const profilesResponse = await this.#profiles.load();
+			const profilesResponse = await this.#profiles.load({ where: { active: 1 } });
 			if (!profilesResponse.status) throw profilesResponse.error;
 
 			this.ready = true;

@@ -1,5 +1,6 @@
 import { DB } from '@essential-js/admin-server/db';
 import { v4 as uuid } from 'uuid';
+import { Op } from 'sequelize';
 
 export interface IPublish {
 	id: string;
@@ -15,6 +16,7 @@ export class Publish {
 	static model: typeof DB.models.Profiles = DB.models.Profiles;
 	static modulesModel: typeof DB.models.ProfileModulePermissions = DB.models.ProfileModulePermissions;
 	static widgetsModel: typeof DB.models.WidgetsProfiles = DB.models.WidgetsProfiles;
+	static usersWidgetsModel: typeof DB.models.UsersWidgets = DB.models.UsersWidgets;
 
 	static async handleModules(profileId: string, modules: Record<string, Record<string, boolean>>, transaction) {
 		const profile = await Publish.model.findByPk(profileId, { transaction });
@@ -48,6 +50,14 @@ export class Publish {
 		await Publish.widgetsModel.destroy({ where: { profileId }, transaction });
 		const records = widgets.map((widgetId) => ({ id: uuid(), profileId, widgetId }));
 		await Publish.widgetsModel.bulkCreate(records, { transaction });
+
+		// Get the users associated with current modififyng profile
+		
+		// Get the widgets associated with each users profile's
+
+		// Check for each widgetProfile if the user has other profile with the same widget that is being iterated
+
+		// If not, remove the widget for the user
 	}
 
 	static async create(params: IPublish) {
@@ -66,6 +76,7 @@ export class Publish {
 	}
 
 	static async update(params: IPublish) {
+		console.log('USERID: ', params);
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, modules, widgets, ...profileData } = params;

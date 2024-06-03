@@ -8,8 +8,9 @@ export function SettingsModal() {
 	const { store } = useLayoutContext();
 	const [isOpen, setIsOpen] = React.useState(false);
 	React.useEffect(() => {
+		if (!isOpen) return;
 		store.settingsManager.load();
-	}, []);
+	}, [isOpen]);
 
 	useBinder(
 		[store],

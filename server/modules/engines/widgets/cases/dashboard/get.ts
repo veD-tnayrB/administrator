@@ -9,7 +9,6 @@ interface IParams {
 export class GetDashboard {
 	static execute = async (params: IParams) => {
 		try {
-			// Obtener los widgets directamente asociados al usuario
 			const directWidgets = await DB.models.UsersWidgets.findAll({
 				include: [
 					{

@@ -16,8 +16,9 @@ export const Widget = ({ description, name, id }: IWidget) => {
 			return;
 		}
 
-		delete store.selectedWidgets[name];
-		store.selectedWidgets = store.selectedWidgets;
+		const currentSelectedWidgets = { ...store.selectedWidgets };
+		delete currentSelectedWidgets[name];
+		store.selectedWidgets = currentSelectedWidgets;
 	};
 
 	const onClick = () => {
