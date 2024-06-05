@@ -61,7 +61,7 @@ export const LeftSectionForm = () => {
 				<span>or</span>
 				<div />
 			</div>
-			<Button loading={loading} variant="outline" onClick={loginWithGoogle}>
+			<Button loading={loading} className="login-external-provider" variant="outline" onClick={loginWithGoogle}>
 				Login with Google
 			</Button>
 		</article>

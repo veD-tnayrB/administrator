@@ -14,7 +14,7 @@ export const BaseModal = ({ children, onClose, ...props }: IProps) => {
 
 	return (
 		<div onClick={onClickBackdrop} className="modal-background">
-			<article onClick={onClickContent} className={`modal-content ${props.className}`}>
+			<article onClick={onClickContent} tabIndex={-1} className={`modal-content ${props.className}`}>
 				{children}
 			</article>
 		</div>

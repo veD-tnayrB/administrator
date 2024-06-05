@@ -19,7 +19,6 @@ export class Publish {
 		try {
 			const { profiles, ...userParams } = params;
 			userParams.password = MD5(process.env.USER_DEFAULT_PASSWORD);
-			console.log('USER CREATING: ', userParams, process.env.USER_DEFAULT_PASSWORD);
 			const user = await Publish.model.create(userParams, { transaction });
 			await this.handleProfiles(userParams.id, profiles || [], transaction);
 

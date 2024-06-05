@@ -44,6 +44,7 @@
 				width: 100%;
 				background: var(--surface);
 				border-radius: 10px;
+				outline: transparent !important;
 				padding: 0.32rem 0.5rem;
 
 				&:focus {

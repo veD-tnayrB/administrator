@@ -51,6 +51,10 @@
 				}
 			}
 
+			.login-external-provider {
+				width: 100%;
+			}
+
 			.or-container {
 				display: flex;
 				align-items: center;
@@ -71,7 +75,6 @@
 		}
 	}
 }
-
 
 @media (max-width: 1024px) {
 	.login-view.auth-view {

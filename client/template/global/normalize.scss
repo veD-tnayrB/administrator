@@ -19,3 +19,16 @@ ul,
 ol {
 	list-style: none;
 }
+
+a,
+input,
+button,
+textarea,
+select,
+option {
+	outline: 1px solid transparent !important;
+
+	&:focus-within {
+		outline: 1px solid var(--primary) !important;
+	}
+}

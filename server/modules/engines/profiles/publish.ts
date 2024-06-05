@@ -47,17 +47,66 @@ export class Publish {
 	}
 
 	static async handleWidgets(profileId: string, widgets: string[], transaction) {
+		// Destruye asociaciones previas de widgets para este perfil
 		await Publish.widgetsModel.destroy({ where: { profileId }, transaction });
+
+		// Crea nuevas asociaciones de widgets
 		const records = widgets.map((widgetId) => ({ id: uuid(), profileId, widgetId }));
 		await Publish.widgetsModel.bulkCreate(records, { transaction });
 
-		// Get the users associated with current modififyng profile
-		
-		// Get the widgets associated with each users profile's
+		// Obtener todos los usuarios vinculados a este perfil
+		const userProfileLinks = await DB.models.UsersProfiles.findAll({
+			where: { profileId },
+			attributes: ['userId'],
+			transaction,
+			raw: true,
+		});
 
-		// Check for each widgetProfile if the user has other profile with the same widget that is being iterated
+		// Iterar sobre cada usuario para actualizar sus widgets
+		for (const link of userProfileLinks) {
+			const userId = link.userId;
 
-		// If not, remove the widget for the user
+			// Obtener todos los perfiles del usuario
+			const userProfiles = await DB.models.UsersProfiles.findAll({
+				where: { userId },
+				attributes: ['profileId'],
+				transaction,
+				raw: true,
+			});
+			const profileIds = userProfiles.map((up: { profileId: string }) => up.profileId);
+
+			const allWidgetsForUser = await DB.models.WidgetsProfiles.findAll({
+				where: { profileId: { [Op.in]: profileIds } },
+				attributes: ['widgetId'],
+				transaction,
+				raw: true,
+			});
+
+			const widgetIds = allWidgetsForUser.map((wp: { widgetId: string }) => wp.widgetId);
+
+			// Determinar si algún widget ya no está asociado a los perfiles activos del usuario
+			const widgetsToRemove = await DB.models.UsersWidgets.findAll({
+				where: {
+					userId,
+					widgetId: { [Op.notIn]: widgetIds }, // Solo selecciona widgets no presentes en los perfiles activos
+				},
+				attributes: ['widgetId'],
+				transaction,
+				raw: true,
+			});
+
+			// Elimina widgets del dashboard del usuario que ya no están asociados a ningún perfil activo
+			const widgetIdsToRemove = widgetsToRemove.map((w: { widgetId: string }) => w.widgetId);
+			if (widgetIdsToRemove.length > 0) {
+				await DB.models.UsersWidgets.destroy({
+					where: {
+						userId,
+						widgetId: { [Op.in]: widgetIdsToRemove },
+					},
+					transaction,
+				});
+			}
+		}
 	}
 
 	static async create(params: IPublish) {
@@ -76,7 +125,6 @@ export class Publish {
 	}
 
 	static async update(params: IPublish) {
-		console.log('USERID: ', params);
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, modules, widgets, ...profileData } = params;

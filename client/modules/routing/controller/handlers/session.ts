@@ -1,7 +1,6 @@
 import { session } from '@essential-js/admin/auth';
 import config from '@essential-js/admin/config';
 const noSession: Array<string> = config.params.application.noSessionRoutes;
-const permissionLess: Array<string> = config.params.application.permissionLessRoutes;
 
 export async function SessionHandler(route: string) {
 	return validate(route);

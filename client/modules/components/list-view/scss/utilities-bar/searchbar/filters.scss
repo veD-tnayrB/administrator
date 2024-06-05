@@ -3,7 +3,7 @@
 	border-radius: var(--border-tertiary);
 
 	&.open {
-		button {
+		.toggler {
 			background: var(--primary);
 
 			.filter-toggler {

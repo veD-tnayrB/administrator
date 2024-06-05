@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Module, IPermission, IModule, IAction } from '@essential-js/admin/models';
+import { Module, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { routing } from '@beyond-js/kernel/routing';
 import { toast } from 'react-toastify';

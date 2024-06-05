@@ -36,7 +36,7 @@ export const FiltersSearch = (props: IFilters) => {
 
 	const reset = () => {
 		const defaultValues: Record<string, string> = {};
-		store.specificFilters.forEach(item => {
+		store.specificFilters.forEach((item) => {
 			const key = item.name;
 			defaultValues[key] = '';
 		});
@@ -46,7 +46,7 @@ export const FiltersSearch = (props: IFilters) => {
 		setIsOpen(false);
 	};
 
-	const output = store.specificFilters.map(item => (
+	const output = store.specificFilters.map((item) => (
 		<div key={item.name} className="pui-input">
 			<input {...item} placeholder={item.label} value={values[item.name] || ''} onChange={onChange} />
 		</div>
@@ -54,6 +54,7 @@ export const FiltersSearch = (props: IFilters) => {
 
 	const options = {
 		toggler: {
+			className: 'toggler',
 			children: <FiltersToggler label={props.label} />,
 		},
 		setIsOpen,
