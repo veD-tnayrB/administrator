@@ -43,16 +43,18 @@ export const SidebarItem: React.FC<IProps> = (params) => {
 	const Tooltip = !store.isSidebarCollapsed ? React.Fragment : Tippy;
 	const props = !store.isSidebarCollapsed ? {} : { content: params.label, placement: 'right' as Placement };
 	return (
-		<li className={`sidebar-item ${cls}`}>
-			<Container
-				data-placement="right"
-				onClick={params.onClick}
-				{...properties}
-				className={`sidebar-item-link ${properties.className}`}
-			>
-				<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
-				<span>{params.label}</span>
-			</Container>
-		</li>
+		<Tooltip {...props}>
+			<li className={`sidebar-item ${cls}`}>
+				<Container
+					data-placement="right"
+					onClick={params.onClick}
+					{...properties}
+					className={`sidebar-item-link ${properties.className}`}
+				>
+					<div className="icon" dangerouslySetInnerHTML={{ __html: params.icon }} />
+					<span>{params.label}</span>
+				</Container>
+			</li>
+		</Tooltip>
 	);
 };

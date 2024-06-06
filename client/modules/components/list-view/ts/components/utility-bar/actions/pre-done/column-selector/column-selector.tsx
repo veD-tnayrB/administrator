@@ -41,6 +41,7 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 	const options = {
 		toggler: {
 			children: <ColumnSelectorToggler {...props} />,
+			name: 'column-toggler',
 		},
 		isOpen: !!isOpen,
 		setIsOpen,

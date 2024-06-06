@@ -59,7 +59,7 @@ export const GeneralSearchbar = (props: ISearchbar) => {
 			</div>
 
 			{displayClear && (
-				<button onClick={onClear} className={`clear-button ${resetCls}`} type="reset">
+				<button name="clear" onClick={onClear} className={`clear-button ${resetCls}`} type="reset">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 						<path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
 					</svg>

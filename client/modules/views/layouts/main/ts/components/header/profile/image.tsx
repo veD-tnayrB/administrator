@@ -3,9 +3,10 @@ import { Image } from 'pragmate-ui/image';
 
 interface IProps {
 	src: string;
+	name: string;
 }
 
-export const ProfileImage = ({ src }: IProps) => {
+export const ProfileImage = ({ name, src }: IProps) => {
 	const isUrl = /^(http|https):\/\/[^ "]+$/.test(src);
 
 	const formatedSrc = React.useMemo(() => {
@@ -18,7 +19,7 @@ export const ProfileImage = ({ src }: IProps) => {
 	return (
 		<div className="settings-toggler">
 			<div className="profile-image">
-				<Image src={formatedSrc} />
+				<Image alt={name} src={formatedSrc} />
 			</div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

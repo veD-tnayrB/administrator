@@ -11,7 +11,11 @@ export const Profile = () => {
 	useBinder([session], () => setUser({ ...session.user }));
 
 	const options = {
-		toggler: { className: 'dialog-toggler', children: <ProfileImage src={user.profileImg} /> },
+		toggler: {
+			className: 'dialog-toggler',
+			children: <ProfileImage name={user.fullName} src={user.profileImg} />,
+			name: 'user-profile',
+		},
 	};
 
 	const goToProfile = () => {

@@ -56,6 +56,7 @@ export const FiltersSearch = (props: IFilters) => {
 		toggler: {
 			className: 'toggler',
 			children: <FiltersToggler label={props.label} />,
+			name: 'filters',
 		},
 		setIsOpen,
 		isOpen,

@@ -23,7 +23,7 @@ export const PaginatorContent = (props: IPaginator) => {
 				</div>
 
 				<div className="left-actions action">
-					<Button className="left" onClick={store.onFirstPage} disabled={isFirstPage}>
+					<Button name="first-page" className="left" onClick={store.onFirstPage} disabled={isFirstPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -34,12 +34,18 @@ export const PaginatorContent = (props: IPaginator) => {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
-							className="lucide lucide-chevrons-left">
+							className="lucide lucide-chevrons-left"
+						>
 							<path d="m11 17-5-5 5-5" />
 							<path d="m18 17-5-5 5-5" />
 						</svg>
 					</Button>
-					<Button onClick={store.onPrev} disabled={isFirstPage} className="disabled-class-to-teest">
+					<Button
+						name="previous-page"
+						onClick={store.onPrev}
+						disabled={isFirstPage}
+						className="disabled-class-to-teest"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -50,14 +56,15 @@ export const PaginatorContent = (props: IPaginator) => {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
-							className="lucide lucide-chevron-left">
+							className="lucide lucide-chevron-left"
+						>
 							<path d="m15 18-6-6 6-6" />
 						</svg>
 					</Button>
 				</div>
 
 				<div className="right-actions action">
-					<Button onClick={store.onNext} disabled={isLastPage}>
+					<Button name="next-page" onClick={store.onNext} disabled={isLastPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -68,11 +75,12 @@ export const PaginatorContent = (props: IPaginator) => {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
-							className="lucide lucide-chevron-right">
+							className="lucide lucide-chevron-right"
+						>
 							<path d="m9 18 6-6-6-6" />
 						</svg>
 					</Button>
-					<Button className="right" disabled={isLastPage} onClick={store.onLastPage}>
+					<Button name="last-page" className="right" disabled={isLastPage} onClick={store.onLastPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -83,7 +91,8 @@ export const PaginatorContent = (props: IPaginator) => {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
-							className="lucide lucide-chevrons-right">
+							className="lucide lucide-chevrons-right"
+						>
 							<path d="m6 17 5-5-5-5" />
 							<path d="m13 17 5-5-5-5" />
 						</svg>

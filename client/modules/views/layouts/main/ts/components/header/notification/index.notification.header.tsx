@@ -18,6 +18,7 @@ export const Notification = () => {
 		toggler: {
 			children: <NotificationToggler hasBeenRead={hasBeenRead} setHasBeenRead={setHasBeenRead} />,
 			className: 'dialog-toggler',
+			name: 'notifications',
 		},
 	};
 	return (

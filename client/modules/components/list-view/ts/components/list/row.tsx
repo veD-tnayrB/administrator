@@ -28,14 +28,14 @@ export /*bundle*/ interface IRow {
 	selectedItems?: Map<string, Record<string, any>>;
 }
 
-export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) => {
+export const DefaultRow = ({ index, item, propertiesToDisplay, selectedItems }: IRow) => {
 	const { list, store } = useListViewContext();
 	const [, setUpdate] = React.useState({});
 	const [displayDeleteModal, setDisplayModal] = React.useState(false);
 	useBinder([store], () => setUpdate({}), ['displaying-change']);
 	useBinder([item], () => setUpdate({}));
 
-	const output = propertiesToDisplay.map(property => {
+	const output = propertiesToDisplay.map((property) => {
 		let value = getValue(item, property);
 		if (property === 'timeCreated' || property === 'timeUpdated') {
 			value = new Date(value).toLocaleString().split(',')[0];
@@ -56,8 +56,8 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 		setDisplayModal(false);
 	};
 
-	const includesEdit = list.itemsConfig?.actions?.find(item => item.type === 'edit');
-	const includesDelete = list.itemsConfig?.actions?.find(item => item.type === 'delete');
+	const includesEdit = list.itemsConfig?.actions?.find((item) => item.type === 'edit');
+	const includesDelete = list.itemsConfig?.actions?.find((item) => item.type === 'delete');
 	const displayActions = includesEdit || includesDelete;
 
 	const onClickEdit = () => routing.pushState(`${includesEdit?.to}/${item.id}`);
@@ -73,7 +73,7 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 		<li className={`row default-row ${selectableCls}`} onClick={onSelect}>
 			{includeCheck && (
 				<span className="check-item field">
-					<Checkbox checked={isItemSelected} onChange={onSelect} id={item.id} />
+					<Checkbox tabIndex={index} checked={isItemSelected} onChange={onSelect} id={item.id} />
 				</span>
 			)}
 
@@ -93,7 +93,8 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 									strokeLinecap="round"
 									strokeLinejoin="round"
 									stroke="currentColor"
-									className="lucide lucide-pen-line icon">
+									className="lucide lucide-pen-line icon"
+								>
 									<path d="M12 20h9" />
 									<path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
 								</svg>
@@ -111,7 +112,8 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 									strokeLinecap="round"
 									strokeLinejoin="round"
 									stroke="currentColor"
-									className="lucide lucide-trash-2 icon">
+									className="lucide lucide-trash-2 icon"
+								>
 									<path d="M3 6h18" />
 									<path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
 									<path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -124,7 +126,9 @@ export const DefaultRow = ({ item, propertiesToDisplay, selectedItems }: IRow) =
 				</span>
 			)}
 
-			{displayDeleteModal && includesDelete && <DeleteModal onClose={onCloseDelete} config={includesDelete} id={item.id} />}
+			{displayDeleteModal && includesDelete && (
+				<DeleteModal onClose={onCloseDelete} config={includesDelete} id={item.id} />
+			)}
 		</li>
 	);
 };

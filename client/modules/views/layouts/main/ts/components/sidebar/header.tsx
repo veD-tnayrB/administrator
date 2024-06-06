@@ -24,12 +24,13 @@ export const SidebarHeader = ({ theme }: IProps) => {
 	};
 
 	const collapsedCls = isColappsed ? 'collapsed' : '';
+	const btnName = isColappsed ? 'Expand' : 'Collapse';
 
 	return (
 		<header className="flex items-center justify-between">
 			<div className="identifier">
 				<div className="logo-container">
-					<Image src={iconUrl} className="logo" />
+					<Image alt={name} src={iconUrl} className="logo" />
 				</div>
 				<h1>
 					{name} <span className="sub-name">{subName}</span>
@@ -37,7 +38,7 @@ export const SidebarHeader = ({ theme }: IProps) => {
 			</div>
 
 			<div className="collapsible-container">
-				<Button onClick={toggleCollapse} className={`collapse-btn ${collapsedCls}`}>
+				<Button name={btnName} onClick={toggleCollapse} className={`collapse-btn ${collapsedCls}`}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
