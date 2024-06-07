@@ -3,16 +3,37 @@
 	grid-template-columns: 60% 40%;
 
 	.right-section {
-		background: var(--primary-container);
+		background: var(--primary);
 		position: relative;
 		display: flex;
 		align-items: center;
 
 		img {
-			width: 700px;
 			position: absolute;
-			bottom: 80px;
-			left: -10rem;
+
+			&.illustration-0 {
+				width: 600px;
+				bottom: 150px;
+				left: -100px;
+			}
+
+			&.illustration-1 {
+				width: 700px;
+				bottom: 220px;
+				left: -120px;
+			}
+
+			&.illustration-2 {
+				width: 500px;
+				bottom: 160px;
+				left: -100px;
+			}
+
+			&.illustration-3 {
+				width: 700px;
+				bottom: 200px;
+				left: -120px;
+			}
 		}
 	}
 
@@ -22,7 +43,7 @@
 	}
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1224px) {
 	.login-view.auth-view {
 		display: flex;
 		flex-direction: column-reverse;

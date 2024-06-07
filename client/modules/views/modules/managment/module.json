@@ -1,18 +1,21 @@
 {
-  "name": "views/modules/managment",
-  "platforms": ["web", "android", "ios"],
-  "widget": {
-    "layout": "main-admin-layout",
-    "route": "/modules/managment/${id}",
-    "is": "page",
-    "ts": {
-      "path": "/widget/ts",
-      "files": [
-        "*"
-      ]
-    },
-    "element": {
-      "name": "modules-managment"
-    }
-  }
+	"name": "views/modules/managment",
+	"platforms": ["web", "android", "ios"],
+	"widget": {
+		"layout": "main-admin-layout",
+		"route": "/modules/managment/${id}",
+		"is": "page",
+		"ts": {
+			"path": "/widget/ts",
+			"files": ["*"]
+		},
+		"sass": {
+			"path": "/widget/scss",
+			"files": ["*"]
+		},
+
+		"element": {
+			"name": "modules-managment"
+		}
+	}
 }

@@ -17,10 +17,18 @@ function View({ store }: { store: StoreManager }) {
 	if (!ready) return <SpinnerPage />;
 
 	const mode = store.isCreating ? 'creation' : 'edition';
+	const creating =
+		'Create new notifications by specifying the title, description, and execution frequency. Associate notifications with multiple profiles or individual users as needed.';
+	const editing =
+		'Edit notifications by specifying the new title, description, and execution frequency. Associate notifications with multiple profiles or individual users as needed.';
+
+	const description = mode === 'creation' ? creating : editing;
+
 	return (
 		<NotificationsManagmentContext.Provider value={contextValue}>
 			<div className="page-container managment-page">
 				<h1>Notifications {mode}</h1>
+				<p>{description}</p>
 				<Form />
 			</div>
 		</NotificationsManagmentContext.Provider>

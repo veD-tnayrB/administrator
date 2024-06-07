@@ -44,6 +44,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			if (!id || id === 'create') {
 				this.#isCreating = true;
+				this.#item.actions = [];
 				this.ready = true;
 				return;
 			}

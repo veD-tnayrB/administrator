@@ -1,5 +1,5 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { User, IUser, Profiles } from '@essential-js/admin/models';
+import { Profile, User, IUser, Profiles } from '@essential-js/admin/models';
 import { toast } from 'react-toastify';
 import { routing } from '@beyond-js/kernel/routing';
 import { session } from '@essential-js/admin/auth';
@@ -14,8 +14,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 
 	#profiles: Profiles = new Profiles();
-	get profiles() {
-		return this.#profiles;
+	#profilesItems: Profile[] = [];
+	get profilesItems() {
+		return this.#profilesItems;
 	}
 
 	#error: string = '';
@@ -44,6 +45,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				this.#item.active = 1;
 				const profilesResponse = await this.#profiles.load({ where: { active: 1 } });
 				if (!profilesResponse.status) throw profilesResponse.error;
+				this.#profilesItems = profilesResponse.data;
 				this.ready = true;
 				return;
 			}
@@ -57,6 +59,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const profilesResponse = await this.#profiles.load({ where: { active: 1 } });
 			if (!profilesResponse.status) throw profilesResponse.error;
+			this.#profilesItems = profilesResponse.data;
 
 			this.ready = true;
 			return { status: true };

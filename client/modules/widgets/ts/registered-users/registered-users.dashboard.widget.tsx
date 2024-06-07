@@ -20,10 +20,10 @@ export /*bundle*/ const RegisteredUsersWidget = React.forwardRef(() => {
 	}, []);
 
 	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
-	const tertiary = getComputedStyle(document.documentElement).getPropertyValue('--tertiary');
-	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--error');
-	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--success');
+	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--primary-10');
+	const tertiary = getComputedStyle(document.documentElement).getPropertyValue('--primary-70');
+	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
+	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--secondary-10');
 
 	const values = data.map((item) => item.value);
 	const labels = data.map((item) => item.label);

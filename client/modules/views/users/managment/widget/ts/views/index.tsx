@@ -16,11 +16,19 @@ function View({ store }: { store: StoreManager }) {
 		store,
 	};
 
+	const editingDescription =
+		'Modify existing user details, including names, surnames, email addresses, and user profiles. Manage account status (active or inactive) and reset passwords when necessary.';
+
+	const creationDescription =
+		'Create new user accounts by providing accurate information such as names, email addresses, and user profiles. Set initial passwords securely.';
+
 	const mode = store.isCreating ? 'Users creation' : 'Users edition';
+	const description = store.isCreating ? creationDescription : editingDescription;
 	return (
 		<UsersManagementContext.Provider value={contextValue}>
 			<div className="page-container managment-page">
 				<h1>{mode}</h1>
+				<p>{description}</p>
 				<Form />
 			</div>
 		</UsersManagementContext.Provider>

@@ -18,7 +18,7 @@ export /*bundle*/ const OnlineUsersWidget = React.forwardRef(() => {
 	}, []);
 
 	const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--tertiary');
+	const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
 
 	const values = data.map((item) => item.value);
 	const labels = data.map((item) => item.label);

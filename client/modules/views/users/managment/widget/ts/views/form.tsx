@@ -38,7 +38,7 @@ export const Form = () => {
 		routing.pushState('/users');
 	};
 
-	const formatedOptions = store.profiles.items.map((item) => ({ label: item.name, value: item.id }));
+	const formatedOptions = store.profilesItems.map((item) => ({ label: item.name, value: item.id }));
 	const profilesValue = formatedOptions.filter((option) => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 

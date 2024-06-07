@@ -26,20 +26,20 @@ export const getRegisteredUsersByMonth = async ({ year, model }: IParams) => {
 		order: [[Sequelize.fn('MONTH', Sequelize.col('time_created')), 'ASC']],
 	});
 
-	const getMonthName = monthNumber => {
+	const getMonthName = (monthNumber: number) => {
 		const monthNames = [
-			'Enero',
-			'Febrero',
-			'Marzo',
-			'Abril',
-			'Mayo',
-			'Junio',
-			'Julio',
-			'Agosto',
-			'Septiembre',
-			'Octubre',
-			'Noviembre',
-			'Diciembre',
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'Agust',
+			'September',
+			'October',
+			'November',
+			'December',
 		];
 		return monthNames[monthNumber - 1];
 	};
@@ -52,7 +52,7 @@ export const getRegisteredUsersByMonth = async ({ year, model }: IParams) => {
 	}));
 
 	// Llenar los datos obtenidos de la base de datos
-	users.forEach(user => {
+	users.forEach((user) => {
 		const monthIndex = user.getDataValue('month') - 1;
 		monthlyData[monthIndex].value = user.getDataValue('count');
 	});
