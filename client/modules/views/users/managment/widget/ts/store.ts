@@ -83,9 +83,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			}
 
 			await this.#item.set(values);
-			const response = await this.#item.publish();
+			const response = await this.#item.publish(values);
 			if (!response.status) throw response.error;
-
 			if (this.#refreshUser) await session.load();
 
 			this.#error = '';

@@ -1,6 +1,9 @@
 import { DB } from '@essential-js/admin-server/db';
 import { MD5 } from '@bgroup/helpers/md5';
+import { IUser } from '@essential-js/admin-server/types';
+import { mailer } from '@essential-js/admin-server/emails';
 
+console.log('mailer ', mailer);
 export class Publish {
 	static model: typeof DB.models.Users = DB.models.Users;
 	static usersProfilesModel: typeof DB.models.UsersProfiles = DB.models.UsersProfiles;
@@ -14,11 +17,27 @@ export class Publish {
 		}
 	};
 
-	static create = async (params, target: string) => {
+	static handlePassword = async (email: string, newPassword: string) => {
+		if (!newPassword) return { status: true };
+
+		const response = await mailer.sendMail({
+			from: process.env.MAILER_FROM,
+			to: email,
+			subject: 'Your new password',
+			text: `Your password has been changed, your new password is ${newPassword}`,
+		});
+		console.log(response);
+		return { status: true, password: MD5(newPassword) };
+	};
+
+	static create = async (params: IUser, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, ...userParams } = params;
-			userParams.password = MD5(process.env.USER_DEFAULT_PASSWORD);
+			userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
+			const response = await this.handlePassword(userParams.email, userParams.password);
+
+			userParams.password = response.password;
 			const user = await Publish.model.create(userParams, { transaction });
 			await this.handleProfiles(userParams.id, profiles || [], transaction);
 
@@ -30,7 +49,7 @@ export class Publish {
 		}
 	};
 
-	static update = async (params, target: string) => {
+	static update = async (params: IUser, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, profiles, ...userParams } = params;

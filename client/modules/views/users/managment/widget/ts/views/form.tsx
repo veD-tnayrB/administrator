@@ -42,9 +42,15 @@ export const Form = () => {
 	const profilesValue = formatedOptions.filter((option) => item.profiles.includes(option.value));
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
+	const info =
+		item.password && !store.isCreating
+			? `The user ${item.email} will receive an email notifying him about the change of his password and its value.`
+			: '';
+
 	return (
 		<form onSubmit={onSubmit} className="managment-form">
 			<Alert type={IAlert.Error}>{error}</Alert>
+			<Alert type={IAlert.Info}>{info}</Alert>
 			<div className="flex gap-4 w-full">
 				<Input
 					className="fixed-label w-full"
@@ -70,6 +76,16 @@ export const Form = () => {
 				label="Email"
 				value={item.email}
 				name="email"
+				onChange={onChange}
+			/>
+
+			<Input
+				placeholder="********"
+				className="fixed-label"
+				type="password"
+				label="Password"
+				value={item.password}
+				name="password"
 				onChange={onChange}
 			/>
 

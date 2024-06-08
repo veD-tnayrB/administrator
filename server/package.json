@@ -52,6 +52,7 @@
 		"formidable": "^3.5.1",
 		"moment-timezone": "^0.5.45",
 		"node-cron": "^3.0.3",
+		"nodemailer": "^6.9.13",
 		"rrule": "^2.8.1",
 		"sequelize-typescript": "^2.1.6",
 		"socket.io-client": "^4.5.4",

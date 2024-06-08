@@ -2,6 +2,7 @@ import { DB } from '@essential-js/admin-server/db';
 import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } from '@essential-js/admin-server/helpers';
 import { IGetRegisteredUsersByMonth, getRegisteredUsersByMonth } from './cases/get-registered-users-by-month';
 import { Publish } from './cases/publish';
+import { IUser } from '@essential-js/admin-server/types';
 
 export /*bundle*/ interface IUser {
 	id: string;
@@ -52,11 +53,11 @@ export class UsersManager extends Manager {
 		return this.#excelHandler.getTemplate(params);
 	};
 
-	create = (params) => {
+	create = (params: IUser) => {
 		return Publish.create(params, `/create/${this.managerName}`);
 	};
 
-	update = (params) => {
+	update = (params: IUser) => {
 		return Publish.update(params, `/update/${this.managerName}`);
 	};
 

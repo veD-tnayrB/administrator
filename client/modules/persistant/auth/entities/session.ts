@@ -127,6 +127,7 @@ class Session extends ReactiveModel<Session> {
 	 */
 	#loginWithGoogle = async (): ILoginMethodResponse => {
 		try {
+			this.fetching = false;
 			const response = await signInWithPopup(auth, providers[Providers.Google]);
 			if (!response.user.email) throw 'User email not found';
 

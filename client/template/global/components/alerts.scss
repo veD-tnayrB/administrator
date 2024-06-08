@@ -7,6 +7,7 @@ div.alert {
 
 	&.alert--success {
 		background: var(--success) !important;
+		color: var(--on-success) !important;
 		span {
 			color: var(--on-success) !important;
 		}
@@ -14,6 +15,7 @@ div.alert {
 
 	&.alert--error {
 		background: var(--error) !important;
+		color: var(--on-error) !important;
 		span {
 			color: var(--on-error) !important;
 		}
@@ -21,6 +23,7 @@ div.alert {
 
 	&.alert--info {
 		background: var(--info) !important;
+		color: var(--on-info) !important;
 		span {
 			color: var(--on-info) !important;
 		}
@@ -28,6 +31,7 @@ div.alert {
 
 	&.alert--warning {
 		background: var(--warning) !important;
+		color: var(--on-warning) !important;
 		span {
 			color: var(--on-warning) !important;
 		}
