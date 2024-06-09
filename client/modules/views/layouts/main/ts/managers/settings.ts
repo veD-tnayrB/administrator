@@ -27,15 +27,26 @@ export class SettingsManager extends ReactiveModel<SettingsManager> {
 	load = async () => {
 		try {
 			this.fetching = true;
-			const response = await this.#collection.getDashboard({ userId: session.user.id });
-			if (!response.status) throw response.error;
+			const response = await this.#collection.getDashboard({
+				userId: session.user.id,
+			});
+			if (response && !response.status) throw response.error;
 
 			this.allWidgets = response.data.allWidgets;
+
+			const promises: Promise<boolean>[] = [];
 			this.#selectedWidgets = response.data.entries.map((item: IWidget) => {
 				const widget = new Widget({ id: item.id });
-				widget.set(item);
+				if (widget.isReady === true) return;
+				promises.push(widget.isReady);
 				return widget;
 			});
+
+			await Promise.all(promises);
+			this.#selectedWidgets.forEach((item: IWidget, index: number) => {
+				item.set(response.data.entries[index]);
+			});
+
 			return (this.ready = true);
 		} catch (error) {
 			console.error(error);
