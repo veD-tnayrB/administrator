@@ -32,11 +32,13 @@ class NotificationsRoutes extends Route {
 
 	markAsRead = (req: Request, res: Response) => {
 		try {
-			// const params = req.body;
-			// const response = this.manager.launch(params);
-			// if (!response.status && 'error' in response) throw response.error;
-			// const formatedResponse = ResponseAPI.success(response);
-			return res.status(200).json({ status: true });
+			const notificationIds = req.body.ids;
+			const userId = req.params.userId;
+
+			const response = this.manager.markAsRead({ notificationIds, userId });
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response);
+			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /launch', exc);
 			const responseError = ResponseAPI.error({ code: 500, message: exc });
@@ -50,7 +52,13 @@ class NotificationsRoutes extends Route {
 		app.post(`/notification`, checkToken, checkPermission('notifications.create'), this.create);
 		app.put(`/notification/:id`, checkToken, checkPermission('notifications.update'), this.update);
 		app.get(`/notifications`, checkToken, checkPermission('notifications.list'), this.list);
-		app.get(`/notification/:id`, checkToken, checkPermission('notifications.get'), this.get)
+		app.get(`/notification/:id`, checkToken, checkPermission('notifications.get'), this.get);
+		app.put(
+			`/notification/mark-as-read/:userId`,
+			checkToken,
+			checkPermission('notifications.get'),
+			this.markAsRead,
+		);
 	};
 }
 

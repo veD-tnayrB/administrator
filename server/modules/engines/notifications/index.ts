@@ -3,6 +3,7 @@ import { Manager } from '@essential-js/admin-server/helpers';
 import { IPublish, Publish } from './cases/publish';
 import { Get, IGet } from './cases/get';
 import { ILaunch, Launch } from './cases/launch';
+import { IMarkAsRead, MarkAsRead } from './cases/mark-as-read';
 
 export class NotificationsManager extends Manager {
 	declare model: DB.models.Notifications;
@@ -15,7 +16,9 @@ export class NotificationsManager extends Manager {
 		return Launch.execute(params);
 	};
 
-	markAsRead = async (params: { userId: string; notificationId: string }) => {};
+	markAsRead = async (params: IMarkAsRead) => {
+		return MarkAsRead.execute(params);
+	};
 
 	create = (params: IPublish) => {
 		return Publish.create(params, '/notifications/create');
