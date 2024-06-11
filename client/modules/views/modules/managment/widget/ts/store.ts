@@ -79,6 +79,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			routing.pushState('/modules');
 			return { status: true };
 		} catch (error) {
+			toast.error('Something went wrong, please try again or contact the administrator');
 			return { status: false, error };
 		} finally {
 			this.fetching = false;

@@ -2,6 +2,7 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { IWidget, Widgets, Profile, IProfile, Modules, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { IValues } from './views/form';
+import { toast } from 'react-toastify';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
@@ -114,6 +115,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			return { status: true };
 		} catch (error) {
+			toast.error('Something went wrong, please try again or contact the administrator');
 			return { status: false, error };
 		} finally {
 			this.fetching = false;
