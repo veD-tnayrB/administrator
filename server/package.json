@@ -63,5 +63,11 @@
 		"@types/express": "^4.17.13",
 		"@types/node": "^16.11.7",
 		"@types/uuid": "^9.0.8"
+	},
+	"static": {
+		"includes": [
+			"assets",
+			"firebase-messaging-sw.js"
+		]
 	}
 }

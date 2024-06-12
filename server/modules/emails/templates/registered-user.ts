@@ -1,4 +1,9 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const companyName = process.env.COMPANY_NAME || 'Essential';
+const companyLogo = process.env.COMPANY_LOGO;
+
 export /*bundle*/ interface IRegisteredUserPayload {
 	names: string;
 	lastNames: string;
@@ -51,7 +56,6 @@ export /*bundle*/ const registeredUserTemplate = ({ names, lastNames, password }
     <table class="container" width="100%" cellspacing="0" cellpadding="0">
         <tr>
             <td class="header">
-                <img src="cid:https://avatars.githubusercontent.com/u/90587911?v=4" alt="Company Logo" class="logo"> <!-- Change 'your-logo-cid' to the CID of your embedded image -->
                 <h1>Successful Registration</h1>
             </td>
         </tr>
