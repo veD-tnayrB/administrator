@@ -1,0 +1,32 @@
+{
+	"en": {
+		"preTitle": "Welcome Back!",
+		"submit": "Sign in",
+		"title": "Sign in",
+		"fields": {
+			"email": "Email",
+			"password": "Password"
+		},
+		"or": "or",
+		"loginWithGoogle": "Sign in with Google",
+		"errors": {
+			"notFound": "Invalid email or password",
+			"somethingWentWrong": "Uups... Something went wrong"
+		}
+	},
+	"es": {
+		"preTitle": "Bienvenidx de vuelta!",
+		"submit": "Entrar",
+		"title": "Login",
+		"fields": {
+			"email": "Email",
+			"password": "Contraseña"
+		},
+		"or": "o",
+		"loginWithGoogle": "Logeate con Google",
+		"errors": {
+			"notFound": "Email o contraseña invalido",
+			"somethingWentWrong": "Oops, algo salio mal, intentenlo de nuevo mas tarde"
+		}
+	}
+}

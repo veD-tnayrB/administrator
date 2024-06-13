@@ -100,6 +100,32 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
+	forgetPassword = async (params: { email: string }) => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.forgetPassword(params);
+			if (!response.status) throw response.error;
+			return response;
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
+	recoverPassword = async (params: { token: string; newPassword: string }) => {
+		try {
+			this.fetching = true;
+			const response = await this.provider.recoverPassword(params);
+			if (!response.status) throw response.error;
+			return response;
+		} catch (error) {
+			return { status: false, error };
+		} finally {
+			this.fetching = false;
+		}
+	};
+
 	publish = async () => {
 		try {
 			this.fetching = true;

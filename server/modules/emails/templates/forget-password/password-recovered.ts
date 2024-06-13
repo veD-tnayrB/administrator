@@ -1,17 +1,12 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
-
-const companyName = process.env.COMPANY_NAME || 'Essential';
-const companyLogo = process.env.COMPANY_LOGO;
-
-export /*bundle*/ interface IRegisteredUserPayload {
+export /*bundle*/ interface IPasswordRecoveryTemplate {
 	names: string;
 	lastNames: string;
-	password: string;
 }
 
-export /*bundle*/ const registeredUserTemplate = ({ names, lastNames, password }: IRegisteredUserPayload) => {
-	const subject = 'Successful Registration';
+const companyName = process.env.COMPANY_NAME || 'Essential';
+
+export /*bundle*/ const passwordRecovered = ({ names, lastNames }: IPasswordRecoveryTemplate) => {
+	const subject = 'Password Successfully Recovered';
 	const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -47,25 +42,32 @@ export /*bundle*/ const registeredUserTemplate = ({ names, lastNames, password }
             text-align: center;
             border-top: 1px solid #67727e;
         }
+        .button {
+            background-color: #1d7a90; /* Primary color */
+            color: white !important;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
         img.logo {
             max-width: 100px;
             margin-bottom: 10px;
         }
+        
     </style>
 </head>
 <body>
     <table class="container" width="100%" cellspacing="0" cellpadding="0">
         <tr>
             <td class="header">
-                <h1>Successful Registration</h1>
+                <h1>Password Recovered</h1>
             </td>
         </tr>
         <tr>
             <td class="content">
                 <p>Hello, ${names} ${lastNames}</p>
-                <p>Your account has been successfully created in our system! Here are your account details so you can access our services:</p>
-                <p><strong>Password:</strong> ${password}</p>
-                <p>We recommend changing your password at your first login for security reasons.</p>
+                <p>Your password was successfully updated</p>
                 <p>If you have any questions or need assistance, please contact our support team.</p>
             </td>
         </tr>
@@ -77,7 +79,7 @@ export /*bundle*/ const registeredUserTemplate = ({ names, lastNames, password }
     </table>
 </body>
 </html>
-	`;
+`;
 
 	return { html, subject };
 };

@@ -1,0 +1,88 @@
+.forget-password-view.auth-view {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+
+	article {
+		background: var(--surface);
+		width: 450px;
+		min-width: 300px;
+		height: fit-content;
+		padding: 2.5rem;
+		border-radius: var(--border-primary);
+		box-shadow: var(--primary-box-shadow);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 2.5rem;
+
+		span {
+			font-size: 0.8rem;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 1.375rem;
+			letter-spacing: 0.03rem;
+		}
+
+		h1 {
+			font-size: 2rem;
+			font-weight: 600;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 2.5rem;
+
+			button {
+				border-radius: 5px;
+
+				.button-label {
+					color: var(--on-primary);
+				}
+			}
+		}
+
+		.pui-button.btn-outline.btn--md {
+			.button-label {
+				color: var(--on-surface);
+			}
+		}
+
+		.login-external-provider {
+			width: 100%;
+		}
+
+		.or-container {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+
+			div {
+				background: var(--inverse-surface);
+				min-height: 0;
+				height: 0.5px;
+				flex: 1;
+				opacity: 0.5;
+			}
+			span {
+				font-size: 0.8rem;
+				color: var(--inverse-surface);
+			}
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.login-view.auth-view {
+		article {
+			width: 100%;
+			padding: 2rem 1.5rem;
+
+			h1 {
+				font-size: 2.5rem;
+			}
+		}
+	}
+}

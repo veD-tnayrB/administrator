@@ -27,8 +27,9 @@
 				"/dashboard"
 			],
 			"noSessionRoutes": [
+				"/auth/recover",
 				"/auth/login",
-				"/auth/forgot-password"
+				"/auth/forget-password"
 			]
 		},
 		"server": "http://localhost:5001/"

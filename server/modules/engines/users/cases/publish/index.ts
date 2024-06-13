@@ -19,12 +19,13 @@ export class Publish {
 	static handlePassword = async (email: string, newPassword: string, names: string, lastNames: string) => {
 		if (!newPassword) return { status: true };
 
+		const { subject, html } = registeredUserTemplate({ password: newPassword, names, lastNames });
+
 		const response = await mailer.sendMail({
 			from: process.env.MAILER_FROM,
 			to: email,
-			subject: 'Your new password',
-			text: `Your password has been changed, your new password is ${newPassword}`,
-			html: registeredUserTemplate({ password: newPassword, names, lastNames }),
+			subject,
+			html,
 		});
 		if (response.rejected.length) return { status: false, error: 'Error sending email' };
 		return { status: true, password: MD5(newPassword) };

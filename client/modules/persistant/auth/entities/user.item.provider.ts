@@ -19,8 +19,16 @@ export class UserItemProvider {
 		return this.#api.get('auth/logout', params);
 	};
 
+	forgetPassword = (params: { email: string }) => {
+		return this.#api.get(`auth/forget-password/${params.email}`);
+	};
+
 	publish = (params: Partial<IUser>) => {
 		this.#api.bearer(params.token);
 		return this.#api.put(`auth/update/user/${params.id}`, params);
+	};
+
+	recoverPassword = ({ newPassword, token }: { newPassword: string; token: string }) => {
+		return this.#api.put(`auth/recover-password/${token}`, { newPassword });
 	};
 }

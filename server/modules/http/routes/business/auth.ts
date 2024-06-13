@@ -68,10 +68,47 @@ export class AuthRoutes {
 			return res.status(500).json(errorResponse);
 		}
 	}
+
+	async forgetPassword(req: Request, res: Response) {
+		try {
+			const params = req.params;
+			if (!params.email) throw 'EMAIL_NOT_PROVIDED';
+			const response = await Auth.forgetPassword(params);
+			if (!response.status) throw response.error;
+
+			const formatedResponse = ResponseAPI.success({ data: response.data });
+			return res.json(formatedResponse);
+		} catch (exc) {
+			console.error('FORGET PASSWORD error:', exc);
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
+			return res.status(500).json(errorResponse);
+		}
+	}
+
+	async recoverPassword(req: Request, res: Response) {
+		try {
+			const params = req.params;
+			const body = req.body;
+			if (!params.token) throw 'INCORRECT_REQUEST';
+			if (!body.newPassword) throw 'NEW_PASSWORD_NOT_PROVIDED';
+			const response = await Auth.recoverPassword(params);
+			if (!response.status) throw response.error;
+
+			const formatedResponse = ResponseAPI.success({ data: response.data });
+			return res.json(formatedResponse);
+		} catch (exc) {
+			console.error('RECOVER PASSWORD error:', exc);
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc });
+			return res.status(500).json(errorResponse);
+		}
+	}
+
 	setup(app: Application) {
 		app.post('/login', this.login);
 		app.get('/auth/get-user', checkToken, this.getUser);
 		app.get('/auth/logout', checkToken, this.logout);
+		app.get('/auth/forget-password/:email', this.forgetPassword);
+		app.put('/auth/recover-password/:token', this.recoverPassword);
 		app.put('/auth/update/user/:userId', checkToken, this.update);
 	}
 }

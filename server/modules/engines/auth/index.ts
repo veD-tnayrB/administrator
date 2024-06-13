@@ -3,6 +3,7 @@ import { ILoginParams, Login } from './cases/login';
 import { Get, IGet } from './cases/get';
 import { Logout } from './cases/logout';
 import { Update } from './cases/update';
+import { ForgetPassword, IRecoverPassword, ISendEmailForgetPassword } from './cases/forget-password';
 
 class AuthManager {
 	login = async (params: ILoginParams) => {
@@ -19,6 +20,14 @@ class AuthManager {
 
 	update = async (params: Partial<IAuthUser>) => {
 		return Update.execute(params);
+	};
+
+	forgetPassword = async (params: ISendEmailForgetPassword) => {
+		return ForgetPassword.sendEmail(params);
+	};
+
+	recoverPassword = async (params: IRecoverPassword) => {
+		return ForgetPassword.recover(params);
 	};
 }
 

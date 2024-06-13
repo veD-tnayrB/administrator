@@ -77,7 +77,8 @@ export class Notifications extends Model<NotificationsAttributes, NotificationsC
     },
     status: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      defaultValue: "0"
     },
     frecuency: {
       type: DataTypes.TEXT,

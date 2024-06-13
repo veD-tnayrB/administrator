@@ -16,11 +16,12 @@ export interface UsersAttributes {
   timeUpdated?: Date;
   password?: string;
   profileImg?: string;
+  forgetPasswordToken?: string;
 }
 
 export type UsersPk = "id";
 export type UsersId = Users[UsersPk];
-export type UsersOptionalAttributes = "active" | "email" | "lastNames" | "names" | "timeCreated" | "timeUpdated" | "password" | "profileImg";
+export type UsersOptionalAttributes = "active" | "email" | "lastNames" | "names" | "timeCreated" | "timeUpdated" | "password" | "profileImg" | "forgetPasswordToken";
 export type UsersCreationAttributes = Optional<UsersAttributes, UsersOptionalAttributes>;
 
 export class Users extends Model<UsersAttributes, UsersCreationAttributes> implements UsersAttributes {
@@ -33,6 +34,7 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
   timeUpdated?: Date;
   password?: string;
   profileImg?: string;
+  forgetPasswordToken?: string;
 
   // Users hasMany AccessTokens via userId
   accessTokens!: AccessTokens[];
@@ -139,6 +141,12 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
       type: DataTypes.TEXT,
       allowNull: true,
       field: 'profile_img'
+    },
+    forgetPasswordToken: {
+      type: DataTypes.STRING(36),
+      allowNull: true,
+      unique: "forget_password_token_UNIQUE",
+      field: 'forget_password_token'
     }
   }, {
     sequelize,
@@ -151,6 +159,14 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "forget_password_token_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "forget_password_token" },
         ]
       },
     ]
