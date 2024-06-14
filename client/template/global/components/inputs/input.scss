@@ -57,4 +57,10 @@ div.pui-input {
 			transform: translateY(0);
 		}
 	}
+
+	&.pui-input--password {
+		.icon-eye.icon-eye {
+			bottom: 0.65rem;
+		}
+	}
 }

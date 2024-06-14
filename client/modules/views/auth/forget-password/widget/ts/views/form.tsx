@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form as FormPUI, Input } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
-import { useLoginContext } from './context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Alert } from 'pragmate-ui/alert';
+import { useForgetPasswordContext } from './context';
 
 export const Form = () => {
-	const { store } = useLoginContext();
+	const { store } = useForgetPasswordContext();
 	const [values, setValues] = React.useState(store.values);
 	const [error, setError] = React.useState<string | null>(null);
 	const [loading, setLoading] = React.useState(false);

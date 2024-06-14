@@ -1,6 +1,5 @@
 import { session } from '@essential-js/admin/auth';
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { routing } from '@beyond-js/kernel/routing';
 const EMAIL_REGEX =
 	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -23,7 +22,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			if (!EMAIL_REGEX.test(params.email)) throw 'INVALID_EMAIL';
 
-			const response = await session.forgetPassword(params);
+			const response = await session.user.forgetPassword(params);
 			if (!response.status) throw response.error;
 
 			this.isFirstTime = false;

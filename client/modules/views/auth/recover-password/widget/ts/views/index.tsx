@@ -1,5 +1,5 @@
 import React from 'react';
-import { IContext, LoginContext } from './context';
+import { IContext, RecoverPasswordContext } from './context';
 import { StoreManager } from '../store';
 import { Form } from './form';
 
@@ -9,10 +9,10 @@ function View({ store }: { store: StoreManager }) {
 		store,
 	};
 	return (
-		<LoginContext.Provider value={contextValue}>
+		<RecoverPasswordContext.Provider value={contextValue}>
 			<div className="forget-password-view auth-view">
 				<Form />
 			</div>
-		</LoginContext.Provider>
+		</RecoverPasswordContext.Provider>
 	);
 }

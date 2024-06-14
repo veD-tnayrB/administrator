@@ -4,5 +4,5 @@ import { StoreManager } from '../store';
 export interface IContext {
 	store: StoreManager;
 }
-export const LoginContext = React.createContext({} as IContext);
-export const useLoginContext = () => React.useContext(LoginContext);
+export const RecoverPasswordContext = React.createContext({} as IContext);
+export const useRecoverPasswordContext = () => React.useContext(RecoverPasswordContext);

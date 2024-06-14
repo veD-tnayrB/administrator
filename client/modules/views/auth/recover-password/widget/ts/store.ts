@@ -9,12 +9,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	}
 
 	values = {
-		email: '',
+		password: '',
+		repeatedPassword: '',
 	};
 
 	success: boolean = false;
 
-	sendForgetPasswordEmail = async (params: { token: string; newPassword: string }) => {
+	recoverPassword = async (params: { token: string; newPassword: string }) => {
 		try {
 			this.fetching = true;
 
