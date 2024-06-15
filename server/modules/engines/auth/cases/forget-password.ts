@@ -1,5 +1,5 @@
 import { DB } from '@essential-js/admin-server/db';
-import { mailer, forgetPasswordTemplate } from '@essential-js/admin-server/emails';
+import { mailer, forgetPasswordTemplate, passwordRecovered } from '@essential-js/admin-server/emails';
 import { v4 as uuid } from 'uuid';
 import { MD5 } from '@bgroup/helpers/md5';
 
@@ -29,7 +29,6 @@ export class ForgetPassword {
 				token,
 			});
 
-			console.log('params:', process.env.MAILER_FROM, params.email, subject);
 			const response = await mailer.sendMail({
 				from: process.env.MAILER_FROM,
 				subject,
@@ -56,11 +55,11 @@ export class ForgetPassword {
 				{ where: { id: user.dataValues.id } },
 			);
 
-			const { html, subject } = forgetPasswordTemplate({
+			const { html, subject } = passwordRecovered({
 				names: user.dataValues.names,
 				lastNames: user.dataValues.lastNames,
 			});
-			const response = await mailer.sendEmail({
+			const response = await mailer.sendMail({
 				html,
 				subject,
 				from: process.env.MAILER_FROM,

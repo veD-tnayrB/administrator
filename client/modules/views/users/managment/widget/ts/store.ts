@@ -55,6 +55,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.#refreshUser = this.#id === session.user.id;
 
 			const response = await this.#item.load({ id });
+			console.log('RESPONSE: ', response);
 			if (!response.status) throw response.error;
 
 			const profilesResponse = await this.#profiles.load({ where: { active: 1 } });

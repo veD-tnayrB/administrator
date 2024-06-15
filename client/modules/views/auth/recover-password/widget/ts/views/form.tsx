@@ -12,8 +12,10 @@ export const Form = () => {
 	const [values, setValues] = React.useState(store.values);
 	const [error, setError] = React.useState<string | null>(null);
 	const [loading, setLoading] = React.useState(false);
-	const isButtonDisabled =
-		values.password === '' || values.repeatedPassword === '' || values.password !== values.repeatedPassword;
+	const isPasswordInvalid = Object.values(store.getValidations(values.password, values.repeatedPassword)).some(
+		(validation) => !validation.condition,
+	);
+	const isButtonDisabled = isPasswordInvalid || values.password !== values.repeatedPassword;
 
 	useBinder([store], () => {
 		setError(store.error);
@@ -23,9 +25,8 @@ export const Form = () => {
 
 	const onSubmit = () => {
 		if (isButtonDisabled) return;
-		const token = routing;
-		console.log('token: ', token);
-		store.recoverPassword(values);
+		const token: string = routing.uri.qs.get('token') as string;
+		store.recoverPassword({ token, newPassword: values.password });
 	};
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +36,8 @@ export const Form = () => {
 			[name]: value,
 		});
 	};
+
+	const goBack = () => routing.pushState('/auth/forget-password');
 
 	const errors: Record<string, string> = {
 		INVALID_EMAIL: 'Please enter a valid email address',
@@ -67,10 +70,16 @@ export const Form = () => {
 				<Validations values={values} />
 
 				<div className="actions w-full flex items-center justify-between gap-4">
-					<Button className="w-full" loading={loading} variant="secondary" type="button">
+					<Button onClick={goBack} className="w-full" loading={loading} variant="secondary" type="button">
 						Cancel
 					</Button>
-					<Button className="w-full" loading={loading} variant="primary" type="submit">
+					<Button
+						disabled={isButtonDisabled}
+						className="w-full"
+						loading={loading}
+						variant="primary"
+						type="submit"
+					>
 						Recover
 					</Button>
 				</div>

@@ -91,7 +91,8 @@ export class AuthRoutes {
 			const body = req.body;
 			if (!params.token) throw 'INCORRECT_REQUEST';
 			if (!body.newPassword) throw 'NEW_PASSWORD_NOT_PROVIDED';
-			const response = await Auth.recoverPassword(params);
+			const specs = { newPassword: body.newPassword, token: params.token };
+			const response = await Auth.recoverPassword(specs);
 			if (!response.status) throw response.error;
 
 			const formatedResponse = ResponseAPI.success({ data: response.data });

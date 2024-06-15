@@ -2,6 +2,7 @@ import { PageReactWidgetController } from '@beyond-js/react-18-widgets/page';
 import { IWidgetStore } from '@beyond-js/widgets/controller';
 import { StoreManager } from './store';
 import { View } from './views';
+import { routing } from '@beyond-js/kernel/routing';
 
 export /*bundle*/
 class Controller extends PageReactWidgetController {
@@ -17,7 +18,9 @@ class Controller extends PageReactWidgetController {
 	/**
 	 * this method is executed when the widget is showd
 	 */
-	show() {}
+	show() {
+		if (!routing.uri.qs.has('token')) routing.pushState('/auth/login');
+	}
 
 	/**
 	 * this method is executed when the widget is hidden

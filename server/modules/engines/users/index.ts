@@ -65,8 +65,7 @@ export class UsersManager extends Manager {
 		try {
 			const specs: any = { where: { id: params.id } };
 			const dataModel = await this.model.findOne(specs);
-			if (!dataModel) throw 'RECORD_NOT_EXIST';
-
+			if (!dataModel) return { status: true, data: [] };
 			const data = dataModel.get({ plain: true });
 
 			const profiles = await DB.models.UsersProfiles.findAll({

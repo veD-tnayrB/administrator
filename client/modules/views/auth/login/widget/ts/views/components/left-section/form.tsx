@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
 import { useLoginContext } from '../../context';
+import { Link } from 'pragmate-ui/link';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Providers } from '@essential-js/admin/auth';
 import { Alert } from 'pragmate-ui/alert';
@@ -64,6 +65,12 @@ export const LeftSectionForm = () => {
 			<Button loading={loading} className="login-external-provider" variant="outline" onClick={loginWithGoogle}>
 				Login with Google
 			</Button>
+
+			<footer className="flex justify-center items-center">
+				<Link className="text-xs" href="/auth/forget-password">
+					Forgot Password?
+				</Link>
+			</footer>
 		</article>
 	);
 };

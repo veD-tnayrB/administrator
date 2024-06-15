@@ -3,6 +3,7 @@ import { Form as FormPUI, Input } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Alert } from 'pragmate-ui/alert';
+import { routing } from '@beyond-js/kernel/routing';
 import { useForgetPasswordContext } from './context';
 
 export const Form = () => {
@@ -31,7 +32,8 @@ export const Form = () => {
 		});
 	};
 
-	console.log('ERRORS: ', error);
+	const goBack = () => routing.pushState('/auth/login');
+
 	const errors: Record<string, string> = {
 		INVALID_EMAIL: 'Please enter a valid email address',
 		DEFAULT: 'Something went wrong when trying to send the email, try again later or ',
@@ -45,16 +47,17 @@ export const Form = () => {
 		<article>
 			<div>
 				<span>Don't worry, we have everything under control</span>
-				<h1>Forget Password</h1>
-
-				<Alert type="error" message={errorMessage} />
-				<Alert type="success" message={sucessMessage} />
+				<h1 className="mb-2">Forget Password</h1>
 			</div>
+
+			<Alert className="mb-6" type="error" message={errorMessage} />
+			<Alert className="mb-6" type="success" message={sucessMessage} />
+
 			<FormPUI onSubmit={onSubmit}>
 				<Input name="email" type="email" value={values.email} label="Email" onChange={onChange} />
 
 				<div className="actions w-full flex items-center justify-between gap-4">
-					<Button className="w-full" loading={loading} variant="secondary" type="button">
+					<Button className="w-full" onClick={goBack} loading={loading} variant="secondary" type="button">
 						Cancel
 					</Button>
 					<Button className="w-full" loading={loading} variant="primary" type="submit">

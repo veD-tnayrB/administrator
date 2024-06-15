@@ -15,6 +15,27 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	success: boolean = false;
 
+	getValidations = (password: string, repeatedPassword: string) => {
+		return {
+			isMoreOrEqualToEightCharacters: {
+				condition: password.length >= 8,
+				message: 'Password must be at least 8 characters long',
+			},
+			hasOneUppercaseLetter: {
+				condition: /[A-Z]/.test(password),
+				message: 'Password must contain at least one uppercase letter',
+			},
+			hasOneLowercaseLetter: {
+				condition: /[a-z]/.test(password),
+				message: 'Password must contain at least one lowercase letter',
+			},
+			isBothPasswordEqual: {
+				condition: password === repeatedPassword && password !== '',
+				message: 'Both passwords must be the same',
+			},
+		};
+	};
+
 	recoverPassword = async (params: { token: string; newPassword: string }) => {
 		try {
 			this.fetching = true;
@@ -26,6 +47,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			setTimeout(() => {
 				this.success = false;
 			}, 2000);
+			routing.pushState('/auth/login');
 		} catch (error) {
 			console.error(error);
 			this.#error = error as string;

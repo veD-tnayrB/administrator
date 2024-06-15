@@ -4,6 +4,10 @@
 	align-items: center;
 	justify-content: center;
 
+	&:not(:has(.brand)) {
+		min-height: 85vh;
+	}
+
 	.brand-name {
 		font-family: var(--brand-font);
 
