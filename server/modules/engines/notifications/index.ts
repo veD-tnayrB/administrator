@@ -6,8 +6,6 @@ import { ILaunch, Launch } from './cases/launch';
 import { IMarkAsRead, MarkAsRead } from './cases/mark-as-read';
 
 export class NotificationsManager extends Manager {
-	declare model: DB.models.Notifications;
-
 	constructor() {
 		super({ model: DB.models.Notifications });
 	}

@@ -3,6 +3,7 @@ import { Form } from './form';
 import { IContext, UsersManagementContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { StoreManager } from '../store';
+import { NotFound } from '@essential-js/admin/components/not-found';
 import { SpinnerPage } from '@essential-js/admin/components/spinner';
 
 export /*bundle*/
@@ -10,6 +11,7 @@ function View({ store }: { store: StoreManager }) {
 	const [isReady, setIsReady] = React.useState(store.ready);
 	useBinder([store], () => setIsReady(store.ready));
 
+	if (store.notFound) return <NotFound />;
 	if (!isReady) return <SpinnerPage />;
 
 	const contextValue: IContext = {

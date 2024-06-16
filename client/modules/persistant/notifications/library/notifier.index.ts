@@ -16,11 +16,11 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/** @private */
 	#device: Desktop = new Desktop();
 	/** Callback for message received event. */
-	onMessageReceived: (params: { notification: any; metadata: any }) => void = () => { };;
+	onMessageReceived: (params: { notification: any; metadata: any }) => void = () => {};
 	/** Callback for message error event. */
-	onMessageError: (error: string) => void = () => { };
+	onMessageError: (error: string) => void = () => {};
 	/** Callback for handle the device registration. */
-	onRegisterDevice: (params: { tokenDevice: string; device: string }) => void | Promise<any> = () => { };
+	onRegisterDevice: (params: { tokenDevice: string; device: string }) => void | Promise<any> = () => {};
 	/** @private */
 	#deviceToken: string = '';
 	#lastMessageId: string = '';
@@ -36,9 +36,12 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 		super();
 		//const device = this.#getDevice();
 
-		setInterval(() => {
-			this.renewDeviceToken();
-		}, 50 * 60 * 1000);
+		setInterval(
+			() => {
+				this.renewDeviceToken();
+			},
+			50 * 60 * 1000,
+		);
 	}
 
 	onMessagePreHandler = (payload: Record<string, any>) => {
@@ -60,7 +63,7 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	 * @private
 	 */
 	#getDevice = () => {
-		const userAgent = navigator.userAgent
+		const userAgent = navigator.userAgent;
 
 		const isMobile =
 			/windows phone/i.test(userAgent) ||
@@ -80,7 +83,7 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	 * @param {string} params.opts.userId - The user ID.
 	 */
 	init = async (params: { credentials: IDesktopCredentials; opts?: any }) => {
-		if (!this.onMessageReceived || (!this.onMessageError)) {
+		if (!this.onMessageReceived || !this.onMessageError) {
 			const extraMessage = 'or onMessageError arent defined';
 			console.error(`onMessageReceived ${extraMessage}`);
 			return;
@@ -93,7 +96,6 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 
 	/**
 	 * Renueva el token del dispositivo si es necesario.
-	 * @async
 	 */
 	renewDeviceToken = async () => {
 		return await this.#device.renewToken();

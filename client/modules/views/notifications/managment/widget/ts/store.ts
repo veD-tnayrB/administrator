@@ -38,6 +38,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#isCreating;
 	}
 
+	notFound: boolean = false;
+
 	load = async ({ id }: { id: string | undefined }) => {
 		if (!id || id === 'create') {
 			await this.#profiles.load({ where: { active: 1 } });
@@ -50,6 +52,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 
 			const response = await this.#item.load({ id });
+			if (response.status && !response.data) this.notFound = true;
 			if (!response.status) throw response.error;
 			this.ready = true;
 			this.#frecuencyManager.load({ frecuencyRules: this.#item.formatedFrecuency, endDate: this.#item.endDate });

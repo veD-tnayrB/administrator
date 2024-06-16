@@ -29,6 +29,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.triggerEvent();
 	}
 
+	notFound: boolean = false;
+
 	#isCreating: boolean = false;
 	get isCreating() {
 		return this.#isCreating;
@@ -56,6 +58,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			const response = await this.#item.load({ id });
 			console.log('RESPONSE: ', response);
+			if (response.status && !response.data) this.notFound = true;
 			if (!response.status) throw response.error;
 
 			const profilesResponse = await this.#profiles.load({ where: { active: 1 } });

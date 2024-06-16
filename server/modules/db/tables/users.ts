@@ -2,6 +2,7 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { AccessTokens, AccessTokensId } from './access_tokens';
 import type { Profiles, ProfilesId } from './profiles';
+import type { SentNotifications, SentNotificationsId } from './sent_notifications';
 import type { UsersNotifications, UsersNotificationsId } from './users_notifications';
 import type { UsersProfiles, UsersProfilesId } from './users_profiles';
 import type { UsersWidgets, UsersWidgetsId } from './users_widgets';
@@ -60,6 +61,18 @@ export class Users extends Model<UsersAttributes, UsersCreationAttributes> imple
   hasProfileIdProfile!: Sequelize.BelongsToManyHasAssociationMixin<Profiles, ProfilesId>;
   hasProfileIdProfiles!: Sequelize.BelongsToManyHasAssociationsMixin<Profiles, ProfilesId>;
   countProfileIdProfiles!: Sequelize.BelongsToManyCountAssociationsMixin;
+  // Users hasMany SentNotifications via userId
+  sentNotifications!: SentNotifications[];
+  getSentNotifications!: Sequelize.HasManyGetAssociationsMixin<SentNotifications>;
+  setSentNotifications!: Sequelize.HasManySetAssociationsMixin<SentNotifications, SentNotificationsId>;
+  addSentNotification!: Sequelize.HasManyAddAssociationMixin<SentNotifications, SentNotificationsId>;
+  addSentNotifications!: Sequelize.HasManyAddAssociationsMixin<SentNotifications, SentNotificationsId>;
+  createSentNotification!: Sequelize.HasManyCreateAssociationMixin<SentNotifications>;
+  removeSentNotification!: Sequelize.HasManyRemoveAssociationMixin<SentNotifications, SentNotificationsId>;
+  removeSentNotifications!: Sequelize.HasManyRemoveAssociationsMixin<SentNotifications, SentNotificationsId>;
+  hasSentNotification!: Sequelize.HasManyHasAssociationMixin<SentNotifications, SentNotificationsId>;
+  hasSentNotifications!: Sequelize.HasManyHasAssociationsMixin<SentNotifications, SentNotificationsId>;
+  countSentNotifications!: Sequelize.HasManyCountAssociationsMixin;
   // Users hasMany UsersNotifications via userId
   usersNotifications!: UsersNotifications[];
   getUsersNotifications!: Sequelize.HasManyGetAssociationsMixin<UsersNotifications>;

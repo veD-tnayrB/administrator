@@ -39,42 +39,53 @@ export class Get {
 					],
 				},
 			];
-			const response = await actions.data(this.model, params, `/get/profile`);
-			if (!response.status) throw response.error;
 
-			const profile = response.data;
+			const response = await Get.model.findOne({ where: { id: params.id }, include: params.include });
+			if (!response) return { status: true, data: null };
+
+			const profile = response.dataValues;
 			const moduleMap = {};
 			profile.profileModulePermissions.forEach((permission) => {
-				const moduleId = permission.action.module.id;
+				const action = permission.dataValues.action.dataValues;
+				const module = action.module.dataValues;
+				const moduleId = module.id;
+
+				console.log('MODULE: ', module);
 				if (!moduleMap[moduleId]) {
 					moduleMap[moduleId] = {
-						id: permission.action.module.id,
-						label: permission.action.module.label,
-						to: permission.action.module.to,
-						icon: permission.action.module.icon,
+						id: module.id,
+						label: module.label,
+						to: module.to,
+						icon: module.icon,
 						actions: [],
 					};
 				}
 				moduleMap[moduleId].actions.push({
-					id: permission.action.id,
-					name: permission.action.name,
-					description: permission.action.description,
-					timeCreated: permission.action.timeCreated,
-					timeUpdated: permission.action.timeUpdated,
+					id: action.id,
+					name: action.name,
+					description: action.description,
+					timeCreated: action.timeCreated,
+					timeUpdated: action.timeUpdated,
 				});
 			});
 
 			const modulesArray = Object.values(moduleMap);
+			console.log('MODULES ARRAY: ', modulesArray);
 
-			const widgetsProfiles = profile.widgetsProfiles.map((wp) => ({
-				id: wp.widget.id,
-				identifier: wp.widget.identifier,
-				columnPosition: wp.columnPosition,
-				rowPosition: wp.rowPosition,
-				width: wp.widget.width,
-				height: wp.widget.height,
-				order: wp.widget.order,
-			}));
+			const widgetsProfiles = profile.widgetsProfiles.map((wp) => {
+				const widgetProfile = wp.dataValues;
+				const widget = widgetProfile.widget.dataValues;
+
+				return {
+					id: widget.id,
+					identifier: widget.identifier,
+					columnPosition: widgetProfile.columnPosition,
+					rowPosition: widgetProfile.rowPosition,
+					width: widget.width,
+					height: widget.height,
+					order: widget.order,
+				};
+			});
 
 			const result = {
 				id: profile.id,
@@ -86,6 +97,7 @@ export class Get {
 				widgets: widgetsProfiles,
 			};
 
+			console.log('RESULT: ', result);
 			return { status: true, data: result };
 		} catch (error) {
 			return { status: false, error };

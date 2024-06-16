@@ -13,6 +13,8 @@ import { Profiles as _Profiles } from "./profiles";
 import type { ProfilesAttributes, ProfilesCreationAttributes } from "./profiles";
 import { ProfilesNotifications as _ProfilesNotifications } from "./profiles_notifications";
 import type { ProfilesNotificationsAttributes, ProfilesNotificationsCreationAttributes } from "./profiles_notifications";
+import { SentNotifications as _SentNotifications } from "./sent_notifications";
+import type { SentNotificationsAttributes, SentNotificationsCreationAttributes } from "./sent_notifications";
 import { Totals as _Totals } from "./totals";
 import type { TotalsAttributes, TotalsCreationAttributes } from "./totals";
 import { Users as _Users } from "./users";
@@ -36,6 +38,7 @@ export {
   _ProfileModulePermissions as ProfileModulePermissions,
   _Profiles as Profiles,
   _ProfilesNotifications as ProfilesNotifications,
+  _SentNotifications as SentNotifications,
   _Totals as Totals,
   _Users as Users,
   _UsersNotifications as UsersNotifications,
@@ -60,6 +63,8 @@ export type {
   ProfilesCreationAttributes,
   ProfilesNotificationsAttributes,
   ProfilesNotificationsCreationAttributes,
+  SentNotificationsAttributes,
+  SentNotificationsCreationAttributes,
   TotalsAttributes,
   TotalsCreationAttributes,
   UsersAttributes,
@@ -84,6 +89,7 @@ export function initModels(sequelize: Sequelize) {
   const ProfileModulePermissions = _ProfileModulePermissions.initModel(sequelize);
   const Profiles = _Profiles.initModel(sequelize);
   const ProfilesNotifications = _ProfilesNotifications.initModel(sequelize);
+  const SentNotifications = _SentNotifications.initModel(sequelize);
   const Totals = _Totals.initModel(sequelize);
   const Users = _Users.initModel(sequelize);
   const UsersNotifications = _UsersNotifications.initModel(sequelize);
@@ -102,6 +108,8 @@ export function initModels(sequelize: Sequelize) {
   ModulesActions.hasMany(ProfileModulePermissions, { as: "profileModulePermissions", foreignKey: "actionId"});
   ProfilesNotifications.belongsTo(Notifications, { as: "notification", foreignKey: "notificationId"});
   Notifications.hasMany(ProfilesNotifications, { as: "profilesNotifications", foreignKey: "notificationId"});
+  SentNotifications.belongsTo(Notifications, { as: "notification", foreignKey: "notificationId"});
+  Notifications.hasMany(SentNotifications, { as: "sentNotifications", foreignKey: "notificationId"});
   UsersNotifications.belongsTo(Notifications, { as: "notification", foreignKey: "notificationId"});
   Notifications.hasMany(UsersNotifications, { as: "usersNotifications", foreignKey: "notificationId"});
   ProfileModulePermissions.belongsTo(Profiles, { as: "profile", foreignKey: "profileId"});
@@ -114,6 +122,8 @@ export function initModels(sequelize: Sequelize) {
   Profiles.hasMany(WidgetsProfiles, { as: "widgetsProfiles", foreignKey: "profileId"});
   AccessTokens.belongsTo(Users, { as: "user", foreignKey: "userId"});
   Users.hasMany(AccessTokens, { as: "accessTokens", foreignKey: "userId"});
+  SentNotifications.belongsTo(Users, { as: "user", foreignKey: "userId"});
+  Users.hasMany(SentNotifications, { as: "sentNotifications", foreignKey: "userId"});
   UsersNotifications.belongsTo(Users, { as: "user", foreignKey: "userId"});
   Users.hasMany(UsersNotifications, { as: "usersNotifications", foreignKey: "userId"});
   UsersProfiles.belongsTo(Users, { as: "user", foreignKey: "userId"});
@@ -133,6 +143,7 @@ export function initModels(sequelize: Sequelize) {
     ProfileModulePermissions: ProfileModulePermissions,
     Profiles: Profiles,
     ProfilesNotifications: ProfilesNotifications,
+    SentNotifications: SentNotifications,
     Totals: Totals,
     Users: Users,
     UsersNotifications: UsersNotifications,

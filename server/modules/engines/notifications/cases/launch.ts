@@ -1,5 +1,6 @@
 import { DB } from '@essential-js/admin-server/db';
 import { sender } from '../library/sender';
+import { v4 as uuid } from 'uuid';
 
 export interface ILaunch {
 	id: string;
@@ -161,9 +162,25 @@ export class Launch {
 			};
 
 			const response = await sender.sendMultipleCast(message);
+
+			// Registro de cada envío en sent_notifications
+			await Promise.all(
+				notification.users.map(async (user) => {
+					const status = response.status ? 'sent' : 'failed'; // Simplificación del manejo de estados
+					await DB.models.SentNotifications.create({
+						id: uuid(),
+						notification_id: notification.id,
+						user_id: user.userId,
+						status: status,
+						time_sent: new Date(),
+					});
+				}),
+			);
+
 			if (!response.status) throw new Error(response.error);
 			return { status: true };
 		} catch (error) {
+			console.error('Error sending notifications:', error);
 			return { status: false, error };
 		}
 	};

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'pragmate-ui/image';
+import { Placeholder } from './placeholder';
 
 interface IProps {
 	src: string;
@@ -16,11 +17,11 @@ export const ProfileImage = ({ name, src }: IProps) => {
 		return `data:image/png;base64,${src}`;
 	}, [src]);
 
+	const img = src ? <Image alt={name} src={formatedSrc} /> : <Placeholder />;
+
 	return (
 		<div className="settings-toggler">
-			<div className="profile-image">
-				<Image alt={name} src={formatedSrc} />
-			</div>
+			<div className="profile-image">{img}</div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"

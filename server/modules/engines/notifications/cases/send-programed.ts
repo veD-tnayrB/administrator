@@ -2,6 +2,7 @@ import * as cron from 'node-cron';
 import { DB } from '@essential-js/admin-server/db';
 import { sender } from '../library/sender';
 import * as moment from 'moment-timezone';
+import { v4 as uuid } from 'uuid';
 
 export /*bundle*/ class SendProgramed {
 	static startListener() {
@@ -39,7 +40,7 @@ export /*bundle*/ class SendProgramed {
 
 			const notificationsFound = await DB.models.Notifications.findAll();
 			let notificationsToSendToday = [];
-			for (let notification of notificationsFound.map(n => n.dataValues)) {
+			for (let notification of notificationsFound.map((n) => n.dataValues)) {
 				const frequencies = JSON.parse(notification.frecuency || '{}');
 
 				// Verificar si hay notificaciones para enviar hoy
@@ -57,7 +58,7 @@ export /*bundle*/ class SendProgramed {
 		}
 	};
 
-	static getUsers = async notifications => {
+	static getUsers = async (notifications) => {
 		try {
 			let results = [];
 
@@ -82,17 +83,17 @@ export /*bundle*/ class SendProgramed {
 					],
 				});
 
-				let directUsers = directUsersNotifications.map(notificationInstance => {
+				let directUsers = directUsersNotifications.map((notificationInstance) => {
 					const { dataValues: notification } = notificationInstance;
 					const user = notification.user.dataValues;
 
 					const notificationToken = user.accessTokens.map(
-						accessToken => accessToken.dataValues.notificationsToken
+						(accessToken) => accessToken.dataValues.notificationsToken,
 					);
 					return {
 						userId: user.id,
 						notificationToken,
-						timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
+						timezones: user.accessTokens.map((accessToken) => accessToken.dataValues.timezone),
 					};
 				});
 
@@ -128,25 +129,25 @@ export /*bundle*/ class SendProgramed {
 					include: profilesNotificationsIncludes,
 				});
 
-				let profileUsers = profilesNotifications.flatMap(profileNotificationInstance => {
+				let profileUsers = profilesNotifications.flatMap((profileNotificationInstance) => {
 					const usersProfiles = profileNotificationInstance.dataValues.profile.dataValues.usersProfiles;
 
-					return usersProfiles.map(up => {
+					return usersProfiles.map((up) => {
 						const user = up.dataValues.user.dataValues;
 
 						return {
 							userId: user.id,
 							notificationToken: user.accessTokens.map(
-								accessToken => accessToken.dataValues.notificationsToken
+								(accessToken) => accessToken.dataValues.notificationsToken,
 							),
-							timezones: user.accessTokens.map(accessToken => accessToken.dataValues.timezone),
+							timezones: user.accessTokens.map((accessToken) => accessToken.dataValues.timezone),
 						};
 					});
 				});
 
 				// Combinar Usuarios directos y Usuarios de Perfiles, eliminando duplicados
 				let combinedUsers = [...directUsers, ...profileUsers].reduce((acc, curr) => {
-					if (!acc.some(user => user.userId === curr.userId)) {
+					if (!acc.some((user) => user.userId === curr.userId)) {
 						acc.push(curr);
 					}
 					return acc;
@@ -168,19 +169,15 @@ export /*bundle*/ class SendProgramed {
 		}
 	};
 
-	static sendNotifications = async notifications => {
+	static sendNotifications = async (notifications) => {
 		try {
-			const todayDate = moment().format('DD-MM-YYYY'); // Obtener la fecha actual en formato 'DD-MM-YYYY'
+			const todayDate = moment().format('DD-MM-YYYY'); // Get today's date in 'DD-MM-YYYY' format
 			for (const notification of notifications) {
 				for (const user of notification.users) {
-					// Iterar sobre cada zona horaria del usuario
 					for (const timezone of user.timezones || ['UTC']) {
-						// Asumir UTC si no se especifica
-
-						const notificationTimes = notification.times.map(time => {
-							const formattedTime = time.replace('-', ':'); // Cambiar 'hh-mm' a 'hh:mm'
+						const notificationTimes = notification.times.map((time) => {
+							const formattedTime = time.replace('-', ':'); // Change 'hh-mm' to 'hh:mm'
 							const localTime = moment.tz(`${todayDate} ${formattedTime}`, 'DD-MM-YYYY HH:mm', timezone);
-							// Convertir esa hora local a UTC para programar el envío
 							return localTime.tz('UTC').toDate();
 						});
 
@@ -190,7 +187,7 @@ export /*bundle*/ class SendProgramed {
 
 							if (delay > 0) {
 								setTimeout(() => {
-									SendProgramed.sendNotification(notification);
+									SendProgramed.sendNotification(notification, user);
 								}, delay);
 							}
 						}
@@ -204,11 +201,10 @@ export /*bundle*/ class SendProgramed {
 		}
 	};
 
-	static sendNotification = async notification => {
-		let tokens = notification.users.flatMap(user => user.notificationToken);
-		// Deduplicar tokens por seguridad
-		tokens = [...new Set(tokens)];
-		tokens = tokens.filter(token => token);
+	static sendNotification = async (notification, user) => {
+		let tokens = [user.notificationToken].filter(Boolean); // Filter out any null or undefined tokens
+
+		if (!tokens.length) return;
 
 		const message = {
 			notification: {
@@ -219,6 +215,19 @@ export /*bundle*/ class SendProgramed {
 		};
 
 		const response = await sender.sendMultipleCast(message);
-		if (!response.status) throw new Error(response.error);
+
+		// Record the sent notification
+		await DB.models.SentNotifications.create({
+			id: uuid(),
+			notification_id: notification.id,
+			user_id: user.userId,
+			status: response.status ? 'sent' : 'failed', // Assume 'sent' or 'failed' based on response status
+			time_sent: new Date(),
+		});
+
+		if (!response.status) {
+			console.error(`Error sending notification to ${user.userId}: ${response.error}`);
+			throw new Error(response.error);
+		}
 	};
 }

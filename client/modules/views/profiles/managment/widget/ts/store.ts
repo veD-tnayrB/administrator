@@ -34,6 +34,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.triggerEvent();
 	}
 
+	notFound: boolean = false;
+
 	#selectedWidgets: Record<string, true> = {};
 	get selectedWidgets() {
 		return this.#selectedWidgets;
@@ -66,6 +68,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 
 			const response = await this.#item.load({ id });
+			if (response.status && !response.data) this.notFound = true;
 			if (!response.status) throw response.error;
 			const selected: Record<string, true> = {};
 			response.data.widgets.forEach((widget: IWidget) => {

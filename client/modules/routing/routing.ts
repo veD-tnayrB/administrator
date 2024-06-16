@@ -8,5 +8,5 @@ routing.redirect = async function redirect(uri): Promise<string> {
 };
 
 routing.missing = async () => {
-	return '/auth/login';
+	return '/error/404';
 };

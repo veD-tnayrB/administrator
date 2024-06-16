@@ -40,6 +40,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.triggerEvent();
 	}
 
+	notFound: boolean = false;
+
 	load = async ({ id }: { id: string | undefined }) => {
 		try {
 			if (!id || id === 'create') {
@@ -58,6 +60,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.ready = true;
 			return { status: true };
 		} catch (error) {
+			this.notFound = true;
 			return { status: false, error };
 		} finally {
 			this.fetching = false;

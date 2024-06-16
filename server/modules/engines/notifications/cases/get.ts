@@ -26,11 +26,11 @@ export class Get {
 					},
 				],
 			});
-			if (!notificationFind) throw 'NOTIFICATION_DOESNT_EXISTS';
+			if (!notificationFind) return { status: true, data: null };
 			const notification = notificationFind.dataValues;
 
-			const users = notification.usersNotifications.map(un => un.dataValues.userId);
-			const profiles = notification.profilesNotifications.map(pn => pn.dataValues.profileId);
+			const users = notification.usersNotifications.map((un) => un.dataValues.userId);
+			const profiles = notification.profilesNotifications.map((pn) => pn.dataValues.profileId);
 
 			const result = {
 				...notification,
