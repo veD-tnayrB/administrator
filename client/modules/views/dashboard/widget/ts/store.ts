@@ -24,12 +24,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	load = async () => {
 		try {
 			this.fetching = true;
-
+			this.#listenResizes();
 			const response = await this.#collection.getDashboard({ userId: session.user.id });
 			if (!response.status) throw new Error(response.error);
 			this.selectedWidgets = response.data.entries;
-
-			this.#listenResizes();
 		} catch (error) {
 			console.error(error);
 			return error;

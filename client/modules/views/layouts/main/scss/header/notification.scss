@@ -33,7 +33,7 @@
 
 		.modal {
 			right: 0;
-			min-width: 350px;
+			min-width: 450px;
 			border-top-left-radius: 10px;
 			border-bottom-left-radius: 10px;
 			border-bottom-right-radius: 10px;
@@ -41,6 +41,10 @@
 			.list-container {
 				header {
 					padding: 0.25rem 0;
+
+					h4 {
+						font-size: 1.1rem;
+					}
 				}
 				.notification-list {
 					max-height: 12.5rem;
@@ -62,13 +66,31 @@
 					.item {
 						border-bottom: 1px solid var(--outline);
 						padding: 0.5rem 0;
+						display: flex;
+						align-items: center;
 
-						h6 {
-							font-size: 0.8rem;
+						.readable {
+							width: calc(100% - 16px);
+
+							h6 {
+								font-size: 0.95rem;
+							}
+
+							p {
+								font-size: 0.95rem;
+								width: calc(100% - 16px);
+							}
 						}
 
-						p {
-							font-size: 1rem;
+						.new {
+							width: 8px;
+							height: 8px;
+							border-radius: 50%;
+							background: var(--primary);
+							top: -2px;
+							right: 0;
+							// bombed animation
+							animation: pulse 2s infinite;
 						}
 
 						&:last-child {

@@ -1,15 +1,20 @@
 import React from 'react';
-import { INotification } from '@essential-js/admin/notifications';
+import { INotificationHistory, NotificationHistoryStatus } from '@essential-js/admin/models';
 
-interface IProps extends INotification {
+interface IProps extends INotificationHistory {
 	index: number;
 }
 
-export const Notification = (props: INotification) => {
+export const Notification = (props: IProps) => {
+	const isNew = props.status === NotificationHistoryStatus.Sent;
+
 	return (
 		<li className="item">
-			<h6>{props.title}</h6>
-			<p>{props.body}</p>
+			<div className="readable">
+				<h6>{props.notification.title}</h6>
+				<p>{props.notification.description}</p>
+			</div>
+			{isNew && <span className="new"></span>}
 		</li>
 	);
 };

@@ -61,7 +61,7 @@ export class Desktop {
 		const permission = await window.Notification.requestPermission();
 		if (permission !== 'granted') return;
 
-		await this.#register();
+		await this.register();
 		onMessage(this.#messaging, this.#parent.onMessagePreHandler);
 	};
 
@@ -70,11 +70,9 @@ export class Desktop {
 	 * @async
 	 * @private
 	 */
-	#register = async () => {
+	register = async () => {
 		if (!this.#messaging || !this.#credentials || !this.#parent) return;
-
 		const token = await getToken(this.#messaging, { vapidKey: this.#credentials.VAPID_KEY });
-		if (this.#token) return;
 		this.#token = token;
 
 		return this.#parent.onRegisterDevice({

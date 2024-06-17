@@ -1,11 +1,6 @@
 import React from 'react';
 
-interface IProps {
-	title: string;
-	body: string;
-}
-
-export const Notification = ({ title, body }: IProps) => {
+export const Notification = ({ title, body }: { title: string; body: string }) => {
 	return (
 		<div>
 			<h5>{title}</h5>

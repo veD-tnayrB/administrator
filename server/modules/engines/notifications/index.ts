@@ -4,6 +4,7 @@ import { IPublish, Publish } from './cases/publish';
 import { Get, IGet } from './cases/get';
 import { ILaunch, Launch } from './cases/launch';
 import { IMarkAsRead, MarkAsRead } from './cases/mark-as-read';
+import { ILoadHistoryParams, LoadHistory } from './cases/load-history';
 
 export class NotificationsManager extends Manager {
 	constructor() {
@@ -28,6 +29,10 @@ export class NotificationsManager extends Manager {
 
 	get = (params: IGet) => {
 		return Get.execute(params);
+	};
+
+	loadHistory = (params: ILoadHistoryParams) => {
+		return LoadHistory.execute(params);
 	};
 }
 

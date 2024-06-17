@@ -1,5 +1,5 @@
 import React from 'react';
-import { INotification } from '@essential-js/admin/notifications';
+import { INotification } from '@essential-js/admin/models';
 import { v4 as uuid } from 'uuid';
 import { Notification } from './item';
 import { NotificationEmpty } from './empty';

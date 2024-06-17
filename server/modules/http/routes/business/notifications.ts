@@ -30,12 +30,25 @@ class NotificationsRoutes extends Route {
 		}
 	};
 
-	markAsRead = (req: Request, res: Response) => {
+	markAsRead = async (req: Request, res: Response) => {
 		try {
-			const notificationIds = req.body.ids;
-			const userId = req.params.userId;
+			const notificationsIds = req.body.ids;
+			const userId = req.body.userId;
+			const response = await this.manager.markAsRead({ notificationsIds, userId });
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = ResponseAPI.success(response);
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /launch', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			res.status(500).send(responseError);
+		}
+	};
 
-			const response = this.manager.markAsRead({ notificationIds, userId });
+	loadHistory = async (req: Request, res: Response) => {
+		try {
+			const userId = req.query.userId;
+			const response = await this.manager.loadHistory({ userId });
 			if (!response.status && 'error' in response) throw response.error;
 			const formatedResponse = ResponseAPI.success(response);
 			return res.status(200).json(formatedResponse);
@@ -53,8 +66,10 @@ class NotificationsRoutes extends Route {
 		app.put(`/notification/:id`, checkToken, checkPermission('notifications.update'), this.update);
 		app.get(`/notifications`, checkToken, checkPermission('notifications.list'), this.list);
 		app.get(`/notification/:id`, checkToken, checkPermission('notifications.get'), this.get);
+		app.get(`/notifications/history`, checkToken, checkPermission('notifications.get'), this.loadHistory);
+
 		app.put(
-			`/notification/mark-as-read/:userId`,
+			`/notifications/history/mark-as-read`,
 			checkToken,
 			checkPermission('notifications.get'),
 			this.markAsRead,

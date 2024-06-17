@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { Notification } from './components/notification';
 import { Header } from './components/header/main.layout.header';
 import { SettingsModal } from './settings';
+import { notificationsHandler } from '@essential-js/admin/notifications';
 
 declare global {
 	namespace JSX {
@@ -23,12 +24,15 @@ declare global {
 export function Layout({ store }: { store: StoreManager }) {
 	const hasPermissions = useCheckPermissions();
 	const [isDOMReady, setIsDOMReady] = React.useState(session.isLoaded);
-	useBinder([session.notificationsHandler], () => {
-		const current = session.notificationsHandler.current;
-		if (!current) return;
-		const { title, body } = current;
-		toast(<Notification title={title} body={body} />);
-	});
+	useBinder(
+		[notificationsHandler],
+		() => {
+			const current = notificationsHandler.current;
+			if (!current) return;
+			toast(<Notification {...current} />);
+		},
+		'notification.received',
+	);
 
 	useBinder([session], () => setIsDOMReady(session.isLoaded));
 

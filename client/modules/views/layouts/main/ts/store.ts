@@ -3,6 +3,7 @@ import { Module, Modules } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import type { IPermission } from '@essential-js/admin/models';
 import { SettingsManager } from './managers/settings';
+import { notificationsHandler } from '@essential-js/admin/notifications';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#settingsManager: SettingsManager = new SettingsManager(this);
@@ -49,6 +50,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	constructor() {
 		super();
 		this.#loadTheme();
+		this.loadNotificationList();
 		session.on('user-changed', this.loadSidebarItems);
 	}
 
@@ -75,6 +77,10 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		} finally {
 			this.fetching = false;
 		}
+	};
+
+	loadNotificationList = async () => {
+		await notificationsHandler.load({ userId: session.user.id });
 	};
 
 	changeMode = () => {

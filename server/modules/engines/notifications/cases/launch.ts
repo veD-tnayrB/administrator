@@ -152,6 +152,7 @@ export class Launch {
 			tokens = [...new Set(tokens)];
 			tokens = tokens.filter((token) => token);
 			if (!tokens.length) return { status: true };
+			console.log('NOTIFICATION: ', notification);
 
 			const message = {
 				notification: {
@@ -169,10 +170,10 @@ export class Launch {
 					const status = response.status ? 'sent' : 'failed'; // Simplificación del manejo de estados
 					await DB.models.SentNotifications.create({
 						id: uuid(),
-						notification_id: notification.id,
-						user_id: user.userId,
+						notificationId: notification.id,
+						userId: user.userId,
 						status: status,
-						time_sent: new Date(),
+						timeSent: new Date(),
 					});
 				}),
 			);

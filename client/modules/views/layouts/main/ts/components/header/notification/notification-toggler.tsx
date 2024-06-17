@@ -1,4 +1,8 @@
 import React from 'react';
+import { notificationsHandler } from '@essential-js/admin/notifications';
+import { NotificationHistoryStatus, INotificationHistory } from '@essential-js/admin/models';
+import { session } from '@essential-js/admin/auth';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
 interface IProps {
 	hasBeenRead: boolean;
@@ -7,13 +11,27 @@ interface IProps {
 
 export const NotificationToggler = ({ hasBeenRead, setHasBeenRead }: IProps) => {
 	const cls = hasBeenRead ? '' : 'unread';
-
+	const [items, setItems] = React.useState(notificationsHandler.items || []);
+	useBinder([notificationsHandler], () => {
+		setItems(notificationsHandler.items);
+	});
+	const unread = items.filter((item: INotificationHistory) => item.status === NotificationHistoryStatus.Sent);
 	const onOpen = () => {
 		setHasBeenRead(true);
+
+		if (!notificationsHandler.token) notificationsHandler.init();
+
+		const ids = unread.map((item: INotificationHistory) => item.id);
+		// extra time to see the new notifications
+		if (unread.length) {
+			setTimeout(() => {
+				notificationsHandler.markAsRead({ userId: session.user.id, ids });
+			}, 5000);
+		}
 	};
 	return (
 		<div onClick={onOpen} className={`notification-toggler ${cls}`}>
-			<div className="read-indicator"></div>
+			{unread.length > 0 && <div className="read-indicator"></div>}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"

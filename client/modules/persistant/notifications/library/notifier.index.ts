@@ -1,5 +1,6 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Desktop, IDesktopCredentials } from './desktop';
+import { Desktop } from './desktop';
+import { FIREBASE_CREDENTIALS } from '@essential-js/admin/serverless-provider';
 
 /** Enumeration for Device types. */
 enum Device {
@@ -13,6 +14,7 @@ enum Device {
  * @extends {ReactiveModel<Notifier>}
  */
 export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
+	#localStorageKey: string = '__notifications_token';
 	/** @private */
 	#device: Desktop = new Desktop();
 	/** Callback for message received event. */
@@ -22,7 +24,7 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/** Callback for handle the device registration. */
 	onRegisterDevice: (params: { tokenDevice: string; device: string }) => void | Promise<any> = () => {};
 	/** @private */
-	#deviceToken: string = '';
+	#deviceToken: string = localStorage.getItem(this.#localStorageKey) || '';
 	#lastMessageId: string = '';
 
 	/** Getter for device token.
@@ -34,7 +36,6 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	/** Constructor for FirebaseNotifications. */
 	constructor() {
 		super();
-		//const device = this.#getDevice();
 
 		setInterval(
 			() => {
@@ -54,8 +55,8 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 			return;
 		}
 
-		const { body, title, ...metadata } = payload;
-		this.onMessageReceived({ notification: { body, title }, metadata });
+		const { body: description, title, ...metadata } = payload;
+		this.onMessageReceived({ notification: { description, title }, metadata });
 	};
 
 	/**
@@ -82,16 +83,20 @@ export /*bundle*/ class Notifier extends ReactiveModel<Notifier> {
 	 * @param {Object} params.opts - Additional options.
 	 * @param {string} params.opts.userId - The user ID.
 	 */
-	init = async (params: { credentials: IDesktopCredentials; opts?: any }) => {
+	init = async () => {
 		if (!this.onMessageReceived || !this.onMessageError) {
 			const extraMessage = 'or onMessageError arent defined';
 			console.error(`onMessageReceived ${extraMessage}`);
 			return;
 		}
 
+		const params = { credentials: FIREBASE_CREDENTIALS };
+
 		await this.#device.init(this, params);
 		this.#deviceToken = this.#device.token;
-		return { status: true };
+
+		localStorage.setItem(this.#localStorageKey, this.#deviceToken);
+		return { status: true, token: this.#deviceToken };
 	};
 
 	/**

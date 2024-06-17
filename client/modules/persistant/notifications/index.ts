@@ -1,7 +1,6 @@
-import { FIREBASE_CREDENTIALS } from '@essential-js/admin/serverless-provider';
 import { ReactiveModel } from '@beyond-js/reactive/model';
 import { Notifier } from './library/notifier.index';
-import { INotification } from './types';
+import { NotificationsHistory, NotificationHistory, INotificationHistory } from '@essential-js/admin/models';
 
 class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	#provider: Notifier = new Notifier();
@@ -10,12 +9,16 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 		return this.#token;
 	}
 
-	#items: INotification[] = [];
+	#userId: string = '';
+
+	#notifications: NotificationsHistory = new NotificationsHistory();
+
+	#items: NotificationHistory[] = [];
 	get items() {
 		return this.#items;
 	}
 
-	#current: INotification | null = null;
+	#current: NotificationHistory | null = null;
 	get current() {
 		return this.#current;
 	}
@@ -29,8 +32,9 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	init = async () => {
 		try {
 			this.fetching = true;
-			await this.#provider.init({ credentials: FIREBASE_CREDENTIALS });
+			await this.#provider.init();
 			this.#token = this.#provider.deviceToken;
+			return this.#token;
 		} catch (error) {
 			return { status: false, error };
 		} finally {
@@ -38,10 +42,44 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 		}
 	};
 
-	#onMessageReceived = async (params: { notification: INotification }) => {
+	load = async (params: { userId: string }) => {
+		try {
+			this.#userId = params.userId;
+			this.fetching = true;
+			const response = await this.#notifications.load(params);
+			if (!response.status) throw response.error;
+
+			this.#items = response.data;
+			this.fetching = false;
+			this.triggerEvent();
+			return response;
+		} catch (error) {
+			console.error('ERROR LOADING NOTIFICATIONS LISTS: ', error);
+			return { status: false, error };
+		}
+	};
+
+	markAsRead = async (params: { ids: string[]; userId: string }) => {
+		try {
+			this.#userId = params.userId;
+			this.fetching = true;
+			const response = await this.#notifications.markAsRead(params);
+			if (!response.status) throw response.error;
+
+			this.#items = response.data;
+			this.#current = null;
+			this.load({ userId: this.#userId });
+			return response;
+		} catch (error) {
+			console.error('ERROR LOADING NOTIFICATIONS LISTS: ', error);
+			return { status: false, error };
+		}
+	};
+
+	#onMessageReceived = async (params: { notification: { body: string; title: string } }) => {
 		this.#current = params.notification;
-		this.#items = [this.#current, ...this.#items];
-		this.triggerEvent();
+		this.load({ userId: this.#userId });
+		this.triggerEvent('notification.received');
 	};
 }
 

@@ -2,13 +2,13 @@ import { ReactiveModel } from '@beyond-js/reactive/model';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@essential-js/admin/serverless-provider';
 import { User } from './user.item';
-import { notificationsHandler } from '@essential-js/admin/notifications';
 import { ILogin } from './types';
 /**
  * Interface for login parameters.
  */
 interface ILoginParams {
 	email: string;
+	notificationsToken: string;
 	password: string;
 	timezone: string;
 }
@@ -40,11 +40,6 @@ class Session extends ReactiveModel<Session> {
 		return this.#user;
 	}
 
-	#notificationsHandler: typeof notificationsHandler;
-	get notificationsHandler() {
-		return this.#notificationsHandler;
-	}
-
 	#isLogged: boolean = !!localStorage.getItem('__session');
 
 	/**
@@ -70,7 +65,6 @@ class Session extends ReactiveModel<Session> {
 	 */
 	constructor() {
 		super();
-		this.#notificationsHandler = notificationsHandler;
 		this.#listenForSessionChanges();
 		if (this.#isLogged) this.load();
 	}
@@ -94,8 +88,8 @@ class Session extends ReactiveModel<Session> {
 
 			// Define the params to use
 			const loadParams: ILogin = provider
-				? { email: response.email, notificationsToken: this.#notificationsHandler.token }
-				: { ...params, notificationsToken: this.#notificationsHandler.token };
+				? { email: response.email, notificationsToken: params.notificationsToken }
+				: { ...params };
 
 			// Load the user in a item to be saved in this object
 			const loadResponse = await this.#user.login(loadParams);
