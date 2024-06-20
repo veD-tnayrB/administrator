@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { Button } from 'pragmate-ui/components';
 import { Checkbox } from 'pragmate-ui/form';
-import { IWidget } from '@essential-js/admin/models';
+import { Widget, IWidget } from '@essential-js/admin/models';
 import { useLayoutContext } from '../../context';
 
 export const WidgetList = () => {
@@ -14,20 +14,23 @@ export const WidgetList = () => {
 		store.isSettingsOpen = false;
 	};
 
+	console.log('SETTINGS MANAGER: ', settingsManager.allWidgets);
 	const output = settingsManager.allWidgets.map((record: IWidget, index) => {
-		const selected = settingsManager.selectedWidgets.some((item: IWidget) => item.id === record.id);
+		const selected = settingsManager.selectedWidgets.some((item: Widget) => item.id === record.id);
 		const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			const { checked } = event.target;
 			if (!checked) {
 				settingsManager.selectedWidgets = settingsManager.selectedWidgets.filter(
-					(item: IWidget) => item.id !== record.id,
+					(item: Widget) => item.id !== record.id,
 				);
 				return;
 			}
 
-			record.columnPosition = 1; // DEFAULT POSITION
-			record.rowPosition = settingsManager.selectedWidgets.length + 1;
-			settingsManager.selectedWidgets = [...settingsManager.selectedWidgets, record];
+			const instance = new Widget({ id: record.id });
+			instance.set(record);
+			instance.columnPosition = 1; // DEFAULT POSITION
+			instance.rowPosition = settingsManager.selectedWidgets.length + 1;
+			settingsManager.selectedWidgets = [...settingsManager.selectedWidgets, instance];
 		};
 		return (
 			<li key={record.id} className="flex items-center">

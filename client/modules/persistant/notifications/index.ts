@@ -64,9 +64,8 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 			this.#userId = params.userId;
 			this.fetching = true;
 			const response = await this.#notifications.markAsRead(params);
-			if (!response.status) throw response.error;
+			if (response && !response.status) throw response.error;
 
-			this.#items = response.data;
 			this.#current = null;
 			this.load({ userId: this.#userId });
 			return response;
@@ -77,7 +76,9 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	};
 
 	#onMessageReceived = async (params: { notification: { body: string; title: string } }) => {
-		this.#current = params.notification;
+		const current = new NotificationHistory();
+		current.set(params.notification);
+		this.#current = current;
 		this.load({ userId: this.#userId });
 		this.triggerEvent('notification.received');
 	};

@@ -13,14 +13,14 @@ export /*bundle*/ const WidgetManager = ({ data }: IProps) => {
 
 	data.sort((a, b) => a.order - b.order);
 
-	const output = data.map(widget => {
+	const output = data.map((widget) => {
 		const WidgetComponent = widgets.get(widget.identifier);
 		if (!WidgetComponent) {
 			console.warn(`${widget.identifier} isnt registered as a widget.`);
 			return null;
 		}
 
-		return <WidgetComponent key={uuidv4()} metadata={widget.metadata} />;
+		return <WidgetComponent key={uuidv4()} />;
 	});
 
 	return <section className="dashboard flex flex-auto flex-wrap gap-5">{output}</section>;

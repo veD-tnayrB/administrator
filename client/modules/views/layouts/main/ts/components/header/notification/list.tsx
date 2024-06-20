@@ -1,15 +1,15 @@
 import React from 'react';
-import { INotification } from '@essential-js/admin/models';
+import { NotificationHistory } from '@essential-js/admin/models';
 import { v4 as uuid } from 'uuid';
 import { Notification } from './item';
 import { NotificationEmpty } from './empty';
 
 interface IProps {
-	items: INotification[];
+	items: NotificationHistory[];
 }
 
 export const NotificationList = ({ items }: IProps) => {
-	const output = items.map((item, index: number) => <Notification index={index} key={uuid()} {...item} />);
+	const output = items.map((item) => <Notification key={uuid()} item={item} />);
 
 	const content = output.length ? output : <NotificationEmpty />;
 	return (

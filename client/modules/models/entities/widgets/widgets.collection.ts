@@ -1,7 +1,7 @@
 import { Collection } from '@beyond-js/reactive/entities';
 import config from '@essential-js/admin/config';
 import { WidgetsCollectionProvider } from '../../providers/widgets/widgets.collection.provider';
-import { IWidget, Widget } from './widget.item';
+import { Widget } from './widget.item';
 
 export /*bundle*/ class Widgets extends Collection {
 	constructor() {
@@ -19,7 +19,7 @@ export /*bundle*/ class Widgets extends Collection {
 		return this.provider.getDashboard(params);
 	};
 
-	saveDashboard = (selectedWidgets: IWidget[]) => {
+	saveDashboard = (selectedWidgets: Widget[]) => {
 		if (!this.provider.saveDashboard) return;
 		return this.provider.saveDashboard(selectedWidgets);
 	};

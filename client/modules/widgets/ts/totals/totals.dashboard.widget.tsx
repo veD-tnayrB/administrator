@@ -5,7 +5,7 @@ import { TotalItem } from './components/total.item.widget';
 
 const manager = new TotalsWidgetManager();
 
-export /*bundle*/ const TotalsWidget = React.forwardRef((props, ref: LegacyRef<HTMLDivElement>) => {
+export /*bundle*/ const TotalsWidget = () => {
 	const [data, setData] = React.useState<Record<string, number>>(manager.data);
 	useBinder([manager], () => setData(manager.data));
 
@@ -31,4 +31,4 @@ export /*bundle*/ const TotalsWidget = React.forwardRef((props, ref: LegacyRef<H
 			/>
 		</section>
 	);
-});
+};

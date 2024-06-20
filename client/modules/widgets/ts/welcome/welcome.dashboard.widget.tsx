@@ -30,7 +30,7 @@ function getMoment(): string {
 	}
 }
 
-export /*bundle*/ const WelcomeWidget = React.forwardRef((props, ref: LegacyRef<HTMLDivElement>) => {
+export /*bundle*/ const WelcomeWidget = () => {
 	const [names, setNames] = React.useState(session.user.names);
 	useBinder([session], () => setNames(session.user.names));
 
@@ -48,4 +48,4 @@ export /*bundle*/ const WelcomeWidget = React.forwardRef((props, ref: LegacyRef<
 			<p>Have a great {getMoment()}!</p>
 		</motion.header>
 	);
-});
+};

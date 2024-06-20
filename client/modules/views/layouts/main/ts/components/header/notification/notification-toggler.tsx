@@ -1,6 +1,6 @@
 import React from 'react';
 import { notificationsHandler } from '@essential-js/admin/notifications';
-import { NotificationHistoryStatus, INotificationHistory } from '@essential-js/admin/models';
+import { NotificationHistoryStatus } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
@@ -15,13 +15,16 @@ export const NotificationToggler = ({ hasBeenRead, setHasBeenRead }: IProps) => 
 	useBinder([notificationsHandler], () => {
 		setItems(notificationsHandler.items);
 	});
-	const unread = items.filter((item: INotificationHistory) => item.status === NotificationHistoryStatus.Sent);
+	const unread = items.filter((item) => {
+		const isCorrect: boolean = item.status === NotificationHistoryStatus.Sent;
+		return isCorrect;
+	});
 	const onOpen = () => {
 		setHasBeenRead(true);
 
 		if (!notificationsHandler.token) notificationsHandler.init();
 
-		const ids = unread.map((item: INotificationHistory) => item.id);
+		const ids = unread.map((item) => item.id) as string[];
 		// extra time to see the new notifications
 		if (unread.length) {
 			setTimeout(() => {

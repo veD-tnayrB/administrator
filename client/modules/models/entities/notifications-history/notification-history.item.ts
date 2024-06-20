@@ -21,6 +21,7 @@ export /*bundle*/ interface INotificationHistory {
 
 export /*bundle*/ class NotificationHistory extends Item<INotificationHistory> {
 	protected properties = ['id', 'notificationId', 'userId', 'notification', 'timeSent', 'status'];
+	id: string = '';
 
 	get formatedFrecuency() {
 		if (!this.frecuency) return [];

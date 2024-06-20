@@ -9,7 +9,7 @@ Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend, A
 
 const manager = new OnlineUsersWidgetManager();
 
-export /*bundle*/ const OnlineUsersWidget = React.forwardRef(() => {
+export /*bundle*/ const OnlineUsersWidget = () => {
 	const [data, setData] = React.useState(manager.data);
 	useBinder([manager], () => setData(manager.data));
 
@@ -54,4 +54,4 @@ export /*bundle*/ const OnlineUsersWidget = React.forwardRef(() => {
 			</motion.section>
 		</div>
 	);
-});
+};

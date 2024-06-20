@@ -1,5 +1,5 @@
 import React from 'react';
-import { session } from '@essential-js/admin/auth';
+import { session, User } from '@essential-js/admin/auth';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Dialog } from '@essential-js/admin/components/dialog';
 import { ProfileImage } from './image';
@@ -7,8 +7,8 @@ import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
 
 export const Profile = () => {
-	const [user, setUser] = React.useState(session.user);
-	useBinder([session], () => setUser({ ...session.user }));
+	const [user, setUser] = React.useState<User>(session.user);
+	useBinder([session], () => setUser(session.user));
 
 	const options = {
 		toggler: {

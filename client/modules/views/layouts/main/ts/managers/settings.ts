@@ -7,12 +7,12 @@ export class SettingsManager extends ReactiveModel<SettingsManager> {
 	#collection: Widgets = new Widgets();
 	allWidgets: IWidget[] = [];
 
-	#selectedWidgets: IWidget[] = [];
+	#selectedWidgets: Widget[] = [];
 	get selectedWidgets() {
 		return this.#selectedWidgets;
 	}
 
-	set selectedWidgets(value: IWidget[]) {
+	set selectedWidgets(value: Widget[]) {
 		this.#selectedWidgets = value;
 		this.triggerEvent();
 	}
@@ -43,7 +43,7 @@ export class SettingsManager extends ReactiveModel<SettingsManager> {
 			});
 
 			await Promise.all(promises);
-			this.#selectedWidgets.forEach((item: IWidget, index: number) => {
+			this.#selectedWidgets.forEach((item: Widget, index: number) => {
 				item.set(response.data.entries[index]);
 			});
 

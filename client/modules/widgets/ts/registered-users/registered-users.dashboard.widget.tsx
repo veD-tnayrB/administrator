@@ -11,7 +11,7 @@ Chart.register(LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend);
 
 const manager = new RegisteredUsersWidgetManager();
 
-export /*bundle*/ const RegisteredUsersWidget = React.forwardRef(() => {
+export /*bundle*/ const RegisteredUsersWidget = () => {
 	const [data, setData] = React.useState(manager.data);
 	useBinder([manager], () => setData(manager.data));
 
@@ -67,4 +67,4 @@ export /*bundle*/ const RegisteredUsersWidget = React.forwardRef(() => {
 			</motion.section>
 		</div>
 	);
-});
+};

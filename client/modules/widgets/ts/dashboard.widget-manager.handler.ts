@@ -5,6 +5,8 @@ import { RegisteredUsersWidget } from './registered-users/registered-users.dashb
 import { OnlineUsersWidget } from './online-users/online-users.dashboard.widget';
 import { WelcomeWidget } from './welcome/welcome.dashboard.widget';
 
+type IWidgetComponent = React.FC<{}>;
+
 export interface IWidget {
 	identifier: string;
 	order: number;
@@ -13,14 +15,13 @@ export interface IWidget {
 }
 
 export class WidgetStore extends ReactiveModel<WidgetStore> {
-	#widgets: Map<string, React.ForwardRefExoticComponent<{ metadata: any }> | React.ComponentType<{ metadata: any }>> =
-		new Map();
+	#widgets: Map<string, IWidgetComponent> = new Map();
 	get widgets() {
 		return this.#widgets;
 	}
 
-	defineWidgets = (widgets: { [key: string]: React.ComponentType<{ metadata: any }> }[]) => {
-		const map = new Map<string, React.ComponentType<{ metadata: any }>>();
+	defineWidgets = (widgets: { [key: string]: IWidgetComponent }[]) => {
+		const map = new Map<string, IWidgetComponent>();
 		widgets.forEach((widget) => {
 			Object.keys(widget).forEach((key) => {
 				map.set(key, widget[key]);
