@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
-	onClose: React.MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
+	onClose?: React.MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
 }
 
 export const BaseModal = ({ children, onClose, ...props }: IProps) => {
 	const onClickBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
-		onClose(event);
+		if (onClose) onClose(event);
 	};
 
 	const onClickContent = (event: React.MouseEvent<HTMLDivElement>) => event.stopPropagation();

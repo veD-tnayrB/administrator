@@ -12,19 +12,19 @@ export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [error, setError] = React.useState('');
-	const [item, setItem] = React.useState<IModifyingUser>({ ...store.item.getProperties(), password: '' });
+	const [item, setItem] = React.useState<IModifyingUser>(store.values);
 
 	useBinder([store], () => {
 		setIsLoading(store.fetching);
 		setError(store.error);
 	});
 
-	useBinder([store], () => setItem({ ...store.item.getProperties(), password: '' }), 'hide');
+	useBinder([store], () => setItem(store.values), 'hide');
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
 		const value = type === 'checkbox' ? event.target.checked : rawValue;
-		setItem((currentValue: Partial<IModifyingUser>) => ({ ...currentValue, [name]: value }));
+		setItem((currentValue: IModifyingUser) => ({ ...currentValue, [name]: value }));
 	};
 
 	const onSubmit = (event: React.FormEvent) => {

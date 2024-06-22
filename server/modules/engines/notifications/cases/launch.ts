@@ -152,7 +152,6 @@ export class Launch {
 			tokens = [...new Set(tokens)];
 			tokens = tokens.filter((token) => token);
 			if (!tokens.length) return { status: true };
-			console.log('NOTIFICATION: ', notification);
 
 			const message = {
 				notification: {

@@ -50,7 +50,6 @@ export class Get {
 				const module = action.module.dataValues;
 				const moduleId = module.id;
 
-				console.log('MODULE: ', module);
 				if (!moduleMap[moduleId]) {
 					moduleMap[moduleId] = {
 						id: module.id,
@@ -70,7 +69,6 @@ export class Get {
 			});
 
 			const modulesArray = Object.values(moduleMap);
-			console.log('MODULES ARRAY: ', modulesArray);
 
 			const widgetsProfiles = profile.widgetsProfiles.map((wp) => {
 				const widgetProfile = wp.dataValues;
@@ -97,7 +95,6 @@ export class Get {
 				widgets: widgetsProfiles,
 			};
 
-			console.log('RESULT: ', result);
 			return { status: true, data: result };
 		} catch (error) {
 			return { status: false, error };

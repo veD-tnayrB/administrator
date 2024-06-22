@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { Button } from 'pragmate-ui/components';
 import { Checkbox } from 'pragmate-ui/form';
 import { Widget, IWidget } from '@essential-js/admin/models';
@@ -14,10 +14,9 @@ export const WidgetList = () => {
 		store.isSettingsOpen = false;
 	};
 
-	console.log('SETTINGS MANAGER: ', settingsManager.allWidgets);
 	const output = settingsManager.allWidgets.map((record: IWidget, index) => {
 		const selected = settingsManager.selectedWidgets.some((item: Widget) => item.id === record.id);
-		const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
 			const { checked } = event.target;
 			if (!checked) {
 				settingsManager.selectedWidgets = settingsManager.selectedWidgets.filter(
@@ -27,9 +26,12 @@ export const WidgetList = () => {
 			}
 
 			const instance = new Widget({ id: record.id });
-			instance.set(record);
+			await instance.set(record);
 			instance.columnPosition = 1; // DEFAULT POSITION
 			instance.rowPosition = settingsManager.selectedWidgets.length + 1;
+
+			console.log('RECORD: ', { record });
+			console.log('INSTANCE: ', { instance, record });
 			settingsManager.selectedWidgets = [...settingsManager.selectedWidgets, instance];
 		};
 		return (

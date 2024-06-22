@@ -3,6 +3,7 @@ import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } fro
 import { IGetRegisteredUsersByMonth, getRegisteredUsersByMonth } from './cases/get-registered-users-by-month';
 import { Publish } from './cases/publish';
 import { IUser } from '@essential-js/admin-server/types';
+import { Get, IGetParams } from './cases/get';
 
 export /*bundle*/ interface IUser {
 	id: string;
@@ -61,25 +62,8 @@ export class UsersManager extends Manager {
 		return Publish.update(params, `/update/${this.managerName}`);
 	};
 
-	get = async (params: { id: string }) => {
-		try {
-			const specs: any = { where: { id: params.id } };
-			const dataModel = await this.model.findOne(specs);
-			if (!dataModel) return { status: true, data: null };
-			const data = dataModel.get({ plain: true });
-
-			const profiles = await DB.models.UsersProfiles.findAll({
-				where: { userId: params.id },
-			});
-			data.profiles = profiles.map((profile) => profile.dataValues.profileId);
-
-			return { status: true, data };
-		} catch (exc) {
-			return {
-				status: false,
-				error: { message: exc, target: `/get/${this.managerName}` },
-			};
-		}
+	get = (params: IGetParams) => {
+		return Get.execute(params);
 	};
 }
 

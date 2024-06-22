@@ -29,7 +29,7 @@ export function Layout({ store }: { store: StoreManager }) {
 		() => {
 			const current = notificationsHandler.current;
 			if (!current) return;
-			toast(<Notification {...current} />);
+			toast(<Notification title={current.title} body={current.body} />);
 		},
 		'notification.received',
 	);

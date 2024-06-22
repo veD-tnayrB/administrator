@@ -26,6 +26,21 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.triggerEvent();
 	}
 
+	values: IModifyingUser = {
+		names: '',
+		id: '',
+		timeUpdated: new Date(),
+		timeCreated: new Date(),
+		profileImg: '',
+		profiles: [],
+		permissions: [],
+		token: '',
+		lastNames: '',
+		email: '',
+		active: false,
+		password: '',
+	};
+
 	load = async () => {
 		try {
 			this.fetching = true;

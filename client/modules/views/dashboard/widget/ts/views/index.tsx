@@ -46,6 +46,7 @@ function View({ store }: { store: StoreManager }) {
 	});
 	const output = widgets.map((record: Layout) => {
 		const Widget = widgetStore.widgets.get(record.i);
+		if (!Widget) return null;
 		return (
 			<div key={record.i}>
 				<Widget />

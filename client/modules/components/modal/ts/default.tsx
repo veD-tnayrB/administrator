@@ -2,8 +2,8 @@ import React from 'react';
 import { BaseModal } from './base';
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
-	title: string;
-	onClose: () => void;
+	title?: string;
+	onClose?: () => void;
 	children: React.ReactNode;
 }
 
