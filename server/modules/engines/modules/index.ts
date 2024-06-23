@@ -1,47 +1,23 @@
 import { DB } from '@essential-js/admin-server/db';
-import { Manager, List } from '@essential-js/admin-server/helpers';
+import { Manager } from '@essential-js/admin-server/helpers';
 import { IPublish, Publish } from './cases/publish';
-import { IAction } from '@essential-js/admin-server/types';
+import { IModule } from '@essential-js/admin-server/types';
+import { IListParams, List } from './cases/lists';
 
-export class ModulesManager extends Manager {
-	declare model: typeof DB.models.Modules;
+export class ModulesManager extends Manager<IModule> {
 	constructor() {
-		super({ model: DB.models.Modules });
+		super({ model: DB.models.Modules, managerName: 'modules' });
 	}
 
-	list = async (params) => {
-		try {
-			const include = [
-				{
-					model: DB.models.ModulesActions,
-					as: 'modulesActions',
-				},
-			];
-			params.include = include;
-			const response = await List.execute(this.model, params, 'modules/list');
-			if (!response.status) throw response.error;
-
-			const modules = response.data.entries.map((module) => {
-				module.actions = module.modulesActions.map((action: IAction) => ({
-					id: action.id,
-					name: action.name,
-					description: action.description,
-				}));
-				return module;
-			});
-
-			return { status: true, data: { entries: modules } };
-		} catch (error) {
-			console.error('ERROR GETTING MODULE LIST: ', error);
-			return { status: false, error };
-		}
+	list = async (params: IListParams) => {
+		return List.execute(params);
 	};
 
-	create = (params: IPublish) => {
+	create = <IPublish>(params: IPublish) => {
 		return Publish.create(params, '/modules/create');
 	};
 
-	update = (params: IPublish) => {
+	update = <IPublish>(params: IPublish) => {
 		return Publish.update(params, '/modules/update');
 	};
 }

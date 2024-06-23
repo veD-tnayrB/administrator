@@ -1,7 +1,17 @@
 import { DB } from '@essential-js/admin-server/db';
 import { MD5 } from '@bgroup/helpers/md5';
-import { IUser } from '@essential-js/admin-server/types';
 import { mailer, registeredUserTemplate } from '@essential-js/admin-server/emails';
+
+export interface IPublishParams {
+	id: string;
+	active: boolean;
+	password: string;
+	email: string;
+	lastNames: string;
+	names: string;
+	profiles: string[];
+	profileImg: string;
+}
 
 export class Publish {
 	static model: typeof DB.models.Users = DB.models.Users;
@@ -31,7 +41,7 @@ export class Publish {
 		return { status: true, password: MD5(newPassword) };
 	};
 
-	static create = async (params: IUser, target: string) => {
+	static create = async (params: IPublishParams, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, ...userParams } = params;
@@ -55,7 +65,7 @@ export class Publish {
 		}
 	};
 
-	static update = async (params: IUser, target: string) => {
+	static update = async (params: IPublishParams, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, profiles, ...userParams } = params;

@@ -120,7 +120,7 @@ export class Publish {
 			return { status: true, data: { id: profileData.id } };
 		} catch (error) {
 			await transaction.rollback();
-			return { status: false, error: { message: 'Failed to create profile', error, target: 'profile/update' } };
+			return { status: false, error: { error, target: 'profile/update' } };
 		}
 	}
 
@@ -135,7 +135,7 @@ export class Publish {
 			return { status: true, data: { id } };
 		} catch (error) {
 			await transaction.rollback();
-			return { status: false, error: { message: 'Failed to update profile', error, target: 'profile/update' } };
+			return { status: false, error: { error, target: 'profile/update' } };
 		}
 	}
 }

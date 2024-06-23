@@ -1,6 +1,7 @@
 export /*bundle*/ interface IAuthUser {
 	id: string;
 	active: boolean;
+	password: string;
 	email: string;
 	lastNames: string;
 	names: string;

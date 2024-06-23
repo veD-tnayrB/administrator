@@ -1,5 +1,4 @@
 import { DB } from '@essential-js/admin-server/db';
-import { actions } from '@bgroup/data-model/db';
 
 export interface IGetParams {
 	id: string;

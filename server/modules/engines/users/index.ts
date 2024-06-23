@@ -1,24 +1,11 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } from '@essential-js/admin-server/helpers';
 import { IGetRegisteredUsersByMonth, getRegisteredUsersByMonth } from './cases/get-registered-users-by-month';
-import { Publish } from './cases/publish';
+import { IPublishParams, Publish } from './cases/publish';
 import { IUser } from '@essential-js/admin-server/types';
 import { Get, IGetParams } from './cases/get';
 
-export /*bundle*/ interface IUser {
-	id: string;
-	active: boolean;
-	email: string;
-	lastNames: string;
-	profiles: string[];
-	names: string;
-	timeCreated: Date;
-	timeUpdated: Date;
-}
-
-export class UsersManager extends Manager {
-	declare model: typeof DB.models.Users;
-	declare managerName: string;
+export class UsersManager extends Manager<IUser> {
 	#excelHandler: ExcelHandler;
 
 	constructor() {
@@ -54,11 +41,11 @@ export class UsersManager extends Manager {
 		return this.#excelHandler.getTemplate(params);
 	};
 
-	create = (params: IUser) => {
+	create = (params: IPublishParams) => {
 		return Publish.create(params, `/create/${this.managerName}`);
 	};
 
-	update = (params: IUser) => {
+	update = (params: IPublishParams) => {
 		return Publish.update(params, `/update/${this.managerName}`);
 	};
 

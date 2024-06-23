@@ -26,7 +26,6 @@ export class ForgetPassword {
 				url: `${process.env.RECOVER_PASSWORD_LINK}${token}`,
 				names: user.dataValues.names,
 				lastNames: user.dataValues.lastNames,
-				token,
 			});
 
 			const response = await mailer.sendMail({

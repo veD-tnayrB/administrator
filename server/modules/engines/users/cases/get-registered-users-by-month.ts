@@ -5,7 +5,7 @@ export interface IGetRegisteredUsersByMonth {
 }
 
 interface IParams extends IGetRegisteredUsersByMonth {
-	model: Model;
+	model: Model['_attributes'];
 }
 
 export const getRegisteredUsersByMonth = async ({ year, model }: IParams) => {

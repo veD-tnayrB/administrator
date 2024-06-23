@@ -1,13 +1,13 @@
 import { DB } from '@essential-js/admin-server/db';
 import { Manager, ExcelHandler, IBulkImport, IGetTemplate, IGenerateReport } from '@essential-js/admin-server/helpers';
+import { IProfile } from '@essential-js/admin-server/types';
 import { Get, IGetParams } from './get';
 import { IPublish, Publish } from './publish';
 
-export class ProfilesManager extends Manager {
-	declare model: typeof DB.models.Profiles;
+export class ProfilesManager extends Manager<IProfile> {
 	#excelHandler: ExcelHandler;
 	constructor() {
-		super({ model: DB.models.Profiles });
+		super({ model: DB.models.Profiles, managerName: 'profiles' });
 		this.#excelHandler = new ExcelHandler({
 			model: this.model,
 			managerName: 'profiles',

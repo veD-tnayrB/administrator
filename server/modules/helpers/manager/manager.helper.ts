@@ -1,10 +1,10 @@
 import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
 import { IGenerateReport, generateReport } from '../excel-handler/cases/generate-report';
-import { List } from './list';
+import { IListParams, List } from './list';
 
 export /*bundle*/ abstract class Manager<T> {
-	#model: Model;
+	#model: Model['_attributes'];
 	get model() {
 		return this.#model;
 	}
@@ -14,13 +14,13 @@ export /*bundle*/ abstract class Manager<T> {
 		return this.#managerName;
 	}
 
-	constructor({ model, managerName }: { model: Model; managerName: string }) {
+	constructor({ model, managerName }: { model: Model['_attributes']; managerName: string }) {
 		if (!model) throw new Error('DB_MODEL_IS_REQUIRED');
 		this.#model = model;
 		this.#managerName = managerName;
 	}
 
-	list = (params: { where: { ids?: string; [key: string]: unknown }; [key: string]: unknown }) => {
+	list = (params: IListParams) => {
 		return List.execute(this.#model, params, `/list/${this.#managerName}`);
 	};
 
@@ -28,7 +28,7 @@ export /*bundle*/ abstract class Manager<T> {
 		return actions.publish(this.#model, { ...params }, `/create/${this.#managerName}`);
 	};
 
-	update = (params: Partial<T>) => {
+	update = (params: T) => {
 		return actions.publish(this.#model, { ...params }, `/update/${this.#managerName}`);
 	};
 
@@ -41,6 +41,6 @@ export /*bundle*/ abstract class Manager<T> {
 	};
 
 	generateReport = async ({ header, params, type }: IGenerateReport) => {
-		return generateReport<T>({ header, params, type, model: this.#model, managerName: this.#managerName });
+		return generateReport({ header, params, type, model: this.#model, managerName: this.#managerName });
 	};
 }

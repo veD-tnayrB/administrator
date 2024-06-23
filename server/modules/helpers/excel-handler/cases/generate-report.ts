@@ -23,20 +23,20 @@ export /*bundle*/ interface IGenerateReport {
 }
 
 interface IParams extends IGenerateReport {
-	model: Model;
+	model: Model['_attributes'];
 	managerName: string;
 }
 
-export const generateReport = async <T>({ header, params, type, model, managerName }: IParams) => {
+export const generateReport = async ({ header, params, type, model, managerName }: IParams) => {
 	try {
 		if (!params) return { status: true };
 		const response = await actions.list(model, { ...params }, `/list/${managerName}`);
 		if (!response) throw new Error("FILTER_COULDN'T_BE_APPLIED");
 
-		let formatedItems: Array<T> = [];
+		let formatedItems = [];
 		const cleanedHeader = header.filter((item) => item.name);
 		if ('data' in response) {
-			formatedItems = response.data.entries.map((item: T) => {
+			formatedItems = response.data.entries.map((item) => {
 				let newItem = {};
 				cleanedHeader.forEach((h) => {
 					newItem[h.name] = item[h.name];

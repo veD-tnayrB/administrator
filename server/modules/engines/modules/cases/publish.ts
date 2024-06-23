@@ -1,6 +1,7 @@
 import { DB } from '@essential-js/admin-server/db';
+import { IModule } from '@essential-js/admin-server/types';
 
-export interface IPublish {
+export interface IPublish extends Omit<IModule, 'actions'> {
 	id: string;
 	label: string;
 	description: string;

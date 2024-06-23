@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { DB } from '@essential-js/admin-server/db';
 import { Excel } from '@bggroup/excel/excel';
-import { Model } from 'sequelize-typescript';
+import { Model } from 'sequelize';
 
 type TDataType = 'string' | 'number' | 'boolean' | 'date';
 
@@ -43,12 +43,12 @@ export /*bundle*/ interface IBulkImport {
 	fileType: string;
 }
 
-interface IParams<T> extends IBulkImport {
-	model: Model;
+interface IParams extends IBulkImport {
+	model: Model['_attributes'];
 	templateConfig: Record<string, string>;
 }
 
-export const bulkImport = async <T>({ filepath, model, templateConfig, fileType }: IParams<T>) => {
+export const bulkImport = async ({ filepath, model, templateConfig, fileType }: IParams) => {
 	const transaction = await DB.sequelize.transaction();
 	let formattedFileType: 'csv' | 'xlsx' = fileType.split('.')[1] as 'csv' | 'xlsx';
 	formattedFileType = formattedFileType.toLowerCase() as 'csv' | 'xlsx';

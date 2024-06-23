@@ -56,7 +56,7 @@ export /*bundle*/ class Route<T> {
 	get = async (req: Request, res: Response) => {
 		try {
 			let { id } = req.params;
-			const response: ResponseType = await this.#manager.get({
+			const response = await this.#manager.get({
 				id: id as string,
 			});
 			if (!response.status && 'error' in response) throw response.error;

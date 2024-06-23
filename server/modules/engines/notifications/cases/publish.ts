@@ -12,12 +12,11 @@ export interface IPublish {
 }
 
 export class Publish {
-	static model: DB.models.Notifications = DB.models.Notifications;
-	static usersNotificationsModel: DB.models.UsersProfiles = DB.models.UsersNotifications;
-	static profilesNotificationsModel: DB.models.ProfilesNotifications = DB.models.ProfilesNotifications;
+	static model: typeof DB.models.Notifications = DB.models.Notifications;
+	static usersNotificationsModel: typeof DB.models.UsersProfiles = DB.models.UsersNotifications;
+	static profilesNotificationsModel: typeof DB.models.ProfilesNotifications = DB.models.ProfilesNotifications;
 
 	static handleRelations = async (notificationId: string, profiles: string[], users: string[], transaction) => {
-		// TODO: Bryant: handle relations the register are being repetitive, isnt being validated the second time save
 		const notification = await Publish.model.findOne({ where: { id: notificationId }, transaction });
 		if (!notification) throw 'NOTIFICATION_WASNT_CREATED_CORRECTLY';
 
@@ -25,18 +24,18 @@ export class Publish {
 		await Publish.profilesNotificationsModel.destroy({ where: { notificationId } }, { transaction });
 
 		if (profiles.length) {
-			const profilesToCreate = profiles.map(profileId => ({ id: uuid(), notificationId, profileId }));
+			const profilesToCreate = profiles.map((profileId) => ({ id: uuid(), notificationId, profileId }));
 
 			await Publish.profilesNotificationsModel.bulkCreate(profilesToCreate, { transaction });
 		}
 		if (users.length) {
-			const usersToCreate = users.map(userId => ({ id: uuid(), notificationId, userId }));
+			const usersToCreate = users.map((userId) => ({ id: uuid(), notificationId, userId }));
 
 			await Publish.usersNotificationsModel.bulkCreate(usersToCreate, { transaction });
 		}
 	};
 
-	static create = async (params: IPublish, target: string) => {
+	static create = async <T>(params: IPublish, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, users, ...notification } = params;
@@ -51,7 +50,7 @@ export class Publish {
 		}
 	};
 
-	static update = async (params: IPublish, target: string) => {
+	static update = async <T>(params: IPublish, target: string) => {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, profiles, users, ...notification } = params;
