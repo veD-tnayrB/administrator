@@ -15,7 +15,7 @@ function View({ store }: { store: StoreManager }) {
 
 	React.useEffect(() => {
 		store.onWidthChange();
-	}, []);
+	}, [ref.current]);
 
 	const onWidth = () => {
 		requestAnimationFrame(() => {

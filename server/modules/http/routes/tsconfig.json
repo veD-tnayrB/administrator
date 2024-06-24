@@ -1,9 +1,14 @@
 {
 	"compilerOptions": {
 		"module": "es2020",
+		"strict": true,
+		"noImplicitUseStrict": true,
+		"alwaysStrict": false,
+		"skipLibCheck": true,
 		"target": "es2018",
-		"noImplicitAny": false,
 		"experimentalDecorators": true,
-		"moduleResolution": "Node"
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "Node",
+		"jsx": "react"
 	}
 }

@@ -22,7 +22,7 @@ export const Tabs = () => {
 
 	const onTabsSelected = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
 		store.setTab(index);
-	}
+	};
 
 	const panes = [
 		{ tab: 'profiles', content: '' },
@@ -40,7 +40,7 @@ export const Tabs = () => {
 						<Tab>Associated profiles</Tab>
 						<Tab>Associated individual users</Tab>
 					</PuiTabs>
-					<Panes className="panes">
+					<Panes className="panes ">
 						<Profiles />
 						<Users />
 					</Panes>

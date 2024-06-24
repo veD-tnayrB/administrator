@@ -32,7 +32,7 @@
 				"/auth/forget-password"
 			]
 		},
-		"server": "http://localhost:5001/"
+		"server": "http://localhost:5001/admin/"
 	},
 	"libraries": {
 		"imports": [

@@ -26,7 +26,7 @@ export const Profiles = () => {
 		},
 	};
 	return (
-		<div>
+		<div className="pt-2">
 			<ListView {...listProperties} />
 		</div>
 	);
