@@ -51,6 +51,10 @@
 				"platform": "web",
 				"ports": {
 					"bundles": 6550
+				},
+				"minify": {
+					"css": true,
+					"js": true
 				}
 			},
 			{
@@ -62,6 +66,10 @@
 				},
 				"ts": {
 					"compiler": "tsc"
+				},
+				"minify": {
+					"css": true,
+					"js": true
 				}
 			}
 		]

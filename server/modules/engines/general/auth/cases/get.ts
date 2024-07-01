@@ -12,7 +12,6 @@ export class Get {
 
 	static execute = async (params: { token: string }) => {
 		try {
-			console.log('EXECUTE TOKEN: ', params.token);
 			const accessTokenInstance = await this.#accessTokensModel.findOne({
 				where: { accessToken: params.token },
 				include: [{ model: DB.models.Users, as: 'user' }],
