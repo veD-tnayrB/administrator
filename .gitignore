@@ -34,3 +34,4 @@ output
 !server/modules/node_modules
 .vercel
 ca.pem
+.sql
