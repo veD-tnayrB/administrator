@@ -121,7 +121,8 @@
 	"static": {
 		"includes": [
 			"assets",
-			"firebase-messaging-sw.js"
+			"firebase-messaging-sw.js",
+			"vercel.json"
 		]
 	}
 }
