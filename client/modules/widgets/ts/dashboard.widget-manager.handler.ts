@@ -4,6 +4,7 @@ import { TotalsWidget } from './totals/totals.dashboard.widget';
 import { RegisteredUsersWidget } from './registered-users/registered-users.dashboard.widget';
 import { OnlineUsersWidget } from './online-users/online-users.dashboard.widget';
 import { WelcomeWidget } from './welcome/welcome.dashboard.widget';
+import { UsersLocationWidget } from './users-location/users-location.dashboard.widget';
 
 type IWidgetComponent = React.FC<{}>;
 
@@ -39,5 +40,6 @@ widgetStore.defineWidgets([
 		'registered-users': RegisteredUsersWidget,
 		'online-users': OnlineUsersWidget,
 		welcome: WelcomeWidget,
+		'users-location': UsersLocationWidget,
 	},
 ]);

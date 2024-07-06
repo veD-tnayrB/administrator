@@ -28,4 +28,9 @@ export /*bundle*/ class Widgets extends Collection {
 		if (!this.provider.getTotals) return;
 		return this.provider.getTotals();
 	};
+
+	getUsersLocation = () => {
+		if (!this.provider.getUsersLocation) return;
+		return this.provider.getUsersLocation();
+	};
 }

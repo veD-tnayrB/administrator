@@ -56,7 +56,7 @@ function View({ store }: { store: StoreManager }) {
 	return (
 		<div className="min-h-screen h-full w-full min-w-screen" ref={ref}>
 			<GridLayout
-				margin={[0, 0]}
+				margin={[15, 5]}
 				autoSize
 				useCSSTransforms
 				className="layout"

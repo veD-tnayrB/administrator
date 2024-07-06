@@ -54,11 +54,26 @@ class WidgetsRoutes extends Route {
 		}
 	};
 
+	getUsersLocation = async (req: Request, res: Response) => {
+		try {
+			const response = await Widgets.getUsersLocation();
+			if (!response.status && 'error' in response) throw response.error;
+			const formatedResponse = response;
+			return res.status(200).json(formatedResponse);
+		} catch (exc) {
+			console.error('Error /get-users-location', exc);
+			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			res.status(500).send(responseError);
+		}
+	};
+
 	setup = (app: Application) => {
 		app.get(`/admin/widgets`, checkToken, this.list);
-		app.get('/admin/widgets/get-totals', checkToken, this.getTotals);
 		app.get('/admin/widgets/get-dashboard/:userId', checkToken, this.getDashboard);
 		app.post('/admin/widgets/save-dashboard', checkToken, this.saveDashboard);
+
+		app.get('/admin/widgets/get-totals', checkToken, this.getTotals);
+		app.get('/admin/widgets/get-users-location', checkToken, this.getUsersLocation);
 	};
 }
 
