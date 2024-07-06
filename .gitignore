@@ -36,3 +36,5 @@ output
 ca.pem
 .sql
 compilations
+compile.bat
+compile.sh
