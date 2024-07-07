@@ -4,6 +4,7 @@ import { useProfilesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
+import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
 import { toast } from 'react-toastify';
 import { Modules } from './modules';
 import { Widgets } from './widgets';
@@ -23,9 +24,13 @@ export const Form = () => {
 		active: store.item.active,
 		modules: store.selectedModules,
 	});
+	const [error, setError] = React.useState(store.error);
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 
-	useBinder([store], () => setIsLoading(store.fetching));
+	useBinder([store], () => {
+		setIsLoading(store.fetching);
+		setError(store.error);
+	});
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
@@ -48,6 +53,8 @@ export const Form = () => {
 
 	return (
 		<FormUI onSubmit={onSubmit} className="managment-form">
+			<Alert type={IAlert.Error}>{error}</Alert>
+
 			<Input className="fixed-label" label="Name" value={values.name} name="name" onChange={onChange} />
 			<Input
 				className="fixed-label"

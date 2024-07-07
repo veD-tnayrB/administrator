@@ -25,6 +25,11 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		return this.#widgets;
 	}
 
+	#error: string = '';
+	get error() {
+		return this.#error;
+	}
+
 	#selectedModules: Record<string, Record<string, boolean>> = {};
 	get selectedModules() {
 		return this.#selectedModules;
@@ -109,6 +114,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			this.fetching = true;
 			const widgets = Object.keys(this.#selectedWidgets);
 			const toSendValues = { ...values, modules: this.#selectedModules, widgets };
+			const validationError = this.#validateValues(toSendValues);
+			if (validationError) {
+				this.#error = validationError;
+				this.triggerEvent();
+				return;
+			}
+
 			await this.#item.set(toSendValues);
 
 			const response = await this.#item.publish(toSendValues);
@@ -125,8 +137,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		}
 	};
 
-	#validateValues = () => {
-		if (!this.#item.name) return 'The profile must have a name.';
+	#validateValues = (values: IValues) => {
+		if (!values.name) return 'The profile must have a name.';
 		if (Object.entries(this.#selectedModules).length) return 'The profile must have at least one module selected';
 	};
 
