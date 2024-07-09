@@ -18,7 +18,7 @@
 		}
 	}
 
-	button {
+	.filter-toggler {
 		border: 1px solid var(--primary);
 		border-radius: var(--border-tertiary);
 		padding: 0 0.5rem;
@@ -26,54 +26,54 @@
 		&:hover {
 			background: var(--primary);
 
-			.filter-toggler {
-				p {
-					color: var(---on-primary);
-				}
-
-				svg {
-					stroke: var(--on-primary);
-				}
-			}
-		}
-
-		.filter-toggler {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 0.5rem;
-
 			p {
-				color: var(--primary);
+				color: var(---on-primary);
 			}
 
 			svg {
-				stroke: var(--primary);
-				width: 20px;
-				height: 20px;
+				stroke: var(--on-primary);
 			}
 		}
 	}
 
-	.modal {
-		border-radius: 10px;
-	}
-	form {
+	.filter-toggler {
 		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding: 0.2rem 0;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
 
-		input {
-			font-size: 0.8rem;
-			padding: 0.3rem 0.5rem;
+		p {
+			color: var(--primary);
 		}
 
-		.actions {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			gap: 0.5rem;
+		svg {
+			stroke: var(--primary);
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.modal-background {
+		.modal-content {
+			width: 600px;
+
+			.content {
+				padding: 1rem 0;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+
+				input {
+					font-size: 0.9rem;
+				}
+			}
+
+			.actions {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 0.5rem;
+			}
 		}
 	}
 }

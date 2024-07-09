@@ -45,7 +45,6 @@ export const WidgetSettings = () => {
 	const widgets = settingsManager.selectedWidgets.map((widget, index) => {
 		const x = !widget.columnPosition && widget.columnPosition !== 0 ? 0 : widget.columnPosition;
 		const y = !widget.rowPosition && widget.rowPosition !== 0 ? index : widget.rowPosition;
-		!widget.identifier && console.log('WIDGET VALUE RN: ', widget.identifier, widget.width);
 		return {
 			i: widget.identifier,
 			x,

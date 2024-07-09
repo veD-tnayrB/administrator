@@ -20,7 +20,7 @@ export const WidgetList = () => {
 			const { checked } = event.target;
 			if (!checked) {
 				settingsManager.selectedWidgets = settingsManager.selectedWidgets.filter(
-					(item: Widget) => item.id !== record.id,
+					(item: Widget) => item.id !== record.id
 				);
 				return;
 			}
@@ -30,8 +30,6 @@ export const WidgetList = () => {
 			instance.columnPosition = 1; // DEFAULT POSITION
 			instance.rowPosition = settingsManager.selectedWidgets.length + 1;
 
-			console.log('RECORD: ', { record });
-			console.log('INSTANCE: ', { instance, record });
 			settingsManager.selectedWidgets = [...settingsManager.selectedWidgets, instance];
 		};
 		return (

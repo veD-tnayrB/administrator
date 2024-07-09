@@ -23,10 +23,9 @@ export class UsersLocationWidgetManager extends ReactiveModel<UsersLocationWidge
 			this.fetching = true;
 
 			const response = await this.#collection.getUsersLocation();
-			console.log('RESPONSE: ', response);
 			const formatedData: Array<{ label: string; value: number }> = [];
 			Object.entries(response.data).forEach(([key, value]) =>
-				formatedData.push({ label: key, value: value as number }),
+				formatedData.push({ label: key, value: value as number })
 			);
 
 			this.#data = formatedData;

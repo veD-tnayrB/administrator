@@ -4,6 +4,7 @@ import { FiltersToggler } from './filters-toggler';
 import { Form } from 'pragmate-ui/form';
 import { Button } from 'pragmate-ui/components';
 import { useListViewContext } from '../../../../context';
+import { Modal } from '@essential-js/admin/components/modal';
 
 export interface IFilter extends React.HTMLAttributes<HTMLInputElement> {
 	label: string;
@@ -52,34 +53,28 @@ export const FiltersSearch = (props: IFilters) => {
 		</div>
 	));
 
-	const options = {
-		toggler: {
-			className: 'toggler',
-			children: <FiltersToggler label={props.label} />,
-			name: 'filters',
-		},
-		setIsOpen,
-		isOpen,
-	};
-
 	const cls = isOpen ? 'open' : '';
 
 	return (
 		<div className={`filters ${cls}`}>
-			<Dialog {...options}>
-				<Form onSubmit={onSubmit}>
-					<h4>{props.title}</h4>
-					{output}
-					<div className="actions">
-						<Button onClick={reset} variant="secondary" type="reset">
-							{props.actions.reset.label}
-						</Button>
-						<Button variant="primary" type="submit">
-							{props.actions.apply.label}
-						</Button>
-					</div>
-				</Form>
-			</Dialog>
+			<FiltersToggler setIsOpen={setIsOpen} label={props.label} />
+
+			{isOpen && (
+				<Modal>
+					<Form onSubmit={onSubmit}>
+						<h4 className="text-2xl">{props.title}</h4>
+						<div className="content">{output}</div>
+						<div className="actions">
+							<Button onClick={reset} variant="secondary" type="reset">
+								{props.actions.reset.label || 'Reset'}
+							</Button>
+							<Button variant="primary" type="submit">
+								{props.actions.apply.label || 'Confirm'}
+							</Button>
+						</div>
+					</Form>
+				</Modal>
+			)}
 		</div>
 	);
 };
