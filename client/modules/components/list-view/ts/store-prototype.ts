@@ -145,21 +145,28 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	search = async (search: { [key: string]: unknown } | string) => {
 		try {
 			this.fetching = true;
-			const query: Record<string, unknown> = {};
-			this.generalFilters.forEach((item) => {
-				const value = typeof search === 'string' ? search : search[item];
-				if (!value) return;
+			let query: Record<string, unknown> = {};
 
-				query[item] = value;
-			});
+			const isSpecificFilter =
+				typeof search === 'object' &&
+				Object.keys(search).some((element) => !this.generalFilters.includes(element));
 
+			if (!isSpecificFilter) {
+				this.generalFilters.forEach((item) => {
+					const value = typeof search === 'string' ? search : search[item];
+					if (!value) return;
+
+					query[item] = value;
+				});
+			}
 			const { start, ...propsToSend } = this.#params;
 
 			const params = {
 				...propsToSend,
-				where: query,
+				where: isSpecificFilter ? search : query,
 				start: 0,
 			};
+			console.log('PARAMS:', { isSpecificFilter, search, query });
 			const response = await this.#collection.load(params);
 			this.#items = response.data;
 		} catch (error) {

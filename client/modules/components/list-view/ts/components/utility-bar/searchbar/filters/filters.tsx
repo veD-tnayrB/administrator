@@ -31,7 +31,12 @@ export const FiltersSearch = (props: IFilters) => {
 	};
 
 	const onSubmit = async () => {
-		await store.search(values);
+		const toSearchValues: Record<string, string> = {};
+		Object.keys(values).forEach((property) => {
+			if (values[property]) toSearchValues[property] = values[property];
+		});
+
+		await store.search(toSearchValues);
 		setIsOpen(false);
 	};
 
