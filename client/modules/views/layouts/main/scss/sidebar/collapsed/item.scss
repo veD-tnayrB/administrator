@@ -1,4 +1,3 @@
-
 .main-layout {
 	nav.main-layout-sidebar.collapsed {
 		.sidebar-content {
@@ -7,7 +6,7 @@
 					span {
 						visibility: hidden;
 						//display: none;
-						transition: all .1s ease-in-out;
+						transition: all 0.1s ease-in-out;
 					}
 				}
 			}
