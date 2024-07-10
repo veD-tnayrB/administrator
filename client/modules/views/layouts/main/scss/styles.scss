@@ -11,10 +11,11 @@
 
 	&:has(.main-layout-sidebar.collapsed) {
 		.content {
+			padding: 1.25rem;
 		}
 	}
 
-	&:empty {
-		background: blue;
-	}
+	// &:empty {
+	// 	background: blue;
+	// }
 }
