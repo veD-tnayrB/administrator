@@ -32,8 +32,8 @@ export /*bundle*/ const UsersLocationWidget = () => {
 	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
 	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--secondary-10');
 
-	const values = data.map((item) => item.value);
-	const labels = data.map((item) => item.label);
+	const values = data.map(item => item.value);
+	const labels = data.map(item => item.label);
 
 	const chart = {
 		labels,
@@ -41,6 +41,7 @@ export /*bundle*/ const UsersLocationWidget = () => {
 			{
 				data: values,
 				backgroundColor: [primary, secondary, quaternary, quinary],
+				border: false,
 			},
 		],
 	};
@@ -51,6 +52,7 @@ export /*bundle*/ const UsersLocationWidget = () => {
 				beginAtZero: true,
 			},
 		},
+		borderWidth: 0,
 	};
 
 	const animation = {

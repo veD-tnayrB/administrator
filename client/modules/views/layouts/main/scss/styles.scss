@@ -6,14 +6,13 @@
 
 	.content {
 		background: var(--background);
-		padding: 0.5rem;
+		padding: 1.25rem;
 	}
 
-	&:has(.main-layout-sidebar.collapsed) {
-		.content {
-			padding: 1.25rem;
-		}
-	}
+	// &:has(.main-layout-sidebar.collapsed) {
+	// 	.content {
+	// 	}
+	// }
 
 	// &:empty {
 	// 	background: blue;

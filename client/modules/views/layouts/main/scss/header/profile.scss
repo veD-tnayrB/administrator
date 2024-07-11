@@ -29,6 +29,10 @@
 						height: 100%;
 						overflow: hidden;
 					}
+
+					svg {
+						stroke: var(--on-surface);
+					}
 				}
 			}
 		}

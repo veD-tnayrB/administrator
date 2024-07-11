@@ -57,14 +57,14 @@ function View({ store }: { store: StoreManager }) {
 		<div className="min-h-screen h-full w-full min-w-screen" ref={ref}>
 			<GridLayout
 				margin={[15, 5]}
+				containerPadding={[0, 0]}
 				autoSize
 				useCSSTransforms
 				className="layout"
 				layout={widgets}
 				cols={12}
 				rowHeight={150}
-				width={width}
-			>
+				width={width}>
 				{output}
 			</GridLayout>
 		</div>
