@@ -103,4 +103,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 This template is provided as-is, and while it is extensively tested and maintained, the maintainers of this repository
 are not responsible for any issues that arise from its use.
 
-Thank you for considering the Central Administrator Template for your next project!
+Thank you for considering the Essential Administrator for your next project!
