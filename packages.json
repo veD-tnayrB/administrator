@@ -1,7 +1,1 @@
-[
-	"/server/package.json",
-	"/client/package.json",
-	"../dependencies/pragmate-ui/src/package.json",
-	"../dependencies/reactive-model/library/package.json",
-	"../dependencies/http-suite/library/package.json"
-]
+["/server/package.json", "/client/package.json", "../dependencies/pragmate-ui/src/package.json"]

@@ -15,6 +15,10 @@
 						outline: 1px solid var(--primary);
 					}
 
+					span {
+						font-size: 0.8rem;
+					}
+
 					&:hover {
 						background: var(--primary);
 						opacity: 0.9;
@@ -55,15 +59,12 @@
 						gap: 0.5rem;
 
 						.icon {
-							width: 22px;
-							height: 22px;
-							aspect-ratio: 1/1;
 							display: flex;
 							align-items: center;
 
 							svg {
-								width: 22px;
-								height: 22px;
+								width: 20px;
+								height: 20px;
 								fill: transparent;
 								stroke: var(--on-surface);
 								stroke-width: 1.5px;

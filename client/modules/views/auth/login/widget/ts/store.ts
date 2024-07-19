@@ -18,7 +18,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		try {
 			this.fetching = true;
 			const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-			const notificationsToken = await notificationsHandler.token;
+			const notificationsToken = notificationsHandler.token;
 			const response = await session.login({ ...params, timezone, notificationsToken }, provider);
 			if (!response.status) throw response.error;
 

@@ -36,8 +36,7 @@
 	},
 	"libraries": {
 		"imports": [
-			"pragmate-ui",
-			"@bgroup/http-suite"
+			"pragmate-ui"
 		]
 	},
 	"modules": {

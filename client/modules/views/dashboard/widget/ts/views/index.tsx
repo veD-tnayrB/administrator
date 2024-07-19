@@ -48,7 +48,7 @@ function View({ store }: { store: StoreManager }) {
 		const Widget = widgetStore.widgets.get(record.i);
 		if (!Widget) return null;
 		return (
-			<div key={record.i}>
+			<div key={record.i} className="flex items-center ">
 				<Widget />
 			</div>
 		);
@@ -63,8 +63,9 @@ function View({ store }: { store: StoreManager }) {
 				className="layout"
 				layout={widgets}
 				cols={12}
-				rowHeight={150}
-				width={width}>
+				rowHeight={110}
+				width={width}
+			>
 				{output}
 			</GridLayout>
 		</div>

@@ -1,11 +1,13 @@
-div.pui-input {
+div.pui-input,
+div.pui-textarea {
 	border-radius: var(--border-tertiary);
 	position: relative;
 	margin: 0;
 	transition: all 0.2s linear;
 	min-height: 38px;
 
-	input {
+	input,
+	textarea {
 		border: 1px solid transparent;
 		border-radius: var(--border-tertiary);
 		background: var(--background);

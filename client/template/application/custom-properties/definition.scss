@@ -21,7 +21,7 @@
 	@include neutral-palette();
 	@include light.properties();
 	@media (prefers-color-scheme: light) {
-		@include dark.properties();
+		@include light.properties();
 	}
 }
 
