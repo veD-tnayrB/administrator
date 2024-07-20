@@ -50,7 +50,9 @@ export /*bundle*/ const OnlineUsersWidget = () => {
 		<div className="online-users-widget">
 			<motion.section {...animation}>
 				<h3>Online users</h3>
-				<Doughnut data={chart} options={options} />
+				<div className="graph">
+					<Doughnut data={chart} options={options} />
+				</div>
 			</motion.section>
 		</div>
 	);

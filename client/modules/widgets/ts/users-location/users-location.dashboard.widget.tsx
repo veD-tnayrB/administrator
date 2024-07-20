@@ -32,8 +32,8 @@ export /*bundle*/ const UsersLocationWidget = () => {
 	const quaternary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
 	const quinary = getComputedStyle(document.documentElement).getPropertyValue('--secondary-10');
 
-	const values = data.map(item => item.value);
-	const labels = data.map(item => item.label);
+	const values = data.map((item) => item.value);
+	const labels = data.map((item) => item.label);
 
 	const chart = {
 		labels,
@@ -64,7 +64,9 @@ export /*bundle*/ const UsersLocationWidget = () => {
 		<div className="online-users-widget">
 			<motion.section {...animation}>
 				<h3>Users Location</h3>
-				<PolarArea data={chart} options={options} />
+				<div className="graph">
+					<PolarArea data={chart} options={options} />
+				</div>
 			</motion.section>
 		</div>
 	);

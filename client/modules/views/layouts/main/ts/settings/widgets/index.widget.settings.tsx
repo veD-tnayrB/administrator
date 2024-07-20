@@ -81,7 +81,7 @@ export const WidgetSettings = () => {
 						className="layout"
 						layout={widgets}
 						cols={12}
-						rowHeight={150}
+						rowHeight={110}
 						width={width}
 					>
 						{output}
