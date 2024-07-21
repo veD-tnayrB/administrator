@@ -18,6 +18,7 @@ export const TemplateExcel = (props: ITemplate) => {
 	return (
 		<Button
 			name="generate-excel-template"
+			aria-label={title}
 			title={title}
 			onClick={onClick}
 			variant="secondary"

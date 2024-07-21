@@ -94,6 +94,7 @@ export const Form = () => {
 				onChange={onSelectChange}
 				options={formatedOptions}
 				label="Profiles"
+				name="profiles"
 				value={profilesValue || []}
 			/>
 

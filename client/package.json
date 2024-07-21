@@ -121,7 +121,8 @@
 		"includes": [
 			"assets",
 			"firebase-messaging-sw.js",
-			"vercel.json"
+			"vercel.json",
+			"robots.txt"
 		]
 	}
 }

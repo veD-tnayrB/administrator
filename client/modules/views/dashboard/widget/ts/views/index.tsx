@@ -6,11 +6,12 @@ import GridLayout, { Layout } from 'react-grid-layout';
 import { widgetStore } from '@essential-js/admin/widgets';
 import { IWidget } from '@essential-js/admin/models';
 
-export /*bundle*/
-function View({ store }: { store: StoreManager }) {
+const WIDTH_PLACEHOLDER = 1024;
+
+export /*bundle*/ function View({ store }: { store: StoreManager }) {
 	const [, setUpdate] = React.useState({});
-	const [width, setWidth] = React.useState(0);
 	const ref = React.useRef<HTMLDivElement>(null);
+	const [width, setWidth] = React.useState(ref.current?.offsetWidth || WIDTH_PLACEHOLDER);
 	useBinder([store], () => setUpdate({}));
 
 	React.useEffect(() => {
@@ -26,6 +27,7 @@ function View({ store }: { store: StoreManager }) {
 
 	useBinder([store], onWidth, 'resize');
 
+	console.log('store.ready', store.ready, width);
 	if (!store.ready) return <SpinnerPage />;
 
 	const widgets = store.selectedWidgets.map((widget: IWidget, index: number) => {
@@ -44,12 +46,13 @@ function View({ store }: { store: StoreManager }) {
 			static: true,
 		};
 	});
+
 	const output = widgets.map((record: Layout) => {
 		const Widget = widgetStore.widgets.get(record.i);
 		if (!Widget) return null;
 		return (
 			<div key={record.i} className="flex items-center ">
-				<Widget />
+				{width !== 0 && <Widget />}
 			</div>
 		);
 	});

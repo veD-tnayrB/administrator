@@ -15,6 +15,7 @@ export const Profile = () => {
 			className: 'dialog-toggler',
 			children: <ProfileImage name={user.fullName} src={user.profileImg} />,
 			name: 'user-profile',
+			'aria-label': 'Profile',
 		},
 	};
 

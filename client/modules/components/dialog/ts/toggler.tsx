@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { HTMLProps } from 'react';
 import { Button } from 'pragmate-ui/components';
 import Tippy from '@tippyjs/react';
 
-export interface IToggler {
+export interface IToggler extends React.RefAttributes<HTMLButtonElement> {
 	label?: string;
 	title?: string;
 }

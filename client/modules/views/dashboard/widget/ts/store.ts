@@ -34,6 +34,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		} finally {
 			this.ready = true;
 			this.fetching = false;
+			console.log('this.ready', this.ready);
 		}
 	};
 
@@ -41,6 +42,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#listenResizes = () => {
 		this.onWidthChange();
+		console.log('RESIZE');
 		layoutStore.on('resize', this.onWidthChange);
 		window.addEventListener('resize', this.onWidthChange);
 	};

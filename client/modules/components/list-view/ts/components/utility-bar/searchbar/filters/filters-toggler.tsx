@@ -11,7 +11,7 @@ export const FiltersToggler = (props: IProps) => {
 		props.setIsOpen((currentValue) => !currentValue);
 	};
 	return (
-		<Button onClick={onClick} className="filter-toggler">
+		<Button aria-label={props.label || 'Filters'} onClick={onClick} className="filter-toggler">
 			{props.label && <p>{props.label}</p>}
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5">
 				<path

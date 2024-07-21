@@ -48,6 +48,7 @@ export const SidebarItem: React.FC<IProps> = (params) => {
 				<Container
 					data-placement="right"
 					onClick={params.onClick}
+					aria-label={params.label}
 					{...properties}
 					className={`sidebar-item-link ${properties.className}`}
 				>

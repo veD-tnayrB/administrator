@@ -14,7 +14,7 @@ export const TemplateCSV = (props: ITemplate) => {
 		store.getTemplate({ type: 'csv' });
 	};
 
-	const title = props.label || 'Download excel template';
+	const title = props.label || 'Download csv template';
 	return (
 		<Button
 			name="generate-template-csv"
@@ -22,6 +22,7 @@ export const TemplateCSV = (props: ITemplate) => {
 			onClick={onClick}
 			variant="secondary"
 			className="generate-report"
+			aria-label={title}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

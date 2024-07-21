@@ -66,7 +66,7 @@ export const Form = () => {
 			</div>
 
 			<div className="flex icon-handler">
-				<Textarea className="w-half" value={item.icon} onChange={onChange} name="icon" label="Icon" />
+				<Textarea className="w-half" value={item.icon} onChange={onChange} name="icon" id="icon" label="Icon" />
 				<div
 					className="icon-container flex items-center justify-center w-half"
 					dangerouslySetInnerHTML={cleanIcon}

@@ -22,7 +22,7 @@ export const Modules = ({ values }: IProps) => {
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Associated modules</h3>
+				<h2>Associated modules</h2>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<ul className="flex flex-col gap-4">{output}</ul>

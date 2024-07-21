@@ -32,7 +32,7 @@ export const Tabs = () => {
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Associations</h3>
+				<h2>Associations</h2>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<TabsContainer onChange={onTabsSelected} panes={panes} active={active}>

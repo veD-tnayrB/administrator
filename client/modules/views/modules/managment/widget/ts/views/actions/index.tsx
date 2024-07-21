@@ -26,7 +26,7 @@ export const Actions = () => {
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Actions</h3>
+				<h2>Actions</h2>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<div className="flex justify-between items-center">

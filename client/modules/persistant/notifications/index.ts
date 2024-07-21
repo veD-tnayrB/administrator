@@ -26,7 +26,6 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	constructor() {
 		super();
 		this.#provider.onMessageReceived = this.#onMessageReceived;
-		this.init();
 	}
 
 	init = async () => {

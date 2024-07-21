@@ -30,7 +30,14 @@ export const Import = (props: IImport) => {
 	return (
 		<>
 			<input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
-			<Button name="import" title={title} onClick={handleClick} variant="secondary" className="import">
+			<Button
+				aria-label="Import"
+				name="import"
+				title={title}
+				onClick={handleClick}
+				variant="secondary"
+				className="import"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"

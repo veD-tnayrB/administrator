@@ -3,7 +3,6 @@ import { RegisteredUsersWidgetManager } from './registered-users.dashboard.manag
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Bar } from 'react-chartjs-2';
 import { Chart, LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend } from 'chart.js';
-import { motion } from 'framer-motion';
 import { YearHandler } from './year-handler';
 import { RegisteredUsersEmpty } from './registered-users-empty.dashboard';
 
@@ -47,11 +46,6 @@ export /*bundle*/ const RegisteredUsersWidget = () => {
 		},
 	};
 
-	const animation = {
-		initial: { opacity: 0 },
-		animate: { opacity: 1 },
-	};
-
 	const content = values.every((val) => val === 0) ? (
 		<RegisteredUsersEmpty />
 	) : (
@@ -60,11 +54,11 @@ export /*bundle*/ const RegisteredUsersWidget = () => {
 
 	return (
 		<div className="registered-users-widget">
-			<motion.section {...animation} className="container">
+			<section className="container">
 				<h3 className="text-center">Registered Users</h3>
 				<YearHandler manager={manager} />
 				{content}
-			</motion.section>
+			</section>
 		</div>
 	);
 };

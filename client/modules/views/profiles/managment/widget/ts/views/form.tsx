@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form as FormUI, Input, Switch } from 'pragmate-ui/form';
+import { Form as FormUI, Input, Switch, Textarea } from 'pragmate-ui/form';
 import { useProfilesManagmentContext } from '../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Button } from 'pragmate-ui/components';
@@ -32,9 +32,9 @@ export const Form = () => {
 		setError(store.error);
 	});
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value: rawValue, type } = event.target;
-		const value = type === 'checkbox' ? event.target.checked : rawValue;
+		const value = type === 'checkbox' ? (event.target as HTMLInputElement).checked : rawValue;
 		setValues({ ...values, [name]: value });
 	};
 
@@ -55,8 +55,16 @@ export const Form = () => {
 		<FormUI onSubmit={onSubmit} className="managment-form">
 			<Alert type={IAlert.Error}>{error}</Alert>
 
-			<Input className="fixed-label" label="Name" value={values.name} name="name" onChange={onChange} />
 			<Input
+				placeholder="Deliveryman"
+				className="fixed-label"
+				label="Name"
+				value={values.name}
+				name="name"
+				onChange={onChange}
+			/>
+			<Textarea
+				placeholder="He is in charge of delivering the packages, he is allowed to see on the dashboard the number of packages he delivered during the day and how much he is paid."
 				className="fixed-label"
 				label="Description"
 				value={values.description}

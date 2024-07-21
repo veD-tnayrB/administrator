@@ -42,6 +42,7 @@ export const ColumnsSelector = (props: IColumnSelector) => {
 		toggler: {
 			children: <ColumnSelectorToggler {...props} />,
 			name: 'column-toggler',
+			'aria-label': props.label || 'Column selector',
 		},
 		isOpen: !!isOpen,
 		setIsOpen,

@@ -32,6 +32,7 @@ export const DownloadTemplate = () => {
 			name: 'generate-excel-template',
 			className: 'generate-report',
 			title: 'Download Template',
+			'aria-label': 'Download Template',
 		},
 	};
 
@@ -39,7 +40,7 @@ export const DownloadTemplate = () => {
 		<Dialog {...options}>
 			<ul>
 				<li>
-					<Button onClick={onExcel} className="generate-report-option">
+					<Button aria-label="Generate Excel Template" onClick={onExcel} className="generate-report-option">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							x="0px"
@@ -55,7 +56,7 @@ export const DownloadTemplate = () => {
 				</li>
 
 				<li>
-					<Button onClick={onCSV} className="generate-report-option">
+					<Button aria-label="Generate CSV Template" onClick={onCSV} className="generate-report-option">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"

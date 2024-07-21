@@ -19,6 +19,7 @@ export const Notification = () => {
 			children: <NotificationToggler hasBeenRead={hasBeenRead} setHasBeenRead={setHasBeenRead} />,
 			className: 'dialog-toggler',
 			name: 'notifications',
+			'aria-label': 'Notifications',
 		},
 	};
 	return (

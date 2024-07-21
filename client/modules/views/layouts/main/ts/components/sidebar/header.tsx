@@ -38,7 +38,12 @@ export const SidebarHeader = ({ theme }: IProps) => {
 			</div>
 
 			<div className="collapsible-container">
-				<Button name={btnName} onClick={toggleCollapse} className={`collapse-btn ${collapsedCls}`}>
+				<Button
+					name={btnName}
+					onClick={toggleCollapse}
+					aria-label={btnName}
+					className={`collapse-btn ${collapsedCls}`}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"

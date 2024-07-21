@@ -40,6 +40,7 @@ export const GenerateReports = () => {
 			name: 'generate-report',
 			className: 'generate-report',
 			title: 'Generate Report',
+			'aria-label': 'Generate Reports',
 		},
 	};
 
@@ -47,7 +48,12 @@ export const GenerateReports = () => {
 		<Dialog {...options}>
 			<ul>
 				<li>
-					<Button name="generate-excel" onClick={onExcel} className="generate-report-option">
+					<Button
+						aria-label="Generate Excel"
+						name="generate-excel"
+						onClick={onExcel}
+						className="generate-report-option"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							x="0px"
@@ -63,7 +69,12 @@ export const GenerateReports = () => {
 				</li>
 
 				<li>
-					<Button onClick={onCSV} className="generate-report-option" name="generate-csv">
+					<Button
+						aria-label="Generate CSV"
+						onClick={onCSV}
+						className="generate-report-option"
+						name="generate-csv"
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"

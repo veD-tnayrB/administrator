@@ -23,7 +23,13 @@ export const PaginatorContent = (props: IPaginator) => {
 				</div>
 
 				<div className="left-actions action">
-					<Button name="first-page" className="left" onClick={store.onFirstPage} disabled={isFirstPage}>
+					<Button
+						aria-label="Fist page"
+						name="first-page"
+						className="left"
+						onClick={store.onFirstPage}
+						disabled={isFirstPage}
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -42,6 +48,7 @@ export const PaginatorContent = (props: IPaginator) => {
 					</Button>
 					<Button
 						name="previous-page"
+						aria-label="Previous page"
 						onClick={store.onPrev}
 						disabled={isFirstPage}
 						className="disabled-class-to-teest"
@@ -64,7 +71,7 @@ export const PaginatorContent = (props: IPaginator) => {
 				</div>
 
 				<div className="right-actions action">
-					<Button name="next-page" onClick={store.onNext} disabled={isLastPage}>
+					<Button aria-label="Next page" name="next-page" onClick={store.onNext} disabled={isLastPage}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"
@@ -80,7 +87,13 @@ export const PaginatorContent = (props: IPaginator) => {
 							<path d="m9 18 6-6-6-6" />
 						</svg>
 					</Button>
-					<Button name="last-page" className="right" disabled={isLastPage} onClick={store.onLastPage}>
+					<Button
+						name="last-page"
+						aria-label="Last page"
+						className="right"
+						disabled={isLastPage}
+						onClick={store.onLastPage}
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							width="24"

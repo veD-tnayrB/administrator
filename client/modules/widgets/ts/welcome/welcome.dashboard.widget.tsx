@@ -1,6 +1,5 @@
-import React, { LegacyRef } from 'react';
+import React from 'react';
 import { WelcomeIllustration } from './welcome-illustration';
-import { motion } from 'framer-motion';
 import { session } from '@essential-js/admin/auth';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 
@@ -34,18 +33,13 @@ export /*bundle*/ const WelcomeWidget = () => {
 	const [names, setNames] = React.useState(session.user.names);
 	useBinder([session], () => setNames(session.user.names));
 
-	const animation = {
-		initial: { opacity: 0 },
-		animate: { opacity: 1 },
-	};
-
 	return (
-		<motion.header {...animation} className="welcome-widget">
+		<header className="welcome-widget">
 			<WelcomeIllustration />
 			<h2>
 				{getGreetings()}, <span>{names}!</span>
 			</h2>
 			<p>Have a great {getMoment()}!</p>
-		</motion.header>
+		</header>
 	);
 };

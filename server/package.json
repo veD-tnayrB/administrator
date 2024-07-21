@@ -24,6 +24,10 @@
 					"bundles": 6571,
 					"http": 6572,
 					"inspect": 6573
+				},
+				"minify": {
+					"css": true,
+					"js": true
 				}
 			},
 			{

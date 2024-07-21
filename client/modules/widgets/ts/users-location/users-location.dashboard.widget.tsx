@@ -13,7 +13,6 @@ import {
 	ArcElement,
 	RadialLinearScale,
 } from 'chart.js';
-import { motion } from 'framer-motion';
 
 Chart.register(RadialLinearScale, LinearScale, BarElement, CategoryScale, Title, Tooltip, Legend, ArcElement);
 
@@ -55,19 +54,14 @@ export /*bundle*/ const UsersLocationWidget = () => {
 		borderWidth: 0,
 	};
 
-	const animation = {
-		initial: { opacity: 0 },
-		animate: { opacity: 1 },
-	};
-
 	return (
 		<div className="online-users-widget">
-			<motion.section {...animation}>
+			<section>
 				<h3>Users Location</h3>
 				<div className="graph">
 					<PolarArea data={chart} options={options} />
 				</div>
-			</motion.section>
+			</section>
 		</div>
 	);
 };

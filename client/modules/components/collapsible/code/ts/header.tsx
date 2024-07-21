@@ -24,10 +24,13 @@ export /*bundle */ function CollapsibleHeader({
 	if (toggleTitle) {
 		attrs.onClick = onClick;
 	}
+
+	const title = open ? 'Close' : 'Open';
+
 	return (
 		<header {...attrs}>
-			<div className='collapsible__header-content'>{children}</div>
-			<IconButton onClick={onClick} className={clsButton} icon={'left'} />
+			<div className="collapsible__header-content">{children}</div>
+			<IconButton aria-label={title} onClick={onClick} className={clsButton} icon={'left'} />
 		</header>
 	);
 }

@@ -18,7 +18,14 @@ export const GenerateCSV = (props: IGenerateReport) => {
 
 	const title = props.label || 'Generate CSV';
 	return (
-		<Button name="generate-csv" title={title} onClick={onClick} variant="secondary" className="generate-report">
+		<Button
+			aria-label="Generate CSV"
+			name="generate-csv"
+			title={title}
+			onClick={onClick}
+			variant="secondary"
+			className="generate-report"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="16"

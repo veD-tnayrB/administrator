@@ -19,7 +19,7 @@ export const Widgets = ({ values }: IProps) => {
 	return (
 		<CollapsibleContainer>
 			<CollapsibleHeader>
-				<h3>Associated widgets</h3>
+				<h2>Associated widgets</h2>
 			</CollapsibleHeader>
 			<CollapsibleContent>
 				<ul className="flex flex-col gap-4">{output}</ul>
