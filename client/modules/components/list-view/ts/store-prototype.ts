@@ -1,5 +1,5 @@
+import { Collection } from '@beyond-js/reactive/entities';
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Collection, Item } from '@beyond-js/reactive/entities';
 import { IFilter } from './components/utility-bar/searchbar/filters/filters';
 import { Reports } from './plugins/reports/manager';
 
@@ -31,7 +31,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	}
 
 	get isAllPageSelected() {
-		const selectedItems = this.#items.filter((item) => this.#selectedItems.has(item.id));
+		const selectedItems = this.#items.filter(item => this.#selectedItems.has(item.id));
 		return selectedItems.length === this.#items.length;
 	}
 
@@ -149,10 +149,10 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 
 			const isSpecificFilter =
 				typeof search === 'object' &&
-				Object.keys(search).some((element) => !this.generalFilters.includes(element));
+				Object.keys(search).some(element => !this.generalFilters.includes(element));
 
 			if (!isSpecificFilter) {
-				this.generalFilters.forEach((item) => {
+				this.generalFilters.forEach(item => {
 					const value = typeof search === 'string' ? search : search[item];
 					if (!value) return;
 
@@ -166,7 +166,6 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 				where: isSpecificFilter ? search : query,
 				start: 0,
 			};
-			console.log('PARAMS:', { isSpecificFilter, search, query });
 			const response = await this.#collection.load(params);
 			this.#items = response.data;
 		} catch (error) {
@@ -264,7 +263,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 	};
 
 	selectItem = ({ id }: { id: string }) => {
-		const item = this.#items.find((item) => item.id === id);
+		const item = this.#items.find(item => item.id === id);
 
 		if (this.#selectedItems.has(id)) {
 			this.#selectedItems.delete(id);
@@ -282,7 +281,7 @@ export /*bundle*/ abstract class StoreListView extends ReactiveModel<StoreListVi
 			return;
 		}
 
-		this.#items.forEach((item) => this.#selectedItems.set(item.id, item));
+		this.#items.forEach(item => this.#selectedItems.set(item.id, item));
 		this.triggerEvent();
 	};
 

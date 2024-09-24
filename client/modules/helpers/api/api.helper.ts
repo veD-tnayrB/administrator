@@ -1,7 +1,7 @@
-import { Api as BaseApi } from '@bgroup/http-suite/api';
-import config from '@essential-js/admin/config';
-import { session } from '@essential-js/admin/auth';
 import { routing } from '@beyond-js/kernel/routing';
+import { Api as BaseApi } from '@bgroup/http-suite/api';
+import { session } from '@essential-js/admin/auth';
+import config from '@essential-js/admin/config';
 
 export /*bundle*/ class Api extends BaseApi {
 	#tokenErrorMessage: string[] = ['TOKEN_EXPIRED', 'INCORRECT_TOKEN'];
@@ -26,9 +26,15 @@ export /*bundle*/ class Api extends BaseApi {
 	}
 
 	// Sobrescribir los métodos específicos para manejar la respuesta de manera centralizada
-	async get(url: string): Promise<any> {
+	async get(
+		url: string,
+		params,
+		header = {
+			'Content-Type': 'application/json',
+		}
+	): Promise<any> {
 		try {
-			const response = await super.get(url);
+			const response = await super.get(url, params, header);
 			this.handleResponse(response);
 			return response;
 		} catch (error) {
@@ -37,9 +43,15 @@ export /*bundle*/ class Api extends BaseApi {
 		}
 	}
 
-	async post(url: string, data?: object): Promise<any> {
+	async post(
+		url: string,
+		data?: object,
+		header = {
+			'Content-Type': 'application/json',
+		}
+	): Promise<any> {
 		try {
-			const response = await super.post(url, data || {});
+			const response = await super.post(url, data || {}, header);
 			this.handleResponse(response);
 			return response;
 		} catch (error) {
@@ -48,9 +60,15 @@ export /*bundle*/ class Api extends BaseApi {
 		}
 	}
 
-	async put(url: string, data?: object): Promise<any> {
+	async put(
+		url: string,
+		data?: object,
+		header = {
+			'Content-Type': 'application/json',
+		}
+	): Promise<any> {
 		try {
-			const response = await super.put(url, data || {});
+			const response = await super.put(url, data || {}, header);
 			this.handleResponse(response);
 			return response;
 		} catch (error) {

@@ -1,6 +1,6 @@
 import { Excel } from '@bggroup/excel/excel';
-import { Model } from 'sequelize';
 import { actions } from '@bgroup/data-model/db';
+import { Model } from 'sequelize';
 
 export type TSheetData = {
 	sheetName: string;
@@ -29,22 +29,22 @@ interface IParams extends IGenerateReport {
 
 export const generateReport = async ({ header, params, type, model, managerName }: IParams) => {
 	try {
-		if (!params) return { status: true };
+		if (!params) throw new Error('PARAMS_REQUIRED');
 		const response = await actions.list(model, { ...params }, `/list/${managerName}`);
 		if (!response) throw new Error("FILTER_COULDN'T_BE_APPLIED");
 
 		let formatedItems = [];
-		const cleanedHeader = header.filter((item) => item.name);
+		const cleanedHeader = header.filter(item => item.name);
 		if ('data' in response) {
-			formatedItems = response.data.entries.map((item) => {
+			formatedItems = response.data.entries.map(item => {
 				let newItem = {};
-				cleanedHeader.forEach((h) => {
+				cleanedHeader.forEach(h => {
 					newItem[h.name] = item[h.name];
 				});
 				return newItem;
 			});
 		}
-		const formatedHeader = cleanedHeader.map((item) => ({ header: item.label, key: item.name }));
+		const formatedHeader = cleanedHeader.map(item => ({ header: item.label, key: item.name }));
 
 		const excel = new Excel();
 

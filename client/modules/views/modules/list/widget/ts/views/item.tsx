@@ -1,8 +1,8 @@
-import React from 'react';
-import { IRow } from '@essential-js/admin/components/list-view';
-import { v4 as uuid } from 'uuid';
-import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
+import { IRow } from '@essential-js/admin/components/list-view';
+import { Button } from 'pragmate-ui/components';
+import React from 'react';
+import { v4 as uuid } from 'uuid';
 import { useModulesListContext } from '../context';
 
 export const Row = ({ propertiesToDisplay, item }: IRow) => {
@@ -23,7 +23,7 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 
 	const onEdit = () => routing.pushState(`/modules/managment/${item.id}`);
 
-	const displayEdit = true; //permissions.has('module.update');
+	const displayEdit = permissions.has('modules.update');
 
 	return (
 		<li className="row">
@@ -42,8 +42,7 @@ export const Row = ({ propertiesToDisplay, item }: IRow) => {
 								strokeWidth="2"
 								strokeLinecap="round"
 								strokeLinejoin="round"
-								className="lucide lucide-pencil-line"
-							>
+								className="lucide lucide-pencil-line">
 								<path d="M12 20h9" />
 								<path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
 								<path d="m15 5 3 3" />

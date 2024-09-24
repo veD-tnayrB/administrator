@@ -1,7 +1,7 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Widgets, IWidget } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
 import { layoutStore } from '@essential-js/admin/layout/main.widget';
+import { IWidget, Widgets } from '@essential-js/admin/models';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#collection: Widgets = new Widgets();
@@ -34,7 +34,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		} finally {
 			this.ready = true;
 			this.fetching = false;
-			console.log('this.ready', this.ready);
 		}
 	};
 
@@ -42,7 +41,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#listenResizes = () => {
 		this.onWidthChange();
-		console.log('RESIZE');
 		layoutStore.on('resize', this.onWidthChange);
 		window.addEventListener('resize', this.onWidthChange);
 	};

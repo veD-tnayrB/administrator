@@ -1,8 +1,9 @@
+import { routing } from '@beyond-js/kernel/routing';
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { IWidget, Widgets, Profile, IProfile, Modules, IModule, IAction } from '@essential-js/admin/models';
 import { session } from '@essential-js/admin/auth';
-import { IValues } from './views/form';
+import { IAction, IModule, IProfile, IWidget, Modules, Profile, Widgets } from '@essential-js/admin/models';
 import { toast } from 'react-toastify';
+import { IValues } from './views/form';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: Profile = new Profile();
@@ -115,6 +116,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			const widgets = Object.keys(this.#selectedWidgets);
 			const toSendValues = { ...values, modules: this.#selectedModules, widgets };
 			const validationError = this.#validateValues(toSendValues);
+
 			if (validationError) {
 				this.#error = validationError;
 				this.triggerEvent();
@@ -128,6 +130,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 			if (this.#refrestUser) await session.load();
 
+			toast.success(this.item.id ? 'Profile updated successfully' : 'Profile created successfully');
+			routing.pushState('/profiles');
+			this.reset();
 			return { status: true };
 		} catch (error) {
 			toast.error('Something went wrong, please try again or contact the administrator');
@@ -139,12 +144,13 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	#validateValues = (values: IValues) => {
 		if (!values.name) return 'The profile must have a name.';
-		if (Object.entries(this.#selectedModules).length) return 'The profile must have at least one module selected';
+		if (Object.entries(values.modules).length === 0) return 'The profile must have at least one module selected';
 	};
-
+	w;
 	reset = () => {
 		this.#item = new Profile();
 		this.#refrestUser = false;
+		this.#error = '';
 		this.#modules = new Modules();
 		this.#widgets = new Widgets();
 		this.#modulesPermissions = new Map();

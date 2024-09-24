@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { StoreManager } from '../store';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { SpinnerPage } from '@essential-js/admin/components/spinner';
-import GridLayout, { Layout } from 'react-grid-layout';
-import { widgetStore } from '@essential-js/admin/widgets';
 import { IWidget } from '@essential-js/admin/models';
+import { widgetStore } from '@essential-js/admin/widgets';
+import * as React from 'react';
+import GridLayout, { Layout } from 'react-grid-layout';
+import { StoreManager } from '../store';
 
 const WIDTH_PLACEHOLDER = 1024;
 
@@ -27,7 +27,6 @@ export /*bundle*/ function View({ store }: { store: StoreManager }) {
 
 	useBinder([store], onWidth, 'resize');
 
-	console.log('store.ready', store.ready, width);
 	if (!store.ready) return <SpinnerPage />;
 
 	const widgets = store.selectedWidgets.map((widget: IWidget, index: number) => {
@@ -67,8 +66,7 @@ export /*bundle*/ function View({ store }: { store: StoreManager }) {
 				layout={widgets}
 				cols={12}
 				rowHeight={110}
-				width={width}
-			>
+				width={width}>
 				{output}
 			</GridLayout>
 		</div>

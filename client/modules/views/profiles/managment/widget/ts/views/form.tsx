@@ -1,11 +1,10 @@
-import React from 'react';
-import { Form as FormUI, Input, Switch, Textarea } from 'pragmate-ui/form';
-import { useProfilesManagmentContext } from '../context';
-import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
-import { toast } from 'react-toastify';
+import { Button } from 'pragmate-ui/components';
+import { Form as FormUI, Input, Switch, Textarea } from 'pragmate-ui/form';
+import React from 'react';
+import { useProfilesManagmentContext } from '../context';
 import { Modules } from './modules';
 import { Widgets } from './widgets';
 
@@ -39,10 +38,7 @@ export const Form = () => {
 	};
 
 	const onSubmit = async () => {
-		await store.save(values);
-		toast.success(store.item.id ? 'Profile updated successfully' : 'Profile created successfully');
-		routing.pushState('/profiles');
-		store.reset();
+		store.save(values);
 	};
 
 	const onCancel = () => {

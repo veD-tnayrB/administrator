@@ -12,7 +12,7 @@ export class Reports {
 		try {
 			this.#parent.fetching = true;
 
-			this.#parent.selectedItems.forEach(async (item) => {
+			this.#parent.selectedItems.forEach(async item => {
 				const response = await item.delete();
 				if (!response) throw 'RECORD_COULDNT_BE_REMOVED';
 			});

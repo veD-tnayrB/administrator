@@ -1,6 +1,6 @@
-import { Users } from '@essential-js/admin-server/engines/users';
-import { Route, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { Users } from '@essential-js/admin-server/engines/users';
+import { Route, checkPermission, checkToken } from '@essential-js/admin-server/helpers';
 import { Application, Request, Response } from 'express';
 import * as formidable from 'formidable';
 import * as path from 'path';
@@ -75,6 +75,7 @@ class UsersRoutes extends Route {
 			if ((!response.status && 'error' in response) || !response.data) throw response.error;
 
 			const excelPath = path.join(__dirname, response.data.pathFile);
+			res.setHeader('Content-Type', 'text/html');
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /generate-report', exc);
@@ -90,6 +91,7 @@ class UsersRoutes extends Route {
 			if ((!response.status && 'error' in response) || !response.data) throw response.error;
 
 			const excelPath = path.join(__dirname, response.data.pathFile);
+			res.setHeader('Content-Type', 'text/html');
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /get-template', exc);
@@ -106,7 +108,7 @@ class UsersRoutes extends Route {
 			`/admin/users/generate-report/:type`,
 			checkToken,
 			checkPermission('users.generate-report'),
-			this.generateReport,
+			this.generateReport
 		);
 		app.get(`/admin/user/:id`, checkToken, checkPermission('users.get'), this.get);
 		app.put(`/admin/user/:id`, checkToken, checkPermission('users.update'), this.update);
