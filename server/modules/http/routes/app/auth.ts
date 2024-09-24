@@ -1,7 +1,7 @@
-import { Auth } from '@essential-js/admin-server/engines/auth';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
-import { Application, Request, Response } from 'express';
+import { Auth } from '@essential-js/admin-server/engines/auth';
 import { checkToken } from '@essential-js/admin-server/helpers';
+import { Application, Request, Response } from 'express';
 
 export class AuthRoutes {
 	async login(req: Request, res: Response) {
@@ -72,7 +72,7 @@ export class AuthRoutes {
 	async forgetPassword(req: Request, res: Response) {
 		try {
 			const params = req.params;
-			if (!params.email || typeof params !== 'string') throw 'EMAIL_NOT_PROVIDED';
+			if (!params.email || typeof params !== 'string') throw 'EMAIL_NOT_PROVIDED L';
 			const response = await Auth.forgetPassword(params);
 			if (!response.status) throw response.error;
 
