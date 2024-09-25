@@ -146,7 +146,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		if (!values.name) return 'The profile must have a name.';
 		if (Object.entries(values.modules).length === 0) return 'The profile must have at least one module selected';
 	};
-	w;
 	reset = () => {
 		this.#item = new Profile();
 		this.#refrestUser = false;
