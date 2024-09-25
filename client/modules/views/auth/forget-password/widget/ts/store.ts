@@ -19,7 +19,6 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	sendForgetPasswordEmail = async (params: { email: string }) => {
 		try {
 			this.fetching = true;
-			console.log('PARAMS: ', params);
 			if (!EMAIL_REGEX.test(params.email)) throw 'INVALID_EMAIL';
 
 			const response = await session.user.forgetPassword(params);

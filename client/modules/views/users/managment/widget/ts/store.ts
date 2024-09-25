@@ -116,6 +116,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	reset = () => {
 		this.#profiles = new Profiles();
 		this.#item = new User();
+		this.#error = '';
 		this.ready = false;
 		this.triggerEvent('hide');
 	};

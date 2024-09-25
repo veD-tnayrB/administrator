@@ -72,7 +72,6 @@ export class AuthRoutes {
 	async forgetPassword(req: Request, res: Response) {
 		try {
 			const params = req.params;
-			console.log('params: ', { params, validation: !params.email || typeof params !== 'string' });
 
 			if (!params.email) throw 'EMAIL_NOT_PROVIDED';
 			const response = await Auth.forgetPassword(params);

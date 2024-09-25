@@ -17,7 +17,7 @@ export class Get {
 				where: { userId: params.id },
 			});
 			data.profiles = profiles.map((profile) => profile.dataValues.profileId);
-
+			delete data.password;
 			return { status: true, data };
 		} catch (exc) {
 			return {

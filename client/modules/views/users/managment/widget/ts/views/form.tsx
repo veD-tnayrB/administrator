@@ -12,14 +12,14 @@ export const Form = () => {
 	const { store } = useUsersManagmentContext();
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [error, setError] = React.useState('');
-	const [item, setItem] = React.useState(store.item.getProperties());
+	const [item, setItem] = React.useState({ ...store.item.getProperties() });
 
 	useBinder([store], () => {
 		setIsLoading(store.fetching);
 		setError(store.error);
 	});
 
-	useBinder([store], () => setItem(store.item.getProperties()), 'hide');
+	useBinder([store], () => setItem({ ...store.item.getProperties() }), 'hide');
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value: rawValue, type } = event.target;
@@ -43,7 +43,7 @@ export const Form = () => {
 	const activeSwitchLabel = item.active ? 'Active' : 'Inactive';
 
 	const info =
-		item.password && !store.isCreating
+		item.password && !store.isCreating && !store.fetching
 			? `The user ${item.email} will receive an email notifying him about the change of his password and its value.`
 			: '';
 
