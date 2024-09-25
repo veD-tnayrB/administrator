@@ -1,6 +1,14 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
-import { UserItemProvider } from './user.item.provider';
 import { ILogin } from './types';
+import { UserItemProvider } from './user.item.provider';
+
+interface IPermission {
+	actionId: string;
+	actionName: string;
+	moduleId: string;
+	moduleState: number;
+	moduleTo: string;
+}
 
 export /*bundle*/ interface IUser {
 	id: string;
@@ -11,7 +19,7 @@ export /*bundle*/ interface IUser {
 	timeCreated: Date;
 	profiles: { id: string; name: string }[];
 	profileImg: string;
-	permissions: { id: string; name: string }[];
+	permissions: IPermission[];
 	timeUpdated: Date;
 	token: string;
 }
@@ -24,6 +32,13 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		let lastNamesArray = this.lastNames.split(' ');
 
 		return this.lastNames ? `${namesArray[0]} ${lastNamesArray[0]}` : this.names;
+	}
+
+	get profilePermissions() {
+		const map = new Map<string, IPermission>();
+		this.permissions.forEach((item: IPermission) => map.set(item.actionName, item));
+
+		return map;
 	}
 
 	constructor() {

@@ -1,8 +1,8 @@
-import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Profile, User, IUser, Profiles } from '@essential-js/admin/models';
-import { toast } from 'react-toastify';
 import { routing } from '@beyond-js/kernel/routing';
+import { ReactiveModel } from '@beyond-js/reactive/model';
 import { session } from '@essential-js/admin/auth';
+import { IUser, Profile, Profiles, User } from '@essential-js/admin/models';
+import { toast } from 'react-toastify';
 
 const EMAIL_REGEX =
 	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,6 +42,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	load = async ({ id }: { id: string | undefined }) => {
 		try {
 			if (!id || id === 'create') {
+				if (!session.user.profilePermissions.has('users.create')) routing.pushState('/error/403');
+
 				this.#isCreating = true;
 				this.#item.profiles = [];
 				this.#item.active = 1;
@@ -51,6 +53,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				this.ready = true;
 				return;
 			}
+			if (!session.user.profilePermissions.has('users.update')) routing.pushState('/error/403');
 
 			this.fetching = true;
 			this.#id = id;

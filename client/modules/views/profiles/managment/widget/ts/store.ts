@@ -61,6 +61,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	load = async ({ id }: { id: string | undefined }) => {
 		try {
 			if (!id || id === 'create') {
+				if (!session.user.profilePermissions.has('profiles.create')) routing.pushState('/error/403');
+
 				this.#isCreating = true;
 				const modulesResponse = await this.#modules.load();
 				if (!modulesResponse.status) throw modulesResponse.error;
@@ -70,9 +72,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 				this.#calculateselectedModules();
 				return this.triggerEvent();
 			}
+			if (!session.user.profilePermissions.has('profiles.update')) routing.pushState('/error/403');
 
 			this.fetching = true;
-
 			const response = await this.#item.load({ id });
 			if (response.status && !response.data) this.notFound = true;
 			if (!response.status) throw response.error;

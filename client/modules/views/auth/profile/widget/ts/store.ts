@@ -1,14 +1,10 @@
-import { ReactiveModel } from '@beyond-js/reactive/model';
-import { toast } from 'react-toastify';
 import { routing } from '@beyond-js/kernel/routing';
-import { User, IUser, session } from '@essential-js/admin/auth';
+import { ReactiveModel } from '@beyond-js/reactive/model';
+import { IUser, session, User } from '@essential-js/admin/auth';
+import { toast } from 'react-toastify';
 
 const EMAIL_REGEX =
 	/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-export interface IModifyingUser extends IUser {
-	password: string;
-}
 
 export class StoreManager extends ReactiveModel<StoreManager> {
 	#item: User = session.user;
@@ -26,20 +22,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 		this.triggerEvent();
 	}
 
-	values: IModifyingUser = {
-		names: '',
-		id: '',
-		timeUpdated: new Date(),
-		timeCreated: new Date(),
-		profileImg: '',
-		profiles: [],
-		permissions: [],
-		token: '',
-		lastNames: '',
-		email: '',
-		active: false,
-		password: '',
-	};
+	values: IUser = session.user.getProperties() as IUser;
 
 	load = async () => {
 		try {
@@ -95,6 +78,7 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	reset = () => {
 		this.ready = false;
+		this.values = this.#item.getProperties() as IUser;
 		this.triggerEvent('hide');
 	};
 }

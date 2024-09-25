@@ -1,10 +1,11 @@
-import { ReactiveModel } from '@beyond-js/reactive/model';
-import { Notification, INotification } from '@essential-js/admin/models';
 import { routing } from '@beyond-js/kernel/routing';
+import { ReactiveModel } from '@beyond-js/reactive/model';
+import { session } from '@essential-js/admin/auth';
+import { Notification } from '@essential-js/admin/models';
 import { toast } from 'react-toastify';
+import { FrecuencyManager } from './managers/frecuency';
 import { ProfilesManager } from './managers/profiles';
 import { UsersManager } from './managers/users';
-import { FrecuencyManager } from './managers/frecuency';
 import { IValues } from './views/form';
 
 export class StoreManager extends ReactiveModel<StoreManager> {
@@ -42,6 +43,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 
 	load = async ({ id }: { id: string | undefined }) => {
 		if (!id || id === 'create') {
+			if (!session.user.profilePermissions.has('notifications.create')) routing.pushState('/error/403');
+
 			await this.#profiles.load({ where: { active: 1 } });
 			await this.#users.load({ where: { active: 1 } });
 			this.#isCreating = true;
@@ -49,6 +52,8 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			return;
 		}
 		try {
+			if (!session.user.profilePermissions.has('notifications.update')) routing.pushState('/error/403');
+
 			this.fetching = true;
 
 			const response = await this.#item.load({ id });

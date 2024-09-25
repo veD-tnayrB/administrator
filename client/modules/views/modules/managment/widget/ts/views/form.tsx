@@ -1,13 +1,13 @@
-import React from 'react';
-import { Input, Switch, Textarea } from 'pragmate-ui/form';
-import { useModulesManagmentContext } from '../context';
-import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import { Button } from 'pragmate-ui/components';
 import { routing } from '@beyond-js/kernel/routing';
-import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
-import { Actions } from './actions';
+import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { IModule } from '@essential-js/admin/models';
 import DOMPurify from 'dompurify';
+import { Alert, ITypes as IAlert } from 'pragmate-ui/alert';
+import { Button } from 'pragmate-ui/components';
+import { Input, Switch, Textarea } from 'pragmate-ui/form';
+import React from 'react';
+import { useModulesManagmentContext } from '../context';
+import { Actions } from './actions';
 
 export const Form = () => {
 	const { store, item, setItem } = useModulesManagmentContext();
@@ -20,8 +20,6 @@ export const Form = () => {
 	});
 
 	useBinder([store], () => setItem(store.item.getProperties()), 'hide');
-
-	if (!store.ready) return null;
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value: rawValue, type } = event.target;

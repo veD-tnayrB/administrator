@@ -1,8 +1,9 @@
+import { NotFound } from '@essential-js/admin/components/not-found';
+import { SpinnerPage } from '@essential-js/admin/components/spinner';
 import * as React from 'react';
-import { Form } from './form';
 import { IContext, ModulesManagmentContext } from '../context';
 import { StoreManager } from '../store';
-import { NotFound } from '@essential-js/admin/components/not-found';
+import { Form } from './form';
 
 export /*bundle*/
 function View({ store }: { store: StoreManager }) {
@@ -23,6 +24,9 @@ function View({ store }: { store: StoreManager }) {
 
 	const mode = store.isCreating ? 'Modules creation' : 'Modules edition';
 	const description = store.isCreating ? creationDescription : editingDescription;
+
+	if (!store.ready) return <SpinnerPage />;
+
 	return (
 		<ModulesManagmentContext.Provider value={contextValue}>
 			<div className="modules-managment page-container managment-page">
