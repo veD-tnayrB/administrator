@@ -80,6 +80,49 @@ and you are ready
 
 Then go to `http://localhost:6550/`
 
+## Firebase Setup
+
+This section explains how to generate Firebase credentials and set up Firebase for your project.
+
+[Link to Firebase Console](https://console.firebase.google.com/)
+
+### Step 1: Create a Firebase Project
+- Go to the Firebase Console.
+- Sign in with your Google account if you haven't already.
+- Click on Add Project or Create a project.
+- Follow the on-screen instructions to name your project and accept the Firebase terms.
+- Once the project is created, you'll be redirected to the Firebase dashboard.
+
+### Step 2: Enable Firebase Services
+- In your Firebase dashboard, select the Project Settings by clicking the gear icon next to your project name.
+- Navigate to the General tab.
+- Scroll down to the **"Your Apps"** section, and click Add App.
+- Choose your platform (Web) and follow the instructions to register your app.
+
+### Step 3: Download Firebase Credentials (Service Account)
+- From the Firebase console, click the gear icon next to Project Overview and select Project Settings.
+- Navigate to the Service accounts tab.
+- Click Generate New Private Key under the Firebase Admin SDK section.
+- A .json file will be downloaded to your computer. This file contains your Firebase credentials.
+- Note: Keep this file secure, as it contains sensitive information about your project.
+
+### Step 4: Add Firebase Credentials to Your Project
+- Copy the downloaded serviceAccountKey.json file to your project directory.
+
+
+## Import Database
+To set up the database for this project, follow the steps below:
+
+Navigate to the `/docs/db.sql` file in the project directory. This file contains the SQL script necessary to initialize the database.
+
+## Note:
+
+### Start Admin Server
+
+Once the workspace is set up and the database is imported, you can start the admin-server service:
+
+![alt text](readme/image.png)
+
 ## Customization
 
 To customize this template for your own use:
