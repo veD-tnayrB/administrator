@@ -1,6 +1,6 @@
-import { Notifications } from '@essential-js/admin-server/engines/notifications';
-import { Route, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { Notifications } from '@essential-js/admin-server/engines/notifications';
+import { Route, checkPermission, checkToken } from '@essential-js/admin-server/helpers';
 import { Application, Request, Response } from 'express';
 
 class NotificationsRoutes extends Route {
@@ -19,7 +19,7 @@ class NotificationsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /launch', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -34,7 +34,7 @@ class NotificationsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /launch', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -48,7 +48,7 @@ class NotificationsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /launch', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -65,7 +65,7 @@ class NotificationsRoutes extends Route {
 			`/admin/notifications/history/mark-as-read`,
 			checkToken,
 			checkPermission('notifications.get'),
-			this.markAsRead,
+			this.markAsRead
 		);
 	};
 }

@@ -1,7 +1,7 @@
-import { Modules } from '@essential-js/admin-server/engines/modules';
-import { Route, ISuccess, checkToken, checkPermission } from '@essential-js/admin-server/helpers';
-import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { Modules } from '@essential-js/admin-server/engines/modules';
+import { ISuccess, Route, checkPermission, checkToken } from '@essential-js/admin-server/helpers';
+import { Application, Request, Response } from 'express';
 
 class ModulesRoutes extends Route {
 	constructor() {
@@ -21,7 +21,7 @@ class ModulesRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};

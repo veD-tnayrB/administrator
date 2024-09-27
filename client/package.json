@@ -13,6 +13,11 @@
 			"es"
 		]
 	},
+	"libraries": {
+		"imports": [
+			"@beyond-js/reactive"
+		]
+	},
 	"params": {
 		"environment": "development",
 		"application": {
@@ -73,7 +78,6 @@
 		"@beyond-js/bee": "^0.0.6",
 		"@beyond-js/kernel": "~0.1.9",
 		"@beyond-js/react-18-widgets": "~1.0.1",
-		"@beyond-js/reactive": "^1.1.12",
 		"@bgroup/helpers": "^1.0.7",
 		"@bgroup/http-suite": "^1.0.7",
 		"@firebase/app": "^0.9.23",

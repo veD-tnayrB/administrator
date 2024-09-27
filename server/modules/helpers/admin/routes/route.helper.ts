@@ -1,6 +1,5 @@
-import { Request, Response } from 'express';
-import { Manager } from '../manager/manager.helper';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { Request, Response } from 'express';
 
 export /*bundle*/ interface ISuccess {
 	status: boolean;
@@ -48,7 +47,7 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /list', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};
@@ -64,7 +63,7 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};
@@ -78,7 +77,7 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /create', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};
@@ -92,7 +91,7 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /update', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};
@@ -108,7 +107,7 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /delete', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).send(responseError);
 		}
 	};

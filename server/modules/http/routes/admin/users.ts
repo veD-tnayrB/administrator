@@ -22,7 +22,7 @@ class UsersRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /list', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -62,7 +62,7 @@ class UsersRoutes extends Route {
 			});
 		} catch (exc) {
 			console.error('Error in bulk importation', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -79,7 +79,7 @@ class UsersRoutes extends Route {
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /generate-report', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -95,7 +95,7 @@ class UsersRoutes extends Route {
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /get-template', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};

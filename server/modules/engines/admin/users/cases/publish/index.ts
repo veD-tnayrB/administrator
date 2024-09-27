@@ -1,5 +1,5 @@
-import { DB } from '@essential-js/admin-server/db';
 import { MD5 } from '@bgroup/helpers/md5';
+import { DB } from '@essential-js/admin-server/db';
 import { mailer, registeredUserTemplate } from '@essential-js/admin-server/emails';
 
 export interface IPublishParams {
@@ -21,7 +21,7 @@ export class Publish {
 		await Publish.usersProfilesModel.destroy({ where: { userId } }, { transaction });
 
 		if (profiles.length) {
-			const profilesToCreate = profiles.map((profileId) => ({ userId, profileId }));
+			const profilesToCreate = profiles.map(profileId => ({ userId, profileId }));
 			await Publish.usersProfilesModel.bulkCreate(profilesToCreate, { transaction });
 		}
 	};
@@ -45,16 +45,26 @@ export class Publish {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, ...userParams } = params;
-			userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
-			const response = await this.handlePassword(
-				userParams.email,
-				userParams.password,
-				userParams.names,
-				userParams.lastNames,
-			);
-			if (!response.status) throw response.error;
 
-			userParams.password = response.password;
+			if (!userParams.email) throw 'EMAIL_IS_REQUIRED';
+			if (!userParams.names) throw 'EMAIL_IS_REQUIRED';
+			if (!userParams.lastNames) throw 'EMAIL_IS_REQUIRED';
+
+			const isDuplicated = await Publish.model.findOne({ where: { email: userParams.email } });
+			if (isDuplicated) throw 'EMAIL_ALREADY_EXISTS';
+
+			if (userParams.password) {
+				userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
+				const response = await this.handlePassword(
+					userParams.email,
+					userParams.password,
+					userParams.names,
+					userParams.lastNames
+				);
+
+				if (!response.status) throw response.error;
+				userParams.password = response.password;
+			}
 			const user = await Publish.model.create(userParams, { transaction });
 			await this.handleProfiles(userParams.id, profiles || [], transaction);
 			await transaction.commit();
@@ -69,6 +79,26 @@ export class Publish {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { id, profiles, ...userParams } = params;
+			if (!userParams.email) throw 'EMAIL_IS_REQUIRED';
+			if (!userParams.names) throw 'EMAIL_IS_REQUIRED';
+			if (!userParams.lastNames) throw 'EMAIL_IS_REQUIRED';
+
+			const isDuplicated = await Publish.model.findOne({ where: { email: userParams.email } });
+			if (isDuplicated && isDuplicated.dataValues.id !== id) throw 'EMAIL_ALREADY_EXISTS';
+
+			if (userParams.password) {
+				userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
+				const response = await this.handlePassword(
+					userParams.email,
+					userParams.password,
+					userParams.names,
+					userParams.lastNames
+				);
+
+				if (!response.status) throw response.error;
+				userParams.password = response.password;
+			}
+
 			await Publish.model.update(userParams, { where: { id }, transaction });
 			await this.handleProfiles(id, profiles, transaction);
 			await transaction.commit();

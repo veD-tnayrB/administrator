@@ -18,6 +18,12 @@
 			justify-content: center;
 			gap: 1.5rem;
 
+			.header-container {
+				.alert {
+					margin: 0.5rem 0;
+				}
+			}
+
 			span {
 				font-size: 0.8rem;
 				font-style: normal;

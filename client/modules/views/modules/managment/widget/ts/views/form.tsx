@@ -56,6 +56,7 @@ export const Form = () => {
 				<Input
 					className="fixed-label w-full"
 					label="Url"
+					disabled={!store.isCreating}
 					placeholder="/profiles"
 					value={item.to}
 					name="to"

@@ -38,6 +38,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 	#id: string = 'create';
 
 	#refreshUser: boolean = false;
+	#exceptions: { [key: string]: string } = {
+		EMAIL_ALREADY_EXISTS: 'Theres already a user with this email',
+	};
 
 	load = async ({ id }: { id: string | undefined }) => {
 		try {
@@ -100,6 +103,9 @@ export class StoreManager extends ReactiveModel<StoreManager> {
 			routing.pushState('/users');
 			return { status: true };
 		} catch (error) {
+			console.log('ERROR: ', error);
+			const exc = error as { message: string };
+			this.#error = this.#exceptions[exc.message];
 			toast.error('Something went wrong, please try again or contact the administrator');
 			return { status: false, error };
 		} finally {

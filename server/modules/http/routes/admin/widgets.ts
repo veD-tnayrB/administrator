@@ -1,7 +1,7 @@
-import { Widgets } from '@essential-js/admin-server/engines/widgets';
-import { Route, ISuccess, ResponseType, checkToken } from '@essential-js/admin-server/helpers';
-import { Application, Request, Response } from 'express';
 import { Response as ResponseAPI } from '@bgroup/helpers/response';
+import { Widgets } from '@essential-js/admin-server/engines/widgets';
+import { ISuccess, Route, checkToken } from '@essential-js/admin-server/helpers';
+import { Application, Request, Response } from 'express';
 
 class WidgetsRoutes extends Route {
 	constructor() {
@@ -20,7 +20,7 @@ class WidgetsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get-dashboard', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -36,7 +36,7 @@ class WidgetsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /save-dashboard', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -49,7 +49,7 @@ class WidgetsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -62,7 +62,7 @@ class WidgetsRoutes extends Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get-users-location', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};

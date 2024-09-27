@@ -1,7 +1,7 @@
-import React from 'react';
+import { IWidget, Widget } from '@essential-js/admin/models';
 import { Button } from 'pragmate-ui/components';
 import { Checkbox } from 'pragmate-ui/form';
-import { Widget, IWidget } from '@essential-js/admin/models';
+import React from 'react';
 import { useLayoutContext } from '../../context';
 
 export const WidgetList = () => {
@@ -32,10 +32,16 @@ export const WidgetList = () => {
 
 			settingsManager.selectedWidgets = [...settingsManager.selectedWidgets, instance];
 		};
+
+		const allOthersDisabled = settingsManager.selectedWidgets.length === 1;
+
+		const disabled = selected && allOthersDisabled;
+
 		return (
 			<li key={record.id} className="flex items-center">
 				<Checkbox
 					id={record.id}
+					disabled={disabled}
 					tabIndex={index + 2}
 					label={record.name}
 					checked={selected}

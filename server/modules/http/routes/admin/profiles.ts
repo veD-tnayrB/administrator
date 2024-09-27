@@ -46,7 +46,7 @@ class ProfilesRoutes extends Route {
 			});
 		} catch (exc) {
 			console.error('Error in bulk importation', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -68,7 +68,7 @@ class ProfilesRoutes extends Route {
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /generate-report', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};
@@ -84,7 +84,7 @@ class ProfilesRoutes extends Route {
 			return res.sendFile(excelPath);
 		} catch (exc) {
 			console.error('Error /get-template', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc as string });
+			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
 			res.status(500).send(responseError);
 		}
 	};

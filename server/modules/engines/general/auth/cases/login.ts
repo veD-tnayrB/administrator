@@ -1,13 +1,14 @@
 import { MD5 } from '@bgroup/helpers/md5';
+import { DB } from '@essential-js/admin-server/db';
 import * as jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
-import { DB } from '@essential-js/admin-server/db';
 
 export interface ILoginParams {
 	email: string;
 	password?: string;
 	notificationsToken?: string;
 	timezone?: string;
+	active: 1;
 }
 export class Login {
 	static #model: typeof DB.models.Users = DB.models.Users;
@@ -18,8 +19,8 @@ export class Login {
 
 	static async execute(params: ILoginParams) {
 		try {
-			let where: ILoginParams = { email: params.email };
-			where = params.password ? { ...where, password: MD5(params.password) } : where;
+			let where: ILoginParams = { email: params.email, active: 1 };
+			where = params.password ? { ...where, password: MD5(params.password), active: 1 } : where;
 			const userInstance = await this.#model.findOne({
 				where,
 				plain: true,
@@ -71,7 +72,7 @@ export class Login {
 			where: { userId: params.userId },
 			include: [{ model: DB.models.Profiles, as: 'profile' }],
 		});
-		profiles = profiles.map((profile) => profile.get({ plain: true }).profile);
+		profiles = profiles.map(profile => profile.get({ plain: true }).profile);
 		let permissions = [];
 		for (const profile of profiles) {
 			const profilePermissions = await this.#profileModulePermissionsModel.findAll({
@@ -81,7 +82,7 @@ export class Login {
 					{ model: DB.models.Modules, as: 'module', where: { active: 1 } },
 				],
 			});
-			const formattedPermissions = profilePermissions.map((permission) => {
+			const formattedPermissions = profilePermissions.map(permission => {
 				const permissionData = permission.get({ plain: true });
 				return {
 					moduleId: permissionData.module.id,

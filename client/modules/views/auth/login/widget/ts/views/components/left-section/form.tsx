@@ -1,11 +1,11 @@
-import React from 'react';
-import { Form, Input } from 'pragmate-ui/form';
-import { Button } from 'pragmate-ui/components';
-import { useLoginContext } from '../../context';
-import { Link } from 'pragmate-ui/link';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Providers } from '@essential-js/admin/auth';
 import { Alert } from 'pragmate-ui/alert';
+import { Button } from 'pragmate-ui/components';
+import { Form, Input } from 'pragmate-ui/form';
+import { Link } from 'pragmate-ui/link';
+import React from 'react';
+import { useLoginContext } from '../../context';
 
 export const LeftSectionForm = () => {
 	const { store } = useLoginContext();
@@ -42,7 +42,7 @@ export const LeftSectionForm = () => {
 
 	return (
 		<article>
-			<div>
+			<div className="header-container">
 				<span>Welcome back!!</span>
 				<h1>Login</h1>
 

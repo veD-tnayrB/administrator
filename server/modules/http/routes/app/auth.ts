@@ -12,13 +12,13 @@ export class AuthRoutes {
 				notificationsToken: req.body.notificationsToken,
 				timezone: req.body.timezone,
 			});
-			if (!response.status) throw response.error;
+			if (!response.status) throw response;
 
 			const formatedResponse = ResponseAPI.success({ data: response.data });
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('LOGIN error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
@@ -34,7 +34,7 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('GET USER error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
@@ -49,7 +49,7 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('LOGOUT error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
@@ -64,7 +64,7 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('Update error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
@@ -80,7 +80,7 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('FORGET PASSWORD error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
@@ -99,7 +99,7 @@ export class AuthRoutes {
 			return res.json(formatedResponse);
 		} catch (exc) {
 			console.error('RECOVER PASSWORD error:', exc);
-			const errorResponse = ResponseAPI.error({ code: 500, message: exc as string });
+			const errorResponse = ResponseAPI.error({ code: 500, message: exc.error });
 			return res.status(500).json(errorResponse);
 		}
 	}
