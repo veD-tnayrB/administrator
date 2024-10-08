@@ -1,0 +1,39 @@
+.action-copied {
+	position: absolute;
+	top: 1rem;
+	right: 3rem;
+	padding: 0.5rem;
+	background: var(--on-background);
+	border-radius: var(--border-radius-base);
+	color: var(--primary);
+	font-size: 0.6rem;
+	transition: all 300ms linear;
+	display: none;
+
+	&.show {
+		display: inline-flex;
+		animation: fadeIn 300ms;
+		z-index: 999;
+	}
+
+	&.hide {
+		animation: fadeOut 300ms;
+	}
+}
+
+.clipboard__container {
+	svg {
+		fill: var(--app-accent-color);
+	}
+}
+.code-container.has-clipboard {
+	position: relative;
+	.clipboard__container {
+		position: absolute;
+		right: 0.5rem;
+		top: 0rem;
+		svg {
+			fill: var(--on-surface);
+		}
+	}
+}

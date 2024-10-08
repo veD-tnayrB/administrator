@@ -1,0 +1,11 @@
+.pui-button-group {
+
+    &>.pragmate-button {
+        border: 1px solid var(--outline);
+    }
+
+    &:first-child, &:last-child  {
+        border-left: none;
+        border-right: none;
+    }
+}

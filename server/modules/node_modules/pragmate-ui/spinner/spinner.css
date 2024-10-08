@@ -1,0 +1,83 @@
+@-webkit-keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+.pragmate-element-spinner {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  opacity: 0;
+}
+.pragmate-element-spinner svg {
+  -webkit-animation: rotate 1.5s linear infinite;
+  animation: rotate 1.5s linear infinite;
+  height: 100%;
+  width: 100%;
+}
+.pragmate-element-spinner circle {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  -webkit-animation: dash 1.5s ease-in-out infinite 0s, 6s ease-in-out infinite -0.75s;
+  animation: dash 1.5s ease-in-out infinite 0s, 6s ease-in-out infinite -0.75s;
+  stroke-linecap: round;
+  fill: none;
+  stroke-width: 3;
+}
+.pragmate-element-spinner.is-active {
+  opacity: 1;
+}
+.pragmate-element-spinner.primary svg circle {
+  stroke: var(--primary);
+}
+.pragmate-element-spinner.secondary svg circle {
+  stroke: var(--secondary);
+}
+.pragmate-element-spinner.on-primary svg circle {
+  stroke: var(--on-primary);
+}
+.pragmate-element-spinner.on-secondary svg circle {
+  stroke: var(--on-secondary);
+}
+.pragmate-element-spinner.tertiary svg circle {
+  stroke: var(--tertiary);
+}
+.pragmate-element-spinner.on-tertiary svg circle {
+  stroke: var(--on-tertiary);
+}
+
+
+/*# sourceMappingURL=spinner.css.map*/

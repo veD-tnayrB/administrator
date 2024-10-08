@@ -1,0 +1,40 @@
+.pui-image {
+	position: relative;
+	-webkit-margin-before: 0;
+	margin-block-start: 0;
+	-webkit-margin-after: 0;
+	margin-block-end: 0;
+	-webkit-margin-start: 0;
+	margin-inline-start: 0;
+	-webkit-margin-end: 0;
+	margin-inline-end: 0;
+
+	&.pui-image-error,
+	&.pui-image-preload {
+		background-color: var(--surface);
+		display: block;
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
+	&.cover-image img {
+		-o-object-fit: cover;
+		object-fit: cover;
+	}
+
+	&.contain img {
+		-o-object-fit: contain;
+		object-fit: contain;
+	}
+
+	&.fill img {
+		-o-object-fit: fill;
+		object-fit: fill;
+	}
+}

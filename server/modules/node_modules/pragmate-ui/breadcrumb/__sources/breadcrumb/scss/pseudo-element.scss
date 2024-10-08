@@ -1,0 +1,32 @@
+.pui-breadcrumb__container {
+	.breadcrumb {
+		display: flex;
+		gap: 0.5rem;
+		a {
+			text-decoration: none;
+			position: relative;
+			align-items: center;
+			height: 100%;
+			margin: 0 1px;
+			display: flex;
+			gap: 0.5rem;
+			transition: all 0.2s;
+			cursor: pointer;
+
+			&:hover,
+			&:hover:after,
+			&:hover:before {
+				height: 100%;
+				color: var(--on-surface);
+
+				.pui-breadcrumb__separator {
+					color: var(--on-surface);
+				}
+			}
+
+			&:hover {
+				transition: all 0.2s;
+			}
+		}
+	}
+}

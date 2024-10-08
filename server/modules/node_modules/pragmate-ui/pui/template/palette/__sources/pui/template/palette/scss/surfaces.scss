@@ -1,0 +1,23 @@
+.surface__container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	background: var(--neutral-100);
+	padding: 1rem;
+	.surface__item {
+		height: 80px;
+		width: 100%;
+		padding: 1rem;
+		display: flex;
+		align-items: flex-end;
+		justify-items: flex-end;
+	}
+
+	&.surface__container--light {
+		background: #1a1a1a;
+	}
+
+	&.surface__container--dark {
+		background: #1a1a1a;
+		color: #fff;
+	}
+}

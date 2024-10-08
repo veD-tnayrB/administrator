@@ -1,0 +1,130 @@
+.pui-modal {
+  position: relative;
+}
+.pui-modal .pui-icon-button.close-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  fill: var(--on-surface);
+  opacity: 0.7;
+  transition: all 100ms ease-in;
+  padding: 0 !important;
+  height: 1.5rem;
+  width: 1.5rem;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.pui-modal .pui-icon-button.close-icon:focus {
+  transition: all 100ms ease-in;
+  opacity: 1;
+}
+/**
+pragmate-ui
+.pui-modal
+*/
+.pui-confirm-dialog-content .pui-confirm-dialog.pui-confirm-dialog-centered {
+  justify-content: center;
+  text-align: center;
+}
+.pui-confirm-dialog-content .pui-confirm-dialog.pui-confirm-dialog-centered .confirm-dialog-content,
+.pui-confirm-dialog-content .pui-confirm-dialog.pui-confirm-dialog-centered .actions {
+  display: grid;
+  justify-content: center;
+}
+.pui-confirm-dialog-content .pui-confirm-dialog.pui-confirm-dialog-centered :where(p, div) {
+  color: var(--on-surface);
+}
+.pui-confirm-dialog .pui-confirm-dialog-content:where(p, div, h3, h4) {
+  color: var(--on-surface);
+}
+.pui-confirm-dialog .pui-confirm-dialog-content h3 {
+  margin: 0;
+}
+.pui-confirm-dialog .pui-confirm-dialog-content__text {
+  margin: 0.5rem 0 0;
+}
+.pui-confirm-dialog .actions {
+  margin-top: 15px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.25rem;
+  justify-content: end;
+}
+.pui-alert-dialog.pui-alert-dialog-centered .alert-dialog-content,
+.pui-alert-dialog.pui-alert-dialog-centered .actions {
+  display: grid;
+  justify-content: center;
+}
+.pui-alert-dialog .alert-dialog-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+.pui-alert-dialog .alert-dialog-content :where(h3, div) {
+  color: var(--on-surface);
+}
+.pui-alert-dialog .actions {
+  border-top: 1px solid var(--separator);
+  margin-top: 15px;
+  display: grid;
+  justify-content: end;
+  padding: 1rem 0 0;
+}
+body.body-pui-modal-opened {
+  height: 100vh;
+  overflow-y: hidden;
+  padding-right: 15px;
+}
+
+.pui-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+}
+.pui-modal.show-modal {
+  display: block;
+  z-index: 1000;
+  height: 100vh;
+  width: 100vw;
+}
+.pui-modal .modal-wrapper {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  height: 100%;
+}
+@media screen and (max-height: 500px) {
+  .pui-modal .modal-wrapper {
+    height: auto;
+  }
+}
+.pui-modal .modal-content {
+  position: relative;
+  background: var(--surface);
+  animation: show 0.5s ease-in-out;
+  border-radius: var(--border-radius-base);
+  padding: 2rem 1.5rem;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/*# sourceMappingURL=modal.css.map*/

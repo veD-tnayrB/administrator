@@ -1,0 +1,23 @@
+.pui-input.pui-input--icon {
+    input {
+        padding: 0.5rem 2rem 0.5rem 1rem;
+    }
+    svg.pui-icon.input-icon {
+        position: absolute;
+        right: 0.5rem;
+        top: 2.125rem;
+        fill: var(--primary);
+    }
+    &.icon__floating svg.pui-icon.input-icon {
+        top: 0.5rem;
+    }
+    &.left-icon {
+        input {
+            padding: 0.5rem 1rem 0.5rem 2rem;
+        }
+        svg.pui-icon.input-icon {
+            right: auto;
+            left: 0.5rem;
+        }
+    }
+}

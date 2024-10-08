@@ -1,0 +1,21 @@
+@keyframes toast-enter {
+	from {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(-50%);
+		opacity: 1;
+	}
+}
+
+@keyframes toast-exit {
+	from {
+		transform: translateY(-50%);
+		opacity: 1;
+	}
+	to {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+}

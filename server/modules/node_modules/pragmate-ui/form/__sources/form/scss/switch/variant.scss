@@ -1,0 +1,28 @@
+$variants-switch : primary,
+secondary,
+tertiary,
+success,
+danger,
+warning,
+info;
+
+.pui-element-switch {
+
+	@each $type in $variants-switch {
+		&__label.#{$type} {
+			border: 1px solid var(--#{$type}-40);
+			.label__btn--slider {
+				background-color: var(--#{$type}-40);
+			}
+		}
+		&__label.active.#{$type} {
+			border-color: var(--#{$type});
+			background: var(--#{$type}-30);
+
+			.label__btn--slider {
+				background: var(--#{$type});
+			}
+		}
+	}
+
+}

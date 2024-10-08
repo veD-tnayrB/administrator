@@ -1,0 +1,39 @@
+.code__box {
+	border: 1px solid var(--app-element-border-color-1);
+	background: var(--color-gray-80);
+	border-radius: var(--border-radius-base);
+	overflow-y: hidden;
+	overflow-x: auto;
+	grid-template-rows: auto 1fr;
+	background: var(--app-code-bg);
+	margin: 1rem 0;
+	//box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+	header {
+		display: flex;
+		padding: 0;
+		flex-grow: 1;
+		gap: 1rem;
+
+		justify-content: space-between;
+		.tab {
+			padding: 1rem;
+			background: var(--app-editor-bg);
+			color: var(--on-primary);
+		}
+
+		.box__buttons {
+			display: flex;
+			gap: 8px;
+		}
+	}
+
+	.box__code {
+		pre {
+			height: 100%;
+			padding-top: 0;
+			margin: 0;
+			background: var(--app-code-bg);
+		}
+	}
+}
