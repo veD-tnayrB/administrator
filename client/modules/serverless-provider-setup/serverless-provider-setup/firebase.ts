@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { FIREBASE_CREDENTIALS } from './firebase-credentials';
 import { getAuth } from 'firebase/auth';
+import { FIREBASE_CREDENTIALS } from './firebase-credentials';
 
 const firebaseConfig = FIREBASE_CREDENTIALS;
 

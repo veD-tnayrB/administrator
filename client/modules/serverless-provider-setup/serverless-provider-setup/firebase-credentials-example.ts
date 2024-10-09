@@ -1,4 +1,4 @@
-export /*bundle*/ const FIREBASE_CREDENTIALS = {
+export /*bundle*/ const FIREBASE_CREDENTIALS_EXAMPLE = {
 	apiKey: 'your_firebase_apiKey',
 	authDomain: 'your_authDomain',
 	projectId: 'your_projectId',

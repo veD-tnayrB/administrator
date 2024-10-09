@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
 import { DataModel as DM } from '@bgroup/data-model/db';
+import * as dotenv from 'dotenv';
 import { initModels } from './tables/init-models';
 dotenv.config();
 
@@ -13,12 +13,7 @@ const config = {
 	dialect: DB_DIALECT,
 	port: Number(DB_PORT),
 	timeZone: DB_TIMEZONE,
-	dialectOptions: {
-		options: {
-			encrypt: false,
-			trustServerCertificate: true,
-		},
-	},
+	dialectOptions: {},
 	initModels: initModels,
 };
 

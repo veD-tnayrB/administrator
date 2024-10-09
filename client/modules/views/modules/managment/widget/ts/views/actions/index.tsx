@@ -1,16 +1,16 @@
-import React from 'react';
-import type { IAction } from '@essential-js/admin/models';
 import {
 	CollapsibleContainer,
-	CollapsibleHeader,
 	CollapsibleContent,
+	CollapsibleHeader,
 } from '@essential-js/admin/components/collapsible';
+import type { IAction } from '@essential-js/admin/models';
 import { Button } from 'pragmate-ui/components';
+import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { useModulesManagmentContext } from '../../context';
+import { EmptyActions } from './empty';
 import { ActionItem } from './item';
 import { ActionManagment } from './managment';
-import { useModulesManagmentContext } from '../../context';
-import { v4 as uuid } from 'uuid';
-import { EmptyActions } from './empty';
 
 export const Actions = () => {
 	const { store, item } = useModulesManagmentContext();
@@ -38,8 +38,7 @@ export const Actions = () => {
 							height="20px"
 							stroke="var(--on-primary)"
 							viewBox="0 0 24 24"
-							strokeWidth="1.5"
-						>
+							strokeWidth="1.5">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 						</svg>
 					</Button>
