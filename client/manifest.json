@@ -1,0 +1,21 @@
+{
+	"short_name": "Essential",
+	"name": "Essential Administrator",
+	"icons": [
+		{
+			"src": "./assets/logo.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "./assets/logo.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#000",
+	"background_color": "#000",
+	"description": "Discover a comprehensive management platform designed to streamline complex administrative tasks across multiple modules. Our robust system offers a dynamic and scalable solution for user profile management, widget configuration, and permissions control, ensuring secure and efficient operation. Customize user experiences with flexible profile settings that adapt to specific module access and actions. Experience the power of automation with scheduled notifications tailored to user-specific time zones, enhancing operational responsiveness and engagement. Ideal for businesses seeking an intuitive yet powerful administrator interface to manage user profiles, widgets, and permissions with ease"
+}

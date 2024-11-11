@@ -118,7 +118,9 @@
 			"assets",
 			"firebase-messaging-sw.js",
 			"vercel.json",
-			"robots.txt"
+			"robots.txt",
+			"sw.js",
+			"manifest.json"
 		]
 	}
 }
