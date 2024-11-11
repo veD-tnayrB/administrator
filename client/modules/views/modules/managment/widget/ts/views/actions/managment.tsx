@@ -1,19 +1,19 @@
-import React from 'react';
-import { Input, Textarea } from 'pragmate-ui/form';
-import { Button } from 'pragmate-ui/components';
-import { useModulesManagmentContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
-import type { IModule, IAction } from '@essential-js/admin/models';
+import type { IAction, IModule } from '@essential-js/admin/models';
+import { Button } from 'pragmate-ui/components';
+import { Input, Textarea } from 'pragmate-ui/form';
+import React from 'react';
+import { useModulesManagmentContext } from '../../context';
 import { ISelectedAction } from '../../store';
 
 export const ActionManagment = () => {
-	const { store, setItem } = useModulesManagmentContext();
+	const { store, setItem, item } = useModulesManagmentContext();
 	const [selectedAction, setSelectedAction] = React.useState(store.selectedAction);
 	useBinder([store], () => setSelectedAction(store.selectedAction));
 	if (!selectedAction) return null;
 
 	const add = () => {
-		const isAnExistingItem = !store.selectedAction?.isCreating;
+		const isAnExistingItem = item.actions.some(action => action.id === store.selectedAction?.id);
 
 		if (!isAnExistingItem) {
 			setItem((currentValue: IModule) => ({

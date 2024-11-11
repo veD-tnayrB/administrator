@@ -1,0 +1,186 @@
+.pui-icon-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  display: inline-grid;
+  position: relative;
+  outline: none;
+  place-items: center;
+}
+.pui-icon-button:not(.pui-icon-button:disabled) {
+  cursor: pointer;
+}
+.pui-icon-button:disabled {
+  opacity: 0.6;
+}
+.pui-icon-button.circle {
+  border-radius: 50%;
+}
+.pui-icon-button.circle > .beyond-ripple {
+  border-radius: 50%;
+  align-self: center;
+}
+.pui-icon-button svg.pui-icon {
+  height: 15px;
+  width: 15px;
+}
+.pui-icon-button.small-icon {
+  height: 24px;
+  width: 24px;
+}
+.pui-icon-button.small-icon .pui-icon {
+  height: 12px;
+  width: 12px;
+}
+.pui-icon-button.xs .pui-icon {
+  height: 15px;
+  width: 15px;
+}
+.pui-icon-button.md {
+  height: 36px;
+  width: 36px;
+}
+.pui-icon-button.md .pui-icon {
+  height: 24px;
+  width: 24px;
+}
+.pui-icon-button.lg {
+  height: 35px;
+  width: 35px;
+}
+.pui-icon-button.lg .pui-icon {
+  height: 35px;
+  width: 35px;
+}
+.pui-icon {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  fill: var(--text-color);
+}
+.pui-icon.circle {
+  border-radius: 50%;
+  padding: 5px;
+}
+.pui-icon.xs {
+  height: 15px;
+  width: 15px;
+}
+.pui-icon.md {
+  height: 25px;
+  width: 25px;
+}
+.pui-icon.lg {
+  height: 35px;
+  width: 35px;
+}
+.pui-icon-button {
+  transition: all 0.2s ease-in-out;
+}
+.pui-icon-button.btn-primary,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--primary);
+}
+.pui-icon-button.btn-primary svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--on-primary);
+}
+.pui-icon-button.btn-primary:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-secondary,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--secondary);
+}
+.pui-icon-button.btn-secondary svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--on-secondary);
+}
+.pui-icon-button.btn-secondary:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-tertiary,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--tertiary);
+}
+.pui-icon-button.btn-tertiary svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--on-tertiary);
+}
+.pui-icon-button.btn-tertiary:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-default,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--default);
+}
+.pui-icon-button.btn-default svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--on-background);
+}
+.pui-icon-button.btn-default:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-success,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--success-container);
+}
+.pui-icon-button.btn-success svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--success);
+}
+.pui-icon-button.btn-success:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-warning,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--warning-container);
+}
+.pui-icon-button.btn-warning svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--warning);
+}
+.pui-icon-button.btn-warning:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-error,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--error-container);
+}
+.pui-icon-button.btn-error svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--error);
+}
+.pui-icon-button.btn-error:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pui-icon-button.btn-info,
+.pui-icon-button .pragmate.icon {
+  background-color: var(--info-container);
+}
+.pui-icon-button.btn-info svg,
+.pui-icon-button .pragmate.icon svg {
+  fill: var(--info);
+}
+.pui-icon-button.btn-info:disabled,
+.pui-icon-button .pragmate.icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/*# sourceMappingURL=icons.css.map*/

@@ -1,0 +1,42 @@
+.page__container {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  max-width: 1024px;
+  margin: 0 auto;
+  flex-direction: row;
+  background: var(--surface);
+
+  .beyond {
+    color: #ff8056;
+  }
+  .build-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    color: var(--box-bg);
+    h5 {
+      font-size: 36px;
+      margin: 32px 0 0;
+    }
+    h3 {
+      font-size: 45px;
+    }
+    .beyond-element-image {
+      max-width: 600px;
+      margin: 0 auto;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+.ripple span {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  -webkit-animation: rippleEffect 1s linear infinite;
+  animation: rippleEffect 1s linear infinite;
+}
+.ripple::after {
+  content: "";
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+  animation: ripple 1s;
+}
+
+@-webkit-keyframes rippleEffect {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+@keyframes rippleEffect {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
+
+/*# sourceMappingURL=ripple.css.map*/

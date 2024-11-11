@@ -1,0 +1,42 @@
+$size-switch : xs,
+md,
+lg;
+
+.pui-element-switch {
+
+    @each $size in $size-switch {
+        &__label.#{$size} {
+            @if ($size =='xs') {
+                width: 30px;
+                height: 14px;
+
+                .label__btn--slider {
+                    height: 10px;
+                    width: 10px;
+                }
+            }
+
+            @else if $size =='md' {
+                width: 50px;
+                height: 24px;
+
+                .label__btn--slider {
+                    height: 20px;
+                    width: 20px;
+                }
+            }
+
+            @else if $size =='lg' {
+                width: 70px;
+                height: 34px;
+
+                .label__btn--slider {
+                    height: 30px;
+                    width: 30px;
+                }
+            }
+        }
+
+    }
+
+}

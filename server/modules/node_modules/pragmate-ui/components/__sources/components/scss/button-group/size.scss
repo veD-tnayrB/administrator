@@ -1,0 +1,23 @@
+$sizes : small,
+medium,
+tall;
+.pragmate-button-group {
+    @each $size in $sizes {
+    
+        &.#{$size}>.pragmate-button {
+            @if ($size =='small') {
+                font-size: 12px;
+            }
+
+            @else if $size =='medium' {
+                font-size: 16px;
+
+            }
+
+            @else if $size =='tall' {
+                font-size: 18px;
+
+            }
+        }
+    }
+}

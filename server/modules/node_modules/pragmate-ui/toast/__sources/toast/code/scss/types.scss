@@ -1,0 +1,21 @@
+.pui-toast__container .toast {
+	&.success {
+		background: var(--success-container);
+	}
+
+	&.error {
+		background: var(--error-container);
+	}
+
+	&.warning {
+		background: var(--warning-container);
+	}
+
+	&.info {
+		background: var(--info-container);
+	}
+
+	&.loading {
+		background: var(--info-container);
+	}
+}

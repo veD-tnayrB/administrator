@@ -1,0 +1,39 @@
+.tab {
+	padding-block: 1rem;
+	width: 100%;
+	padding: 1rem;
+	cursor: pointer;
+	background: var(--surface);
+	transition: all 0.2s ease;
+	white-space: nowrap;
+	text-transform: capitalize;
+	position: relative;
+
+	&.is-disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 5px;
+		background-color: var(--primary);
+		transition: width 0.2s ease;
+	}
+
+	&.active {
+		background-color: var(--background);
+	}
+
+	&.active::before {
+		width: 100%;
+	}
+
+	&:not(.active):not(.is-disabled):hover::before {
+		width: 100%;
+		background-color: var(--color-gray-20);
+	}
+}

@@ -1,0 +1,30 @@
+.pragmate-element-spinner {
+	&.spinner--xs {
+		&,
+		svg {
+			height: 30px;
+			width: 30px;
+		}
+	}
+	&.spinner--sm {
+		&,
+		svg {
+			height: 40px;
+			width: 40px;
+		}
+	}
+	&.spinner--md {
+		&,
+		svg {
+			height: 50px;
+			width: 50px;
+		}
+	}
+	&.spinner--xl {
+		&,
+		svg {
+			height: 60px;
+			width: 60px;
+		}
+	}
+}

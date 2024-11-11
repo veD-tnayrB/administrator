@@ -1,0 +1,40 @@
+@import './button-styles';
+$button-variants: (
+	'primary': (
+		var(--primary),
+		var(--on-primary)
+	),
+	'secondary': (
+		var(--secondary),
+		var(--on-secondary)
+	),
+	'tertiary': (
+		var(--tertiary),
+		var(--on-tertiary)
+	),
+	'default': (
+		var(--default),
+		var(--on-background)
+	),
+	'success': (
+		var(--success-container),
+		var(--success)
+	),
+	'warning': (
+		var(--warning-container),
+		var(--warning)
+	),
+	'error': (
+		var(--error-container),
+		var(--error)
+	),
+	'info': (
+		var(--info-container),
+		var(--info)
+	)
+);
+
+.pui-icon-button {
+	@include button-styles($button-variants);
+	transition: all 0.2s ease-in-out;
+}

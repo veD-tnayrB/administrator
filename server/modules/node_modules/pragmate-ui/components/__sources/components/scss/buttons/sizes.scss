@@ -1,0 +1,28 @@
+.btn,
+.pui-button {
+	&.btn--lg {
+		font-size: 2rem;
+		padding: 0.5rem 1rem;
+	}
+
+	&.btn--sm {
+		padding: 0.5rem 1rem;
+		font-size: 0.8rem;
+		min-height: 0;
+	}
+
+	&.btn--md {
+		font-size: 1rem;
+	}
+
+	&.btn--xs {
+		padding: 0.5rem;
+		font-size: 0.7rem;
+		min-height: 0;
+	}
+
+	&.btn--block {
+		display: block;
+		width: 100%;
+	}
+}

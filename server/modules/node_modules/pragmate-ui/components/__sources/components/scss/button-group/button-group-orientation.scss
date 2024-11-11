@@ -1,0 +1,11 @@
+$orientations : row,
+column;
+
+.pragmate-button-group {
+    
+    @each $orientation in $orientations {
+        &.#{$orientation} {
+            flex-direction: $orientation;
+        }
+    }
+}

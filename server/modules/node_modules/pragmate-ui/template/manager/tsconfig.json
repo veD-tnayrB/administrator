@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"module": "es2020",
+		"target": "es2018",
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "Node",
+		"jsx": "react",
+		"skipLibCheck": true
+	}
+}
