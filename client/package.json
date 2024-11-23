@@ -21,7 +21,7 @@
 			"localDBVersion": 1,
 			"company": {
 				"name": "Essential",
-				"subName": "Pack"
+				"subName": "Desktop"
 			},
 			"permissionLessRoutes": [
 				"/user/profile",
