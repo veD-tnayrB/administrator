@@ -20,8 +20,8 @@
 			"localDB": "essential-dashboard",
 			"localDBVersion": 1,
 			"company": {
-				"name": "Baleares",
-				"subName": "Group"
+				"name": "Essential",
+				"subName": "Pack"
 			},
 			"permissionLessRoutes": [
 				"/user/profile",

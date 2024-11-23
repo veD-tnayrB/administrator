@@ -1,19 +1,19 @@
 @mixin properties() {
 	--text-color: hsl(0, 0%, 10%);
-	--primary: #1d7a90;
-	--primary-container: #006981e7;
+	--primary: #241d86;
+	--primary-container: #4b51d4;
 	--on-primary: #fff;
-	--on-primary-container: #bdbdbd;
-	--inverse-primary: #bbdefb;
-	--secondary: #67727e;
-	--secondary-container: #ffcdd2;
+	--on-primary-container: #c1cfff;
+	--inverse-primary: #c1cfff;
+	--secondary: #9d9fa8;
+	--secondary-container: #d8d9e0;
 	--on-secondary: #fff;
-	--on-secondary-container: #b71c1c;
+	--on-secondary-container: var(--secondary);
 	--tertiary: #1b5e20;
 	--tertiary-container: #c8e6c9;
 	--on-tertiary: #1b5e20;
 	--on-tertiary-container: #1b5e20;
-	--surface: #fff;
+	--surface: #fefefe;
 	--surface-dim: #eeeeee;
 	--surface-bright: #e0e0e0;
 	--surface-container-lowest: #bdbdbd;
@@ -26,7 +26,7 @@
 	--on-surface-variant: #757575;
 	--inverse-surface: #757575;
 	--inverse-on-surface: #bdbdbd;
-	--background: hsl(210, 40%, 96%); // hsl(210, 40%, 96%);
+	--background: #fafbfd; // hsl(210, 40%, 96%);
 	--on-background: #212121;
 
 	--outline: #e4e4e4;
