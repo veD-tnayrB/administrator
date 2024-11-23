@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@beyond-js/reactive": "^1.2.0",
-    "@bgroup/http-suite": "^1.0.5",
-    "pragmate-ui": "^0.1.1"
-  }
-}

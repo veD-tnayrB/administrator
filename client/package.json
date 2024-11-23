@@ -16,6 +16,7 @@
 	"params": {
 		"environment": "development",
 		"application": {
+			"swLocation": "/sw.js",
 			"localDB": "essential-dashboard",
 			"localDBVersion": 1,
 			"company": {
@@ -73,9 +74,9 @@
 		"@beyond-js/bee": "^0.0.6",
 		"@beyond-js/kernel": "~0.1.9",
 		"@beyond-js/react-18-widgets": "~1.0.1",
-		"@beyond-js/reactive": "1.1.12",
+		"@beyond-js/reactive": "1.1.14",
 		"@bgroup/helpers": "^1.0.7",
-		"@bgroup/http-suite": "^1.0.7",
+		"@bgroup/http-suite": "^1.0.8",
 		"@firebase/app": "^0.9.23",
 		"@tippyjs/react": "^4.2.6",
 		"@types/dompurify": "^3.0.5",
@@ -86,7 +87,7 @@
 		"dompurify": "^3.1.3",
 		"firebase": "^10.6.0",
 		"framer-motion": "^11.5.6",
-		"http-suite": "^0.0.1",
+		"http-suite": "^1.2.0",
 		"idb": "^7.1.1",
 		"moment-timezone": "^0.5.45",
 		"npm-force-resolutions": "^0.0.10",
