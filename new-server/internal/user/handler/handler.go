@@ -89,7 +89,7 @@ func (h *UserHandler) List(ctx *gin.Context) {
 		return
 	}
 
-	if descParam != "desc" && orderParam != "asc" {
+	if descParam != "desc" && descParam != "asc" {
 		ctx.JSON(http.StatusBadRequest, "ORDER NEEDS TO BE 'DESC' OR 'ASC'")
 		return
 	}
@@ -100,7 +100,7 @@ func (h *UserHandler) List(ctx *gin.Context) {
 	listParams.Desc = descParam
 
 	where := models.WhereParams{}
-	if ctx.Query("where") != "" {
+	if ctx.Query("where") != "" && ctx.Query("where") != "{}" {
 		whereParam := ctx.Query("where")
 		err := json.Unmarshal([]byte(whereParam), &where)
 		if err != nil {

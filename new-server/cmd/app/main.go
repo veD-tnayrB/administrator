@@ -32,6 +32,6 @@ func main() {
 	// users.POST("/user/:id", userHandler.createUser)
 	// users.PUT("/user/:id", userHandler.updateUser)
 
-	router.Run(":3000")
+	router.Run(":5001")
 
 }
