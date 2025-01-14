@@ -36,3 +36,14 @@ type ListParams struct {
 	Desc  string
 	Where *WhereParams
 }
+
+type GenerateReportHeader struct {
+	label string
+	name  string
+}
+
+type GenerateReportParams struct {
+	Header []*GenerateReportHeader `json:"header"`
+	Params *ListParams             `json:"params"`
+	Type   string
+}

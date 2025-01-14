@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/veD-tnayrB/administrator/internal/user/models"
@@ -48,10 +49,6 @@ func (h *UserHandler) GetRegisteredByMonth(ctx *gin.Context) {
 	ctx.JSON(200, response)
 }
 
-func (h *UserHandler) GenerateReport(ctx *gin.Context) {
-
-}
-
 // EXAMPLE OF QUERY PARAM:?limit=5&order=timeUpdated&des=DES&start=0&where={%22id%22:%22Br%22,%22names%22:%22Br%22,%22lastNames%22:%22Br%22}
 
 func (h *UserHandler) List(ctx *gin.Context) {
@@ -89,7 +86,7 @@ func (h *UserHandler) List(ctx *gin.Context) {
 		return
 	}
 
-	if descParam != "desc" && descParam != "asc" {
+	if strings.ToLower(descParam) != "desc" && strings.ToLower(descParam) != "asc" {
 		ctx.JSON(http.StatusBadRequest, "ORDER NEEDS TO BE 'DESC' OR 'ASC'")
 		return
 	}
@@ -120,4 +117,25 @@ func (h *UserHandler) List(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, response)
+}
+
+func (h *UserHandler) GenerateReport(ctx *gin.Context) {
+	var body models.GenerateReportParams
+	fileType := ctx.DefaultQuery("type", "xlsx")
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.JSON(http.StatusBadRequest, "BODY IS REQUIRED")
+		return
+	}
+	body.Type = fileType
+
+	fmt.Printf("%v %v %v \n", body.Type, body.Header, body.Params.Limit)
+
+	response, err := h.UserService.GenerateReport(&body)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, "SOMETHING WENT WRONG")
+		return
+	}
+	ctx.JSON(http.StatusOK, response)
+	return
 }

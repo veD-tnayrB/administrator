@@ -115,6 +115,10 @@ func (r *UserRepository) List(params *models.ListParams) ([]*models.User, error)
 			values = append(values, "%"+strings.ToLower(params.Where.Id)+"%")
 		}
 
+		if len(values) == 0 {
+			whereClasure = "WHERE "
+		}
+
 		if len(values) > 0 {
 			whereClasure += ") AND "
 		}

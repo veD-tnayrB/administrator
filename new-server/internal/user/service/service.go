@@ -29,3 +29,13 @@ func (s *UserService) GetRegisteredByMonth(ctx context.Context, year int) ([]*mo
 func (s *UserService) List(params *models.ListParams) ([]*models.User, error) {
 	return s.UserRepo.List(params)
 }
+
+func (s *UserService) GenerateReport(params *models.GenerateReportParams) (int, error) {
+	registers, err := s.UserRepo.List(params.Params)
+
+	if err != nil {
+		return 0, errors.New("COULDNT_GET_REGISTERS")
+	}
+
+	return 1, nil
+}
