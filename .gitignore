@@ -38,3 +38,6 @@ ca.pem
 compilations
 compile.bat
 compile.sh
+
+__*.exe
+*.exe

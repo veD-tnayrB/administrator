@@ -139,3 +139,46 @@ func (h *UserHandler) GenerateReport(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 	return
 }
+
+func (h *UserHandler) Create(ctx *gin.Context) {
+	var body models.CreateParams
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.JSON(http.StatusBadGateway, "BODY IS REQUIRED")
+		return
+	}
+
+	if body.Email == "" {
+		ctx.JSON(http.StatusBadGateway, "EMAIL_IS_REQUIRED")
+		return
+	}
+
+	if body.Names == "" {
+		ctx.JSON(http.StatusBadGateway, "NAMES_IS_REQUIRED")
+		return
+	}
+
+	if body.LastNames == "" {
+		ctx.JSON(http.StatusBadGateway, "LAST_NAMES_IS_REQUIRED")
+		return
+	}
+
+	profiles := body.Profiles
+	user := models.User{
+		Id:          body.Id,
+		Names:       body.Names,
+		LastNames:   body.LastNames,
+		Email:       body.Email,
+		Password:    body.Password,
+		Active:      body.Active,
+		ProfileImg:  body.ProfileImg,
+		TimeCreated: body.TimeCreated,
+		TimeUpdated: body.TimeUpdated,
+	}
+	err := h.UserService.Create(&user, &profiles)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, "SOMETHING_WENT_WRONGj")
+	}
+
+	ctx.JSON(http.StatusCreated, true)
+	return
+}

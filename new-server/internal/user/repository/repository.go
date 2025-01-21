@@ -9,7 +9,8 @@ import (
 	"time"
 
 	"github.com/veD-tnayrB/administrator/common/helpers"
-	"github.com/veD-tnayrB/administrator/internal/user/models"
+
+	models "github.com/veD-tnayrB/administrator/internal/user/models"
 )
 
 type UserRepository struct {
@@ -161,4 +162,50 @@ func (r *UserRepository) List(params *models.ListParams) ([]*models.User, error)
 
 	// @TODO: veD-tnayrB Implement the time created OR time updated between functionality
 	return users, nil
+}
+
+func (r *UserRepository) GetByEmail(email string) (*models.User, error) {
+	if email == "" {
+		return nil, errors.New("EMAIL_IS_REQUIRED")
+	}
+
+	query := "SELECT id, names, last_names, email, password, active, profile_img, forget_password_token, time_created, time_updated FROM users WHERE email = ?"
+	user := models.User{}
+	request := r.DB.QueryRow(query, email)
+
+	err := request.Scan(&user.Id, &user.Names, &user.LastNames, &user.Email, &user.Password, &user.Active, &user.ProfileImg, &user.ForgetPasswordToken, &user.TimeCreated, &user.TimeUpdated)
+	if err != nil {
+		return nil, errors.New("error while scanning the query response")
+	}
+
+	return &user, nil
+}
+
+func (r *UserRepository) Create(tx *sql.Tx, user *models.User) error {
+	query := "INSERT INTO users (id, names, last_names, password, active, profile_img, forget_password_token, time_created, time_updated) VALUES (?,?,?,?,?,?,?,?,?)"
+	_, err := tx.Exec(query, user.Id, user.Names, user.LastNames, user.Password, user.Active, user.ProfileImg, user.ForgetPasswordToken, user.TimeCreated, user.TimeUpdated)
+
+	if err != nil {
+		return errors.New("error while executing the create query")
+	}
+
+	return nil
+}
+
+func (r *UserRepository) AssignProfile(tx *sql.Tx, userId string, profileId string) error {
+	if userId == "" {
+		return errors.New("USER_ID_REQUIRED")
+	}
+
+	if profileId == "" {
+		return errors.New("PROFILE_ID_REQUIRED")
+	}
+
+	query := "INSERT INTO users_profiles (user_id, profile_id) VALUES (?,?)"
+	_, err := tx.Exec(query, userId, profileId)
+	if err != nil {
+		return errors.New("error while executing the insert query")
+	}
+
+	return nil
 }

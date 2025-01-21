@@ -1,6 +1,9 @@
 import { MD5 } from '@bgroup/helpers/md5';
 import { DB } from '@essential-js/admin-server/db';
-import { mailer, registeredUserTemplate } from '@essential-js/admin-server/emails';
+import {
+	mailer,
+	registeredUserTemplate,
+} from '@essential-js/admin-server/emails';
 
 export interface IPublishParams {
 	id: string;
@@ -15,21 +18,43 @@ export interface IPublishParams {
 
 export class Publish {
 	static model: typeof DB.models.Users = DB.models.Users;
-	static usersProfilesModel: typeof DB.models.UsersProfiles = DB.models.UsersProfiles;
+	static usersProfilesModel: typeof DB.models.UsersProfiles =
+		DB.models.UsersProfiles;
 
-	static handleProfiles = async (userId: string, profiles: string[], transaction) => {
-		await Publish.usersProfilesModel.destroy({ where: { userId } }, { transaction });
+	static handleProfiles = async (
+		userId: string,
+		profiles: string[],
+		transaction
+	) => {
+		await Publish.usersProfilesModel.destroy(
+			{ where: { userId } },
+			{ transaction }
+		);
 
 		if (profiles.length) {
-			const profilesToCreate = profiles.map(profileId => ({ userId, profileId }));
-			await Publish.usersProfilesModel.bulkCreate(profilesToCreate, { transaction });
+			const profilesToCreate = profiles.map(profileId => ({
+				userId,
+				profileId,
+			}));
+			await Publish.usersProfilesModel.bulkCreate(profilesToCreate, {
+				transaction,
+			});
 		}
 	};
 
-	static handlePassword = async (email: string, newPassword: string, names: string, lastNames: string) => {
+	static handlePassword = async (
+		email: string,
+		newPassword: string,
+		names: string,
+		lastNames: string
+	) => {
 		if (!newPassword) return { status: true };
 
-		const { subject, html } = registeredUserTemplate({ password: newPassword, names, lastNames });
+		const { subject, html } = registeredUserTemplate({
+			password: newPassword,
+			names,
+			lastNames,
+		});
 
 		const response = await mailer.sendMail({
 			from: process.env.MAILER_FROM,
@@ -37,7 +62,8 @@ export class Publish {
 			subject,
 			html,
 		});
-		if (response.rejected.length) return { status: false, error: 'Error sending email' };
+		if (response.rejected.length)
+			return { status: false, error: 'Error sending email' };
 		return { status: true, password: MD5(newPassword) };
 	};
 
@@ -45,16 +71,19 @@ export class Publish {
 		const transaction = await DB.sequelize.transaction();
 		try {
 			const { profiles, ...userParams } = params;
-
 			if (!userParams.email) throw 'EMAIL_IS_REQUIRED';
 			if (!userParams.names) throw 'EMAIL_IS_REQUIRED';
 			if (!userParams.lastNames) throw 'EMAIL_IS_REQUIRED';
 
-			const isDuplicated = await Publish.model.findOne({ where: { email: userParams.email } });
+			const isDuplicated = await Publish.model.findOne({
+				where: { email: userParams.email },
+			});
 			if (isDuplicated) throw 'EMAIL_ALREADY_EXISTS';
 
 			if (userParams.password) {
-				userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
+				userParams.password =
+					userParams.password || process.env.USER_DEFAULT_PASSWORD;
+
 				const response = await this.handlePassword(
 					userParams.email,
 					userParams.password,
@@ -65,8 +94,14 @@ export class Publish {
 				if (!response.status) throw response.error;
 				userParams.password = response.password;
 			}
-			const user = await Publish.model.create(userParams, { transaction });
-			await this.handleProfiles(userParams.id, profiles || [], transaction);
+			const user = await Publish.model.create(userParams, {
+				transaction,
+			});
+			await this.handleProfiles(
+				userParams.id,
+				profiles || [],
+				transaction
+			);
 			await transaction.commit();
 			return { status: true, data: { id: user.id } };
 		} catch (error) {
@@ -83,11 +118,15 @@ export class Publish {
 			if (!userParams.names) throw 'EMAIL_IS_REQUIRED';
 			if (!userParams.lastNames) throw 'EMAIL_IS_REQUIRED';
 
-			const isDuplicated = await Publish.model.findOne({ where: { email: userParams.email } });
-			if (isDuplicated && isDuplicated.dataValues.id !== id) throw 'EMAIL_ALREADY_EXISTS';
+			const isDuplicated = await Publish.model.findOne({
+				where: { email: userParams.email },
+			});
+			if (isDuplicated && isDuplicated.dataValues.id !== id)
+				throw 'EMAIL_ALREADY_EXISTS';
 
 			if (userParams.password) {
-				userParams.password = userParams.password || process.env.USER_DEFAULT_PASSWORD;
+				userParams.password =
+					userParams.password || process.env.USER_DEFAULT_PASSWORD;
 				const response = await this.handlePassword(
 					userParams.email,
 					userParams.password,
@@ -99,7 +138,10 @@ export class Publish {
 				userParams.password = response.password;
 			}
 
-			await Publish.model.update(userParams, { where: { id }, transaction });
+			await Publish.model.update(userParams, {
+				where: { id },
+				transaction,
+			});
 			await this.handleProfiles(id, profiles, transaction);
 			await transaction.commit();
 			return { status: true, data: { id } };

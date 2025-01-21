@@ -47,3 +47,8 @@ type GenerateReportParams struct {
 	Params *ListParams             `json:"params"`
 	Type   string
 }
+
+type CreateParams struct {
+	*User
+	Profiles []string `json:"profiles"`
+}
