@@ -13,6 +13,8 @@ import (
 	models "github.com/veD-tnayrB/administrator/internal/user/models"
 )
 
+// TODO: @veD-tnayrB Bryant please standarize the fucking errors in each layer as it should, then will be horrible.
+
 type UserRepository struct {
 	DB *sql.DB
 }
@@ -181,14 +183,42 @@ func (r *UserRepository) GetByEmail(email string) (*models.User, error) {
 	return &user, nil
 }
 
+func (r *UserRepository) CheckIfExistsWithEmail(email string) (bool, error) {
+	if email == "" {
+		return false, errors.New("EMAIL_IS_REQUIRED")
+	}
+
+	query := "SELECT email FROM users WHERE email = ?"
+	request := r.DB.QueryRow(query, email)
+
+	err := request.Scan(&email)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+
+		return false, errors.New("error while scanning the query response")
+	}
+
+	return true, nil
+}
+
 func (r *UserRepository) Create(tx *sql.Tx, user *models.User) error {
-	query := "INSERT INTO users (id, names, last_names, password, active, profile_img, forget_password_token, time_created, time_updated) VALUES (?,?,?,?,?,?,?,?,?)"
-	_, err := tx.Exec(query, user.Id, user.Names, user.LastNames, user.Password, user.Active, user.ProfileImg, user.ForgetPasswordToken, user.TimeCreated, user.TimeUpdated)
+
+	fmt.Printf("UPDATE: %v CREATE: %v \n", user.TimeUpdated, user.TimeUpdated)
+
+	query := "INSERT INTO users (id, names, last_names, email, password, active, profile_img, forget_password_token, time_created, time_updated) VALUES (?,?,?,?,?,?,?,?,?,?)"
+	_, err := tx.Exec(query, user.Id, user.Names, user.LastNames, user.Email, user.Password, user.Active, user.ProfileImg, user.ForgetPasswordToken, user.TimeCreated, user.TimeUpdated)
 
 	if err != nil {
 		return errors.New("error while executing the create query")
 	}
 
+	return nil
+}
+
+func (r *UserRepository) Update(tx *sql.Tx, user *models.User) error {
+	// TODO: @veD-tnayrB Please implement the update method.
 	return nil
 }
 
@@ -207,5 +237,14 @@ func (r *UserRepository) AssignProfile(tx *sql.Tx, userId string, profileId stri
 		return errors.New("error while executing the insert query")
 	}
 
+	return nil
+}
+
+func (r *UserRepository) RemoveAssignedProfiles(tx *sql.Tx, id string) error {
+	query := "DELETE * FROM users_profiles WHERE user_id = ?"
+	_, err := tx.Exec(query, id)
+	if err != nil {
+		return errors.New("error while executing the delete query")
+	}
 	return nil
 }

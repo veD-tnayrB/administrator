@@ -1,8 +1,4 @@
-
-
-func GenerateReport(records) {
-
-}
+package helpers
 
 func generateXlsx() {
 

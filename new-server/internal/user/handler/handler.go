@@ -176,7 +176,9 @@ func (h *UserHandler) Create(ctx *gin.Context) {
 	}
 	err := h.UserService.Create(&user, &profiles)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, "SOMETHING_WENT_WRONGj")
+		fmt.Println(err)
+		ctx.JSON(http.StatusInternalServerError, "SOMETHING_WENT_WRONG")
+		return
 	}
 
 	ctx.JSON(http.StatusCreated, true)
