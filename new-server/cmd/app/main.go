@@ -9,6 +9,7 @@ import (
 	database "github.com/veD-tnayrB/administrator/common"
 
 	profileRepository "github.com/veD-tnayrB/administrator/internal/profile/repository"
+	security "github.com/veD-tnayrB/administrator/internal/security"
 
 	userHandler "github.com/veD-tnayrB/administrator/internal/user/handler"
 	userRepository "github.com/veD-tnayrB/administrator/internal/user/repository"
@@ -29,9 +30,16 @@ func main() {
 
 	profileRepository := profileRepository.ProfileRepository{DB: db}
 
+	hasher := security.NewHasher()
+
 	userRepository := userRepository.UserRepository{DB: db}
-	userService := userService.UserService{UserRepo: &userRepository, ProfileRepo: &profileRepository}
+	userService := userService.UserService{UserRepo: &userRepository, ProfileRepo: &profileRepository, Hasher: hasher}
 	userHandler := userHandler.UserHandler{UserService: &userService}
+
+	// authService := authService.AuthService{
+	// 	UserRepository: &userRepository,
+	// 	hasher:         hasher,
+	// }
 
 	router := gin.Default()
 	v1 := router.Group("/v1/admin")

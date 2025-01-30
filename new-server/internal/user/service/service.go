@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/veD-tnayrB/administrator/internal/user/models"
@@ -15,9 +16,15 @@ import (
 	"github.com/veD-tnayrB/administrator/common/helpers"
 )
 
+type Hasher interface {
+	Encrypt(password string) (string, error)
+	Check(password string) (bool, error)
+}
+
 type UserService struct {
 	UserRepo    *repository.UserRepository
 	ProfileRepo *profileRepo.ProfileRepository
+	Hasher      Hasher
 }
 
 func (s *UserService) GetById(ctx context.Context, id string) (*models.User, error) {
@@ -91,11 +98,24 @@ func (s *UserService) Create(user *models.User, profiles *[]string) (err error) 
 		return errors.New("EMAIL_ALREADY_EXISTS")
 	}
 
-	if user.Password != "" {
-		// TODO: @veD-tnayrB please add the comming password case
+	notifyUser := false
+	if user.Password == "" {
+		user.Password = os.Getenv("USER_DEFAULT_PASSWORD")
+		notifyUser = true
 	}
-	// TODO: @veD-tnayrB Bryant remember this is the code for the administrator
-	// So having that on mind add the email notification logic
+
+	// TODO: @veD-tnayrB please add the comming password case
+	user.Password, err = helpers.EncryptPassword(user.Password)
+	if err != nil {
+		return errors.New("ERROR_ENCRYPTING_PASSWORD")
+	}
+
+	if notifyUser {
+		// Logic here to send the email notification buddy
+
+		// TODO: @veD-tnayrB Bryant remember this is the code for the administrator
+		// So having that on mind add the email notification logic
+	}
 
 	// Take the current date (date when the transaction is made and applu it to the values)
 	user.TimeCreated, err = helpers.ParseToDBDate(time.Now())
@@ -175,7 +195,6 @@ func (s *UserService) Update(user *models.User, profiles *[]string) (err error) 
 	user.TimeUpdated = time.Now().UTC().Format(time.RFC3339)
 	userErr := s.UserRepo.Update(tx, user)
 	if userErr != nil {
-		fmt.Printf("err: %v\n", userErr)
 		return errors.New("USER_COULDNT_BE_UPDATED")
 	}
 
