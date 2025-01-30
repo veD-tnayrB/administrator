@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/veD-tnayrB/administrator/internal/auth/models"
 	"github.com/veD-tnayrB/administrator/internal/user/repository"
@@ -12,9 +13,15 @@ type Hasher interface {
 	Check(password string) (bool, error)
 }
 
+type TokenService interface {
+	Generate(payload map[string]interface{}) (string, error)
+	Verify(token string) (bool, error)
+}
+
 type AuthService struct {
 	UserRepository *repository.UserRepository
 	Hasher         Hasher
+	TokenService   TokenService
 }
 
 func (s *AuthService) Login(params *models.LoginParams) error {
@@ -25,7 +32,7 @@ func (s *AuthService) Login(params *models.LoginParams) error {
 	// hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 	// TODO: @veD-tnayrB Bryant motherfucker plase add the logic too handle the google, facebook, etc, login motherfucker
 	// if params.Password == "" {
-	// 	return errors.New("EMAIL_IS_REQUIRED")
+	// 	return errors.New("PASSWORD_IS_REQUIRED ???")
 	// }
 	user, err := s.UserRepository.GetActiveByEmail(params.Email)
 	if err != nil {
@@ -37,7 +44,15 @@ func (s *AuthService) Login(params *models.LoginParams) error {
 	}
 
 	// TODO: @veD-tnayrB Bryant motherfucker please add the jwt logic
-	token := "ASDOASLKDSADASD"
+	tokenPayload := map[string]interface{}{
+		"email": params.Email,
+		"id":    user.Id,
+	}
+	token, err := s.TokenService.Generate(tokenPayload)
+	if err != nil {
+		return errors.New("ERROR_WHILE_GENERATING_THE_ACCESS_TOKEN")
+	}
+	fmt.Println(token)
 
 	return nil
 }

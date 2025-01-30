@@ -11,6 +11,8 @@ import (
 	profileRepository "github.com/veD-tnayrB/administrator/internal/profile/repository"
 	security "github.com/veD-tnayrB/administrator/internal/security"
 
+	authService "github.com/veD-tnayrB/administrator/internal/auth/service"
+
 	userHandler "github.com/veD-tnayrB/administrator/internal/user/handler"
 	userRepository "github.com/veD-tnayrB/administrator/internal/user/repository"
 	userService "github.com/veD-tnayrB/administrator/internal/user/service"
@@ -31,15 +33,17 @@ func main() {
 	profileRepository := profileRepository.ProfileRepository{DB: db}
 
 	hasher := security.NewHasher()
+	tokenService := security.NewTokenService()
 
 	userRepository := userRepository.UserRepository{DB: db}
 	userService := userService.UserService{UserRepo: &userRepository, ProfileRepo: &profileRepository, Hasher: hasher}
 	userHandler := userHandler.UserHandler{UserService: &userService}
 
-	// authService := authService.AuthService{
-	// 	UserRepository: &userRepository,
-	// 	hasher:         hasher,
-	// }
+	authService := authService.AuthService{
+		UserRepository: &userRepository,
+		Hasher:         hasher,
+		TokenService:   tokenService,
+	}
 
 	router := gin.Default()
 	v1 := router.Group("/v1/admin")
