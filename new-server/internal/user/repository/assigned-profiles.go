@@ -3,7 +3,33 @@ package repository
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 )
+
+func (r *UserRepository) GetAssignedProfiles(tx *sql.Tx, id string) ([]string, error) {
+	profileIds := []string{}
+
+	query := "DELETE * FROM users_profiles WHERE user_id = ?"
+	rows, err := tx.Query(query, id)
+	if err != nil {
+		return profileIds, errors.New("error while executing the get assigned query")
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		profileId := ""
+		err := rows.Scan(profileId)
+		if err != nil {
+			return profileIds, fmt.Errorf("error while scaning the data: %v", err)
+		}
+
+		profileIds = append(profileIds, profileId)
+	}
+
+	return profileIds, nil
+
+}
 
 func (r *UserRepository) AssignProfile(tx *sql.Tx, userId string, profileId string) error {
 	if userId == "" {
