@@ -33,7 +33,7 @@
 				"/auth/forget-password"
 			]
 		},
-		"server": "http://localhost:5001/v1/admin/"
+		"server": "http://localhost:5001/admin/"
 	},
 	"modules": {
 		"path": "modules"

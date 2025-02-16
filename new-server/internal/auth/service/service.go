@@ -1,7 +1,12 @@
 package service
 
 import (
-	"github.com/veD-tnayrB/administrator/internal/user/repository"
+	"database/sql"
+
+	repository "github.com/veD-tnayrB/administrator/internal/auth/repository"
+	moduleModels "github.com/veD-tnayrB/administrator/internal/module/models"
+	profileModels "github.com/veD-tnayrB/administrator/internal/profile/models"
+	"github.com/veD-tnayrB/administrator/internal/user/models"
 )
 
 type Hasher interface {
@@ -14,8 +19,24 @@ type TokenService interface {
 	Verify(token string) (bool, error)
 }
 
+type UserRepository interface {
+	GetActiveByEmail(email string) (*models.User, error)
+	CreateAccessToken(tx *sql.Tx, userId string, timeCreated string, timeUpdated string, notificationToken string, timezone string) error
+	GetByAccessToken(token string) (*models.User, error)
+}
+
+type PermissionRepository interface {
+	GetUserPermissions(userId string) ([]*moduleModels.ModuleAction, error)
+}
+
+type ProfileRepository interface {
+	GetUserProfiles(userId string) ([]*profileModels.Profile, error)
+}
 type AuthService struct {
-	UserRepository *repository.UserRepository
-	Hasher         Hasher
-	TokenService   TokenService
+	UserRepository       UserRepository
+	Hasher               Hasher
+	TokenService         TokenService
+	PermissionRepository PermissionRepository
+	ProfileRepository    ProfileRepository
+	AuthRepository       *repository.AuthRepository
 }

@@ -10,28 +10,23 @@ import (
 	"github.com/veD-tnayrB/administrator/internal/auth/models"
 )
 
-func (s *AuthService) Login(params *models.LoginParams) error {
+func (s *AuthService) Login(params *models.LoginParams) (*models.LoginResponse, error) {
 	if params.Email == "" {
-		return errors.New("EMAIL_IS_REQUIRED")
+		return nil, errors.New("EMAIL_IS_REQUIRED")
 	}
-
-	// hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-	// TODO: @veD-tnayrB Bryant motherfucker plase add the logic too handle the google, facebook, etc, login motherfucker
-	// if params.Password == "" {
-	// 	return errors.New("PASSWORD_IS_REQUIRED ???")
-	// }
 	user, err := s.UserRepository.GetActiveByEmail(params.Email)
+	fmt.Printf("%v", user)
 	if err != nil {
-		return errors.New("ERROR_WHILE_VERIFYING_IF_USER_EXISTS")
+		return nil, errors.New("ERROR_WHILE_VERIFYING_IF_USER_EXISTS")
 	}
 
 	if user == nil {
-		return errors.New("USER_DOESNT_EXISTS")
+		return nil, errors.New("USER_DOESNT_EXISTS")
 	}
 
-	tx, transactionErr := s.UserRepository.DB.Begin()
+	tx, transactionErr := s.AuthRepository.DB.Begin()
 	if transactionErr != nil {
-		return errors.New("ERROR_WHILE_INITIALIZING_THE_TRANSACTION")
+		return nil, errors.New("ERROR_WHILE_INITIALIZING_THE_TRANSACTION")
 	}
 
 	defer func() {
@@ -40,9 +35,47 @@ func (s *AuthService) Login(params *models.LoginParams) error {
 		}
 	}()
 
-	s.generateToken(tx, params, user.Id)
+	token, err := s.generateToken(tx, params, user.Id)
+	if err != nil {
+		return nil, errors.New("ERROR_GENERATING_TOKEN")
+	}
 
-	return nil
+	profiles, err := s.ProfileRepository.GetUserProfiles(user.Id)
+	if err != nil {
+		return nil, errors.New("ERROR_GETTING_USER_PROFILES")
+	}
+
+	formattedProfiles := []*models.ProfileDTO{}
+	for index := range profiles {
+		formattedProfiles = append(formattedProfiles, s.parseProfile(profiles[index]))
+	}
+
+	permissions, err := s.PermissionRepository.GetUserPermissions(user.Id)
+	if err != nil {
+		return nil, errors.New("ERROR_GETTING_USER_PERMISSIONS")
+	}
+	formattedPermissions := []*models.PermissionDTO{}
+	for index := range permissions {
+		formattedPermissions = append(formattedPermissions, s.parsePermission(permissions[index]))
+	}
+
+	formattedUser := models.UserDTO{
+		Id:          user.Id,
+		Names:       user.Names,
+		LastNames:   user.LastNames,
+		Email:       user.Email,
+		Active:      user.Active,
+		ProfileImg:  user.ProfileImg,
+		Profiles:    formattedProfiles,
+		Permissions: formattedPermissions,
+	}
+
+	response := models.LoginResponse{
+		User:  &formattedUser,
+		Token: token,
+	}
+
+	return &response, nil
 }
 
 func (s *AuthService) generateToken(tx *sql.Tx, params *models.LoginParams, userId string) (string, error) {
@@ -54,8 +87,6 @@ func (s *AuthService) generateToken(tx *sql.Tx, params *models.LoginParams, user
 	if err != nil {
 		return "", errors.New("ERROR_WHILE_GENERATING_THE_ACCESS_TOKEN")
 	}
-
-	fmt.Println(token)
 
 	timeCreated, err := helpers.ParseToDBDate(time.Now())
 	if err != nil {

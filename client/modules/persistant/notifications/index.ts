@@ -1,6 +1,9 @@
 import { ReactiveModel } from '@beyond-js/reactive/model';
+import {
+	NotificationHistory,
+	NotificationsHistory,
+} from '@essential-js/admin/models';
 import { Notifier } from './library/notifier.index';
-import { NotificationsHistory, NotificationHistory, INotificationHistory } from '@essential-js/admin/models';
 
 class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 	#provider: Notifier = new Notifier();
@@ -74,7 +77,9 @@ class NotificationsHandler extends ReactiveModel<NotificationsHandler> {
 		}
 	};
 
-	#onMessageReceived = async (params: { notification: { body: string; title: string } }) => {
+	#onMessageReceived = async (params: {
+		notification: { body: string; title: string };
+	}) => {
 		const current = new NotificationHistory();
 		current.set(params.notification);
 		this.#current = current;

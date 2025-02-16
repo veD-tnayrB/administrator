@@ -6,11 +6,11 @@ import (
 	"fmt"
 )
 
-func (r *UserRepository) GetAssignedProfiles(tx *sql.Tx, id string) ([]string, error) {
+func (r *UserRepository) GetAssignedProfiles(id string) ([]string, error) {
 	profileIds := []string{}
 
 	query := "DELETE * FROM users_profiles WHERE user_id = ?"
-	rows, err := tx.Query(query, id)
+	rows, err := r.DB.Query(query, id)
 	if err != nil {
 		return profileIds, errors.New("error while executing the get assigned query")
 	}
