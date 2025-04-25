@@ -1,9 +1,13 @@
 import { IAuthUser } from '@essential-js/admin-server/types';
-import { ILoginParams, Login } from './cases/login';
+import {
+	ForgetPassword,
+	IRecoverPassword,
+	ISendEmailForgetPassword,
+} from './cases/forget-password';
 import { Get, IGet } from './cases/get';
+import { ILoginParams, Login } from './cases/login';
 import { ILogoutParams, Logout } from './cases/logout';
 import { Update } from './cases/update';
-import { ForgetPassword, IRecoverPassword, ISendEmailForgetPassword } from './cases/forget-password';
 
 class AuthManager {
 	login = async (params: ILoginParams) => {
