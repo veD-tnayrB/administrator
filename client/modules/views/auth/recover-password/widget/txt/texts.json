@@ -1,32 +1,47 @@
 {
 	"en": {
-		"preTitle": "Welcome Back!",
-		"submit": "Sign in",
-		"title": "Sign in",
+		"preTitle": "Almost there!",
+		"title": "Create New Password",
+		"submit": "Set Password",
+		"success": "Your password has been successfully updated",
+		"cancel": "Cancel",
 		"fields": {
-			"email": "Email",
-			"password": "Password"
+			"newPassword": "New Password",
+			"confirmPassword": "Confirm Password"
 		},
-		"or": "or",
-		"loginWithGoogle": "Sign in with Google",
+		"validations": {
+			"isMoreOrEqualToEightCharacters": "Password must be at least 8 characters long",
+			"hasOneUppercaseLetter": "Password must contain at least one uppercase letter",
+			"hasOneLowercaseLetter": "Password must contain at least one lowercase letter",
+			"isBothPasswordEqual": "Both passwords must be the same"
+		},
 		"errors": {
-			"notFound": "Invalid email or password",
-			"somethingWentWrong": "Uups... Something went wrong"
+			"passwordMismatch": "Passwords do not match",
+			"passwordTooShort": "Password must be at least 8 characters",
+			"somethingWentWrong": "Oops... Something went wrong"
 		}
 	},
 	"es": {
-		"preTitle": "Bienvenidx de vuelta!",
-		"submit": "Entrar",
-		"title": "Login",
-		"fields": {
-			"email": "Email",
-			"password": "Contraseña"
+		"preTitle": "Casi terminamos!",
+		"title": "Crear nueva contraseña",
+		"submit": "Establecer contraseña",
+		"success": "Tu contraseña ha sido actualizada con éxito",
+		"cancel": "Cancelar",
+		"validations": {
+			"isMoreOrEqualToEightCharacters": "La contraseña debe tener al menos 8 caracteres",
+			"hasOneUppercaseLetter": "La contraseña debe contener al menos una letra mayúscula",
+			"hasOneLowercaseLetter": "La contraseña debe contener al menos una letra minúscula",
+			"isBothPasswordEqual": "Ambas contraseñas deben ser iguales"
 		},
-		"or": "o",
-		"loginWithGoogle": "Logeate con Google",
+
+		"fields": {
+			"newPassword": "Nueva contraseña",
+			"confirmPassword": "Confirmar contraseña"
+		},
 		"errors": {
-			"notFound": "Email o contraseña invalido",
-			"somethingWentWrong": "Oops, algo salio mal, intentenlo de nuevo mas tarde"
+			"passwordMismatch": "Las contraseñas no coinciden",
+			"passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+			"somethingWentWrong": "Ups... Algo salió mal"
 		}
 	}
 }

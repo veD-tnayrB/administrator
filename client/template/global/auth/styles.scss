@@ -1,0 +1,23 @@
+.auth-view {
+	display: grid;
+	grid-template-columns: 50% 50%;
+
+	.background-section {
+		height: 100%;
+		min-height: 100vh;
+	}
+}
+
+@media (max-width: 1224px) {
+	.auth-view {
+		display: flex;
+		flex-direction: column-reverse;
+
+		.right-section {
+			display: none;
+			img {
+				display: none;
+			}
+		}
+	}
+}

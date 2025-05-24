@@ -1,68 +1,16 @@
 .login-view.auth-view {
 	.left-section {
-		background: var(--background);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
 		article {
-			background: var(--surface);
-			width: 400px;
-			min-width: 200px;
-			min-height: 400px;
-			padding: 2rem;
-			border-radius: var(--border-primary);
-			box-shadow: var(--primary-box-shadow);
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			gap: 1.5rem;
-
-			.header-container {
-				.alert {
-					margin: 0.5rem 0;
-				}
-			}
-
-			span {
-				font-size: 0.8rem;
-				font-style: normal;
-				font-weight: 400;
-				line-height: 1.375rem;
-				letter-spacing: 0.03rem;
-			}
-
-			h1 {
-				font-size: 2.1rem;
-				font-weight: 600;
-			}
-
-			form {
-				display: flex;
-				flex-direction: column;
-				gap: 1.5rem;
-
-				input {
-					font-size: 0.95rem;
-				}
-
-				button {
-					border-radius: 5px;
-
-					.button-label {
-						color: var(--on-primary);
-					}
-				}
-			}
-
-			.pui-button.btn-outline.btn--md {
-				.button-label {
-					color: var(--on-surface);
-				}
-			}
-
 			.login-external-provider {
 				width: 100%;
+				border: 1px solid var(--outline);
+
+				.button-label {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.5rem;
+				}
 			}
 
 			.or-container {
@@ -77,25 +25,10 @@
 					flex: 1;
 					opacity: 0.5;
 				}
+
 				span {
 					font-size: 0.8rem;
 					color: var(--inverse-surface);
-				}
-			}
-		}
-	}
-}
-
-@media (max-width: 1024px) {
-	.login-view.auth-view {
-		.left-section {
-			padding: 1rem;
-
-			article {
-				padding: 2rem 1.5rem;
-
-				h1 {
-					font-size: 2.5rem;
 				}
 			}
 		}

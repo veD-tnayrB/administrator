@@ -1,17 +1,19 @@
-import React from 'react';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import React from 'react';
+import { useLayoutContext } from '../../context';
+import { SidebarFooter } from './footer';
 import { SidebarHeader } from './header';
 import { SidebarItem } from './item';
-import { useLayoutContext } from '../../context';
 import { SidebarLoading } from './loading';
-import { SidebarFooter } from './footer';
 
 export const Sidebar = () => {
 	const { store } = useLayoutContext();
 	const [items, setItems] = React.useState(store.sidebarCollection.items);
 	const [isLoading, setIsLoading] = React.useState(store.fetching);
 	const [theme, setTheme] = React.useState(store.mode);
-	const [isCollapsed, setIsCollapsed] = React.useState(store.isSidebarCollapsed);
+	const [isCollapsed, setIsCollapsed] = React.useState(
+		store.isSidebarCollapsed
+	);
 	useBinder([store], () => setTheme(store.mode), ['theme-changed']);
 
 	useBinder([store], () => {
@@ -19,11 +21,17 @@ export const Sidebar = () => {
 		setIsLoading(store.fetching);
 	});
 
-	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed), 'resize');
+	useBinder(
+		[store],
+		() => setIsCollapsed(store.isSidebarCollapsed),
+		'resize'
+	);
 
 	items.sort((a, b) => a.order - b.order);
 
-	const output = items.map((item) => <SidebarItem key={item.label} {...item} />);
+	const output = items.map(item => (
+		<SidebarItem key={item.label} {...item} />
+	));
 	const panel = isLoading ? (
 		<SidebarLoading />
 	) : (

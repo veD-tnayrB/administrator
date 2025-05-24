@@ -31,12 +31,16 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		let namesArray = this.names.split(' ');
 		let lastNamesArray = this.lastNames.split(' ');
 
-		return this.lastNames ? `${namesArray[0]} ${lastNamesArray[0]}` : this.names;
+		return this.lastNames
+			? `${namesArray[0]} ${lastNamesArray[0]}`
+			: this.names;
 	}
 
 	get profilePermissions() {
 		const map = new Map<string, IPermission>();
-		this.permissions.forEach((item: IPermission) => map.set(item.actionName, item));
+		this.permissions.forEach((item: IPermission) =>
+			map.set(item.actionName, item)
+		);
 
 		return map;
 	}
@@ -128,7 +132,10 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 		}
 	};
 
-	recoverPassword = async (params: { token: string; newPassword: string }) => {
+	recoverPassword = async (params: {
+		token: string;
+		newPassword: string;
+	}) => {
 		try {
 			this.fetching = true;
 			const response = await this.provider.recoverPassword(params);
@@ -144,7 +151,9 @@ export /*bundle*/ class User extends ReactiveModel<IUser> {
 	publish = async () => {
 		try {
 			this.fetching = true;
-			const response = await this.provider.publish({ ...this.getProperties() });
+			const response = await this.provider.publish({
+				...this.getProperties(),
+			});
 			if (!response.status) throw response.error;
 			return response;
 		} catch (error) {

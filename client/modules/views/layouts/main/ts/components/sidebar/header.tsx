@@ -1,9 +1,9 @@
-import React from 'react';
-import { Image } from 'pragmate-ui/image';
-import { Button } from 'pragmate-ui/components';
-import config from '@essential-js/admin/config';
-import { useLayoutContext } from '../../context';
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
+import config from '@essential-js/admin/config';
+import { Button } from 'pragmate-ui/components';
+import { Image } from 'pragmate-ui/image';
+import React from 'react';
+import { useLayoutContext } from '../../context';
 
 interface IProps {
 	theme: string;
@@ -11,13 +11,22 @@ interface IProps {
 
 export const SidebarHeader = ({ theme }: IProps) => {
 	const { store } = useLayoutContext();
-	const [isColappsed, setIsCollapsed] = React.useState(store.isSidebarCollapsed);
+	const [isColappsed, setIsCollapsed] = React.useState(
+		store.isSidebarCollapsed
+	);
 	const name = config.params.application.company.name;
 	const subName = config.params.application.company.subName;
 
-	useBinder([store], () => setIsCollapsed(store.isSidebarCollapsed), 'resize');
+	useBinder(
+		[store],
+		() => setIsCollapsed(store.isSidebarCollapsed),
+		'resize'
+	);
 
-	const iconUrl = theme === 'dark' ? '/assets/sidebar/logo-dark.svg' : '/assets/sidebar/logo-light.svg';
+	const iconUrl =
+		theme === 'dark'
+			? '/assets/sidebar/logo-dark.svg'
+			: '/assets/sidebar/logo-light.svg';
 
 	const toggleCollapse = () => {
 		store.isSidebarCollapsed = !store.isSidebarCollapsed;
@@ -42,8 +51,7 @@ export const SidebarHeader = ({ theme }: IProps) => {
 					name={btnName}
 					onClick={toggleCollapse}
 					aria-label={btnName}
-					className={`collapse-btn ${collapsedCls}`}
-				>
+					className={`collapse-btn ${collapsedCls}`}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -53,8 +61,7 @@ export const SidebarHeader = ({ theme }: IProps) => {
 						strokeWidth="2"
 						strokeLinecap="round"
 						strokeLinejoin="round"
-						className="lucide lucide-chevron-right"
-					>
+						className="lucide lucide-chevron-right">
 						<path d="m9 18 6-6-6-6" />
 					</svg>
 				</Button>

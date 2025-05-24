@@ -1,5 +1,6 @@
 import { useBinder } from '@beyond-js/react-18-widgets/hooks';
 import { Providers } from '@essential-js/admin/auth';
+import { AppIcon } from '@essential-js/admin/components/ui';
 import { Alert } from 'pragmate-ui/alert';
 import { Button } from 'pragmate-ui/components';
 import { Form, Input } from 'pragmate-ui/form';
@@ -37,38 +38,59 @@ export const LeftSectionForm = () => {
 		});
 	};
 	const errors: Record<string, string> = {
-		USER_DOESNT_EXISTS: 'Invalid credentials, please check if you have entered the data correctly and try again.',
+		USER_DOESNT_EXISTS: store.texts.errors.notFound,
+		SOMETHING_WENT_WRONG: store.texts.errors.somethingWentWrong,
 	};
 
 	return (
 		<article>
 			<div className="header-container">
-				<span>Welcome back!!</span>
-				<h1>Login</h1>
+				<h1>{store.texts.title}</h1>
+				<span className="pretitle">{store.texts.preTitle}</span>
 
-				<Alert type="error" message={errors[error as string] as string} />
+				<Alert
+					type="error"
+					message={errors[error as string] as string}
+				/>
 			</div>
 			<Form onSubmit={onSubmit}>
-				<Input name="email" type="email" value={values.email} label="Email" onChange={onChange} />
-				<Input name="password" type="password" value={values.password} label="Password" onChange={onChange} />
+				<Input
+					name="email"
+					type="email"
+					value={values.email}
+					label="Email"
+					onChange={onChange}
+				/>
+				<Input
+					name="password"
+					type="password"
+					value={values.password}
+					label="Password"
+					onChange={onChange}
+				/>
 
 				<Button loading={loading} variant="primary" type="submit">
-					Go
+					{store.texts.submit}
 				</Button>
 			</Form>
 
 			<div className="or-container">
 				<div />
-				<span>or</span>
+				<span>{store.texts.or}</span>
 				<div />
 			</div>
-			<Button loading={loading} className="login-external-provider" variant="outline" onClick={loginWithGoogle}>
-				Login with Google
+			<Button
+				loading={loading}
+				className="login-external-provider"
+				variant="outline"
+				onClick={loginWithGoogle}>
+				<AppIcon icon="google" />
+				{store.texts.loginWithGoogle}
 			</Button>
 
 			<footer className="flex justify-center items-center">
 				<Link className="text-xs" href="/auth/forget-password">
-					Forgot Password?
+					{store.texts.forgotPassword}
 				</Link>
 			</footer>
 		</article>

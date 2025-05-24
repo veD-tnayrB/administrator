@@ -47,7 +47,10 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /list', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
+			const responseError = ResponseAPI.error({
+				code: 500,
+				message: exc.error,
+			});
 			return res.status(500).send(responseError);
 		}
 	};
@@ -63,7 +66,10 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /get', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
+			const responseError = ResponseAPI.error({
+				code: 500,
+				message: exc.error,
+			});
 			return res.status(500).send(responseError);
 		}
 	};
@@ -73,11 +79,16 @@ export /*bundle*/ class Route {
 			const data = req.body;
 			const response = await this.#manager.create(data);
 			if (!response.status) throw response.error;
-			const formatedResponse = ResponseAPI.success({ data: response.data });
+			const formatedResponse = ResponseAPI.success({
+				data: response.data,
+			});
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /create', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
+			const responseError = ResponseAPI.error({
+				code: 500,
+				message: exc.error,
+			});
 			return res.status(500).send(responseError);
 		}
 	};
@@ -87,11 +98,16 @@ export /*bundle*/ class Route {
 			const data = req.body;
 			const response = await this.#manager.update(data);
 			if (!response.status) throw response.error;
-			const formatedResponse = ResponseAPI.success({ data: response.data });
+			const formatedResponse = ResponseAPI.success({
+				data: response.data,
+			});
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /update', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
+			const responseError = ResponseAPI.error({
+				code: 500,
+				message: exc.error,
+			});
 			return res.status(500).send(responseError);
 		}
 	};
@@ -107,7 +123,10 @@ export /*bundle*/ class Route {
 			return res.status(200).json(formatedResponse);
 		} catch (exc) {
 			console.error('Error /delete', exc);
-			const responseError = ResponseAPI.error({ code: 500, message: exc.error });
+			const responseError = ResponseAPI.error({
+				code: 500,
+				message: exc.error,
+			});
 			return res.status(500).send(responseError);
 		}
 	};

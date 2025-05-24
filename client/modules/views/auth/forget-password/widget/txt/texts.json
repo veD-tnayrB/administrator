@@ -1,32 +1,34 @@
 {
 	"en": {
-		"preTitle": "Welcome Back!",
-		"submit": "Sign in",
-		"title": "Sign in",
+		"preTitle": "Don't worry, everything is under control",
+		"submit": "Send reset link",
+		"title": "Reset Password",
+		"success": "Email sent, check your inbox",
+		"accept": "Send email",
+		"resend": "Resend email",
+		"cancel": "Cancel",
 		"fields": {
-			"email": "Email",
-			"password": "Password"
+			"email": "Email"
 		},
-		"or": "or",
-		"loginWithGoogle": "Sign in with Google",
 		"errors": {
-			"notFound": "Invalid email or password",
-			"somethingWentWrong": "Uups... Something went wrong"
+			"notFound": "Email not found",
+			"somethingWentWrong": "Oops... Something went wrong"
 		}
 	},
 	"es": {
-		"preTitle": "Bienvenidx de vuelta!",
-		"submit": "Entrar",
-		"title": "Login",
+		"preTitle": "No te preocupes, todo está bajo control",
+		"submit": "Enviar enlace de restablecimiento",
+		"success": "El email ha sido enviado, revisa tu inbox",
+		"title": "Restablecer contraseña",
+		"cancel": "Cancelar",
+		"accept": "Enviar email",
+		"resend": "Reenviar email",
 		"fields": {
-			"email": "Email",
-			"password": "Contraseña"
+			"email": "Email"
 		},
-		"or": "o",
-		"loginWithGoogle": "Logeate con Google",
 		"errors": {
-			"notFound": "Email o contraseña invalido",
-			"somethingWentWrong": "Oops, algo salio mal, intentenlo de nuevo mas tarde"
+			"notFound": "Email no encontrado",
+			"somethingWentWrong": "Ups... Algo salió mal"
 		}
 	}
 }

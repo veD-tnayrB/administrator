@@ -1,0 +1,16 @@
+.auth-view {
+	.right-section {
+		background: var(--primary);
+		position: relative;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+
+		img {
+			position: absolute;
+			width: 100%;
+			height: auto;
+			min-height: 100%;
+		}
+	}
+}

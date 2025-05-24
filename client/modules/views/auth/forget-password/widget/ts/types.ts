@@ -2,9 +2,13 @@ export interface ITexts {
 	preTitle: string;
 	submit: string;
 	title: string;
-	fields: { email: string; password: string };
-	or: string;
-	loginWithGoogle: string;
+	success: string;
+	accept: string;
+	resend: string;
+	cancel: string;
+	fields: {
+		email: string;
+	};
 	errors: {
 		notFound: string;
 		somethingWentWrong: string;
